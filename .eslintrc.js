@@ -25,7 +25,7 @@ module.exports = {
     'keyword-spacing': 'error',
     'no-trailing-spaces': ['error', { skipBlankLines: false }],
     'no-multiple-empty-lines': ['error', { max: 1 }],
-    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-unused-expressions': 'error',

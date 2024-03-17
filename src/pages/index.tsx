@@ -1,7 +1,8 @@
 import Button from '@components/Button';
 import axios from 'axios';
 import { useAtomValue } from 'jotai';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { jwtAtom } from 'src/atoms';
 import { userIdAtom } from 'src/atoms/user';
@@ -11,6 +12,8 @@ export default function Page() {
   const [isUserInfoVisible, setIsUserInfoVisible] = useState(false);
   const jwt = useAtomValue(jwtAtom);
   const userId = useAtomValue(userIdAtom);
+
+  const router = useRouter();
 
   const { data } = useQuery<{
     data: { id: string; email: string; name: string };
@@ -24,6 +27,12 @@ export default function Page() {
       }),
     { enabled: isUserInfoVisible }
   );
+
+  useEffect(() => {
+    if (jwt === '') {
+      router.push('/login');
+    }
+  }, []);
 
   return (
     <>

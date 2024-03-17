@@ -54,6 +54,9 @@ function SignUp() {
       <Button color="gray" onClick={() => mutate({ name, email, password })}>
         sign up
       </Button>
+      <Button color="gray" onClick={() => router.push('/login')}>
+        go to the login page
+      </Button>
     </div>
   );
 }

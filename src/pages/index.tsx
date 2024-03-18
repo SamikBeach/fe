@@ -20,7 +20,7 @@ export default function Page() {
   }>(
     'user',
     async () =>
-      axios.get(`http://localhost:3001/users/${userId}`, {
+      axios.get(`http://localhost:3001/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },

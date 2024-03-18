@@ -19,7 +19,7 @@ function SignUp() {
       email: string;
       password: string;
     }) => {
-      return axios.post('http://localhost:3001/users', payload);
+      return axios.post('http://localhost:3001/user', payload);
     },
     onSuccess: () => {
       router.push('/login');

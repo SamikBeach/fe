@@ -1,12 +1,27 @@
 import Button from '@components/Button';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { jwtAtom } from 'src/atoms';
 import { userIdAtom } from 'src/atoms/user';
 import { css } from 'styled-system/css';
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+  publisher: string;
+  yearOfPublication: number;
+  salesQuantity: number;
+}
 
 export default function Page() {
   const [isUserInfoVisible, setIsUserInfoVisible] = useState(false);
@@ -15,9 +30,13 @@ export default function Page() {
 
   const router = useRouter();
 
-  const { data } = useQuery<{
-    data: { id: string; email: string; name: string };
-  }>(
+  const { data: user } = useQuery<
+    {
+      data: User;
+    },
+    AxiosError,
+    User
+  >(
     'user',
     async () =>
       axios.get(`http://localhost:3001/user/${userId}`, {
@@ -25,7 +44,24 @@ export default function Page() {
           Authorization: `Bearer ${jwt}`,
         },
       }),
-    { enabled: isUserInfoVisible }
+    { enabled: isUserInfoVisible, select: data => data.data }
+  );
+
+  const { data: books = [] } = useQuery<
+    {
+      data: Book[];
+    },
+    AxiosError,
+    Book[]
+  >(
+    'book',
+    async () =>
+      axios.get('http://localhost:3001/book', {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }),
+    { select: data => data.data }
   );
 
   useEffect(() => {
@@ -44,21 +80,33 @@ export default function Page() {
         {isUserInfoVisible ? 'Hide User Info' : 'Show User Info'}
       </Button>
       {isUserInfoVisible && (
-        <div className={css({ marginTop: '20' })}>
+        <div className={css({ my: '5' })}>
           <h2>
             <b>User Info</b>
           </h2>
           <p>
-            <b>Name:</b> {data?.data.name}
+            <b>Name:</b> {user?.name}
           </p>
           <p>
-            <b>Email:</b> {data?.data.email}
+            <b>Email:</b> {user?.email}
           </p>
           <p>
-            <b>Id:</b> {data?.data.id}
+            <b>Id:</b> {user?.id}
           </p>
         </div>
       )}
+      <div className={css({ display: 'flex' })}>
+        {books.map(book => (
+          <div key={book.id} className={css({ marginRight: '10' })}>
+            <div className={css({ fontWeight: 'bold' })}>{book.id}</div>
+            <div className={css({ fontWeight: 'bold' })}>{book.title}</div>
+            <div>{book.author}</div>
+            <div>{book.publisher}</div>
+            <div>{book.yearOfPublication}</div>
+            <div>{book.salesQuantity}</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

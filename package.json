@@ -2,9 +2,9 @@
   "name": "fe",
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=development next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "yarn build && next start",
     "lint": "next lint"
   },
   "dependencies": {

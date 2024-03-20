@@ -42,7 +42,7 @@ export default function Page() {
   >(
     'user',
     async () =>
-      axios.get(`http://localhost:3001/user/${userId}`, {
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
@@ -59,7 +59,7 @@ export default function Page() {
   >(
     'book',
     async () =>
-      axios.get('http://localhost:3001/book', {
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/book`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
@@ -68,7 +68,7 @@ export default function Page() {
   );
 
   const fetchBooksByAuthor = async (author: string) => {
-    return await axios.get('http://localhost:3001/book', {
+    return await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/book`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },

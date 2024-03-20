@@ -18,7 +18,13 @@ function Login() {
 
   const mutation = useMutation({
     mutationFn: (payload: { email: string; password: string }) => {
-      return axios.post('http://localhost:3001/user/login', payload);
+      console.log(
+        'process.env.NEXT_PUBLIC_SERVER_URL',
+        process.env.NEXT_PUBLIC_SERVER_URL
+      );
+      return axios.post('/user/login', payload, {
+        baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+      });
     },
     onSuccess: data => {
       setJwt(data.data.jwt);

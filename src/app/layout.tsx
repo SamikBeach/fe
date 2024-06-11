@@ -1,3 +1,5 @@
+import '../styles/globals.css';
+
 import { ReactNode } from 'react';
 import ReactQueryProviders from 'src/hooks/useReactQuery';
 

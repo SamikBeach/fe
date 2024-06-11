@@ -1,3 +1,4 @@
+import { Theme, ThemePanel } from '@radix-ui/themes';
 import '../styles/globals.css';
 import '@radix-ui/themes/styles.css';
 
@@ -13,8 +14,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <div>layout</div>
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+        <Theme
+          accentColor="crimson"
+          grayColor="sand"
+          radius="large"
+          panelBackground="solid"
+        >
+          <div>layout</div>
+          <ReactQueryProviders>{children}</ReactQueryProviders>
+          {/* <ThemePanel /> */}
+        </Theme>
       </body>
     </html>
   );

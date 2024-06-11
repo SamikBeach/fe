@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@components/Button';
+import { Box, Flex, Popover, Text } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';
@@ -9,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { jwtAtom } from 'src/atoms';
 import { userIdAtom } from 'src/atoms/user';
+import { css } from 'styled-system/css';
 import { vstack } from 'styled-system/patterns';
 
 function Login() {
@@ -54,12 +56,35 @@ function Login() {
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
-      <Button color="gray" onClick={() => mutation.mutate({ email, password })}>
+      <Button onClick={() => mutation.mutate({ email, password })}>
         login
       </Button>
-      <Button color="gray" onClick={() => router.push('/sign-up')}>
+      <Button onClick={() => router.push('/sign-up')}>
         go to the sign-up page
       </Button>
+      <Popover.Root>
+        <Popover.Trigger popover="auto">
+          <Button>Popover</Button>
+        </Popover.Trigger>
+        <Popover.Content
+          width="360px"
+          height="400px"
+          side="bottom"
+          align="center"
+          className={css({ bgColor: 'gray.500' })}
+        >
+          <Flex gap="3">
+            <Box flexGrow="1">
+              <Text>asdf</Text>
+              <Text>asdf</Text>
+              <Text>asdf</Text>
+            </Box>
+          </Flex>
+          <Popover.Close>
+            <Button size="1">Close</Button>
+          </Popover.Close>
+        </Popover.Content>
+      </Popover.Root>
     </div>
   );
 }

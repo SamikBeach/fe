@@ -53,10 +53,15 @@ function SignUp() {
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
-      <Button color="gray" onClick={() => mutate({ name, email, password })}>
+      <Button
+        color="red"
+        variant="soft"
+        size="4"
+        onClick={() => mutate({ name, email, password })}
+      >
         sign up
       </Button>
-      <Button color="gray" onClick={() => router.push('/login')}>
+      <Button color="gray" variant="soft" onClick={() => router.push('/login')}>
         go to the login page
       </Button>
     </div>

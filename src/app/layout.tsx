@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '@radix-ui/themes/styles.css';
 
 import { ReactNode } from 'react';
 import ReactQueryProviders from 'src/hooks/useReactQuery';

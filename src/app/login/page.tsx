@@ -63,7 +63,7 @@ function Login() {
         go to the sign-up page
       </Button>
       <Popover.Root>
-        <Popover.Trigger popover="auto">
+        <Popover.Trigger>
           <Button>Popover</Button>
         </Popover.Trigger>
         <Popover.Content

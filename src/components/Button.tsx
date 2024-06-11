@@ -1,7 +1,7 @@
-import { Button as RadixButton } from '@radix-ui/themes';
+import { Button as RadixButton, ButtonProps } from '@radix-ui/themes';
 import { ComponentProps, forwardRef } from 'react';
 
-interface Props extends ComponentProps<typeof RadixButton> {}
+interface Props extends ButtonProps {}
 
 const Button = forwardRef<HTMLButtonElement, Props>(
   ({ children, ...props }: Props, ref) => {

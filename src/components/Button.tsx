@@ -1,5 +1,5 @@
 import { Button as RadixButton, ButtonProps } from '@radix-ui/themes';
-import { ComponentProps, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 interface Props extends ButtonProps {}
 

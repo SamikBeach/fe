@@ -64,7 +64,7 @@ function Login() {
       </Button>
       <Popover.Root>
         <Popover.Trigger>
-          <Button>Popover</Button>
+          <Button className={css({ cursor: 'pointer' })}>Popover</Button>
         </Popover.Trigger>
         <Popover.Content
           width="360px"

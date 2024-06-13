@@ -1,6 +1,6 @@
 import ReactQueryProviders from '@components/react-query/ReactQueryProviders';
 import { Theme, ThemePanel } from '@radix-ui/themes';
-import '@styles/global.css';
+import '@styles/globals.css';
 
 import { ReactNode } from 'react';
 

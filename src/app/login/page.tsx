@@ -10,7 +10,6 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
-
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { vstack } from 'styled-system/patterns';

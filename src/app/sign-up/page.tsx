@@ -1,62 +1,71 @@
 'use client';
 
+import { registerEmail } from '@apis/auth';
+import api from '@apis/config';
+import { isLoggedInAtom } from '@atoms/auth';
 import Button from '@components/Button';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { TextField } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
+import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { vstack } from 'styled-system/patterns';
 
 function SignUp() {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const router = useRouter();
 
+  const setIsLoggedIn = useSetAtom(isLoggedInAtom);
+
   const { mutate } = useMutation({
-    mutationFn: (payload: {
-      name: string;
-      email: string;
-      password: string;
-    }) => {
-      return axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/user`, payload);
+    mutationFn: (payload: { email: string; password: string }) => {
+      return registerEmail(payload);
     },
-    onSuccess: () => {
-      router.push('/login');
+    onSuccess: ({ data }: { data: { accessToken: string } }) => {
+      router.push('/');
+
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      setIsLoggedIn(true);
     },
     onError: (error: AxiosError) => {
       alert(
-        error.message +
-          '\n' +
-          '\n' +
-          (error.response?.data as any).message.join(', \n')
+        error.message + '\n' + '\n' + (error.response?.data as any).message
       );
     },
   });
 
   return (
     <div className={vstack({ marginTop: '20' })}>
-      <input
-        type="text"
-        placeholder="name"
-        onChange={e => setName(e.target.value)}
-      />
-      <input
+      <TextField.Root
         type="text"
         placeholder="email"
         onChange={e => setEmail(e.target.value)}
-      />
-      <input
+      >
+        <TextField.Slot>
+          <MagnifyingGlassIcon />
+        </TextField.Slot>
+      </TextField.Root>
+
+      <TextField.Root
         type="password"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
-      />
+      >
+        <TextField.Slot>
+          <MagnifyingGlassIcon />
+        </TextField.Slot>
+      </TextField.Root>
       <Button
         variant="soft"
         size="4"
-        onClick={() => mutate({ name, email, password })}
+        onClick={() => mutate({ email, password })}
       >
         sign up
       </Button>

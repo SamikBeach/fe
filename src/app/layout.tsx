@@ -1,8 +1,8 @@
+import ReactQueryProviders from '@components/react-query/ReactQueryProviders';
 import { Theme, ThemePanel } from '@radix-ui/themes';
-import '../styles/globals.css';
+import '@styles/global.css';
 
 import { ReactNode } from 'react';
-import ReactQueryProviders from 'src/hooks/useReactQuery';
 
 export const metadata = {
   title: 'samik beach',

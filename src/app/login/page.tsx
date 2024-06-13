@@ -1,39 +1,37 @@
 'use client';
 
+import { loginEmail } from '@apis/auth';
+import api from '@apis/config';
+import { isLoggedInAtom } from '@atoms/auth';
 import Button from '@components/Button';
-import { Box, Flex, Popover, Text } from '@radix-ui/themes';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { Box, Flex, Popover, Text, TextField } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
-import { jwtAtom } from 'src/atoms';
-import { userIdAtom } from 'src/atoms/user';
 import { css } from 'styled-system/css';
 import { vstack } from 'styled-system/patterns';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const setJwt = useSetAtom(jwtAtom);
-  const setUserId = useSetAtom(userIdAtom);
+
+  const setIsLoggedIn = useSetAtom(isLoggedInAtom);
 
   const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: (payload: { email: string; password: string }) => {
-      console.log(
-        'process.env.NEXT_PUBLIC_SERVER_URL',
-        process.env.NEXT_PUBLIC_SERVER_URL
-      );
-      return axios.post('/user/login', payload, {
-        baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-      });
+      return loginEmail(payload);
     },
-    onSuccess: data => {
-      setJwt(data.data.jwt);
-      setUserId(data.data.id);
+    onSuccess: ({ data }: { data: { accessToken: string } }) => {
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      setIsLoggedIn(true);
 
       router.push('/');
     },
@@ -46,16 +44,25 @@ function Login() {
 
   return (
     <div className={vstack({ marginTop: '20' })}>
-      <input
+      <TextField.Root
         type="text"
         placeholder="email"
         onChange={e => setEmail(e.target.value)}
-      />
-      <input
+      >
+        <TextField.Slot>
+          <MagnifyingGlassIcon />
+        </TextField.Slot>
+      </TextField.Root>
+
+      <TextField.Root
         type="password"
         placeholder="Password"
         onChange={e => setPassword(e.target.value)}
-      />
+      >
+        <TextField.Slot>
+          <MagnifyingGlassIcon />
+        </TextField.Slot>
+      </TextField.Root>
       <Button onClick={() => mutation.mutate({ email, password })}>
         login
       </Button>

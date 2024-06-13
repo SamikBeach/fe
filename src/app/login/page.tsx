@@ -24,7 +24,7 @@ function Login() {
 
   const mutation = useMutation({
     mutationFn: loginEmail,
-    onSuccess: ({ data }: { data: { accessToken: string } }) => {
+    onSuccess: ({ data }) => {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 

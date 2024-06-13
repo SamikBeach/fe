@@ -24,7 +24,7 @@ function SignUp() {
 
   const { mutate } = useMutation({
     mutationFn: registerEmail,
-    onSuccess: ({ data }: { data: { accessToken: string } }) => {
+    onSuccess: ({ data }) => {
       router.push('/');
 
       api.defaults.headers.common['Authorization'] =

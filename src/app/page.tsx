@@ -1,6 +1,7 @@
 // TODO: use client 제거하고 서버 컴포넌트로
 'use client';
 
+import { getAllAuthors } from '@apis/author';
 import { getAllBooks } from '@apis/book';
 import { isLoggedInAtom } from '@atoms/auth';
 import { Button } from '@radix-ui/themes';
@@ -15,7 +16,7 @@ export default function Home() {
 
   const { data } = useQuery({
     queryKey: ['book'],
-    queryFn: getAllBooks,
+    queryFn: getAllAuthors,
     enabled: isShownBooks,
     staleTime: 0,
   });
@@ -27,9 +28,12 @@ export default function Home() {
           toggle getAllBooks
         </Button>
         {isShownBooks &&
-          data?.data
-            .slice(0, 10)
-            .map(book => <div key={book.id}>{book.isbn}</div>)}
+          data?.data.map(author => (
+            <div key={author.id}>
+              {author.id}: {author.name}
+              {/* <img src={author.image_url} /> */}
+            </div>
+          ))}
       </>
     );
   }

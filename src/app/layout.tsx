@@ -1,3 +1,4 @@
+import Header from '@components/Header';
 import ReactQueryProviders from '@components/react-query/ReactQueryProviders';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import '@styles/globals.css';
@@ -19,8 +20,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           radius="large"
           panelBackground="solid"
         >
-          <div>layout</div>
-          <ReactQueryProviders>{children}</ReactQueryProviders>
+          <ReactQueryProviders>
+            <Header />
+            {children}
+          </ReactQueryProviders>
           {/* <ThemePanel /> */}
         </Theme>
       </body>

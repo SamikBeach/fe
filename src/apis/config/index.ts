@@ -1,6 +1,5 @@
 import { getNewAccessToken } from '@apis/auth/token';
 import axios from 'axios';
-import { cookies } from 'next/headers';
 
 const baseURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -12,6 +11,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// NOTE: Access token 갱신
 api.interceptors.response.use(
   response => response,
   async error => {

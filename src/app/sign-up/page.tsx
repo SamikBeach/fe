@@ -23,9 +23,7 @@ function SignUp() {
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
 
   const { mutate } = useMutation({
-    mutationFn: (payload: { email: string; password: string }) => {
-      return registerEmail(payload);
-    },
+    mutationFn: registerEmail,
     onSuccess: ({ data }: { data: { accessToken: string } }) => {
       router.push('/');
 

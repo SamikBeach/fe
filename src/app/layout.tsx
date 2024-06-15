@@ -17,7 +17,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Theme accentColor="gray" radius="large" panelBackground="solid">
           <ReactQueryProviders>
-            <main className={css({ bgColor: 'gray.100', height: '100vh' })}>
+            <main
+              className={css({
+                bgColor: 'gray.50',
+                height: '100vh',
+              })}
+            >
               <Header />
               {children}
             </main>

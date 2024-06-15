@@ -4,8 +4,8 @@
 import { getAllAuthors } from '@apis/author';
 import { getAllBooks } from '@apis/book';
 import { isLoggedInAtom } from '@atoms/auth';
-import { Drawer } from '@components/Drawer';
-import { SidePeek } from '@components/SidePeek';
+import { Drawer } from '@elements/Drawer';
+
 import { Button } from '@elements/Button';
 import { Avatar, IconButton } from '@radix-ui/themes';
 
@@ -13,7 +13,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
+
 import { css } from 'styled-system/css';
+import { RelationDiagram } from '@components/RelationDiagram';
 
 export default function Home() {
   const [isShownBooks, setIsShownBooks] = useState(false);
@@ -30,7 +32,7 @@ export default function Home() {
   // if (isLoggedIn) {
   return (
     <>
-      <Button onClick={() => setIsShownBooks(prev => !prev)}>
+      {/* <Button onClick={() => setIsShownBooks(prev => !prev)}>
         toggle getAllBooks
       </Button>
       <Button onClick={() => setIsOpenDrawer(prev => !prev)}>openDrawer</Button>
@@ -53,7 +55,9 @@ export default function Home() {
       >
         <div>drawer</div>
         <Button>this is a button</Button>
-      </Drawer>
+      </Drawer> */}
+
+      <RelationDiagram />
 
       {isShownBooks &&
         data?.data.map(author => (

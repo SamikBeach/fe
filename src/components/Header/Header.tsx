@@ -26,5 +26,8 @@ const StyledHeader = styled('header', {
     borderColor: 'gray.200',
     width: '100%',
     px: '20px',
+
+    position: 'sticky',
+    top: '0px',
   },
 });

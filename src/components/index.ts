@@ -1,5 +1,5 @@
 export * from './Header';
-export * from './SidePeek';
-export * from './Drawer';
+export * from '../elements/SidePeek';
+export * from '../elements/Drawer';
 
 export * from './react-query';

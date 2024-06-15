@@ -19,6 +19,7 @@
       "@apis/*": ["src/apis/*"],
       "@app/*": ["src/app/*"],
       "@atoms/*": ["src/atoms/*"],
+      "@elements/*": ["src/elements/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@public/*": ["src/public/*"],

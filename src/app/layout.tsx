@@ -1,9 +1,10 @@
-import Header from '@components/Header';
+import { Header } from '@components/Header';
 import ReactQueryProviders from '@components/react-query/ReactQueryProviders';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 import '@styles/globals.css';
 
 import { ReactNode } from 'react';
+import { css } from 'styled-system/css';
 
 export const metadata = {
   title: 'samik beach',
@@ -14,15 +15,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Theme
-          accentColor="crimson"
-          grayColor="sand"
-          radius="large"
-          panelBackground="solid"
-        >
+        <Theme accentColor="gray" radius="large" panelBackground="solid">
           <ReactQueryProviders>
-            <Header />
-            {children}
+            <main className={css({ bgColor: 'gray.100', height: '100vh' })}>
+              <Header />
+              {children}
+            </main>
           </ReactQueryProviders>
           {/* <ThemePanel /> */}
         </Theme>

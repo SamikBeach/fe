@@ -3,9 +3,8 @@
 import { loginEmail } from '@apis/auth';
 import api from '@apis/config';
 import { isLoggedInAtom } from '@atoms/auth';
-import Button from '@components/Button';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Box, Flex, Popover, Text, TextField } from '@radix-ui/themes';
+import { Box, Button, Flex, Popover, Text, TextField } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';

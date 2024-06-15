@@ -28,7 +28,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.13.10":
+"@babel/runtime@npm:^7.11.1, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.18.0, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9":
   version: 7.24.7
   resolution: "@babel/runtime@npm:7.24.7"
   dependencies:
@@ -1914,6 +1914,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rc-component/portal@npm:^1.1.1":
+  version: 1.1.2
+  resolution: "@rc-component/portal@npm:1.1.2"
+  dependencies:
+    "@babel/runtime": "npm:^7.18.0"
+    classnames: "npm:^2.3.2"
+    rc-util: "npm:^5.24.4"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/3c0297356635d47f364be79de02bb16009f06b1ce82124c3e63da9a71b8e7d3ea2c147e4703ead9cae0f662435a21e9feb30d2edf7197108bc3dbf969f3ca51f
+  languageName: node
+  linkType: hard
+
 "@swc/counter@npm:^0.1.3":
   version: 0.1.3
   resolution: "@swc/counter@npm:0.1.3"
@@ -2523,7 +2537,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.3.2, classnames@npm:^2.5.1":
+"classnames@npm:^2.2.1, classnames@npm:^2.2.6, classnames@npm:^2.3.2, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -3084,8 +3098,10 @@ __metadata:
     next: "npm:^14.2.3"
     postcss-import: "npm:^16.1.0"
     prettier: "npm:^3.3.1"
+    rc-drawer: "npm:^7.2.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-modern-drawer: "npm:^1.3.1"
     tslib: "npm:^2.6.3"
     typescript: "npm:^5.4.5"
   languageName: unknown
@@ -4686,6 +4702,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rc-drawer@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "rc-drawer@npm:7.2.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    "@rc-component/portal": "npm:^1.1.1"
+    classnames: "npm:^2.2.6"
+    rc-motion: "npm:^2.6.1"
+    rc-util: "npm:^5.38.1"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/d6814998983100193d6a521745324a94fa8d65cbb979b2764d1d48a78d6b6e22f9d078ebb68545b68a0cc38f062298d11ed3635e93d004a60415d384330a8573
+  languageName: node
+  linkType: hard
+
+"rc-motion@npm:^2.6.1":
+  version: 2.9.1
+  resolution: "rc-motion@npm:2.9.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.11.1"
+    classnames: "npm:^2.2.1"
+    rc-util: "npm:^5.39.3"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/fa832f571ef85eb6250c62cd690ef7e139878a8ab9ed8dbf884d97621cb51b6963376847d82810dc8cb36e03ea430dec4d53f66681609119b85f897b0833f451
+  languageName: node
+  linkType: hard
+
+"rc-util@npm:^5.24.4, rc-util@npm:^5.38.1, rc-util@npm:^5.39.3":
+  version: 5.42.1
+  resolution: "rc-util@npm:5.42.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.18.3"
+    react-is: "npm:^18.2.0"
+  peerDependencies:
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  checksum: 10c0/ba766278594bf233e31178308344eb70246b48813ca1f567f241dcb6f6c826f8610893654832af353424c5f04d84c2361ce4f52b68606812be408c74289e034c
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -4695,6 +4754,22 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^18.2.0":
+  version: 18.3.1
+  resolution: "react-is@npm:18.3.1"
+  checksum: 10c0/f2f1e60010c683479e74c63f96b09fb41603527cd131a9959e2aee1e5a8b0caf270b365e5ca77d4a6b18aae659b60a86150bb3979073528877029b35aecd2072
+  languageName: node
+  linkType: hard
+
+"react-modern-drawer@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "react-modern-drawer@npm:1.3.1"
+  peerDependencies:
+    react: ">16.0.0"
+  checksum: 10c0/2a760f708f65e0b352985d9d341832b44060a7cc14c68bcf70a61eb3874175cc1eced78c067998c817f7a2d2cb082a71b944768988ce4cd242698e8061993a1b
   languageName: node
   linkType: hard
 

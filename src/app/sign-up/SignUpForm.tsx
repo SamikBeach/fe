@@ -73,7 +73,7 @@ export default function SignUpForm() {
         className={css({ width: '300px' })}
         size="3"
       >
-        Sign up with email
+        Sign up
       </Button>
       <Link
         href="/login"

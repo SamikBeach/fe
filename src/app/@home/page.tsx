@@ -16,6 +16,7 @@ import { useState } from 'react';
 
 import { css } from 'styled-system/css';
 import { RelationDiagram } from '@components/RelationDiagram';
+import { SidePeek } from '@elements/SidePeek';
 
 export default function Home() {
   const [isShownBooks, setIsShownBooks] = useState(false);
@@ -47,9 +48,10 @@ export default function Home() {
           },
         })}
         onClick={() => setIsOpenDrawer(true)}
-      />
-      <Drawer
+      /> */}
+      {/* <Drawer
         direction="right"
+        size="40%"
         open={isOpenDrawer}
         onClose={() => setIsOpenDrawer(false)}
       >

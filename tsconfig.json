@@ -21,6 +21,7 @@
       "@atoms/*": ["src/atoms/*"],
       "@elements/*": ["src/elements/*"],
       "@components/*": ["src/components/*"],
+      "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
       "@public/*": ["src/public/*"],
       "@styles/*": ["src/styles/*"]

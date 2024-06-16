@@ -1,7 +1,8 @@
-import { Dialog } from '@radix-ui/themes';
+import * as Dialog from '@radix-ui/react-dialog';
 import { ComponentProps, ReactNode, forwardRef } from 'react';
-import { css } from 'styled-system/css';
-import { styled } from 'styled-system/jsx';
+import classNames from 'classnames';
+
+import './side-peek.css';
 
 interface Props {
   children: ReactNode;
@@ -11,46 +12,41 @@ export default function SidePeek({ children }: Props) {
   return children;
 }
 
-function SidePeekRoot({
-  children,
-  ...props
-}: ComponentProps<typeof Dialog.Root>) {
-  return <StyledDialogRoot {...props}>{children}</StyledDialogRoot>;
-}
+const SidePeekOverlay = forwardRef<
+  HTMLDivElement,
+  ComponentProps<typeof Dialog.Overlay>
+>(function ({ children, className, ...props }, ref) {
+  return (
+    <Dialog.Overlay
+      ref={ref}
+      className={classNames('DialogContent', className)}
+      {...props}
+    >
+      {children}
+    </Dialog.Overlay>
+  );
+});
 
 const SidePeekContent = forwardRef<
   HTMLDivElement,
   ComponentProps<typeof Dialog.Content>
->(function (props, ref) {
+>(function ({ className, children, ...props }, ref) {
   return (
     <Dialog.Content
       ref={ref}
-      className={css({ marginRight: '10px' })}
+      className={classNames('DialogContent', className)}
       {...props}
     >
-      {props.children}
+      {children}
     </Dialog.Content>
   );
 });
 
-const StyledDialogRoot = styled(Dialog.Root, {
-  base: {
-    '&::before': {
-      content: '""',
-      position: 'fixed',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      zIndex: -1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5) !important',
-    },
-  },
-});
-
-SidePeek.Root = SidePeekRoot;
-SidePeek.Trigger = Dialog.Trigger;
+SidePeek.Overlay = SidePeekOverlay;
 SidePeek.Content = SidePeekContent;
+SidePeek.Root = Dialog.Root;
+SidePeek.Trigger = Dialog.Trigger;
+SidePeek.Portal = Dialog.Portal;
 SidePeek.Close = Dialog.Close;
 SidePeek.Title = Dialog.Title;
 SidePeek.Description = Dialog.Description;

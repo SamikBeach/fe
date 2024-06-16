@@ -147,7 +147,7 @@ export default function RelationDiagram() {
         <MiniMap nodeColor="gray" nodeStrokeWidth={3} zoomable pannable />
         {/* <Background variant={BackgroundVariant.Dots} /> */}
         <Controls showFitView showZoom showInteractive position="bottom-left" />
-      </ReactFlow>{' '}
+      </ReactFlow>
     </ReactFlowProvider>
   );
 }

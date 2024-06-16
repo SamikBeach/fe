@@ -34,35 +34,35 @@ const initialNodes: Node[] = [
   {
     id: '3',
     type: 'philosopherNode',
-    position: { x: 0, y: 200 },
+    position: { x: -200, y: 200 },
     data: { label: '3' },
     targetPosition: Position.Top,
   },
   {
     id: '4',
     type: 'philosopherNode',
-    position: { x: 0, y: 300 },
+    position: { x: 200, y: 200 },
     data: { label: '4' },
     targetPosition: Position.Top,
   },
   {
     id: '5',
     type: 'philosopherNode',
-    position: { x: 0, y: 400 },
+    position: { x: 0, y: 300 },
     data: { label: '5' },
     targetPosition: Position.Top,
   },
   {
     id: '6',
     type: 'philosopherNode',
-    position: { x: 0, y: 500 },
+    position: { x: -200, y: 400 },
     data: { label: '6' },
     targetPosition: Position.Top,
   },
   {
     id: '7',
     type: 'philosopherNode',
-    position: { x: 0, y: 600 },
+    position: { x: 200, y: 400 },
     data: { label: '7' },
     targetPosition: Position.Top,
   },
@@ -83,10 +83,17 @@ const initialEdges: Edge[] = [
     sourceHandle: 'bottom',
   },
   {
+    id: 'e2-4',
+    type: 'custom-edge',
+    source: '2',
+    target: '4',
+    sourceHandle: 'bottom',
+  },
+  {
     id: 'e3-4',
     type: 'custom-edge',
     source: '3',
-    target: '4',
+    target: '5',
     sourceHandle: 'bottom',
   },
   {
@@ -104,9 +111,9 @@ const initialEdges: Edge[] = [
     sourceHandle: 'bottom',
   },
   {
-    id: 'e6-7',
+    id: 'e5-7',
     type: 'custom-edge',
-    source: '6',
+    source: '5',
     target: '7',
     sourceHandle: 'bottom',
   },
@@ -124,12 +131,18 @@ export default function RelationDiagram() {
         // onNodesChange={onNodesChange}
         // onEdgesChange={onEdgesChange}
         fitView
-        draggable={false}
+        // draggable={false}
         zoomOnScroll={false}
         panOnScroll
         nodeTypes={{ philosopherNode: PhilosopherNode }}
         edgeTypes={{ 'custom-edge': CustomEdge }}
-        className={css({ height: 'calc(100vh - 64px) !important' })}
+        className={css({
+          height: 'calc(100vh - 64px) !important',
+
+          '& .react-flow__attribution': {
+            display: 'none',
+          },
+        })}
       >
         <MiniMap nodeColor="gray" nodeStrokeWidth={3} zoomable pannable />
         {/* <Background variant={BackgroundVariant.Dots} /> */}

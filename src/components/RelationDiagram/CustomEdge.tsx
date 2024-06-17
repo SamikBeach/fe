@@ -1,23 +1,39 @@
-import { BaseEdge, getStraightPath } from 'reactflow';
+import { memo } from 'react';
+import {
+  BaseEdge,
+  Position,
+  getBezierPath,
+  getSimpleBezierPath,
+  getSmoothStepPath,
+  getStraightPath,
+} from 'reactflow';
 
-export default function CustomEdge({
+function CustomEdge({
   id,
   sourceX,
   sourceY,
   targetX,
   targetY,
+  sourcePosition,
+  targetPosition,
 }: {
   id: string;
   sourceX: number;
   sourceY: number;
   targetX: number;
   targetY: number;
+  sourcePosition: Position;
+  targetPosition: Position;
 }) {
-  const [edgePath] = getStraightPath({
+  const [edgePath] = getSmoothStepPath({
     sourceX,
     sourceY,
     targetX,
     targetY,
+    sourcePosition,
+    targetPosition,
+    borderRadius: 10,
+    offset: 0,
   });
 
   return (
@@ -26,3 +42,5 @@ export default function CustomEdge({
     </>
   );
 }
+
+export default CustomEdge;

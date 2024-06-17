@@ -1,12 +1,22 @@
 import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { Avatar, Card, Text } from '@radix-ui/themes';
+import { memo } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
-interface AuthorNodeProps extends NodeProps {}
+export interface NodeData {
+  label: string;
+  name: string;
+  englishName: string;
+  src: string;
+}
 
-export default function AuthorNode({ selected }: AuthorNodeProps) {
+interface AuthorNodeProps extends NodeProps {
+  data: NodeData;
+}
+
+function AuthorNode({ selected, data }: AuthorNodeProps) {
   return (
     <AuthorSidePeek>
       <AuthorSidePeek.Trigger>
@@ -18,26 +28,22 @@ export default function AuthorNode({ selected }: AuthorNodeProps) {
         />
         <Card
           className={css({
-            base: {
-              cursor: 'pointer',
+            width: '240px',
+            cursor: 'pointer',
 
-              '&::after': {
-                outline: selected ? '1px solid gray' : 'none',
-              },
+            '&::after': {
+              outline: selected ? '1px solid brown' : 'none',
             },
           })}
         >
           <HStack>
-            <Avatar
-              src="https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcS3F15vW2p-W1vemKEkViypH0pjICfqHDzzuhC87bVXDYeysTmfYY9tD-M5-UyBr-Uo"
-              fallback="니체"
-            />
-            <VStack gap="0">
-              <Text className={css({ color: 'black' })} weight="bold" size="1">
-                Friedrich Nietzsche
+            <Avatar src={data.src} fallback="니체" radius="full" />
+            <VStack gap="0" alignItems="start">
+              <Text className={css({ color: 'black' })} weight="bold" size="2">
+                {data.name}
               </Text>
               <Text size="1" color="gray">
-                1844.08.15 - 1900.08.25
+                {data.englishName}
               </Text>
             </VStack>
           </HStack>
@@ -52,3 +58,5 @@ export default function AuthorNode({ selected }: AuthorNodeProps) {
     </AuthorSidePeek>
   );
 }
+
+export default AuthorNode;

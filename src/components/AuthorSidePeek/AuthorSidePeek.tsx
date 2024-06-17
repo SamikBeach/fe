@@ -85,6 +85,7 @@ function AuthorInfo() {
         src="https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcS3F15vW2p-W1vemKEkViypH0pjICfqHDzzuhC87bVXDYeysTmfYY9tD-M5-UyBr-Uo"
         fallback="니체"
         size="9"
+        radius="full"
       />
       <VStack alignItems="start" gap="0px">
         <Text

@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Theme accentColor="gray" radius="large" panelBackground="solid">
+        <Theme accentColor="brown" radius="large" panelBackground="translucent">
           <ReactQueryProviders>
             <main
               className={css({

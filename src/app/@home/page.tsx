@@ -4,7 +4,6 @@
 import { getAllAuthors } from '@apis/author';
 import { getAllBooks } from '@apis/book';
 import { isLoggedInAtom } from '@atoms/auth';
-import { Drawer } from '@elements/Drawer';
 
 import { Button } from '@elements/Button';
 import { Avatar, IconButton } from '@radix-ui/themes';

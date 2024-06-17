@@ -1,24 +1,17 @@
 import { AuthorSidePeek } from '@components/AuthorSidePeek';
+import { Author } from '@models/author';
 import { Avatar, Card, Text } from '@radix-ui/themes';
-import { memo } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
-export interface NodeData {
-  label: string;
-  name: string;
-  englishName: string;
-  src: string;
-}
-
 interface AuthorNodeProps extends NodeProps {
-  data: NodeData;
+  data: Author;
 }
 
 function AuthorNode({ selected, data }: AuthorNodeProps) {
   return (
-    <AuthorSidePeek>
+    <AuthorSidePeek author={data}>
       <AuthorSidePeek.Trigger>
         <Handle
           type="target"
@@ -37,13 +30,13 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
           })}
         >
           <HStack>
-            <Avatar src={data.src} fallback="니체" radius="full" />
+            <Avatar src={data.imageUrl} fallback="니체" radius="full" />
             <VStack gap="0" alignItems="start">
               <Text className={css({ color: 'black' })} weight="bold" size="2">
                 {data.name}
               </Text>
               <Text size="1" color="gray">
-                {data.englishName}
+                {data.nameInKor}
               </Text>
             </VStack>
           </HStack>

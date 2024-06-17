@@ -11,7 +11,7 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from 'reactflow';
-import AuthorNode, { NodeData } from './AuthorCard';
+import AuthorNode from './AuthorNode';
 import { css } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 import CustomEdge from './CustomEdge';
@@ -19,6 +19,7 @@ import { Button } from '@elements/Button';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { getAllAuthors } from '@apis/author';
+import { Author } from '@models/author';
 
 // const initialNodes: Node<NodeData>[] = [
 //   {
@@ -174,36 +175,45 @@ export default function RelationDiagram() {
     queryFn: getAllAuthors,
   });
 
-  const initialNodes: Node<NodeData>[] =
+  const initialNodes =
     data?.data
-      .map((author, index) => ({
-        id: author.id.toString(),
-        type: 'authorNode',
-        position: {
-          x: Math.floor(Math.random() * 50) * 50,
-          y: Math.floor(Math.random() * 50) * 50,
-        },
-        data: {
-          label: author.id.toString(),
-          name: author.name,
-          englishName: author.name_in_kor,
-          src: author.image_url,
-        },
-      }))
-      .slice(0, 50) ?? [];
+      .map<Node<Author>>((author, index) => {
+        console.log({ author });
+        const bornYear = author.born_date?.split('-')[0];
 
-  const initialEdges: Edge[] =
+        return {
+          id: author.id.toString(),
+          type: 'authorNode',
+          position: {
+            x: Math.floor(Math.random() * 30) * 50,
+            y: Number(bornYear),
+          },
+          data: {
+            id: author.id,
+            label: author.id.toString(),
+            name: author.name,
+            nameInKor: author.name_in_kor,
+            imageUrl: author.image_url,
+            bornDate: author.born_date,
+            bornDateIsBc: author.born_date_is_bc,
+            diedDate: author.died_date,
+            diedDateIsBc: author.died_date_is_bc,
+          },
+        };
+      })
+      .slice(0, 30) ?? [];
+
+  const initialEdges =
     data?.data
-      .map(author => ({
+      .map<Edge>(author => ({
         id: `e${author.id}-2`,
         type: 'customEdge',
         source: author.id.toString(),
-        target: '2',
+        target: Math.floor(Math.random() * 30).toString(),
         sourceHandle: 'bottom',
+        animated: true,
       }))
-      .slice(0, 50) ?? [];
-
-  console.log(data?.data);
+      .slice(0, 30) ?? [];
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);

@@ -20,12 +20,14 @@ import { HStack, VStack } from 'styled-system/jsx';
 import { Button } from '@elements/Button';
 import { hstack } from 'styled-system/patterns';
 import { WritingSidePeek } from '@components/WritingSidePeek';
+import { Author } from '@models/author';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   children: ReactNode;
+  author: Author;
 }
 
-export default function AuthorSidePeek({ children, ...props }: Props) {
+export default function AuthorSidePeek({ children, author, ...props }: Props) {
   const [isOpenWritingSidePeek, setIsOpenWritingSidePeek] = useState(false);
 
   return (

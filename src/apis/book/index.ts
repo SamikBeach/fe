@@ -1,11 +1,7 @@
 import api from '@apis/config';
+import { BookServerModel } from '@models/book';
 
-interface Book {
-  id: number;
-  isbn: string;
-}
-
-type GetAllBooksResponse = Book[];
+type GetAllBooksResponse = BookServerModel[];
 
 export function getAllBooks() {
   return api.get<GetAllBooksResponse>('/book');

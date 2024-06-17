@@ -23,6 +23,8 @@
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@models/*": ["src/models/*"],
+      "@parsers/*": ["src/parsers/*"],
       "@public/*": ["src/public/*"],
       "@styles/*": ["src/styles/*"]
     },

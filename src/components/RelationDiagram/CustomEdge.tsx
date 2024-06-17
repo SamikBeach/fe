@@ -1,9 +1,4 @@
-import {
-  BaseEdge,
-  getBezierPath,
-  getSmoothStepPath,
-  getStraightPath,
-} from 'reactflow';
+import { BaseEdge, getStraightPath } from 'reactflow';
 
 export default function CustomEdge({
   id,

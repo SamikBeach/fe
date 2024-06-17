@@ -169,6 +169,9 @@ import { Author } from '@models/author';
 //   },
 // ];
 
+const nodeTypes = { authorNode: AuthorNode };
+const edgeTypes = { customEdge: CustomEdge };
+
 export default function RelationDiagram() {
   const { data } = useQuery({
     queryKey: ['author'],
@@ -178,7 +181,6 @@ export default function RelationDiagram() {
   const initialNodes =
     data?.data
       .map<Node<Author>>((author, index) => {
-        console.log({ author });
         const bornYear = author.born_date?.split('-')[0];
 
         return {
@@ -230,8 +232,8 @@ export default function RelationDiagram() {
         draggable={false}
         zoomOnScroll={false}
         panOnScroll
-        nodeTypes={{ authorNode: AuthorNode }}
-        edgeTypes={{ customEdge: CustomEdge }}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         className={css({
           height: 'calc(100vh - 64px) !important',
 

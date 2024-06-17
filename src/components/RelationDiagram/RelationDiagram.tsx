@@ -15,6 +15,8 @@ import AuthorNode from './AuthorNode';
 import { css } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 import CustomEdge from './CustomEdge';
+import { Button } from '@elements/Button';
+import { Select } from '@radix-ui/themes';
 
 const initialNodes: Node[] = [
   {
@@ -132,6 +134,24 @@ export default function RelationDiagram() {
 
   return (
     <ReactFlowProvider>
+      <Select.Root defaultValue="apple">
+        <Select.Trigger
+          className={css({ position: 'absolute', zIndex: 2, margin: '20px' })}
+        />
+        <Select.Content side="bottom" position="popper">
+          <Select.Group>
+            <Select.Label>Fruits</Select.Label>
+            <Select.Item value="orange">Orange</Select.Item>
+            <Select.Item value="apple">Apple</Select.Item>
+          </Select.Group>
+          <Select.Separator />
+          <Select.Group>
+            <Select.Label>Vegetables</Select.Label>
+            <Select.Item value="carrot">Carrot</Select.Item>
+            <Select.Item value="potato">Potato</Select.Item>
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
       <ReactFlow
         nodes={nodes}
         edges={edges}

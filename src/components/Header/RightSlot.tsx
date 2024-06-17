@@ -10,12 +10,16 @@ export default function RightSlot() {
     <Flex align="center" gap="14px">
       <Button
         variant="ghost"
-        className={css({ color: 'black' })}
+        className={css({ color: 'black', fontWeight: 'medium' })}
         onClick={() => router.push('/login')}
       >
         Log in
       </Button>
-      <Button variant="soft" onClick={() => router.push('/sign-up')}>
+      <Button
+        variant="soft"
+        onClick={() => router.push('/sign-up')}
+        className={css({ color: 'black', fontWeight: 'medium' })}
+      >
         Sign up
       </Button>
     </Flex>

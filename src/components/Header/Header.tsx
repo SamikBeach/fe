@@ -2,14 +2,15 @@
 
 import { Flex } from '@radix-ui/themes';
 import { styled } from 'styled-system/jsx';
-import Logo from './Logo';
+
 import RightSlot from './RightSlot';
+import LeftSlot from './LeftSlot';
 
 export default function Header() {
   return (
     <StyledHeader>
       <Flex align="center" width="100%" height="100%" justify="between">
-        <Logo />
+        <LeftSlot />
         <RightSlot />
       </Flex>
     </StyledHeader>

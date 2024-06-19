@@ -23,11 +23,10 @@ import { WritingSidePeek } from '@components/WritingSidePeek';
 import { Author } from '@models/author';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
-  children: ReactNode;
   author: Author;
 }
 
-export default function AuthorSidePeek({ children, author, ...props }: Props) {
+export default function AuthorSidePeek({ children, ...props }: Props) {
   const [isOpenWritingSidePeek, setIsOpenWritingSidePeek] = useState(false);
 
   return (
@@ -254,5 +253,3 @@ function WritingInfo({
     </>
   );
 }
-
-AuthorSidePeek.Trigger = SidePeek.Trigger;

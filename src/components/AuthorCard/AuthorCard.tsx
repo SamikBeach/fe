@@ -14,19 +14,17 @@ interface Props extends ComponentProps<typeof Card> {
 function AuthorCard({ author, className, ...props }: Props) {
   console.log({ author });
 
-  const splitBornDate = author.born_date.split('-');
+  const splitBornDate = author.born_date?.split('-');
   const isValidBornDate =
-    author.born_date !== null &&
     author.born_date !== '' &&
-    splitBornDate[1] !== '00' &&
-    splitBornDate[2] !== '00';
+    splitBornDate?.[1] !== '00' &&
+    splitBornDate?.[2] !== '00';
 
-  const splitDiedDate = author.died_date.split('-');
+  const splitDiedDate = author.died_date?.split('-');
   const isValidDiedDate =
-    author.died_date !== null &&
     author.died_date !== '' &&
-    splitDiedDate[1] !== '00' &&
-    splitDiedDate[2] !== '00';
+    splitDiedDate?.[1] !== '00' &&
+    splitDiedDate?.[2] !== '00';
 
   return (
     <Card
@@ -50,9 +48,11 @@ function AuthorCard({ author, className, ...props }: Props) {
           <HStack>
             <Text size="2">
               {isValidBornDate &&
+                author.born_date != null &&
                 format(new Date(author.born_date), 'y년 M월 d일 ')}
               -{author.died_date_is_bc ? '기원전' : ''}
               {isValidDiedDate &&
+                author.died_date != null &&
                 format(new Date(author.died_date), 'y년 M월 d일 ')}
             </Text>
           </HStack>
@@ -72,17 +72,12 @@ function AuthorCard({ author, className, ...props }: Props) {
           <Text>influenced by</Text>
           <HStack>
             {author.influenced_by.map(influenced => (
-              <AuthorHoverCard.Root>
-                <AuthorHoverCard.Trigger>
-                  <Avatar
-                    size="2"
-                    radius="full"
-                    src={influenced.image_url}
-                    fallback={influenced.name[0]}
-                  />
-                </AuthorHoverCard.Trigger>
-                <AuthorHoverCard.Content author={influenced} />
-              </AuthorHoverCard.Root>
+              <Avatar
+                size="2"
+                radius="full"
+                src={influenced.image_url}
+                fallback={influenced.name[0]}
+              />
             ))}
           </HStack>
         </VStack>

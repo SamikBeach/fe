@@ -1,5 +1,5 @@
 import { AuthorSidePeek } from '@components/AuthorSidePeek';
-import { Author } from '@models/author';
+import { AuthorServerModel } from '@models/author';
 import { Avatar, Card, Text } from '@radix-ui/themes';
 import { useState } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
@@ -7,7 +7,7 @@ import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
 interface AuthorNodeProps extends NodeProps {
-  data: Author;
+  data: AuthorServerModel;
 }
 
 function AuthorNode({ selected, data }: AuthorNodeProps) {
@@ -33,13 +33,13 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         onPointerUp={() => setIsOpenAuthorSidePeek(true)}
       >
         <HStack>
-          <Avatar src={data.imageUrl} fallback="니체" radius="full" />
+          <Avatar src={data.image_url} fallback="니체" radius="full" />
           <VStack gap="0" alignItems="start">
             <Text className={css({ color: 'black' })} weight="bold" size="2">
               {data.name}
             </Text>
             <Text size="1" color="gray">
-              {data.nameInKor}
+              {data.name_in_kor}
             </Text>
           </VStack>
         </HStack>

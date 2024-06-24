@@ -17,23 +17,17 @@ export default function LeftSlot() {
           variant="ghost"
           size="3"
           className={css({ color: 'black', fontWeight: 'medium' })}
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/authors')}
         >
-          <HStack gap="6px">
-            <HomeIcon className={css({ marginTop: '2px' })} />
-            Home
-          </HStack>
+          <HStack gap="6px">Authors</HStack>
         </Button>
         <Button
           variant="ghost"
           size="3"
           className={css({ color: 'black', fontWeight: 'medium' })}
-          onClick={() => router.push('/discover')}
+          onClick={() => router.push('/books')}
         >
-          <HStack gap="6px">
-            <GlobeIcon className={css({ marginTop: '1px' })} />
-            Discover
-          </HStack>
+          <HStack gap="6px">Books</HStack>
         </Button>
       </HStack>
     </HStack>

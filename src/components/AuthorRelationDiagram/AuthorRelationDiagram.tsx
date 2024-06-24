@@ -19,7 +19,7 @@ import { Button } from '@elements/Button';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { getAllAuthors } from '@apis/author';
-import { Author } from '@models/author';
+import { AuthorServerModel } from '@models/author';
 
 // const initialNodes: Node<NodeData>[] = [
 //   {
@@ -180,7 +180,7 @@ export default function RelationDiagram() {
 
   const initialNodes =
     data?.data
-      .map<Node<Author>>((author, index) => {
+      .map<Node<AuthorServerModel>>((author, index) => {
         const bornYear = author.born_date?.split('-')[0];
 
         return {
@@ -222,7 +222,6 @@ export default function RelationDiagram() {
 
   return (
     <ReactFlowProvider>
-      <FilterSelect />
       <ReactFlow
         nodes={initialNodes}
         edges={initialEdges}
@@ -247,33 +246,5 @@ export default function RelationDiagram() {
         <Controls showFitView showZoom showInteractive position="bottom-left" />
       </ReactFlow>
     </ReactFlowProvider>
-  );
-}
-
-function FilterSelect() {
-  return (
-    <Select.Root defaultValue="apple">
-      <Select.Trigger
-        className={css({
-          cursor: 'pointer',
-          position: 'absolute',
-          zIndex: 2,
-          margin: '20px',
-        })}
-      />
-      <Select.Content side="bottom" position="popper">
-        <Select.Group>
-          <Select.Label>Fruits</Select.Label>
-          <Select.Item value="orange">Orange</Select.Item>
-          <Select.Item value="apple">Apple</Select.Item>
-        </Select.Group>
-        <Select.Separator />
-        <Select.Group>
-          <Select.Label>Vegetables</Select.Label>
-          <Select.Item value="carrot">Carrot</Select.Item>
-          <Select.Item value="potato">Potato</Select.Item>
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
   );
 }

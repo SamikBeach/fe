@@ -32,15 +32,15 @@ function AuthorHoverCardContent({
     <HoverCard.Content
       className={classNames(
         css({
-          height: '300px',
           padding: '20px',
           cursor: 'pointer',
+          width: '400px',
         }),
         className
       )}
       {...props}
     >
-      <HStack alignItems="start">
+      <HStack alignItems="start" gap="20px">
         <Avatar src={author.image_url} fallback="폴백" radius="full" size="7" />
         <VStack alignItems="start" gap="0">
           <Text size="4" weight="bold">
@@ -48,39 +48,16 @@ function AuthorHoverCardContent({
           </Text>
           <Text size="3">{author.name_in_kor}</Text>
           <HStack>
-            <Text size="2">
-              {isValidBornDate &&
-                author.born_date !== null &&
-                format(new Date(author.born_date), 'y년 M월 d일 ')}
-              -{author.died_date_is_bc ? '기원전' : ''}
-              {isValidDiedDate &&
-                author.died_date !== null &&
-                format(new Date(author.died_date), 'y년 M월 d일 ')}
+            <Text size="2" color="gray">
+              {author.born_date_is_bc ? '기원전 ' : ''}
+              {isValidBornDate && author.born_date != null
+                ? format(new Date(author.born_date), 'y년 M월 d일 ')
+                : '???'}
+              - {author.died_date_is_bc ? '기원전 ' : ''}
+              {isValidDiedDate && author.died_date != null
+                ? format(new Date(author.died_date), 'y년 M월 d일 ')
+                : '???'}
             </Text>
-          </HStack>
-          <Text>{author.era?.join(',')}</Text>
-          <Text>{author.region?.join(', ')}</Text>
-          <Text>influenced to</Text>
-          <HStack>
-            {author.influenced.map(influenced => (
-              <Avatar
-                size="2"
-                radius="full"
-                src={influenced.image_url}
-                fallback={influenced.name[0]}
-              />
-            ))}
-          </HStack>
-          <Text>influenced by</Text>
-          <HStack>
-            {author.influenced_by.map(influenced => (
-              <Avatar
-                size="2"
-                radius="full"
-                src={influenced.image_url}
-                fallback={influenced.name[0]}
-              />
-            ))}
           </HStack>
         </VStack>
       </HStack>

@@ -12,8 +12,6 @@ interface Props extends ComponentProps<typeof Card> {
 }
 
 function AuthorCard({ author, className, ...props }: Props) {
-  console.log({ author });
-
   const splitBornDate = author.born_date?.split('-');
   const isValidBornDate =
     author.born_date !== '' &&
@@ -68,45 +66,63 @@ function AuthorCard({ author, className, ...props }: Props) {
           </Text>
           <Text>{author.era?.map(era => era.era).join(', ')}</Text>
           <Text>{author.region?.map(region => region.region).join(', ')}</Text>
-          {author.influenced.length > 0 && (
-            <>
-              <Text size="1" color="gray">
-                Influenced to
-              </Text>
-              <HStack>
-                {author.influenced.slice(0, 3).map(influenced => (
-                  <Avatar
-                    size="2"
-                    radius="full"
-                    src={influenced.image_url}
-                    fallback={influenced.name[0]}
-                  />
-                ))}
-                +{author.influenced.slice(3).length}
-              </HStack>
-            </>
-          )}
-          {author.influenced_by.length > 0 && (
-            <>
-              <Text size="1" color="gray">
-                Influenced by
-              </Text>
-              <HStack gap="6px">
-                {author.influenced_by.slice(0, 3).map(influenced => (
-                  <Avatar
-                    size="2"
-                    radius="full"
-                    src={influenced.image_url}
-                    fallback={influenced.name[0]}
-                  />
-                ))}
+          <VStack gap="10px" alignItems="start">
+            {author.influenced.length > 0 && (
+              <VStack gap="4px" alignItems="start">
+                <Text size="1" color="gray">
+                  Influenced to
+                </Text>
+                <HStack>
+                  {author.influenced.slice(0, 3).map(influenced => (
+                    <AuthorHoverCard.Root>
+                      <AuthorHoverCard.Trigger>
+                        <Avatar
+                          size="2"
+                          radius="full"
+                          src={
+                            influenced.image_url ??
+                            'https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png'
+                          }
+                          fallback={influenced.name[0]}
+                        />
+                      </AuthorHoverCard.Trigger>
+                      <AuthorHoverCard.Content author={influenced} />
+                    </AuthorHoverCard.Root>
+                  ))}
+                  +{author.influenced.slice(3).length}
+                </HStack>
+              </VStack>
+            )}
+            {author.influenced_by.length > 0 && (
+              <VStack gap="4px" alignItems="start">
+                <Text size="1" color="gray">
+                  Influenced by
+                </Text>
+                <HStack gap="6px">
+                  {author.influenced_by.slice(0, 3).map(influenced => (
+                    <AuthorHoverCard.Root>
+                      <AuthorHoverCard.Trigger>
+                        <Avatar
+                          size="2"
+                          radius="full"
+                          src={
+                            influenced.image_url ??
+                            'https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png'
+                          }
+                          fallback={influenced.name[0]}
+                        />
+                      </AuthorHoverCard.Trigger>
+                      <AuthorHoverCard.Content author={influenced} />
+                    </AuthorHoverCard.Root>
+                  ))}
 
-                {author.influenced_by.slice(3).length > 0
-                  ? `+${author.influenced_by.slice(3).length}`
-                  : ''}
-              </HStack>
-            </>
-          )}
+                  {author.influenced_by.slice(3).length > 0
+                    ? `+${author.influenced_by.slice(3).length}`
+                    : ''}
+                </HStack>
+              </VStack>
+            )}
+          </VStack>
         </VStack>
       </HStack>
     </Card>

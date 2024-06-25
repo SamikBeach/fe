@@ -20,10 +20,10 @@ import { HStack, VStack } from 'styled-system/jsx';
 import { Button } from '@elements/Button';
 import { hstack } from 'styled-system/patterns';
 import { WritingSidePeek } from '@components/AuthorSidePeek/WritingSidePeek';
-import { Author } from '@models/author';
+import { AuthorServerModel } from '@models/author';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
-  author: Author;
+  author: AuthorServerModel;
 }
 
 export default function AuthorSidePeek({ children, ...props }: Props) {

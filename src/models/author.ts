@@ -7,12 +7,30 @@ export interface AuthorServerModel {
   born_date_is_bc: 1 | null;
   died_date: string | null;
   died_date_is_bc: 1 | null;
-  education: string[];
-  era?: string[];
-  region?: string[];
-  main_interest: string[];
-  nationality: string;
-  school: string[];
+  education: {
+    id: number;
+    education: string;
+  }[];
+  era?: {
+    id: number;
+    era: string;
+  }[];
+  region?: {
+    id: number;
+    region: string;
+  }[];
+  main_interest: {
+    id: number;
+    main_interest: string;
+  }[];
+  nationality?: {
+    id: number;
+    nationality: string;
+  };
+  school: {
+    id: number;
+    school: string;
+  }[];
   influenced: AuthorServerModel[];
   influenced_by: AuthorServerModel[];
 }

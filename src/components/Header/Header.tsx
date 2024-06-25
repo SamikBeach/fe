@@ -30,5 +30,7 @@ const StyledHeader = styled('header', {
 
     position: 'sticky',
     top: '0px',
+
+    zIndex: 3,
   },
 });

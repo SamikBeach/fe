@@ -183,6 +183,7 @@ export default function RelationDiagram() {
       .map<Node<AuthorServerModel>>((author, index) => {
         const bornYear = author.born_date?.split('-')[0];
 
+        console.log({ author });
         return {
           id: author.id.toString(),
           type: 'authorNode',
@@ -191,15 +192,8 @@ export default function RelationDiagram() {
             y: Number(bornYear),
           },
           data: {
-            id: author.id,
             label: author.id.toString(),
-            name: author.name,
-            nameInKor: author.name_in_kor,
-            imageUrl: author.image_url,
-            bornDate: author.born_date,
-            bornDateIsBc: author.born_date_is_bc,
-            diedDate: author.died_date,
-            diedDateIsBc: author.died_date_is_bc,
+            ...author,
           },
         };
       })

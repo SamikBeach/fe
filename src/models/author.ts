@@ -7,7 +7,7 @@ export interface AuthorServerModel {
   born_date_is_bc: 1 | null;
   died_date: string | null;
   died_date_is_bc: 1 | null;
-  education: {
+  education?: {
     id: number;
     education: string;
   }[];
@@ -19,7 +19,7 @@ export interface AuthorServerModel {
     id: number;
     region: string;
   }[];
-  main_interest: {
+  main_interest?: {
     id: number;
     main_interest: string;
   }[];
@@ -27,12 +27,21 @@ export interface AuthorServerModel {
     id: number;
     nationality: string;
   };
-  school: {
+  school?: {
     id: number;
     school: string;
   }[];
   influenced: AuthorServerModel[];
   influenced_by: AuthorServerModel[];
+  writing: {
+    author_id: number;
+    id: number;
+    publication_date: string;
+    publication_date_is_bc: 1 | null;
+    title: string;
+    title_in_eng: string | null;
+    title_in_kor: string | null;
+  }[];
 }
 
 // export interface Author {

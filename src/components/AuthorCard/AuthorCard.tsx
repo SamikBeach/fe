@@ -58,11 +58,11 @@ function AuthorCard({ author, className, ...props }: Props) {
           <Text color="gray">{author.nationality?.nationality}</Text>
           <Text>
             {author.main_interest
-              .map(mainInterest => mainInterest.main_interest)
+              ?.map(mainInterest => mainInterest.main_interest)
               .join(', ')}
           </Text>
           <Text>
-            {author.education.map(education => education.education).join(', ')}
+            {author.education?.map(education => education.education).join(', ')}
           </Text>
           <Text>{author.era?.map(era => era.era).join(', ')}</Text>
           <Text>{author.region?.map(region => region.region).join(', ')}</Text>

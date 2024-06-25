@@ -2,6 +2,7 @@ import { AuthorServerModel } from '@models/author';
 import { Avatar, HoverCard, Text } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -16,6 +17,8 @@ function AuthorHoverCardContent({
   className,
   ...props
 }: AuthorHoverCardContentProps) {
+  const router = useRouter();
+
   const splitBornDate = author.born_date?.split('-');
   const isValidBornDate =
     author.born_date !== '' &&
@@ -38,6 +41,11 @@ function AuthorHoverCardContent({
         }),
         className
       )}
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        router.push(`/author/${author.id}`);
+      }}
       {...props}
     >
       <HStack alignItems="start" gap="20px">

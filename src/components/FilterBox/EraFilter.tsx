@@ -1,9 +1,13 @@
 import { getAllEras } from '@apis/era';
+import { selectedEraIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
 import { css } from 'styled-system/css';
 
 function EraFilter() {
+  const setSelectedEraId = useSetAtom(selectedEraIdAtom);
+
   const { data: era = [] } = useQuery({
     queryKey: ['era'],
     queryFn: getAllEras,
@@ -11,7 +15,7 @@ function EraFilter() {
   });
 
   return (
-    <Select.Root>
+    <Select.Root onValueChange={value => setSelectedEraId(Number(value))}>
       <Select.Trigger
         className={css({
           cursor: 'pointer',
@@ -25,7 +29,7 @@ function EraFilter() {
           {era
             .sort((a, b) => a.era.localeCompare(b.era))
             .map(_era => (
-              <Select.Item value={_era.era}>{_era.era}</Select.Item>
+              <Select.Item value={String(_era.id)}>{_era.era}</Select.Item>
             ))}
         </Select.Group>
       </Select.Content>

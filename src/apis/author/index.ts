@@ -12,3 +12,17 @@ type GetAuthorByIdResponse = AuthorServerModel;
 export function getAuthorById({ id }: { id: number }) {
   return api.get<GetAuthorByIdResponse>(`/author/${id}`);
 }
+
+export function searchAuthors({
+  nationalityId,
+  eraId,
+  regionId,
+}: {
+  nationalityId?: number;
+  eraId?: number;
+  regionId?: number;
+}) {
+  return api.get<GetAllBooksResponse>('/author/search', {
+    params: { nationalityId, eraId, regionId },
+  });
+}

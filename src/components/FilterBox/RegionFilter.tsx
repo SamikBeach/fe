@@ -1,9 +1,13 @@
 import { getAllRegions } from '@apis/region';
+import { selectedRegionIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
 import { css } from 'styled-system/css';
 
 function RegionFilter() {
+  const setSelectedRegionId = useSetAtom(selectedRegionIdAtom);
+
   const { data: region = [] } = useQuery({
     queryKey: ['region'],
     queryFn: getAllRegions,
@@ -11,7 +15,7 @@ function RegionFilter() {
   });
 
   return (
-    <Select.Root>
+    <Select.Root onValueChange={value => setSelectedRegionId(Number(value))}>
       <Select.Trigger
         className={css({
           cursor: 'pointer',
@@ -25,7 +29,9 @@ function RegionFilter() {
           {region
             .sort((a, b) => a.region.localeCompare(b.region))
             .map(_region => (
-              <Select.Item value={_region.region}>{_region.region}</Select.Item>
+              <Select.Item value={String(_region.id)}>
+                {_region.region}
+              </Select.Item>
             ))}
         </Select.Group>
       </Select.Content>

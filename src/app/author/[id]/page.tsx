@@ -6,7 +6,6 @@ import { Avatar, Text } from '@radix-ui/themes';
 import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { format } from 'date-fns';
-import Image from 'next/image';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
   const { data: author } = useQuery({

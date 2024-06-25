@@ -14,8 +14,6 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
     select: response => response.data,
   });
 
-  console.log({ author });
-
   const splitBornDate = author?.born_date?.split('-');
   const isValidBornDate =
     author?.born_date !== '' &&

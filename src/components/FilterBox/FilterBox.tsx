@@ -1,14 +1,17 @@
 import { viewModeAtom } from '@atoms/viewMode';
-import { Flex, SegmentedControl, Select } from '@radix-ui/themes';
+import { SegmentedControl } from '@radix-ui/themes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { css } from 'styled-system/css';
 import EraFilter from './EraFilter';
+import RegionFilter from './RegionFilter';
+import { HStack } from 'styled-system/jsx';
+import NationalityFilter from './NationalityFilter';
 
 export default function FilterBox() {
   const viewMode = useAtomValue(viewModeAtom);
 
   return (
-    <Flex
+    <HStack
       className={css({
         pointerEvents: 'auto',
         height: '64px',
@@ -18,12 +21,15 @@ export default function FilterBox() {
         position: viewMode === 'list' ? 'relative' : 'absolute',
         top: '0px',
       })}
-      justify="between"
-      align="center"
+      justify="space-between"
     >
-      <EraFilter />
+      <HStack>
+        <EraFilter />
+        <RegionFilter />
+        <NationalityFilter />
+      </HStack>
       <ViewModeSelect />
-    </Flex>
+    </HStack>
   );
 }
 

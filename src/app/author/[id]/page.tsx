@@ -2,12 +2,15 @@
 
 import { getAuthorById } from '@apis/author';
 import { useQuery } from '@tanstack/react-query';
-import { Avatar, Text } from '@radix-ui/themes';
+import { Avatar, Separator, Text } from '@radix-ui/themes';
 import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
+  const router = useRouter();
+
   const { data: author } = useQuery({
     queryKey: ['author', params.id],
     queryFn: () => getAuthorById({ id: params.id }),
@@ -56,7 +59,11 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
       </HStack>
       <HStack alignItems="start" flexWrap="wrap" wordBreak="break-all">
         {author?.writing.map(writing => (
-          <VStack alignItems="start" className={css({ width: '100px' })}>
+          <VStack
+            alignItems="start"
+            className={css({ width: '100px', cursor: 'pointer' })}
+            onClick={() => router.push(`/writing/${writing.id}`)}
+          >
             <img
               alt="writing_image"
               width={100}
@@ -67,6 +74,27 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
           </VStack>
         ))}
       </HStack>
+      <Separator className={css({ width: '100%' })} />
+      <VStack alignItems="start">
+        <Text>미분류 번역서</Text>
+        <HStack alignItems="start" flexWrap="wrap" wordBreak="break-all">
+          {author?.book.map(book => (
+            <VStack
+              alignItems="start"
+              className={css({ width: '100px', cursor: 'pointer' })}
+              onClick={() => router.push(`/book/${book.id}`)}
+            >
+              <img
+                alt="book_image"
+                width={100}
+                height={140}
+                src="https://image.yes24.com/goods/426994/XL"
+              />
+              <Text>{book.isbn}</Text>
+            </VStack>
+          ))}
+        </HStack>
+      </VStack>
     </VStack>
   );
 }

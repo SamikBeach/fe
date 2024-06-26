@@ -13,14 +13,19 @@ interface Props extends ComponentProps<typeof Card> {
 
 function AuthorCard({ author, className, ...props }: Props) {
   const splitBornDate = author.born_date?.split('-');
+  // TODO: 수정 필요
   const isValidBornDate =
     author.born_date !== '' &&
+    splitBornDate?.[0].length !== undefined &&
+    splitBornDate?.[0].length > 2 &&
     splitBornDate?.[1] !== '00' &&
     splitBornDate?.[2] !== '00';
 
   const splitDiedDate = author.died_date?.split('-');
   const isValidDiedDate =
     author.died_date !== '' &&
+    splitDiedDate?.[0].length !== undefined &&
+    splitDiedDate?.[0].length > 2 &&
     splitDiedDate?.[1] !== '00' &&
     splitDiedDate?.[2] !== '00';
 

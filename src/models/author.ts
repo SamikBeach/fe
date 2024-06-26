@@ -42,6 +42,10 @@ export interface AuthorServerModel {
     title_in_eng: string | null;
     title_in_kor: string | null;
   }[];
+  book: {
+    id: number;
+    isbn: string;
+  }[];
 }
 
 // export interface Author {

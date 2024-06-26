@@ -82,7 +82,7 @@ export default function RelationDiagram() {
           },
         };
       })
-      .slice(0, 600) ?? [];
+      .slice(0, 60) ?? [];
 
   const initialEdges =
     authors

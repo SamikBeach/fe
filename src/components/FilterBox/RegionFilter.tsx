@@ -29,7 +29,7 @@ function RegionFilter() {
           {region
             .sort((a, b) => a.region.localeCompare(b.region))
             .map(_region => (
-              <Select.Item value={String(_region.id)}>
+              <Select.Item key={_region.id} value={String(_region.id)}>
                 {_region.region}
               </Select.Item>
             ))}

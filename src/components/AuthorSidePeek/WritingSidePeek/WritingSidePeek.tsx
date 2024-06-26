@@ -1,33 +1,36 @@
 import { SidePeek } from '@elements/SidePeek';
-import { Cross1Icon } from '@radix-ui/react-icons';
-import {
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  Grid,
-  IconButton,
-  Inset,
-  ScrollArea,
-  SegmentedControl,
-  Separator,
-  Text,
-  Theme,
-} from '@radix-ui/themes';
+import { Box, Flex, ScrollArea, Text } from '@radix-ui/themes';
 import { ComponentProps, ReactNode } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
-import { Button } from '@elements/Button';
+import { VStack } from 'styled-system/jsx';
 import { hstack } from 'styled-system/patterns';
+import { getWritingById } from '@apis/writing';
+import { useQuery } from '@tanstack/react-query';
+import { WritingServerModel } from '@models/writing';
+import { BookServerModel } from '@models/book';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   children?: ReactNode;
+  writingId: number;
 }
 
-export default function WritingSidePeek({ children, ...props }: Props) {
+export default function WritingSidePeek({
+  children,
+  writingId,
+  open,
+  onOpenChange,
+  ...props
+}: Props) {
+  const { data: writing } = useQuery({
+    queryKey: ['writing', writingId],
+    queryFn: () => getWritingById({ id: writingId }),
+    select: response => response.data,
+    enabled: open,
+  });
+
   return (
-    <SidePeek.Root modal {...props}>
+    <SidePeek.Root modal open={open} onOpenChange={onOpenChange} {...props}>
       {children}
       <SidePeek.Portal>
         {/* <SidePeek.Overlay /> */}
@@ -39,20 +42,8 @@ export default function WritingSidePeek({ children, ...props }: Props) {
           })}
         >
           <Flex direction="column" gap="16px" height="100%">
-            <AuthorInfo />
-            <Separator orientation="horizontal" size="4" />
-            <SegmentedControl.Root className={css({ width: '200px' })}>
-              <SegmentedControl.Item value="writing">
-                원전
-              </SegmentedControl.Item>
-              <SegmentedControl.Item value="translated-book">
-                번역서
-              </SegmentedControl.Item>
-              <SegmentedControl.Item value="common-book">
-                그 외
-              </SegmentedControl.Item>
-            </SegmentedControl.Root>
-            <WritingInfo />
+            <WritingInfo writing={writing} />
+            <BookInfo book={writing?.book} />
           </Flex>
           <SidePeek.CloseButton />
         </SidePeek.Content>
@@ -61,35 +52,30 @@ export default function WritingSidePeek({ children, ...props }: Props) {
   );
 }
 
-function AuthorInfo() {
+function WritingInfo({ writing }: { writing?: WritingServerModel }) {
   return (
     <Flex gap="16px" align="center">
-      <Avatar
-        src="https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcS3F15vW2p-W1vemKEkViypH0pjICfqHDzzuhC87bVXDYeysTmfYY9tD-M5-UyBr-Uo"
-        fallback="니체"
-        size="6"
+      <img
+        src="https://books.google.co.kr/books/publisher/content?id=fRa_CwAAQBAJ&pg=PP2&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U091j9O3JWw68P_eBYNUacwetb0EA&w=1280"
+        height={140}
+        width={100}
       />
       <Flex direction="column" gap="0px">
         <Text
           weight="bold"
           className={css({ fontWeight: 'bold', fontSize: '20px' })}
         >
-          Friedrich Nietzsche
+          {writing?.title}
         </Text>
         <Text className={css({ fontSize: '14px', color: 'gray.500' })}>
-          1844.08.15 - 1900.08.25
-        </Text>
-        <Text className={css({ fontSize: '14px' })}>
-          Friedrich Wilhelm Nietzsche[ii] (15 October 1844 – 25 August 1900) was
-          a German philosopher. He began his career as a classical philologist
-          before turning to philosophy.
+          {writing?.publication_date}
         </Text>
       </Flex>
     </Flex>
   );
 }
 
-function WritingInfo() {
+function BookInfo({ book }: { book?: BookServerModel[] }) {
   return (
     <ScrollArea
       type="always"
@@ -97,83 +83,29 @@ function WritingInfo() {
       // className={css({ right: '-30px' })}
     >
       <VStack alignItems="flex-start" height="100%">
-        <Box
-          height="160px"
-          className={hstack({
-            alignItems: 'flex-start',
-          })}
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-            className={css({ height: '100%', cursor: 'pointer' })}
-          />
-          <VStack alignItems="flex-start" gap="0">
-            <Text
-              size="2"
-              align="center"
-              weight="bold"
-              className={css({ cursor: 'pointer' })}
-            >
-              Also sprach Zarathustra
-            </Text>
-            <Text className={css({ fontSize: '14px' })}>
-              Thus Spoke Zarathustra: A Book for All and None (German: Also
-              sprach Zarathustra: Ein Buch für Alle und Keinen, also translated
-              as Thus Spake Zarathustra) is a philosophical novel by German
-              philosopher
-            </Text>
-          </VStack>
-        </Box>
-        <Box height="160px" className={hstack({ alignItems: 'flex-start' })}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Jenseits_von_Gut_und_B%C3%B6se_-_1886.jpg"
-            className={css({ height: '100%' })}
-          />
-          <VStack alignItems="flex-start" gap="0">
-            <Text size="2" align="center" weight="bold">
-              Beyond Good and Evil
-            </Text>
-            <Text className={css({ fontSize: '14px' })}>
-              Beyond Good and Evil: Prelude to a Philosophy of the Future
-              (German: Jenseits von Gut und Böse: Vorspiel einer Philosophie der
-              Zukunft) is a book by philosopher Friedrich Nietzsche that expands
-              the ideas of his previous work, Thus Spoke Zarathustra, with a
-              more critical and polemical approach.
-            </Text>
-          </VStack>
-        </Box>
-        <Box height="160px" className={hstack({ alignItems: 'flex-start' })}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Genealogie_der_Moral%2C_1887_-_cover.jpg"
-            className={css({ height: '100%' })}
-          />
-          <VStack alignItems="flex-start" gap="0">
-            <Text size="2" align="center" weight="bold">
-              On the Genealogy of Morality
-            </Text>
-            <Text className={css({ fontSize: '14px' })}>
-              On the Genealogy of Morality: A Polemic (German: Zur Genealogie
-              der Moral: Eine Streitschrift) is an 1887 book by German
-              philosopher
-            </Text>
-          </VStack>
-        </Box>
-        <Box height="160px" className={hstack({ alignItems: 'flex-start' })}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Genealogie_der_Moral%2C_1887_-_cover.jpg"
-            className={css({ height: '100%' })}
-          />
-          <VStack alignItems="flex-start" gap="0">
-            <Text size="2" align="center" weight="bold">
-              On the Genealogy of Morality
-            </Text>
-            <Text className={css({ fontSize: '14px' })}>
-              On the Genealogy of Morality: A Polemic (German: Zur Genealogie
-              der Moral: Eine Streitschrift) is an 1887 book by German
-              philosopher
-            </Text>
-          </VStack>
-        </Box>
+        {book?.map(_book => (
+          <Box
+            height="160px"
+            className={hstack({
+              alignItems: 'flex-start',
+            })}
+          >
+            <img
+              src="https://books.google.co.kr/books/publisher/content?id=fRa_CwAAQBAJ&pg=PP1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U2GbapWuQe_cyWPYJjV9CbjPrS2Qw&w=1280"
+              className={css({ height: '100%', cursor: 'pointer' })}
+            />
+            <VStack alignItems="flex-start" gap="0">
+              <Text
+                size="2"
+                align="center"
+                weight="bold"
+                className={css({ cursor: 'pointer' })}
+              >
+                {_book.isbn}
+              </Text>
+            </VStack>
+          </Box>
+        ))}
       </VStack>
     </ScrollArea>
   );

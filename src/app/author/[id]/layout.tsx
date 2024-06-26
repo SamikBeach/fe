@@ -1,6 +1,3 @@
-import { Header } from '@components/Header';
-import ReactQueryProviders from '@components/common/ReactQueryProviders';
-import { Theme, ThemePanel } from '@radix-ui/themes';
 import '@styles/globals.css';
 
 import { ReactNode } from 'react';

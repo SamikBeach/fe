@@ -29,7 +29,9 @@ function EraFilter() {
           {era
             .sort((a, b) => a.era.localeCompare(b.era))
             .map(_era => (
-              <Select.Item value={String(_era.id)}>{_era.era}</Select.Item>
+              <Select.Item key={_era.id} value={String(_era.id)}>
+                {_era.era}
+              </Select.Item>
             ))}
         </Select.Group>
       </Select.Content>

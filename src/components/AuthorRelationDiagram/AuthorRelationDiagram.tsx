@@ -18,8 +18,14 @@ import CustomEdge from './CustomEdge';
 import { Button } from '@elements/Button';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
-import { getAllAuthors } from '@apis/author';
+import { getAllAuthors, searchAuthors } from '@apis/author';
 import { AuthorServerModel } from '@models/author';
+import { useAtomValue } from 'jotai';
+import {
+  selectedEraIdAtom,
+  selectedNationalityIdAtom,
+  selectedRegionIdAtom,
+} from '@atoms/filter';
 
 // const initialNodes: Node<NodeData>[] = [
 //   {
@@ -173,13 +179,23 @@ const nodeTypes = { authorNode: AuthorNode };
 const edgeTypes = { customEdge: CustomEdge };
 
 export default function RelationDiagram() {
-  const { data } = useQuery({
+  const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
+  const selectedEraId = useAtomValue(selectedEraIdAtom);
+  const selectedRegionId = useAtomValue(selectedRegionIdAtom);
+
+  const { data: authors = [] } = useQuery({
     queryKey: ['author'],
-    queryFn: getAllAuthors,
+    queryFn: () =>
+      searchAuthors({
+        nationalityId: selectedNationalityId,
+        eraId: selectedEraId,
+        regionId: selectedRegionId,
+      }),
+    select: response => response.data,
   });
 
   const initialNodes =
-    data?.data
+    authors
       .map<Node<AuthorServerModel>>((author, index) => {
         const bornYear = author.born_date?.split('-')[0];
 
@@ -196,10 +212,10 @@ export default function RelationDiagram() {
           },
         };
       })
-      .slice(0, 30) ?? [];
+      .slice(0, 60) ?? [];
 
   const initialEdges =
-    data?.data
+    authors
       .map<Edge>(author => ({
         id: `e${author.id}-2`,
         type: 'customEdge',
@@ -208,7 +224,7 @@ export default function RelationDiagram() {
         sourceHandle: 'bottom',
         animated: true,
       }))
-      .slice(0, 30) ?? [];
+      .slice(0, 60) ?? [];
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);

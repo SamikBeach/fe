@@ -31,7 +31,10 @@ function NationalityFilter() {
           {nationality
             .sort((a, b) => a.nationality.localeCompare(b.nationality))
             .map(_nationality => (
-              <Select.Item value={String(_nationality.id)}>
+              <Select.Item
+                key={_nationality.id}
+                value={String(_nationality.id)}
+              >
                 {_nationality.nationality}
               </Select.Item>
             ))}

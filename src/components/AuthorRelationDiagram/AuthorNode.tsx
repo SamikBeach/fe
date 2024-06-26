@@ -51,7 +51,7 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         className={css({ visibility: 'hidden' })}
       />
       <AuthorSidePeek
-        author={data}
+        authorId={data.id}
         open={isOpenAuthorSidePeek}
         onOpenChange={setIsOpenAuthorSidePeek}
       />

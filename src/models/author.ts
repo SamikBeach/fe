@@ -1,3 +1,5 @@
+import { WritingServerModel } from './writing';
+
 export interface AuthorServerModel {
   id: number;
   name: string;
@@ -33,15 +35,7 @@ export interface AuthorServerModel {
   }[];
   influenced: AuthorServerModel[];
   influenced_by: AuthorServerModel[];
-  writing: {
-    author_id: number;
-    id: number;
-    publication_date: string;
-    publication_date_is_bc: 1 | null;
-    title: string;
-    title_in_eng: string | null;
-    title_in_kor: string | null;
-  }[];
+  writing: WritingServerModel[];
   book: {
     id: number;
     isbn: string;

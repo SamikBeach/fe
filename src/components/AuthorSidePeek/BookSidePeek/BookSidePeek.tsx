@@ -1,5 +1,5 @@
 import { SidePeek } from '@elements/SidePeek';
-import { Avatar, Flex, ScrollArea, Text } from '@radix-ui/themes';
+import { Flex, ScrollArea, Text } from '@radix-ui/themes';
 import { ComponentProps, ReactNode } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
@@ -72,7 +72,7 @@ function BookInfo({ book }: { book?: BookServerModel }) {
   );
 }
 
-function SellerLink({ book }: { book?: BookServerModel[] }) {
+function SellerLink() {
   return (
     <ScrollArea
       type="always"

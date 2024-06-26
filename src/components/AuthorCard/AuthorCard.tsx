@@ -1,4 +1,4 @@
-import AuthorHoverCard from '@components/AuthorHoverCard/AuthorHoverCard';
+import { AuthorAvatar } from '@components/AuthorAvatar';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, Card, Text } from '@radix-ui/themes';
 import classNames from 'classnames';
@@ -79,20 +79,7 @@ function AuthorCard({ author, className, ...props }: Props) {
                 </Text>
                 <HStack>
                   {author.influenced.slice(0, 3).map(influenced => (
-                    <AuthorHoverCard.Root>
-                      <AuthorHoverCard.Trigger>
-                        <Avatar
-                          size="2"
-                          radius="full"
-                          src={
-                            influenced.image_url ??
-                            'https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png'
-                          }
-                          fallback={influenced.name[0]}
-                        />
-                      </AuthorHoverCard.Trigger>
-                      <AuthorHoverCard.Content author={influenced} />
-                    </AuthorHoverCard.Root>
+                    <AuthorAvatar author={influenced} />
                   ))}
                   +{author.influenced.slice(3).length}
                 </HStack>
@@ -104,21 +91,8 @@ function AuthorCard({ author, className, ...props }: Props) {
                   Influenced by
                 </Text>
                 <HStack gap="6px">
-                  {author.influenced_by.slice(0, 3).map(influenced => (
-                    <AuthorHoverCard.Root>
-                      <AuthorHoverCard.Trigger>
-                        <Avatar
-                          size="2"
-                          radius="full"
-                          src={
-                            influenced.image_url ??
-                            'https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png'
-                          }
-                          fallback={influenced.name[0]}
-                        />
-                      </AuthorHoverCard.Trigger>
-                      <AuthorHoverCard.Content author={influenced} />
-                    </AuthorHoverCard.Root>
+                  {author.influenced_by.slice(0, 3).map(influencedBy => (
+                    <AuthorAvatar author={influencedBy} />
                   ))}
 
                   {author.influenced_by.slice(3).length > 0

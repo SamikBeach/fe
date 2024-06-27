@@ -1,7 +1,6 @@
 import { searchBooks } from '@apis/book';
 import { BookCard } from '@components/BookCard';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Grid } from 'styled-system/jsx';
 

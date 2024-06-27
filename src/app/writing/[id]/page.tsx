@@ -11,7 +11,7 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
   const router = useRouter();
 
   const { data: writing } = useQuery({
-    queryKey: ['author', params.id],
+    queryKey: ['writing', params.id],
     queryFn: () => getWritingById({ id: params.id }),
     select: response => response.data,
   });
@@ -34,6 +34,7 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
             <Text size="2" color="gray">
               Writing 설명
             </Text>
+            <Text>{writing?.book.length} books</Text>
           </HStack>
         </VStack>
       </HStack>

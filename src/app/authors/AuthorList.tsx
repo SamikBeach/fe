@@ -35,8 +35,8 @@ function AuthorList() {
   });
 
   return (
-    <Grid columns={3} className={css({ padding: '20px' })} gap="20px">
-      {authors.slice(0, 60).map(author => (
+    <Grid columns={3} className={css({ py: '20px', px: '60px' })} gap="20px">
+      {authors.slice(0, 100).map(author => (
         <AuthorCard
           key={author.id}
           author={author}

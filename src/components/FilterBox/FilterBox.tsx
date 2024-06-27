@@ -7,6 +7,7 @@ import RegionFilter from './RegionFilter';
 import { HStack, HstackProps } from 'styled-system/jsx';
 import NationalityFilter from './NationalityFilter';
 import classNames from 'classnames';
+import Sort from './Sort';
 
 interface Props extends HstackProps {
   showViewModeSelect?: boolean;
@@ -33,15 +34,16 @@ export default function FilterBox({
         }),
         className
       )}
-      justify="space-between"
+      gap="30px"
       {...props}
     >
+      {showViewModeSelect && <ViewModeSelect />}
       <HStack>
         <EraFilter />
         <RegionFilter />
         <NationalityFilter />
+        <Sort />
       </HStack>
-      {showViewModeSelect && <ViewModeSelect />}
     </HStack>
   );
 }

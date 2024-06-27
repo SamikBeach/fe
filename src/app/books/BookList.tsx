@@ -6,8 +6,6 @@ import { css } from 'styled-system/css';
 import { Grid } from 'styled-system/jsx';
 
 function BookList() {
-  const router = useRouter();
-
   const { data: books = [] } = useQuery({
     queryKey: ['book'],
     queryFn: () => searchBooks(),
@@ -17,11 +15,7 @@ function BookList() {
   return (
     <Grid columns={3} className={css({ padding: '20px' })} gap="20px">
       {books.slice(0, 60).map(book => (
-        <BookCard
-          key={book.id}
-          book={book}
-          onClick={() => router.push(`/book/${book.id}`)}
-        />
+        <BookCard key={book.id} book={book} />
       ))}
     </Grid>
   );

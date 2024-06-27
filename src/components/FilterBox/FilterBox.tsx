@@ -4,31 +4,44 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { css } from 'styled-system/css';
 import EraFilter from './EraFilter';
 import RegionFilter from './RegionFilter';
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import NationalityFilter from './NationalityFilter';
+import classNames from 'classnames';
 
-export default function FilterBox() {
+interface Props extends HstackProps {
+  showViewModeSelect?: boolean;
+}
+
+export default function FilterBox({
+  className,
+  showViewModeSelect = true,
+  ...props
+}: Props) {
   const viewMode = useAtomValue(viewModeAtom);
 
   return (
     <HStack
-      className={css({
-        pointerEvents: 'auto',
-        height: '64px',
-        width: '100%',
-        px: '20px',
+      className={classNames(
+        css({
+          pointerEvents: 'auto',
+          height: '64px',
+          width: '100%',
+          px: '20px',
 
-        position: viewMode === 'list' ? 'relative' : 'absolute',
-        top: '0px',
-      })}
+          position: viewMode === 'list' ? 'relative' : 'absolute',
+          top: '0px',
+        }),
+        className
+      )}
       justify="space-between"
+      {...props}
     >
       <HStack>
         <EraFilter />
         <RegionFilter />
         <NationalityFilter />
       </HStack>
-      <ViewModeSelect />
+      {showViewModeSelect && <ViewModeSelect />}
     </HStack>
   );
 }

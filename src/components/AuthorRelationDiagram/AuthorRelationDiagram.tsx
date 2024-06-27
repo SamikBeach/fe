@@ -1,4 +1,6 @@
 import ReactFlow, {
+  Background,
+  BackgroundVariant,
   Controls,
   Edge,
   MiniMap,
@@ -121,7 +123,7 @@ export default function RelationDiagram() {
         })}
       >
         <MiniMap nodeColor="gray" nodeStrokeWidth={3} zoomable pannable />
-        {/* <Background variant={BackgroundVariant.Dots} /> */}
+        {/* <Background id="1" style={{ backgroundColor: 'blue' }} /> */}
         <Controls showFitView showZoom showInteractive position="bottom-left" />
       </ReactFlow>
     </ReactFlowProvider>

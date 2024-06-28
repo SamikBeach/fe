@@ -1,8 +1,8 @@
 import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, Card, Text } from '@radix-ui/themes';
-import { useState } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { useEffect, useState } from 'react';
+import { Handle, NodeProps, Position, useReactFlow } from 'reactflow';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -12,6 +12,13 @@ interface AuthorNodeProps extends NodeProps {
 
 function AuthorNode({ selected, data }: AuthorNodeProps) {
   const [isOpenAuthorSidePeek, setIsOpenAuthorSidePeek] = useState(false);
+  // const reactflow = useReactFlow();
+
+  // useEffect(() => {
+  //   if (selected) {
+  //     reactflow.setNodes([]);
+  //   }
+  // }, [selected]);
 
   return (
     <>
@@ -29,8 +36,12 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
           '&::after': {
             outline: selected ? '1px solid brown' : 'none',
           },
+
+          backgroundColor: selected ? 'brown' : 'white',
         })}
-        onPointerUp={() => setIsOpenAuthorSidePeek(true)}
+        onPointerUp={() => {
+          setIsOpenAuthorSidePeek(true);
+        }}
       >
         <HStack>
           <Avatar src={data.image_url} fallback="니체" radius="full" />

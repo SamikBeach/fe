@@ -5,9 +5,13 @@ import ReactFlow, {
   Edge,
   MiniMap,
   Node,
+  Panel,
   ReactFlowProvider,
   useEdgesState,
+  useNodes,
+  useNodesInitialized,
   useNodesState,
+  useOnSelectionChange,
 } from 'reactflow';
 import AuthorNode from './AuthorNode';
 import { css } from 'styled-system/css';
@@ -21,6 +25,8 @@ import {
   selectedNationalityIdAtom,
   selectedRegionIdAtom,
 } from '@atoms/filter';
+import { Button } from '@radix-ui/themes';
+import { useEffect } from 'react';
 
 const nodeTypes = { authorNode: AuthorNode };
 const edgeTypes = { customEdge: CustomEdge };
@@ -30,8 +36,17 @@ export default function RelationDiagram() {
   const selectedEraId = useAtomValue(selectedEraIdAtom);
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
 
-  const { data: authors = [] } = useQuery({
-    queryKey: ['author'],
+  const {
+    data: authors = [],
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: [
+      'author',
+      // selectedNationalityId,
+      // selectedEraId,
+      // selectedRegionId,
+    ],
     queryFn: () =>
       searchAuthors({
         nationalityId: selectedNationalityId,
@@ -94,20 +109,82 @@ export default function RelationDiagram() {
         source: author.id.toString(),
         target: Math.floor(Math.random() * 30).toString(),
         sourceHandle: 'bottom',
-        animated: true,
       }))
       .slice(0, 60) ?? [];
+
+  // console.log({ initialNodes });
+  // console.log({ initialEdges });
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setNodes(initialNodes);
+      setEdges(initialEdges);
+    }
+  }, [isSuccess]);
+
+  const getConnectedNodes = (nodeId: string) => {
+    return edges
+      .filter(edge => edge.source === nodeId)
+      .map(edge => nodes.find(node => node.id === edge.target));
+  };
+
+  if (isLoading) {
+    return 'loading...';
+  }
+
+  console.log({ nodes });
+
   return (
     <ReactFlowProvider>
+      <Button
+        className={css({
+          position: 'absolute',
+          top: 100,
+          left: 100,
+          zIndex: 3,
+        })}
+        // onClick={() =>
+        // onNodesChange([{ id: '3', selected: true, type: 'select' }])
+        // }
+      >
+        테스트 버튼
+      </Button>
       <ReactFlow
-        nodes={initialNodes}
-        edges={initialEdges}
-        // onNodesChange={onNodesChange}
-        // onEdgesChange={onEdgesChange}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={(_, node) => {
+          const connectedNodes = getConnectedNodes(node.id);
+
+          // connectedNodes를 selected:true로
+          setNodes(_nodes => {
+            return nodes.map(_node => {
+              if (
+                connectedNodes.find(
+                  connectedNode => connectedNode?.id === _node.id
+                )
+              ) {
+                return { ..._node, selected: true };
+              }
+
+              return _node;
+            });
+          });
+          console.log({ node, connectedNodes });
+        }}
+        // onSelectionChange={({ nodes, edges }) => {
+        //   console.log('onSelectionChange');
+        //   console.log({ nodes, edges });
+        // }}
+        // onKeyDown={e => {
+        //   if (e.key === 'Escape') {
+        //     e.preventDefault();
+        //   }
+        // }}
         fitView
         draggable={false}
         zoomOnScroll={false}

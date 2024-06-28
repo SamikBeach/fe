@@ -278,7 +278,6 @@ interface BookInfoProps {
 }
 
 function BookInfo({ selectedBookId, setSelectedBookId, book }: BookInfoProps) {
-  console.log({ book });
   return (
     <>
       <ScrollArea type="always" scrollbars="vertical">

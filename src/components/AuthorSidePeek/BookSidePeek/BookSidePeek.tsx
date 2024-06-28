@@ -28,8 +28,6 @@ export default function BookSidePeek({
     enabled: open,
   });
 
-  console.log({ book });
-
   return (
     <SidePeek.Root modal open={open} onOpenChange={onOpenChange} {...props}>
       {children}

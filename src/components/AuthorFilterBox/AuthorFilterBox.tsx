@@ -14,7 +14,7 @@ import EducationFilter from './EducationFilter';
 
 interface Props extends HstackProps {}
 
-export default function FilterBox({ className, ...props }: Props) {
+export default function AuthorFilterBox({ className, ...props }: Props) {
   const viewMode = useAtomValue(viewModeAtom);
 
   return (

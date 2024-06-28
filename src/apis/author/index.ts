@@ -19,12 +19,14 @@ export function searchAuthors({
   regionId,
   mainInterestId,
   schoolId,
+  educationId,
 }: {
   nationalityId?: number;
   eraId?: number;
   regionId?: number;
   mainInterestId?: number;
   schoolId?: number;
+  educationId?: number;
 }) {
   return api.get<GetAllBooksResponse>('/author/search', {
     params: {
@@ -33,6 +35,7 @@ export function searchAuthors({
       regionId,
       mainInterestId,
       schoolId,
+      educationId,
     },
   });
 }

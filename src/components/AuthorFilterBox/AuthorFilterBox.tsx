@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Sort from './Sort';
 import MainInterestFIlter from './MainInterestFIlter';
 import SchoolFilter from './SchoolFilter';
+import EducationFilter from './EducationFilter';
 
 interface Props extends HstackProps {}
 
@@ -40,6 +41,7 @@ export default function FilterBox({ className, ...props }: Props) {
         <NationalityFilter />
         <MainInterestFIlter />
         <SchoolFilter />
+        <EducationFilter />
         <Sort />
       </HStack>
     </HStack>

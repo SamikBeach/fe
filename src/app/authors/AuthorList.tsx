@@ -1,5 +1,6 @@
 import { searchAuthors } from '@apis/author';
 import {
+  selectedEducationIdAtom,
   selectedEraIdAtom,
   selectedMainInterestIdAtom,
   selectedNationalityIdAtom,
@@ -21,6 +22,7 @@ function AuthorList() {
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
   const selectedMainInterestId = useAtomValue(selectedMainInterestIdAtom);
   const selectedSchoolId = useAtomValue(selectedSchoolIdAtom);
+  const selectedEducationId = useAtomValue(selectedEducationIdAtom);
 
   const { data: authors = [] } = useQuery({
     queryKey: [
@@ -30,6 +32,7 @@ function AuthorList() {
       selectedRegionId,
       selectedMainInterestId,
       selectedSchoolId,
+      selectedEducationId,
     ],
     queryFn: () =>
       searchAuthors({
@@ -38,6 +41,7 @@ function AuthorList() {
         regionId: selectedRegionId,
         mainInterestId: selectedMainInterestId,
         schoolId: selectedSchoolId,
+        educationId: selectedEducationId,
       }),
     select: response => response.data,
   });

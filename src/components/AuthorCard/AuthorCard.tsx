@@ -105,24 +105,24 @@ function AuthorCard({ author, className, ...props }: Props) {
           </Text>
           <VStack alignItems="start">
             <HStack>
-              {[1, 2, 3].map(v => (
+              {[1, 2, 3].map(() => (
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
                   width={23}
                   height={30}
                 />
               ))}
-              <Text size="1">{author.writing.length} writings</Text>
+              <Text size="1">{author.writing?.length} writings</Text>
             </HStack>
             <HStack>
-              {[1, 2, 3].map(v => (
+              {[1, 2, 3].map(() => (
                 <img
                   src="https://image.yes24.com/goods/426994/XL"
                   width={23}
                   height={30}
                 />
               ))}
-              <Text size="1">{author.book.length} books</Text>
+              <Text size="1">{author.book?.length} books</Text>
             </HStack>
           </VStack>
           <VStack gap="10px" alignItems="start">

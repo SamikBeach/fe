@@ -2,7 +2,7 @@
 'use client';
 
 import { AuthorRelationDiagram } from '@components/AuthorRelationDiagram';
-import { FilterBox } from '@components/FilterBox';
+import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import { css } from 'styled-system/css';
 import AuthorList from './AuthorList';
 import { useAtomValue } from 'jotai';
@@ -13,7 +13,7 @@ export default function AuthorsPage() {
 
   return (
     <div className={css({ position: 'relative' })}>
-      <FilterBox />
+      <AuthorFilterBox />
       {viewMode === 'list' ? <AuthorList /> : <AuthorRelationDiagram />}
     </div>
   );

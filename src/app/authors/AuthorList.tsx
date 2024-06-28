@@ -1,8 +1,10 @@
 import { searchAuthors } from '@apis/author';
 import {
   selectedEraIdAtom,
+  selectedMainInterestIdAtom,
   selectedNationalityIdAtom,
   selectedRegionIdAtom,
+  selectedSchoolIdAtom,
 } from '@atoms/filter';
 import { AuthorCard } from '@components/AuthorCard';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +19,8 @@ function AuthorList() {
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
   const selectedEraId = useAtomValue(selectedEraIdAtom);
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
+  const selectedMainInterestId = useAtomValue(selectedMainInterestIdAtom);
+  const selectedSchoolId = useAtomValue(selectedSchoolIdAtom);
 
   const { data: authors = [] } = useQuery({
     queryKey: [
@@ -24,12 +28,16 @@ function AuthorList() {
       selectedNationalityId,
       selectedEraId,
       selectedRegionId,
+      selectedMainInterestId,
+      selectedSchoolId,
     ],
     queryFn: () =>
       searchAuthors({
         nationalityId: selectedNationalityId,
         eraId: selectedEraId,
         regionId: selectedRegionId,
+        mainInterestId: selectedMainInterestId,
+        schoolId: selectedSchoolId,
       }),
     select: response => response.data,
   });

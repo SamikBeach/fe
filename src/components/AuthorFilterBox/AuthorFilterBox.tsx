@@ -8,16 +8,12 @@ import { HStack, HstackProps } from 'styled-system/jsx';
 import NationalityFilter from './NationalityFilter';
 import classNames from 'classnames';
 import Sort from './Sort';
+import MainInterestFIlter from './MainInterestFIlter';
+import SchoolFilter from './SchoolFilter';
 
-interface Props extends HstackProps {
-  showViewModeSelect?: boolean;
-}
+interface Props extends HstackProps {}
 
-export default function FilterBox({
-  className,
-  showViewModeSelect = true,
-  ...props
-}: Props) {
+export default function FilterBox({ className, ...props }: Props) {
   const viewMode = useAtomValue(viewModeAtom);
 
   return (
@@ -37,11 +33,13 @@ export default function FilterBox({
       gap="30px"
       {...props}
     >
-      {showViewModeSelect && <ViewModeSelect />}
+      <ViewModeSelect />
       <HStack>
         <EraFilter />
         <RegionFilter />
         <NationalityFilter />
+        <MainInterestFIlter />
+        <SchoolFilter />
         <Sort />
       </HStack>
     </HStack>

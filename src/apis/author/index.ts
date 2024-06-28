@@ -17,12 +17,22 @@ export function searchAuthors({
   nationalityId,
   eraId,
   regionId,
+  mainInterestId,
+  schoolId,
 }: {
   nationalityId?: number;
   eraId?: number;
   regionId?: number;
+  mainInterestId?: number;
+  schoolId?: number;
 }) {
   return api.get<GetAllBooksResponse>('/author/search', {
-    params: { nationalityId, eraId, regionId },
+    params: {
+      nationalityId,
+      eraId,
+      regionId,
+      mainInterestId,
+      schoolId,
+    },
   });
 }

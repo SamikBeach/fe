@@ -1,7 +1,7 @@
 import { isLoggedInAtom } from '@atoms/auth';
+import { SearchBar } from '@components/SearchBar';
 import { Button } from '@elements/Button';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Avatar, DropdownMenu, IconButton, TextField } from '@radix-ui/themes';
+import { DropdownMenu, IconButton } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
@@ -14,14 +14,7 @@ export default function RightSlot() {
 
   return (
     <HStack gap="30px">
-      <TextField.Root
-        placeholder="Search books, authors..."
-        className={css({ width: '250px' })}
-      >
-        <TextField.Slot>
-          <MagnifyingGlassIcon height="16" width="16" />
-        </TextField.Slot>
-      </TextField.Root>
+      <SearchBar />
       {isLoggedIn ? (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>

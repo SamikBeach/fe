@@ -1,7 +1,7 @@
 import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, Card, Text } from '@radix-ui/themes';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Handle, NodeProps, Position, useReactFlow } from 'reactflow';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -28,33 +28,33 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         id="top"
         className={css({ visibility: 'hidden' })}
       />
-      <Card
+
+      <HStack
         className={css({
           width: '240px',
           cursor: 'pointer',
 
-          '&::after': {
-            outline: selected ? '1px solid brown' : 'none',
-          },
+          borderRadius: '8px',
+          border: selected ? '1px solid brown' : '1px solid lightgray',
+          padding: '10px',
 
-          backgroundColor: selected ? 'brown' : 'white',
+          backgroundColor: 'white',
         })}
         onPointerUp={() => {
           setIsOpenAuthorSidePeek(true);
         }}
       >
-        <HStack>
-          <Avatar src={data.image_url} fallback="니체" radius="full" />
-          <VStack gap="0" alignItems="start">
-            <Text className={css({ color: 'black' })} weight="bold" size="2">
-              {data.name}
-            </Text>
-            <Text size="1" color="gray">
-              {data.name_in_kor}
-            </Text>
-          </VStack>
-        </HStack>
-      </Card>
+        <Avatar src={data.image_url} fallback="니체" radius="full" />
+        <VStack gap="0" alignItems="start">
+          <Text className={css({ color: 'black' })} weight="bold" size="2">
+            {data.name}
+          </Text>
+          <Text size="1" color="gray">
+            {data.name_in_kor}
+          </Text>
+        </VStack>
+      </HStack>
+
       <Handle
         type="source"
         position={Position.Bottom}

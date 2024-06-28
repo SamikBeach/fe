@@ -3,12 +3,14 @@ import { Box, Flex, ScrollArea, Text } from '@radix-ui/themes';
 import { ComponentProps, ReactNode } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
-import { VStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
 import { hstack } from 'styled-system/patterns';
 import { getWritingById } from '@apis/writing';
 import { useQuery } from '@tanstack/react-query';
 import { WritingServerModel } from '@models/writing';
 import { BookServerModel } from '@models/book';
+import { AuthorAvatar } from '@components/AuthorAvatar';
+import { HeartIcon } from '@radix-ui/react-icons';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   children?: ReactNode;
@@ -54,13 +56,13 @@ export default function WritingSidePeek({
 
 function WritingInfo({ writing }: { writing?: WritingServerModel }) {
   return (
-    <Flex gap="16px" align="center">
+    <HStack gap="16px" alignItems="start">
       <img
-        src="https://books.google.co.kr/books/publisher/content?id=fRa_CwAAQBAJ&pg=PP2&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U091j9O3JWw68P_eBYNUacwetb0EA&w=1280"
+        src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
         height={140}
         width={100}
       />
-      <Flex direction="column" gap="0px">
+      <VStack alignItems="start" gap="0px">
         <Text
           weight="bold"
           className={css({ fontWeight: 'bold', fontSize: '20px' })}
@@ -70,8 +72,32 @@ function WritingInfo({ writing }: { writing?: WritingServerModel }) {
         <Text className={css({ fontSize: '14px', color: 'gray.500' })}>
           {writing?.publication_date}
         </Text>
-      </Flex>
-    </Flex>
+        <HStack>
+          <AuthorAvatar
+            author={{
+              id: 1,
+              name: 'Friedrich Nietzsche',
+              name_in_kor: '프리드리히 니체',
+              born_date: '1844-10-15',
+              born_date_is_bc: null,
+              died_date: '1900-08-25',
+              died_date_is_bc: null,
+              image_url:
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/472px-Nietzsche187a.jpg',
+              influenced: [],
+              influenced_by: [],
+              writing: [],
+              book: [],
+            }}
+          />
+          <Text size="4">{writing?.author.name}</Text>
+        </HStack>
+        <Text>{writing?.book.length} books</Text>
+        <Text size="2" color="gray">
+          Ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur.
+        </Text>
+      </VStack>
+    </HStack>
   );
 }
 
@@ -94,15 +120,25 @@ function BookInfo({ book }: { book?: BookServerModel[] }) {
               src="https://books.google.co.kr/books/publisher/content?id=fRa_CwAAQBAJ&pg=PP1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U2GbapWuQe_cyWPYJjV9CbjPrS2Qw&w=1280"
               className={css({ height: '100%', cursor: 'pointer' })}
             />
-            <VStack alignItems="flex-start" gap="0">
+            <VStack alignItems="start" gap="0px">
+              <Text>도덕의 계보학</Text>
+              <Text>번역: 홍길동</Text>
+              <Text>출판사: 민음사</Text>
               <Text
                 size="2"
                 align="center"
                 weight="bold"
                 className={css({ cursor: 'pointer' })}
               >
-                {_book.isbn}
+                {_book?.isbn}
               </Text>
+              <HStack>
+                <HStack gap="0">
+                  <Text>123</Text>
+                  <HeartIcon color="red" />
+                </HStack>
+                <Text>362 comments</Text>
+              </HStack>
             </VStack>
           </Box>
         ))}

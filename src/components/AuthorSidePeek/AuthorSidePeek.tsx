@@ -19,6 +19,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getAuthorById } from '@apis/author';
 import { format } from 'date-fns';
 import { BookSidePeek } from './BookSidePeek';
+import { HeartIcon } from '@radix-ui/react-icons';
+import { AuthorAvatar } from '..';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   authorId: number;
@@ -36,9 +38,7 @@ export default function AuthorSidePeek({
   );
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
 
-  const [selectedTab, setSelectedTab] = useState<
-    'writing' | 'translated-book' | 'common-book'
-  >('writing');
+  const [selectedTab, setSelectedTab] = useState<'writing' | 'book'>('writing');
 
   const isOpenSidePeek = selectedWritingId !== null || selectedBookId !== null;
 
@@ -85,20 +85,13 @@ export default function AuthorSidePeek({
               size="3"
               className={css({ width: '200px' })}
               onValueChange={value =>
-                setSelectedTab(
-                  value as 'writing' | 'translated-book' | 'common-book'
-                )
+                setSelectedTab(value as 'writing' | 'book')
               }
             >
               <SegmentedControl.Item value="writing">
                 원전
               </SegmentedControl.Item>
-              <SegmentedControl.Item value="translated-book">
-                번역서
-              </SegmentedControl.Item>
-              <SegmentedControl.Item value="common-book">
-                그 외
-              </SegmentedControl.Item>
+              <SegmentedControl.Item value="book">번역서</SegmentedControl.Item>
             </SegmentedControl.Root>
             {selectedTab === 'writing' && (
               <WritingInfo
@@ -107,7 +100,7 @@ export default function AuthorSidePeek({
                 writing={author?.writing}
               />
             )}
-            {selectedTab === 'translated-book' && (
+            {selectedTab === 'book' && (
               <BookInfo
                 selectedBookId={selectedBookId}
                 setSelectedBookId={setSelectedBookId}
@@ -165,13 +158,30 @@ function AuthorInfo({ author }: { author?: AuthorServerModel }) {
         <Text className={css({ fontSize: '14px' })}>Author 설명</Text>
         <HStack gap="20px">
           <VStack alignItems="start" gap="0">
+            <Text size="1" color="gray">
+              {author?.nationality?.nationality}
+            </Text>
+            <Text size="1">
+              {author?.main_interest
+                ?.map(mainInterest => mainInterest.main_interest)
+                .join(', ')}
+            </Text>
+            <Text size="1">
+              {author?.education
+                ?.map(education => education.education)
+                .join(', ')}
+            </Text>
+            <Text size="1">{author?.era?.map(era => era.era).join(', ')}</Text>
+            <Text size="1">
+              {author?.region?.map(region => region.region).join(', ')}
+            </Text>
+            <Text size="1">
+              {author?.school?.map(school => school.school).join(', ')}
+            </Text>
             <Text>Influenced By</Text>
             <HStack gap="2px">
               {author?.influenced_by.map(influencedBy => (
-                <Avatar
-                  src={influencedBy.image_url}
-                  fallback={influencedBy.name}
-                />
+                <AuthorAvatar size="1" author={influencedBy} />
               ))}
             </HStack>
           </VStack>
@@ -179,15 +189,7 @@ function AuthorInfo({ author }: { author?: AuthorServerModel }) {
             <Text>Influenced To</Text>
             <HStack gap="2px">
               {author?.influenced.map(influenced => (
-                <Avatar src={influenced.image_url} fallback={influenced.name} />
-              ))}
-            </HStack>
-          </VStack>
-          <VStack alignItems="start" gap="0">
-            <Text>Main Interests</Text>
-            <HStack gap="2px">
-              {author?.main_interest?.map(main_interest => (
-                <Text>{main_interest.main_interest}</Text>
+                <AuthorAvatar size="1" author={influenced} />
               ))}
             </HStack>
           </VStack>
@@ -225,18 +227,34 @@ function WritingInfo({
                 onClick={() => setSelectedWritingId(_writing.id)}
               />
               <VStack alignItems="flex-start" gap="0">
-                <Text
-                  size="2"
-                  align="center"
-                  weight="bold"
-                  className={css({ cursor: 'pointer' })}
-                  onClick={() => setSelectedWritingId(_writing.id)}
-                >
-                  {_writing.title}
-                </Text>
+                <HStack>
+                  <Text
+                    size="2"
+                    align="center"
+                    weight="bold"
+                    className={css({ cursor: 'pointer' })}
+                    onClick={() => setSelectedWritingId(_writing.id)}
+                  >
+                    {_writing.title}
+                  </Text>
+                  <HStack>
+                    <HStack gap="0">
+                      <Text>123</Text>
+                      <HeartIcon color="red" />
+                    </HStack>
+                    <Text>362 comments</Text>
+                  </HStack>
+                </HStack>
+                <Text>영문 타이틀:{_writing.title_in_eng}</Text>
+                <Text>국문 타이틀:{_writing.title_in_kor}</Text>
                 <Text className={css({ fontSize: '14px' })}>
                   {_writing.publication_date} 년
                 </Text>
+                <Text size="2" color="gray">
+                  Ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                  consectetur.
+                </Text>
+                <Text>{_writing?.book?.length} books</Text>
               </VStack>
             </Box>
           ))}
@@ -260,6 +278,7 @@ interface BookInfoProps {
 }
 
 function BookInfo({ selectedBookId, setSelectedBookId, book }: BookInfoProps) {
+  console.log({ book });
   return (
     <>
       <ScrollArea type="always" scrollbars="vertical">
@@ -277,6 +296,9 @@ function BookInfo({ selectedBookId, setSelectedBookId, book }: BookInfoProps) {
                 onClick={() => setSelectedBookId(_book.id)}
               />
               <VStack alignItems="flex-start" gap="0">
+                <Text>도덕의 계보학</Text>
+                <Text>번역: 홍길동</Text>
+                <Text>출판사: 민음사</Text>
                 <Text
                   size="2"
                   align="center"
@@ -286,6 +308,13 @@ function BookInfo({ selectedBookId, setSelectedBookId, book }: BookInfoProps) {
                 >
                   {_book.isbn}
                 </Text>
+                <HStack>
+                  <HStack gap="0">
+                    <Text>123</Text>
+                    <HeartIcon color="red" />
+                  </HStack>
+                  <Text>362 comments</Text>
+                </HStack>
               </VStack>
             </Box>
           ))}

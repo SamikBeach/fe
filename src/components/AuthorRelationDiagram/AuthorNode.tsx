@@ -16,10 +16,9 @@ import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
 interface AuthorNodeProps extends NodeProps {
   data: AuthorServerModel;
-  cardProps: HstackProps;
 }
 
-function AuthorNode({ selected, data, cardProps }: AuthorNodeProps) {
+function AuthorNode({ selected, data }: AuthorNodeProps) {
   const [isOpenAuthorSidePeek, setIsOpenAuthorSidePeek] = useState(false);
   // console.log({ selected });
 
@@ -54,12 +53,13 @@ function AuthorNode({ selected, data, cardProps }: AuthorNodeProps) {
                 : data.activeInfluencedBy
                   ? 'lightpink'
                   : 'white',
+
+            animation: 'fadein 0.2s',
           })
         )}
         onPointerUp={() => {
           setIsOpenAuthorSidePeek(true);
         }}
-        {...cardProps}
       >
         <Avatar src={data.image_url} fallback="니체" radius="full" />
         <VStack gap="0" alignItems="start">

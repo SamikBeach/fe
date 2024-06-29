@@ -9,7 +9,7 @@ import {
   getStraightPath,
 } from 'reactflow';
 
-interface Props extends BaseEdgeProps {
+interface Props {
   id: string;
   sourceX: number;
   sourceY: number;

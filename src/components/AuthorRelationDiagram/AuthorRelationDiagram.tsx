@@ -60,6 +60,10 @@ function RelationDiagram() {
   const initialNodes = useMemo(() => {
     return (
       authors
+        .filter(
+          author =>
+            author.influenced.length > 0 || author.influenced_by.length > 0
+        )
         .map<Node<AuthorServerModel>>((author, index) => {
           const bornYear =
             author.born_date?.split('-')[0] === undefined
@@ -69,6 +73,11 @@ function RelationDiagram() {
           const bornCentury = Math.floor(Number(bornYear) / 100) + 1;
 
           const authorIndex = authors
+            .filter(
+              _author =>
+                _author.influenced.length > 0 ||
+                _author.influenced_by.length > 0
+            )
             .filter(_author => {
               if (bornCentury < 17) {
                 return (
@@ -107,12 +116,7 @@ function RelationDiagram() {
               ...author,
             },
           };
-        })
-        .filter(
-          author =>
-            author.data.influenced.length > 0 ||
-            author.data.influenced_by.length > 0
-        ) ?? []
+        }) ?? []
     );
   }, [authors]);
 
@@ -185,7 +189,14 @@ function RelationDiagram() {
             };
           }
 
-          return _node;
+          return {
+            ..._node,
+            data: {
+              ..._node.data,
+              activeInfluenced: false,
+              activeInfluencedBy: false,
+            },
+          };
         });
 
         return newNodes;
@@ -216,6 +227,35 @@ function RelationDiagram() {
     [setEdges, setNodes]
   );
 
+  const showOnlySelectedNodes = useCallback(() => {
+    setNodes(_nodes => {
+      if (!_nodes.find(node => node.selected)) {
+        return _nodes;
+      }
+
+      return _nodes.filter(node => {
+        return (
+          node.selected ||
+          node.data.activeInfluenced ||
+          node.data.activeInfluencedBy
+        );
+      });
+    });
+  }, [setNodes]);
+
+  const showAllNodes = useCallback(() => {
+    setNodes(_nodes => {
+      return initialNodes.map(initialNode => {
+        const node = nodes.find(_node => _node.id === initialNode.id);
+        if (node !== undefined) {
+          return node;
+        }
+
+        return initialNode;
+      });
+    });
+  }, [setNodes, initialNodes, nodes]);
+
   if (isLoading) {
     return 'loading...';
   }
@@ -231,8 +271,20 @@ function RelationDiagram() {
           left: 100,
           zIndex: 3,
         })}
+        onClick={showOnlySelectedNodes}
       >
-        테스트 버튼
+        선택된 노드만 보기
+      </Button>
+      <Button
+        className={css({
+          position: 'absolute',
+          top: 140,
+          left: 100,
+          zIndex: 3,
+        })}
+        onClick={showAllNodes}
+      >
+        전체 보기
       </Button>
       <ReactFlow
         nodes={nodes}
@@ -244,6 +296,17 @@ function RelationDiagram() {
           if (edges.length > 0) {
             setEdges([]);
           }
+
+          setNodes(
+            nodes.map(node => ({
+              ...node,
+              data: {
+                ...node.data,
+                activeInfluenced: false,
+                activeInfluencedBy: false,
+              },
+            }))
+          );
         }}
         fitView
         draggable={false}

@@ -292,7 +292,7 @@ function RelationDiagram() {
       return initialNodes.map(initialNode => {
         const node = nodes.find(_node => _node.id === initialNode.id);
         if (node !== undefined) {
-          return node;
+          return { ...node, position: initialNode.position };
         }
 
         return initialNode;

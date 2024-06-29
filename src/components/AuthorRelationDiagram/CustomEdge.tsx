@@ -1,12 +1,23 @@
 import { memo } from 'react';
 import {
   BaseEdge,
+  BaseEdgeProps,
   Position,
   getBezierPath,
   getSimpleBezierPath,
   getSmoothStepPath,
   getStraightPath,
 } from 'reactflow';
+
+interface Props extends BaseEdgeProps {
+  id: string;
+  sourceX: number;
+  sourceY: number;
+  targetX: number;
+  targetY: number;
+  sourcePosition: Position;
+  targetPosition: Position;
+}
 
 function CustomEdge({
   id,
@@ -16,15 +27,8 @@ function CustomEdge({
   targetY,
   sourcePosition,
   targetPosition,
-}: {
-  id: string;
-  sourceX: number;
-  sourceY: number;
-  targetX: number;
-  targetY: number;
-  sourcePosition: Position;
-  targetPosition: Position;
-}) {
+  ...props
+}: Props) {
   const [edgePath] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -38,7 +42,7 @@ function CustomEdge({
 
   return (
     <>
-      <BaseEdge id={id} path={edgePath} />
+      <BaseEdge id={id} {...props} path={edgePath} />
     </>
   );
 }

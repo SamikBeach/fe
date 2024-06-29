@@ -2,6 +2,7 @@ import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { AuthorServerModel } from '@models/author';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { Avatar, Card, IconButton, Text } from '@radix-ui/themes';
+import classNames from 'classnames';
 import { memo, useEffect, useState } from 'react';
 import {
   Handle,
@@ -11,13 +12,14 @@ import {
   useReactFlow,
 } from 'reactflow';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
 interface AuthorNodeProps extends NodeProps {
   data: AuthorServerModel;
+  cardProps: HstackProps;
 }
 
-function AuthorNode({ selected, data }: AuthorNodeProps) {
+function AuthorNode({ selected, data, cardProps }: AuthorNodeProps) {
   const [isOpenAuthorSidePeek, setIsOpenAuthorSidePeek] = useState(false);
   // console.log({ selected });
 
@@ -36,32 +38,38 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         className={css({ visibility: 'hidden' })}
       />
 
-      <HStack>
-        <HStack
-          className={css({
+      <HStack
+        className={classNames(
+          css({
             width: '240px',
             cursor: 'pointer',
 
             borderRadius: '8px',
             border: selected ? '1px solid brown' : '1px solid lightgray',
             padding: '10px',
-
-            backgroundColor: 'white',
-          })}
-          onPointerUp={() => {
-            setIsOpenAuthorSidePeek(true);
-          }}
-        >
-          <Avatar src={data.image_url} fallback="니체" radius="full" />
-          <VStack gap="0" alignItems="start">
-            <Text className={css({ color: 'black' })} weight="bold" size="2">
-              {data.name}
-            </Text>
-            <Text size="1" color="gray">
-              {data.name_in_kor}
-            </Text>
-          </VStack>
-        </HStack>
+            backgroundColor: selected
+              ? 'lightgreen'
+              : data.activeInfluenced
+                ? 'lightblue'
+                : data.activeInfluencedBy
+                  ? 'lightpink'
+                  : 'white',
+          })
+        )}
+        onPointerUp={() => {
+          setIsOpenAuthorSidePeek(true);
+        }}
+        {...cardProps}
+      >
+        <Avatar src={data.image_url} fallback="니체" radius="full" />
+        <VStack gap="0" alignItems="start">
+          <Text className={css({ color: 'black' })} weight="bold" size="2">
+            {data.name}
+          </Text>
+          <Text size="1" color="gray">
+            {data.name_in_kor}
+          </Text>
+        </VStack>
       </HStack>
 
       <Handle

@@ -3,6 +3,9 @@ import { WritingServerModel } from './writing';
 export interface AuthorServerModel {
   id: number;
   name: string;
+  // 클라 모델 별도 구현
+  activeInfluencedBy?: boolean;
+  activeInfluenced?: boolean;
   name_in_kor: string;
   image_url: string;
   born_date: string | null;

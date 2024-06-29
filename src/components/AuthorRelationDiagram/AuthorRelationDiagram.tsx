@@ -165,14 +165,23 @@ function RelationDiagram() {
 
       setNodes(_nodes => {
         const newNodes = _nodes.map(_node => {
-          if (
-            [...influencedAuthorIds, ...influencedByAuthorIds].includes(
-              Number(_node.id)
-            )
-          ) {
+          if (influencedAuthorIds.includes(Number(_node.id))) {
             return {
               ..._node,
-              selected: true,
+              data: {
+                ..._node.data,
+                activeInfluenced: true,
+              },
+            };
+          }
+
+          if (influencedByAuthorIds.includes(Number(_node.id))) {
+            return {
+              ..._node,
+              data: {
+                ..._node.data,
+                activeInfluencedBy: true,
+              },
             };
           }
 
@@ -182,12 +191,13 @@ function RelationDiagram() {
         return newNodes;
       });
 
-      const influencedEges = influencedAuthorIds.map(id => ({
+      const influencedEdges = influencedAuthorIds.map(id => ({
         id: `${node.id}-${String(id)}`,
         source: node.id,
         target: String(id),
         sourceHandle: 'bottom',
         type: 'customEdge',
+        style: { stroke: 'blue' },
         animated: true,
       }));
 
@@ -197,10 +207,11 @@ function RelationDiagram() {
         target: node.id,
         sourceHandle: 'top',
         type: 'customEdge',
+        style: { stroke: 'red' },
         animated: true,
       }));
 
-      setEdges([...influencedEges, ...influencedByEdges]);
+      setEdges([...influencedEdges, ...influencedByEdges]);
     },
     [setEdges, setNodes]
   );

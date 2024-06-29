@@ -12,6 +12,7 @@ import ReactFlow, {
   useNodesInitialized,
   useNodesState,
   useOnSelectionChange,
+  useReactFlow,
 } from 'reactflow';
 import AuthorNode from './AuthorNode';
 import { css } from 'styled-system/css';
@@ -33,6 +34,8 @@ const nodeTypes = { authorNode: AuthorNode, plusButtonNode: PlusButtonNode };
 const edgeTypes = { customEdge: CustomEdge };
 
 function RelationDiagram() {
+  const reactflow = useReactFlow();
+
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
   const selectedEraId = useAtomValue(selectedEraIdAtom);
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
@@ -285,7 +288,19 @@ function RelationDiagram() {
           return node;
         });
     });
-  }, [setNodes]);
+
+    setTimeout(() => {
+      reactflow.fitView({
+        nodes: nodes.filter(
+          node =>
+            node.selected ||
+            node.data.activeInfluenced ||
+            node.data.activeInfluencedBy
+        ),
+        duration: 300,
+      });
+    }, 0);
+  }, [setNodes, reactflow, nodes]);
 
   const showAllNodes = useCallback(() => {
     setNodes(_nodes => {
@@ -381,8 +396,8 @@ function RelationDiagram() {
 
 export default function AuthorRelationDiagram() {
   return (
-    // <ReactFlowProvider>
-    <RelationDiagram />
-    // </ReactFlowProvider>
+    <ReactFlowProvider>
+      <RelationDiagram />
+    </ReactFlowProvider>
   );
 }

@@ -20,6 +20,13 @@ interface AuthorNodeProps extends NodeProps {
 
 function AuthorNode({ selected, data }: AuthorNodeProps) {
   const [isOpenAuthorSidePeek, setIsOpenAuthorSidePeek] = useState(false);
+
+  const bornYear =
+    data.born_date?.split('-')[0] === undefined
+      ? 0
+      : Number(data.born_date?.split('-')[0]);
+
+  const bornCentury = Math.floor(Number(bornYear) / 100) + 1;
   // console.log({ selected });
 
   // useEffect(() => {
@@ -72,6 +79,9 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
             {data.name_in_kor}
           </Text>
         </VStack>
+        <Text weight="bold">
+          {data.born_date_is_bc ? '기원전' : ''} {bornCentury}C
+        </Text>
       </HStack>
 
       <Handle

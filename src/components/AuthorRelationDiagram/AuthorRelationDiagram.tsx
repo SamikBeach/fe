@@ -27,24 +27,12 @@ import {
 } from '@atoms/filter';
 import { Button } from '@radix-ui/themes';
 import { memo, useCallback, useEffect, useMemo } from 'react';
+import PlusButtonNode from './PlusButtonNode';
 
-const nodeTypes = { authorNode: AuthorNode };
+const nodeTypes = { authorNode: AuthorNode, plusButtonNode: PlusButtonNode };
 const edgeTypes = { customEdge: CustomEdge };
 
 function RelationDiagram() {
-  // const nodeTypes = useMemo(
-  //   () => ({
-  //     authorNode: AuthorNode,
-  //   }),
-  //   []
-  // );
-  // const edgeTypes = useMemo(
-  //   () => ({
-  //     customEdge: CustomEdge,
-  //   }),
-  //   []
-  // );
-
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
   const selectedEraId = useAtomValue(selectedEraIdAtom);
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
@@ -98,6 +86,10 @@ function RelationDiagram() {
             })
             .findIndex(_author => _author.id === author.id);
 
+          // if (authorIndex > 0) {
+          //   return null;
+          // }
+
           return {
             id: author.id.toString(),
             type: 'authorNode',
@@ -110,11 +102,13 @@ function RelationDiagram() {
             },
             data: {
               label: author.id.toString(),
+
               ...author,
             },
           };
         })
-        .slice(0, 200) ?? []
+        .slice(0, 200)
+        .filter(author => author !== null) ?? []
     );
   }, [authors]);
 
@@ -140,6 +134,7 @@ function RelationDiagram() {
     if (isSuccess) {
       setNodes(initialNodes);
       setEdges(initialEdges);
+      console.log('effect');
     }
   }, [isSuccess, setNodes, setEdges, initialNodes, initialEdges]);
 
@@ -152,28 +147,61 @@ function RelationDiagram() {
     [edges, nodes]
   );
 
-  // TODO: 부하 심함
+  // const handleNodeClick = useCallback(
+  //   (
+  //     _: React.MouseEvent<Element, MouseEvent>,
+  //     node: Node<any, string | undefined>
+  //   ) => {
+  //     const connectedNodes = getConnectedNodes(node.id);
+
+  //     // connectedNodes를 selected:true로
+  //     setNodes(_nodes => {
+  //       return nodes.map(_node => {
+  //         if (
+  //           connectedNodes.find(connectedNode => connectedNode?.id === _node.id)
+  //         ) {
+  //           return { ..._node, selected: true };
+  //         }
+
+  //         return _node;
+  //       });
+  //     });
+  //   },
+  //   [getConnectedNodes, nodes, setNodes]
+  // );
+
   const handleNodeClick = useCallback(
     (
       _: React.MouseEvent<Element, MouseEvent>,
-      node: Node<any, string | undefined>
+      node: Node<AuthorServerModel, string | undefined>
     ) => {
-      const connectedNodes = getConnectedNodes(node.id);
+      const influencedAuthorIds = node.data.influenced.map(
+        influenced => influenced.id
+      );
+      const influencedByAuthorIds = node.data.influenced_by.map(
+        influenced => influenced.id
+      );
 
-      // connectedNodes를 selected:true로
       setNodes(_nodes => {
-        return nodes.map(_node => {
+        const newNodes = _nodes.map(_node => {
           if (
-            connectedNodes.find(connectedNode => connectedNode?.id === _node.id)
+            [...influencedAuthorIds, ...influencedByAuthorIds].includes(
+              Number(_node.id)
+            )
           ) {
-            return { ..._node, selected: true };
+            return {
+              ..._node,
+              selected: true,
+            };
           }
 
           return _node;
         });
+
+        return newNodes;
       });
     },
-    [getConnectedNodes, nodes, setNodes]
+    [setNodes]
   );
 
   if (isLoading) {
@@ -183,7 +211,6 @@ function RelationDiagram() {
   console.log('rerender');
 
   return (
-    // <ReactFlowProvider>
     <>
       <Button
         className={css({
@@ -196,11 +223,11 @@ function RelationDiagram() {
         테스트 버튼
       </Button>
       <ReactFlow
-        nodes={initialNodes}
-        edges={initialEdges}
+        nodes={nodes}
+        edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        // onNodeClick={handleNodeClick}
+        onNodeClick={handleNodeClick}
         fitView
         draggable={false}
         zoomOnScroll={false}
@@ -220,8 +247,13 @@ function RelationDiagram() {
         <Controls showFitView showZoom showInteractive position="bottom-left" />
       </ReactFlow>
     </>
-    // </ReactFlowProvider>
   );
 }
 
-export default RelationDiagram;
+export default function AuthorRelationDiagram() {
+  return (
+    // <ReactFlowProvider>
+    <RelationDiagram />
+    // </ReactFlowProvider>
+  );
+}

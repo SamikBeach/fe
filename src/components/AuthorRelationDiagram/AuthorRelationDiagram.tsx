@@ -233,13 +233,57 @@ function RelationDiagram() {
         return _nodes;
       }
 
-      return _nodes.filter(node => {
-        return (
-          node.selected ||
-          node.data.activeInfluenced ||
-          node.data.activeInfluencedBy
-        );
-      });
+      return _nodes
+        .filter(node => {
+          return (
+            node.selected ||
+            node.data.activeInfluenced ||
+            node.data.activeInfluencedBy
+          );
+        })
+        .map(node => {
+          if (node.selected) {
+            return node;
+          }
+
+          const selectedNode = _nodes.find(_node => _node.selected);
+
+          if (selectedNode === undefined) {
+            return node;
+          }
+
+          if (node.data.activeInfluenced) {
+            const positionX =
+              _nodes
+                .filter(_node => _node.data.activeInfluenced)
+                .findIndex(_node => _node.id === node.id) * 250;
+
+            return {
+              ...node,
+              position: {
+                x: positionX,
+                y: selectedNode.position.y + 100,
+              },
+            };
+          }
+
+          if (node.data.activeInfluencedBy) {
+            const positionX =
+              _nodes
+                .filter(_node => _node.data.activeInfluencedBy)
+                .findIndex(_node => _node.id === node.id) * 250;
+
+            return {
+              ...node,
+              position: {
+                x: positionX,
+                y: selectedNode.position.y - 100,
+              },
+            };
+          }
+
+          return node;
+        });
     });
   }, [setNodes]);
 

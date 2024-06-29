@@ -28,6 +28,8 @@ export default function AuthorFilterBox({ className, ...props }: Props) {
 
           position: viewMode === 'list' ? 'relative' : 'absolute',
           top: '0px',
+
+          zIndex: 4,
         }),
         className
       )}

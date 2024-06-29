@@ -52,7 +52,9 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
                 ? 'lightblue'
                 : data.activeInfluencedBy
                   ? 'lightpink'
-                  : 'white',
+                  : data.activeFiltered
+                    ? 'purple.200'
+                    : 'white',
 
             animation: 'fadein 0.2s',
           })

@@ -29,6 +29,7 @@ import {
 import { Button } from '@radix-ui/themes';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import PlusButtonNode from './PlusButtonNode';
+import { AuthorFilterBox } from '@components/AuthorFilterBox';
 
 const nodeTypes = { authorNode: AuthorNode, plusButtonNode: PlusButtonNode };
 const edgeTypes = { customEdge: CustomEdge };
@@ -232,7 +233,10 @@ function RelationDiagram() {
 
   const showOnlySelectedNodes = useCallback(() => {
     setNodes(_nodes => {
-      if (!_nodes.find(node => node.selected)) {
+      if (
+        !_nodes.find(node => node.selected) &&
+        !_nodes.find(node => node.data.activeFiltered)
+      ) {
         return _nodes;
       }
 
@@ -241,7 +245,8 @@ function RelationDiagram() {
           return (
             node.selected ||
             node.data.activeInfluenced ||
-            node.data.activeInfluencedBy
+            node.data.activeInfluencedBy ||
+            node.data.activeFiltered
           );
         })
         .map(node => {
@@ -295,7 +300,8 @@ function RelationDiagram() {
           node =>
             node.selected ||
             node.data.activeInfluenced ||
-            node.data.activeInfluencedBy
+            node.data.activeInfluencedBy ||
+            node.data.activeFiltered
         ),
         duration: 300,
       });
@@ -381,6 +387,7 @@ function RelationDiagram() {
           },
         })}
       >
+        <AuthorFilterBox />
         <MiniMap
           nodeColor={node => (node.selected ? 'red' : 'gray')}
           nodeStrokeWidth={3}

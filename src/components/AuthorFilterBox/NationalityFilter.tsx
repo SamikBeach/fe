@@ -3,6 +3,7 @@ import { selectedNationalityIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
+import { useReactFlow } from 'reactflow';
 import { css } from 'styled-system/css';
 
 function NationalityFilter() {
@@ -14,9 +15,29 @@ function NationalityFilter() {
     select: response => response.data,
   });
 
+  const reactflow = useReactFlow();
+
   return (
     <Select.Root
-      onValueChange={value => setSelectedNationalityId(Number(value))}
+      onValueChange={value => {
+        setSelectedNationalityId(Number(value));
+
+        reactflow.setNodes(nodes => {
+          return nodes.map(node => {
+            if (node.data?.nationality.id === Number(value)) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  activeFiltered: true,
+                },
+              };
+            }
+
+            return { ...node, data: { ...node.data, activeFiltered: false } };
+          });
+        });
+      }}
     >
       <Select.Trigger
         className={css({

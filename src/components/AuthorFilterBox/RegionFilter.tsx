@@ -3,6 +3,7 @@ import { selectedRegionIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
+import { useReactFlow } from 'reactflow';
 import { css } from 'styled-system/css';
 
 function RegionFilter() {
@@ -14,8 +15,34 @@ function RegionFilter() {
     select: response => response.data,
   });
 
+  const reactflow = useReactFlow();
+
   return (
-    <Select.Root onValueChange={value => setSelectedRegionId(Number(value))}>
+    <Select.Root
+      onValueChange={value => {
+        setSelectedRegionId(Number(value));
+
+        reactflow.setNodes(nodes => {
+          return nodes.map(node => {
+            if (
+              node.data?.region
+                .map((_region: any) => _region.id)
+                .includes(Number(value))
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  activeFiltered: true,
+                },
+              };
+            }
+
+            return { ...node, data: { ...node.data, activeFiltered: false } };
+          });
+        });
+      }}
+    >
       <Select.Trigger
         className={css({
           cursor: 'pointer',

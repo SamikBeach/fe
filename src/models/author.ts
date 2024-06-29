@@ -6,6 +6,7 @@ export interface AuthorServerModel {
   // 클라 모델 별도 구현
   activeInfluencedBy?: boolean;
   activeInfluenced?: boolean;
+  activeFiltered?: boolean;
   name_in_kor: string;
   image_url: string;
   born_date: string | null;

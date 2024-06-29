@@ -13,7 +13,6 @@ export default function AuthorsPage() {
 
   return (
     <div className={css({ position: 'relative' })}>
-      <AuthorFilterBox />
       {viewMode === 'list' ? <AuthorList /> : <AuthorRelationDiagram />}
     </div>
   );

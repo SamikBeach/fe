@@ -3,6 +3,7 @@ import { selectedEraIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
+import { useReactFlow } from 'reactflow';
 import { css } from 'styled-system/css';
 
 function EraFilter() {
@@ -14,8 +15,32 @@ function EraFilter() {
     select: response => response.data,
   });
 
+  const reactflow = useReactFlow();
+
   return (
-    <Select.Root onValueChange={value => setSelectedEraId(Number(value))}>
+    <Select.Root
+      onValueChange={value => {
+        setSelectedEraId(Number(value));
+
+        reactflow.setNodes(nodes => {
+          return nodes.map(node => {
+            if (
+              node.data?.era.map((_era: any) => _era.id).includes(Number(value))
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  activeFiltered: true,
+                },
+              };
+            }
+
+            return { ...node, data: { ...node.data, activeFiltered: false } };
+          });
+        });
+      }}
+    >
       <Select.Trigger
         className={css({
           cursor: 'pointer',

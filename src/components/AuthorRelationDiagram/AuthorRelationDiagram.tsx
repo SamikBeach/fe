@@ -93,6 +93,7 @@ function RelationDiagram() {
           return {
             id: author.id.toString(),
             type: 'authorNode',
+            draggable: false,
             position: {
               x: authorIndex * 250,
               y:
@@ -107,8 +108,11 @@ function RelationDiagram() {
             },
           };
         })
-        .slice(0, 500)
-        .filter(author => author !== null) ?? []
+        .filter(
+          author =>
+            author.data.influenced.length > 0 ||
+            author.data.influenced_by.length > 0
+        ) ?? []
     );
   }, [authors]);
 
@@ -184,14 +188,16 @@ function RelationDiagram() {
         target: String(id),
         sourceHandle: 'bottom',
         type: 'customEdge',
+        animated: true,
       }));
 
-      const influencedByEdges = influencedByAuthorIds.map(id => ({
+      const influencedByEdges = influencedByAuthorIds.map<Edge>(id => ({
         id: `${String(id)}-${node.id}}`,
         source: String(id),
         target: node.id,
         sourceHandle: 'top',
         type: 'customEdge',
+        animated: true,
       }));
 
       setEdges([...influencedEges, ...influencedByEdges]);
@@ -223,6 +229,11 @@ function RelationDiagram() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={handleNodeClick}
+        onPaneClick={() => {
+          if (edges.length > 0) {
+            setEdges([]);
+          }
+        }}
         fitView
         draggable={false}
         zoomOnScroll={false}
@@ -237,7 +248,12 @@ function RelationDiagram() {
           },
         })}
       >
-        <MiniMap nodeColor="gray" nodeStrokeWidth={3} zoomable pannable />
+        <MiniMap
+          nodeColor={node => (node.selected ? 'red' : 'gray')}
+          nodeStrokeWidth={3}
+          zoomable
+          pannable
+        />
         {/* <Background id="1" style={{ backgroundColor: 'blue' }} /> */}
         <Controls showFitView showZoom showInteractive position="bottom-left" />
       </ReactFlow>

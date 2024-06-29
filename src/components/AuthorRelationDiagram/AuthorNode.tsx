@@ -70,11 +70,11 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         id="bottom"
         className={css({ visibility: 'hidden' })}
       />
-      <AuthorSidePeek
+      {/* <AuthorSidePeek
         authorId={data.id}
         open={isOpenAuthorSidePeek}
         onOpenChange={setIsOpenAuthorSidePeek}
-      />
+      /> */}
     </>
   );
 }

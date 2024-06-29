@@ -107,7 +107,7 @@ function RelationDiagram() {
             },
           };
         })
-        .slice(0, 200)
+        .slice(0, 500)
         .filter(author => author !== null) ?? []
     );
   }, [authors]);
@@ -117,7 +117,7 @@ function RelationDiagram() {
     return (
       authors
         .map<Edge>(author => ({
-          id: `e${author.id}-2`,
+          id: `${author.id}-2`,
           type: 'customEdge',
           source: author.id.toString(),
           target: Math.floor(Math.random() * 30).toString(),
@@ -146,29 +146,6 @@ function RelationDiagram() {
     },
     [edges, nodes]
   );
-
-  // const handleNodeClick = useCallback(
-  //   (
-  //     _: React.MouseEvent<Element, MouseEvent>,
-  //     node: Node<any, string | undefined>
-  //   ) => {
-  //     const connectedNodes = getConnectedNodes(node.id);
-
-  //     // connectedNodes를 selected:true로
-  //     setNodes(_nodes => {
-  //       return nodes.map(_node => {
-  //         if (
-  //           connectedNodes.find(connectedNode => connectedNode?.id === _node.id)
-  //         ) {
-  //           return { ..._node, selected: true };
-  //         }
-
-  //         return _node;
-  //       });
-  //     });
-  //   },
-  //   [getConnectedNodes, nodes, setNodes]
-  // );
 
   const handleNodeClick = useCallback(
     (
@@ -200,8 +177,26 @@ function RelationDiagram() {
 
         return newNodes;
       });
+
+      const influencedEges = influencedAuthorIds.map(id => ({
+        id: `${node.id}-${String(id)}`,
+        source: node.id,
+        target: String(id),
+        sourceHandle: 'bottom',
+        type: 'customEdge',
+      }));
+
+      const influencedByEdges = influencedByAuthorIds.map(id => ({
+        id: `${String(id)}-${node.id}}`,
+        source: String(id),
+        target: node.id,
+        sourceHandle: 'top',
+        type: 'customEdge',
+      }));
+
+      setEdges([...influencedEges, ...influencedByEdges]);
     },
-    [setNodes]
+    [setEdges, setNodes]
   );
 
   if (isLoading) {

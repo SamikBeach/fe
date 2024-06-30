@@ -13,7 +13,7 @@ function AuthorAvatar({ author, ...props }: Props) {
         <Avatar
           size="2"
           radius="full"
-          src={author.image_url}
+          src={author.image_url ?? undefined}
           fallback={author.name[0]}
           {...props}
         />

@@ -3,21 +3,28 @@ import { selectedMainInterestIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
+import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 
-function MainInterestFIlter() {
+interface Props extends ComponentProps<typeof Select.Root> {}
+
+function MainInterestFilter({ onValueChange, ...props }: Props) {
   const setSelectedMainInterestId = useSetAtom(selectedMainInterestIdAtom);
 
-  const { data: mainInterest = [] } = useQuery({
+  const { data: mainInterests = [] } = useQuery({
     queryKey: ['mainInterest'],
     queryFn: getAllMainInterests,
     select: response => response.data,
   });
 
+  const handleValueChange = (value: string) => {
+    setSelectedMainInterestId(Number(value));
+
+    onValueChange?.(value);
+  };
+
   return (
-    <Select.Root
-      onValueChange={value => setSelectedMainInterestId(Number(value))}
-    >
+    <Select.Root onValueChange={handleValueChange} {...props}>
       <Select.Trigger
         className={css({
           cursor: 'pointer',
@@ -28,14 +35,14 @@ function MainInterestFIlter() {
       <Select.Content side="bottom" position="popper">
         <Select.Group>
           <Select.Label>MainInterest</Select.Label>
-          {mainInterest
+          {mainInterests
             .sort((a, b) => a.main_interest.localeCompare(b.main_interest))
-            .map(_mainInterest => (
+            .map(mainInterest => (
               <Select.Item
-                key={_mainInterest.id}
-                value={String(_mainInterest.id)}
+                key={mainInterest.id}
+                value={String(mainInterest.id)}
               >
-                {_mainInterest.main_interest}
+                {mainInterest.main_interest}
               </Select.Item>
             ))}
         </Select.Group>
@@ -44,4 +51,4 @@ function MainInterestFIlter() {
   );
 }
 
-export default MainInterestFIlter;
+export default MainInterestFilter;

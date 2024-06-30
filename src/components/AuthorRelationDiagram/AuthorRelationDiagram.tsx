@@ -321,6 +321,26 @@ function RelationDiagram() {
     });
   }, [setNodes, initialNodes, nodes]);
 
+  const handleFilterValueChange = useCallback(
+    (value: string) => {
+      setNodes(_nodes => {
+        return _nodes.map(node => {
+          if (node.data?.nationality?.id === Number(value)) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                activeFiltered: true,
+              },
+            };
+          }
+          return { ...node, data: { ...node.data, activeFiltered: false } };
+        });
+      });
+    },
+    [setNodes]
+  );
+
   if (isLoading) {
     return 'loading...';
   }
@@ -387,7 +407,7 @@ function RelationDiagram() {
           },
         })}
       >
-        <AuthorFilterBox />
+        <AuthorFilterBox onValueChange={handleFilterValueChange} />
         <MiniMap
           nodeColor={node => (node.selected ? 'red' : 'gray')}
           nodeStrokeWidth={3}

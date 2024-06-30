@@ -3,42 +3,28 @@ import { selectedNationalityIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
-import { useReactFlow } from 'reactflow';
+import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 
-function NationalityFilter() {
+interface Props extends ComponentProps<typeof Select.Root> {}
+
+function NationalityFilter({ onValueChange, ...props }: Props) {
   const setSelectedNationalityId = useSetAtom(selectedNationalityIdAtom);
 
-  const { data: nationality = [] } = useQuery({
+  const { data: nationalities = [] } = useQuery({
     queryKey: ['nationality'],
     queryFn: getAllNationalities,
     select: response => response.data,
   });
 
-  const reactflow = useReactFlow();
+  const handleValueChange = (value: string) => {
+    setSelectedNationalityId(Number(value));
+
+    onValueChange?.(value);
+  };
 
   return (
-    <Select.Root
-      onValueChange={value => {
-        setSelectedNationalityId(Number(value));
-
-        reactflow.setNodes(nodes => {
-          return nodes.map(node => {
-            if (node.data?.nationality.id === Number(value)) {
-              return {
-                ...node,
-                data: {
-                  ...node.data,
-                  activeFiltered: true,
-                },
-              };
-            }
-
-            return { ...node, data: { ...node.data, activeFiltered: false } };
-          });
-        });
-      }}
-    >
+    <Select.Root onValueChange={handleValueChange} {...props}>
       <Select.Trigger
         className={css({
           cursor: 'pointer',
@@ -49,14 +35,11 @@ function NationalityFilter() {
       <Select.Content side="bottom" position="popper">
         <Select.Group>
           <Select.Label>Nationality</Select.Label>
-          {nationality
+          {nationalities
             .sort((a, b) => a.nationality.localeCompare(b.nationality))
-            .map(_nationality => (
-              <Select.Item
-                key={_nationality.id}
-                value={String(_nationality.id)}
-              >
-                {_nationality.nationality}
+            .map(nationality => (
+              <Select.Item key={nationality.id} value={String(nationality.id)}>
+                {nationality.nationality}
               </Select.Item>
             ))}
         </Select.Group>

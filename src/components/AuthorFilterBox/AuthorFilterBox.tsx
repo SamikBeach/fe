@@ -1,20 +1,28 @@
 import { viewModeAtom } from '@atoms/viewMode';
-import { SegmentedControl } from '@radix-ui/themes';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
-import EraFilter from './EraFilter';
-import RegionFilter from './RegionFilter';
 import { HStack, HstackProps } from 'styled-system/jsx';
-import NationalityFilter from './NationalityFilter';
 import classNames from 'classnames';
-import Sort from './Sort';
-import MainInterestFIlter from './MainInterestFIlter';
-import SchoolFilter from './SchoolFilter';
-import EducationFilter from './EducationFilter';
+import {
+  EducationFilter,
+  EraFilter,
+  MainInterestFilter,
+  NationalityFilter,
+  RegionFilter,
+  SchoolFilter,
+} from './filters';
+import { Sort } from './sort';
+import ViewModeSelect from './ViewModeSelect';
 
-interface Props extends HstackProps {}
+interface Props extends HstackProps {
+  onValueChange?: (value: string) => void;
+}
 
-export default function AuthorFilterBox({ className, ...props }: Props) {
+export default function AuthorFilterBox({
+  className,
+  onValueChange,
+  ...props
+}: Props) {
   const viewMode = useAtomValue(viewModeAtom);
 
   return (
@@ -38,36 +46,14 @@ export default function AuthorFilterBox({ className, ...props }: Props) {
     >
       <ViewModeSelect />
       <HStack>
-        <EraFilter />
-        <RegionFilter />
-        <NationalityFilter />
-        <MainInterestFIlter />
-        <SchoolFilter />
-        <EducationFilter />
+        <EraFilter onValueChange={onValueChange} />
+        <RegionFilter onValueChange={onValueChange} />
+        <NationalityFilter onValueChange={onValueChange} />
+        <MainInterestFilter onValueChange={onValueChange} />
+        <SchoolFilter onValueChange={onValueChange} />
+        <EducationFilter onValueChange={onValueChange} />
         <Sort />
       </HStack>
     </HStack>
-  );
-}
-
-function ViewModeSelect() {
-  const setViewMode = useSetAtom(viewModeAtom);
-
-  return (
-    <SegmentedControl.Root
-      className={css({ zIndex: 2 })}
-      defaultValue="list"
-      onValueChange={value => setViewMode(value as 'diagram' | 'list')}
-    >
-      <SegmentedControl.Item value="list" onSelect={() => setViewMode('list')}>
-        List
-      </SegmentedControl.Item>
-      <SegmentedControl.Item
-        value="diagram"
-        onSelect={() => setViewMode('diagram')}
-      >
-        Diagram
-      </SegmentedControl.Item>
-    </SegmentedControl.Root>
   );
 }

@@ -8,6 +8,7 @@ import {
   selectedSchoolIdAtom,
 } from '@atoms/filter';
 import { AuthorCard } from '@components/AuthorCard';
+import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
@@ -47,15 +48,18 @@ function AuthorList() {
   });
 
   return (
-    <Grid columns={3} className={css({ py: '20px', px: '60px' })} gap="20px">
-      {authors.slice(0, 100).map(author => (
-        <AuthorCard
-          key={author.id}
-          author={author}
-          onClick={() => router.push(`/author/${author.id}`)}
-        />
-      ))}
-    </Grid>
+    <>
+      <AuthorFilterBox />
+      <Grid columns={3} className={css({ py: '20px', px: '60px' })} gap="20px">
+        {authors.slice(0, 100).map(author => (
+          <AuthorCard
+            key={author.id}
+            author={author}
+            onClick={() => router.push(`/author/${author.id}`)}
+          />
+        ))}
+      </Grid>
+    </>
   );
 }
 

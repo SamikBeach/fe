@@ -3,19 +3,28 @@ import { selectedSchoolIdAtom } from '@atoms/filter';
 import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
+import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 
-function SchoolFilter() {
+interface Props extends ComponentProps<typeof Select.Root> {}
+
+function SchoolFilter({ onValueChange, ...props }: Props) {
   const setSelectedSchoolId = useSetAtom(selectedSchoolIdAtom);
 
-  const { data: school = [] } = useQuery({
+  const { data: schools = [] } = useQuery({
     queryKey: ['school'],
     queryFn: getAllSchools,
     select: response => response.data,
   });
 
+  const handleValueChange = (value: string) => {
+    setSelectedSchoolId(Number(value));
+
+    onValueChange?.(value);
+  };
+
   return (
-    <Select.Root onValueChange={value => setSelectedSchoolId(Number(value))}>
+    <Select.Root onValueChange={handleValueChange} {...props}>
       <Select.Trigger
         className={css({
           cursor: 'pointer',
@@ -26,11 +35,11 @@ function SchoolFilter() {
       <Select.Content side="bottom" position="popper">
         <Select.Group>
           <Select.Label>School</Select.Label>
-          {school
+          {schools
             .sort((a, b) => a.school.localeCompare(b.school))
-            .map(_school => (
-              <Select.Item key={_school.id} value={String(_school.id)}>
-                {_school.school}
+            .map(school => (
+              <Select.Item key={school.id} value={String(school.id)}>
+                {school.school}
               </Select.Item>
             ))}
         </Select.Group>

@@ -1,39 +1,23 @@
-import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { AuthorServerModel } from '@models/author';
-import { PlusIcon } from '@radix-ui/react-icons';
-import { Avatar, Card, IconButton, Text } from '@radix-ui/themes';
+import { Avatar, Text } from '@radix-ui/themes';
+import { getCenturyByDate } from '@utils/author';
 import classNames from 'classnames';
-import { memo, useEffect, useState } from 'react';
-import {
-  Handle,
-  NodeProps,
-  Position,
-  useNodesState,
-  useReactFlow,
-} from 'reactflow';
+import { isNil } from 'lodash';
+import { useState } from 'react';
+import { Handle, NodeProps, Position } from 'reactflow';
 import { css } from 'styled-system/css';
-import { HStack, HstackProps, VStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
 
 interface AuthorNodeProps extends NodeProps {
   data: AuthorServerModel;
 }
 
 function AuthorNode({ selected, data }: AuthorNodeProps) {
+  const { name, name_in_kor, image_url, born_date, born_date_is_bc } = data;
+
   const [isOpenAuthorSidePeek, setIsOpenAuthorSidePeek] = useState(false);
 
-  const bornYear =
-    data.born_date?.split('-')[0] === undefined
-      ? 0
-      : Number(data.born_date?.split('-')[0]);
-
-  const bornCentury = Math.floor(Number(bornYear) / 100) + 1;
-  // console.log({ selected });
-
-  // useEffect(() => {
-  //   if (selected) {
-  //     reactflow.setNodes([]);
-  //   }
-  // }, [selected]);
+  const bornCentury = isNil(born_date) ? null : getCenturyByDate(born_date);
 
   return (
     <>
@@ -70,17 +54,17 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
           setIsOpenAuthorSidePeek(true);
         }}
       >
-        <Avatar src={data.image_url} fallback="니체" radius="full" />
+        <Avatar src={image_url ?? undefined} fallback="니체" radius="full" />
         <VStack gap="0" alignItems="start">
           <Text className={css({ color: 'black' })} weight="bold" size="2">
-            {data.name}
+            {name}
           </Text>
           <Text size="1" color="gray">
-            {data.name_in_kor}
+            {name_in_kor}
           </Text>
         </VStack>
         <Text weight="bold">
-          {data.born_date_is_bc ? '기원전' : ''} {bornCentury}C
+          {born_date_is_bc ? '기원전' : ''} {bornCentury}C
         </Text>
       </HStack>
 

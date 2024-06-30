@@ -1,15 +1,11 @@
-import { memo } from 'react';
 import {
   BaseEdge,
   BaseEdgeProps,
   Position,
-  getBezierPath,
-  getSimpleBezierPath,
   getSmoothStepPath,
-  getStraightPath,
 } from 'reactflow';
 
-interface Props {
+interface Props extends Omit<BaseEdgeProps, 'path'> {
   id: string;
   sourceX: number;
   sourceY: number;
@@ -42,7 +38,7 @@ function CustomEdge({
 
   return (
     <>
-      <BaseEdge id={id} {...props} path={edgePath} />
+      <BaseEdge id={id} path={edgePath} {...props} />
     </>
   );
 }

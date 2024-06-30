@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import { css } from 'styled-system/css';
 import { HStack, HstackProps } from 'styled-system/jsx';
-import Sort from './Sort';
-import WritingFilter from './WritingFilter';
-import AuthorFilter from './AuthorFilter';
-import PublisherFilter from './PublisherFilter';
-import PublicationDateFilter from './PublicationDateFilter';
+import {
+  AuthorFilter,
+  PublicationDateFilter,
+  PublisherFilter,
+  WritingFilter,
+} from './filters';
+import { Sort } from './sort';
 
 interface Props extends HstackProps {}
 

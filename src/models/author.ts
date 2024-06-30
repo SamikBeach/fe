@@ -1,3 +1,10 @@
+import { BookServerModel } from './book';
+import { EducationServerModel } from './education';
+import { EraServerModel } from './era';
+import { MainInterestServerModel } from './main_interest';
+import { NationalityServerModel } from './nationality';
+import { RegionServerModel } from './region';
+import { SchoolServerModel } from './school';
 import { WritingServerModel } from './writing';
 
 export interface AuthorServerModel {
@@ -8,61 +15,19 @@ export interface AuthorServerModel {
   activeInfluenced?: boolean;
   activeFiltered?: boolean;
   name_in_kor: string;
-  image_url: string;
-  born_date: string | null;
-  born_date_is_bc: 1 | null;
-  died_date: string | null;
-  died_date_is_bc: 1 | null;
-  education?: {
-    id: number;
-    education: string;
-  }[];
-  era?: {
-    id: number;
-    era: string;
-  }[];
-  region?: {
-    id: number;
-    region: string;
-  }[];
-  main_interest?: {
-    id: number;
-    main_interest: string;
-  }[];
-  nationality?: {
-    id: number;
-    nationality: string;
-  };
-  school?: {
-    id: number;
-    school: string;
-  }[];
+  image_url?: string | null;
+  born_date?: string | null;
+  born_date_is_bc?: 0 | 1 | null;
+  died_date?: string | null;
+  died_date_is_bc?: 0 | 1 | null;
+  education?: EducationServerModel[];
+  era?: EraServerModel[];
+  region?: RegionServerModel[];
+  main_interest?: MainInterestServerModel[];
+  nationality?: NationalityServerModel;
+  school?: SchoolServerModel[];
   influenced: AuthorServerModel[];
   influenced_by: AuthorServerModel[];
   writing: WritingServerModel[];
-  book: {
-    id: number;
-    isbn: string;
-  }[];
+  book: BookServerModel[];
 }
-
-// export interface Author {
-//   id: number;
-//   name: string;
-//   nameInKor: string;
-//   imageUrl: string;
-//   bornDate: string;
-//   bornDateIsBc: boolean;
-//   diedDate: string;
-//   diedDateIsBc: boolean;
-//   education: string[];
-//   era: string[];
-//   region: string[];
-//   mainInterest: string[];
-//   school: string[];
-//   influenced: AuthorServerModel[];
-//   influencedBy: AuthorServerModel[];
-// }
-
-// AuthorNode
-// AuthorEdge

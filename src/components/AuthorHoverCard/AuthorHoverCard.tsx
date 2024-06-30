@@ -1,7 +1,7 @@
 import { AuthorServerModel } from '@models/author';
 import { Avatar, HoverCard, Text } from '@radix-ui/themes';
+import { getBornAndDiedDateText } from '@utils/author';
 import classNames from 'classnames';
-import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
@@ -17,19 +17,18 @@ function AuthorHoverCardContent({
   className,
   ...props
 }: AuthorHoverCardContentProps) {
+  const {
+    id,
+    name,
+    name_in_kor,
+    image_url,
+    born_date,
+    died_date,
+    born_date_is_bc,
+    died_date_is_bc,
+  } = author;
+
   const router = useRouter();
-
-  const splitBornDate = author.born_date?.split('-');
-  const isValidBornDate =
-    author.born_date !== '' &&
-    splitBornDate?.[1] !== '00' &&
-    splitBornDate?.[2] !== '00';
-
-  const splitDiedDate = author.died_date?.split('-');
-  const isValidDiedDate =
-    author.died_date !== '' &&
-    splitDiedDate?.[1] !== '00' &&
-    splitDiedDate?.[2] !== '00';
 
   return (
     <HoverCard.Content
@@ -44,27 +43,31 @@ function AuthorHoverCardContent({
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-        router.push(`/author/${author.id}`);
+
+        router.push(`/author/${id}`);
       }}
       {...props}
     >
       <HStack alignItems="start" gap="20px">
-        <Avatar src={author.image_url} fallback="폴백" radius="full" size="7" />
+        <Avatar
+          src={image_url ?? undefined}
+          fallback="폴백"
+          radius="full"
+          size="7"
+        />
         <VStack alignItems="start" gap="0">
           <Text size="4" weight="bold">
-            {author.name}
+            {name}
           </Text>
-          <Text size="3">{author.name_in_kor}</Text>
+          <Text size="3">{name_in_kor}</Text>
           <HStack>
             <Text size="2" color="gray">
-              {author.born_date_is_bc ? '기원전 ' : ''}
-              {isValidBornDate && author.born_date != null
-                ? format(new Date(author.born_date), 'y년 M월 d일 ')
-                : '???'}
-              - {author.died_date_is_bc ? '기원전 ' : ''}
-              {isValidDiedDate && author.died_date != null
-                ? format(new Date(author.died_date), 'y년 M월 d일 ')
-                : '???'}
+              {getBornAndDiedDateText({
+                bornDate: born_date,
+                diedDate: died_date,
+                bornDateIsBc: born_date_is_bc === 1,
+                diedDateIsBc: died_date_is_bc === 1,
+              })}
             </Text>
           </HStack>
         </VStack>

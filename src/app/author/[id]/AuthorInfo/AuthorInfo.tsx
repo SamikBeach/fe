@@ -1,9 +1,7 @@
 import { AuthorServerModel } from '@models/author';
 import { HeartIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
-import { getIsValidDateString } from '@utils/author';
-import { format } from 'date-fns';
-import { isNil } from 'lodash';
+import { getBornAndDiedDateText } from '@utils/author';
 import { HStack, VStack } from 'styled-system/jsx';
 import InfluencedList from './InfluencedList';
 import InfluencedByList from './InfluencedByList';
@@ -47,14 +45,12 @@ export default function AuthorInfo({ author }: Props) {
           <Text size="4">{name_in_kor}</Text>
           <HStack>
             <Text size="2" color="gray">
-              {born_date_is_bc ? '기원전 ' : ''}
-              {!isNil(born_date) && getIsValidDateString(born_date)
-                ? format(new Date(born_date), 'y년 M월 d일 ')
-                : '???'}
-              - {died_date_is_bc ? '기원전 ' : ''}
-              {!isNil(died_date) && getIsValidDateString(died_date)
-                ? format(new Date(died_date), 'y년 M월 d일 ')
-                : '???'}
+              {getBornAndDiedDateText({
+                bornDate: born_date,
+                diedDate: died_date,
+                bornDateIsBc: born_date_is_bc === 1,
+                diedDateIsBc: died_date_is_bc === 1,
+              })}
             </Text>
           </HStack>
           <Text size="1" color="gray">

@@ -7,10 +7,10 @@ export function getAllBooks() {
   return api.get<GetAllBooksResponse>('/book');
 }
 
-type GetBookResponse = BookServerModel;
+type GetBookByIdResponse = BookServerModel;
 
 export function getBookById({ id }: { id: number }) {
-  return api.get<GetBookResponse>(`/book/${id}`);
+  return api.get<GetBookByIdResponse>(`/book/${id}`);
 }
 
 type SearchBooksResponse = BookServerModel[];

@@ -1,9 +1,5 @@
 import api from '@apis/config';
-
-interface User {
-  id: number;
-  email: string;
-}
+import { User } from '@models/user';
 
 type GetAllUsersResponse = User[];
 

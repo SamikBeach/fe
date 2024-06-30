@@ -1,10 +1,10 @@
 import api from '@apis/config';
 import { AuthorServerModel } from '@models/author';
 
-type GetAllBooksResponse = AuthorServerModel[];
+type GetAllAuthorsResponse = AuthorServerModel[];
 
 export function getAllAuthors() {
-  return api.get<GetAllBooksResponse>('/author');
+  return api.get<GetAllAuthorsResponse>('/author');
 }
 
 type GetAuthorByIdResponse = AuthorServerModel;
@@ -12,6 +12,8 @@ type GetAuthorByIdResponse = AuthorServerModel;
 export function getAuthorById({ id }: { id: number }) {
   return api.get<GetAuthorByIdResponse>(`/author/${id}`);
 }
+
+type SearchAuthorsResponse = AuthorServerModel[];
 
 export function searchAuthors({
   nationalityId,
@@ -28,7 +30,7 @@ export function searchAuthors({
   schoolId?: number;
   educationId?: number;
 }) {
-  return api.get<GetAllBooksResponse>('/author/search', {
+  return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
       nationalityId,
       eraId,

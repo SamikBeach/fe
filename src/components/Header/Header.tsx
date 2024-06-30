@@ -3,8 +3,8 @@
 import { Flex } from '@radix-ui/themes';
 import { styled } from 'styled-system/jsx';
 
-import RightSlot from './RightSlot';
-import LeftSlot from './LeftSlot';
+import RightSlot from './RightSlot/RightSlot';
+import LeftSlot from './LeftSlot/LeftSlot';
 
 export default function Header() {
   return (

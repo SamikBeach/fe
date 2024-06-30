@@ -2,9 +2,8 @@ import { Button } from '@elements/Button';
 
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import Logo from './Logo';
+import Logo from '../Logo';
 import { HStack } from 'styled-system/jsx';
-import { GlobeIcon, HomeIcon } from '@radix-ui/react-icons';
 
 export default function LeftSlot() {
   const router = useRouter();

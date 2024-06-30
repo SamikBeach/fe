@@ -1,7 +1,5 @@
-import { Text } from '@radix-ui/themes';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import { HStack } from 'styled-system/jsx';
 
 export default function Logo() {
   const router = useRouter();

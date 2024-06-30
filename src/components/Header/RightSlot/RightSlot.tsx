@@ -1,41 +1,22 @@
 import { isLoggedInAtom } from '@atoms/auth';
 import { SearchBar } from '@components/SearchBar';
 import { Button } from '@elements/Button';
-import { DropdownMenu, IconButton } from '@radix-ui/themes';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
+import UserProfileIconButton from './UserProfileIconButton';
 
 export default function RightSlot() {
   const router = useRouter();
 
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
 
   return (
     <HStack gap="30px">
       <SearchBar />
       {isLoggedIn ? (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <IconButton
-              radius="full"
-              className={css({ cursor: 'pointer', fontSize: '12px' })}
-            >
-              B
-            </IconButton>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item
-              onSelect={() => {
-                setIsLoggedIn(false);
-                router.push('/login');
-              }}
-            >
-              Log out
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+        <UserProfileIconButton />
       ) : (
         <HStack gap="14px">
           <Button

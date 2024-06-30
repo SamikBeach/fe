@@ -1,4 +1,6 @@
-export const MOCK_AUTHOR = {
+import { AuthorServerModel } from '@models/author';
+
+export const MOCK_AUTHOR: AuthorServerModel = {
   id: 1,
   name: 'Friedrich Nietzsche',
   name_in_kor: '프리드리히 니체',
@@ -8,8 +10,8 @@ export const MOCK_AUTHOR = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/472px-Nietzsche187a.jpg',
-  influenced: [],
-  influenced_by: [],
-  writing: [],
-  book: [],
+  influenceds: [],
+  influenced_bys: [],
+  writings: [],
+  books: [],
 };

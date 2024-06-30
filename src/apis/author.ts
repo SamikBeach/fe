@@ -13,6 +13,15 @@ export function getAuthorById({ id }: { id: number }) {
   return api.get<GetAuthorByIdResponse>(`/author/${id}`);
 }
 
+interface SearchAuthorsRequest {
+  nationalityId?: number;
+  eraId?: number;
+  regionId?: number;
+  mainInterestId?: number;
+  schoolId?: number;
+  educationId?: number;
+}
+
 type SearchAuthorsResponse = AuthorServerModel[];
 
 export function searchAuthors({
@@ -22,14 +31,7 @@ export function searchAuthors({
   mainInterestId,
   schoolId,
   educationId,
-}: {
-  nationalityId?: number;
-  eraId?: number;
-  regionId?: number;
-  mainInterestId?: number;
-  schoolId?: number;
-  educationId?: number;
-}) {
+}: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
       nationalityId,

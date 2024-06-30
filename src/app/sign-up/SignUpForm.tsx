@@ -68,6 +68,7 @@ export default function SignUpForm() {
             <LockClosedIcon />
           </TextField.Slot>
         </TextField.Root>
+
         <Button
           variant="soft"
           onClick={() => mutate({ email, password })}
@@ -76,6 +77,7 @@ export default function SignUpForm() {
         >
           Sign up
         </Button>
+
         <Link
           href="/login"
           className={css({

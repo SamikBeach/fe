@@ -1,10 +1,10 @@
 import { Header } from '@components/Header';
 import ReactQueryProviders from '@components/common/ReactQueryProviders';
 import { Theme } from '@radix-ui/themes';
-import '@styles/globals.css';
-
 import { ReactNode } from 'react';
 import { css } from 'styled-system/css';
+
+import '@styles/globals.css';
 
 export const metadata = {
   title: 'samik beach',

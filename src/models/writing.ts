@@ -10,5 +10,5 @@ export interface WritingServerModel {
   publication_date?: string | null;
   publication_date_is_bc?: 0 | 1 | null;
   author: AuthorServerModel;
-  book: BookServerModel[];
+  books: BookServerModel[];
 }

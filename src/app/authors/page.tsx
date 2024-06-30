@@ -2,7 +2,6 @@
 'use client';
 
 import { AuthorRelationDiagram } from '@components/AuthorRelationDiagram';
-import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import { css } from 'styled-system/css';
 import AuthorList from './AuthorList';
 import { useAtomValue } from 'jotai';

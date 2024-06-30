@@ -19,27 +19,15 @@ function SearchPopover({ children, open, onOpenChange, ...props }: Props) {
         className={css({ width: '260px' })}
       >
         <VStack>
-          <Button
-            variant="ghost"
-            className={css({ width: '100%', justifyContent: 'start' })}
-            onClick={() => onOpenChange?.(false)}
-          >
-            칸트
-          </Button>
-          <Button
-            variant="ghost"
-            className={css({ width: '100%', justifyContent: 'start' })}
-            onClick={() => onOpenChange?.(false)}
-          >
-            니체
-          </Button>
-          <Button
-            variant="ghost"
-            className={css({ width: '100%', justifyContent: 'start' })}
-            onClick={() => onOpenChange?.(false)}
-          >
-            비트겐슈타인
-          </Button>
+          {['칸트', '니체', '비트겐슈타인'].map(result => (
+            <Button
+              variant="ghost"
+              className={css({ width: '100%', justifyContent: 'start' })}
+              onClick={() => onOpenChange?.(false)}
+            >
+              {result}
+            </Button>
+          ))}
         </VStack>
       </Popover.Content>
     </Popover.Root>

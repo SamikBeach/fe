@@ -32,3 +32,12 @@ export function getBornAndDiedDateText({
       : '???'
   }`;
 }
+
+export function getCenturyByDate(date: string) {
+  const bornYear = date.split('-')[0];
+
+  return getIsValidDateString(date)
+    ? Math.floor(Number(bornYear) / 100) + 1
+    : null;
+}
+//

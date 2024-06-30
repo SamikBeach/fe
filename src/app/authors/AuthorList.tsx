@@ -16,8 +16,6 @@ import { css } from 'styled-system/css';
 import { Grid } from 'styled-system/jsx';
 
 function AuthorList() {
-  const router = useRouter();
-
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
   const selectedEraId = useAtomValue(selectedEraIdAtom);
   const selectedRegionId = useAtomValue(selectedRegionIdAtom);
@@ -52,11 +50,7 @@ function AuthorList() {
       <AuthorFilterBox />
       <Grid columns={3} className={css({ py: '20px', px: '60px' })} gap="20px">
         {authors.slice(0, 100).map(author => (
-          <AuthorCard
-            key={author.id}
-            author={author}
-            onClick={() => router.push(`/author/${author.id}`)}
-          />
+          <AuthorCard key={author.id} author={author} />
         ))}
       </Grid>
     </>

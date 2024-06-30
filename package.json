@@ -11,6 +11,7 @@
   "devDependencies": {
     "@pandacss/dev": "^0.40.1",
     "@types/base-64": "^1",
+    "@types/lodash": "^4",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -35,6 +36,7 @@
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "jotai": "^2.8.3",
+    "lodash": "^4.17.21",
     "next": "^14.2.3",
     "rc-drawer": "^7.2.0",
     "react": "^18.3.1",

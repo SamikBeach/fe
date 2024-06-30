@@ -20,14 +20,14 @@ export interface AuthorServerModel {
   born_date_is_bc?: 0 | 1 | null;
   died_date?: string | null;
   died_date_is_bc?: 0 | 1 | null;
-  education?: EducationServerModel[];
-  era?: EraServerModel[];
-  region?: RegionServerModel[];
-  main_interest?: MainInterestServerModel[];
+  educations?: EducationServerModel[];
+  eras?: EraServerModel[];
+  regions?: RegionServerModel[];
+  main_interests?: MainInterestServerModel[];
   nationality?: NationalityServerModel;
-  school?: SchoolServerModel[];
-  influenced: AuthorServerModel[];
-  influenced_by: AuthorServerModel[];
-  writing: WritingServerModel[];
-  book: BookServerModel[];
+  schools?: SchoolServerModel[];
+  influenceds?: AuthorServerModel[];
+  influenced_bys?: AuthorServerModel[];
+  writings?: WritingServerModel[];
+  books?: BookServerModel[];
 }

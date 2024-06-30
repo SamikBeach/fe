@@ -26,7 +26,8 @@
       "@models/*": ["src/models/*"],
       "@parsers/*": ["src/parsers/*"],
       "@public/*": ["src/public/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "plugins": [
       {

@@ -2357,6 +2357,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.17.6
+  resolution: "@types/lodash@npm:4.17.6"
+  checksum: 10c0/3b197ac47af9443fee8c4719c5ffde527d7febc018b827d44a6bc2523c728c7adfdd25196fdcfe3eed827993e0c41a917d0da6e78938b18b2be94164789f1117
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^17.0.36":
   version: 17.0.45
   resolution: "@types/node@npm:17.0.45"
@@ -3564,6 +3571,7 @@ __metadata:
     "@radix-ui/themes": "npm:^3.0.5"
     "@tanstack/react-query": "npm:^5.44.0"
     "@types/base-64": "npm:^1"
+    "@types/lodash": "npm:^4"
     "@types/node": "npm:^20.14.2"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
@@ -3578,6 +3586,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     jotai: "npm:^2.8.3"
+    lodash: "npm:^4.17.21"
     next: "npm:^14.2.3"
     postcss-import: "npm:^16.1.0"
     prettier: "npm:^3.3.1"
@@ -4358,6 +4367,13 @@ __metadata:
   version: 4.5.0
   resolution: "lodash.uniq@npm:4.5.0"
   checksum: 10c0/262d400bb0952f112162a320cc4a75dea4f66078b9e7e3075ffbc9c6aa30b3e9df3cf20e7da7d566105e1ccf7804e4fbd7d804eee0b53de05d83f16ffbf41c5e
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
   languageName: node
   linkType: hard
 

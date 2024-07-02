@@ -13,7 +13,14 @@ export function getBookById({ id }: { id: number }) {
   return api.get<GetBookByIdResponse>(`/book/${id}`);
 }
 
-type SearchBooksResponse = BookServerModel[];
+type SearchBooksResponse = {
+  cursor: {
+    after: number | null;
+  };
+  coont: number;
+  next: string | null;
+  data: BookServerModel[];
+};
 
 export function searchBooks() {
   return api.get<SearchBooksResponse>('/book/search');

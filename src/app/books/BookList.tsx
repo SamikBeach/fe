@@ -8,7 +8,7 @@ function BookList() {
   const { data: books = [] } = useQuery({
     queryKey: ['book'],
     queryFn: () => searchBooks(),
-    select: response => response.data,
+    select: response => response.data.data,
   });
 
   return (

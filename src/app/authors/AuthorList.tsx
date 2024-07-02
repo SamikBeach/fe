@@ -11,7 +11,6 @@ import { AuthorCard } from '@components/AuthorCard';
 import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
-import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Grid } from 'styled-system/jsx';
 
@@ -42,7 +41,7 @@ function AuthorList() {
         schoolId: selectedSchoolId,
         educationId: selectedEducationId,
       }),
-    select: response => response.data,
+    select: response => response.data.data,
   });
 
   return (

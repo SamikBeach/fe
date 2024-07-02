@@ -22,7 +22,14 @@ interface SearchAuthorsRequest {
   educationId?: number;
 }
 
-type SearchAuthorsResponse = AuthorServerModel[];
+type SearchAuthorsResponse = {
+  cursor: {
+    after: number | null;
+  };
+  coont: number;
+  next: string | null;
+  data: AuthorServerModel[];
+};
 
 export function searchAuthors({
   nationalityId,

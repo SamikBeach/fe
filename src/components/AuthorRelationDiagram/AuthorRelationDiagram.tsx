@@ -46,7 +46,7 @@ function RelationDiagram() {
         eraId: selectedEraId,
         regionId: selectedRegionId,
       }),
-    select: response => response.data,
+    select: response => response.data.data,
   });
 
   const initialNodes = useInitialNodes({ authors });

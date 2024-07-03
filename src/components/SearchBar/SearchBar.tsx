@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import SearchDropdownMenu from './SearchDropdownMenu';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import classNames from 'classnames';
 
@@ -23,6 +23,16 @@ function SearchBar() {
       textFieldRef.current?.focus();
     }
   };
+
+  useEffect(() => {
+    window.addEventListener('keypress', e => {
+      if (e.key === '/') {
+        setTimeout(() => {
+          textFieldRef.current?.focus();
+        }, 0);
+      }
+    });
+  }, []);
 
   return (
     <SearchDropdownMenu

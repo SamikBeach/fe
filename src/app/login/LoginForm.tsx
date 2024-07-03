@@ -24,7 +24,7 @@ export default function LoginForm() {
 
   const router = useRouter();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: loginEmail,
     onSuccess: ({ data }) => {
       api.defaults.headers.common['Authorization'] =
@@ -96,6 +96,7 @@ export default function LoginForm() {
                 onClick={() => mutate({ email, password })}
                 className={css({ width: '100%' })}
                 size="3"
+                loading={isPending}
               >
                 <Text size="2">Log in</Text>
               </Button>

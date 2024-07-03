@@ -27,7 +27,8 @@
       "@parsers/*": ["src/parsers/*"],
       "@svg/*": ["src/svg/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@fonts/*": ["src/fonts/*"]
     },
     "plugins": [
       {

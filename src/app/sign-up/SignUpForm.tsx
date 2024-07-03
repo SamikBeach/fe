@@ -23,7 +23,7 @@ export default function SignUpForm() {
 
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: registerEmail,
     onSuccess: ({ data }) => {
       router.push('/');
@@ -85,6 +85,7 @@ export default function SignUpForm() {
                 onClick={() => mutate({ email, password: '1234' })}
                 className={css({ width: '100%' })}
                 size="3"
+                loading={isPending}
               >
                 <Text size="2">Sign Up</Text>
               </Button>

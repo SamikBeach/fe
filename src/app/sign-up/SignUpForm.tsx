@@ -41,7 +41,14 @@ export default function SignUpForm() {
   });
 
   return (
-    <Card className={css({ width: '400px', padding: '40px' })}>
+    <Card
+      className={css({ width: '400px', padding: '40px' })}
+      onKeyDown={e => {
+        if (e.key === 'Enter') {
+          mutate({ email, password: '1234' });
+        }
+      }}
+    >
       <VStack
         className={css({ pt: '20px' })}
         rounded="xl"
@@ -75,7 +82,7 @@ export default function SignUpForm() {
               </VStack>
 
               <Button
-                onClick={() => mutate({ email, password: '' })}
+                onClick={() => mutate({ email, password: '1234' })}
                 className={css({ width: '100%' })}
                 size="3"
               >
@@ -85,7 +92,7 @@ export default function SignUpForm() {
 
             <Button
               variant="outline"
-              onClick={() => mutate({ email, password: '' })}
+              onClick={() => mutate({ email, password: '1234' })}
               className={css({ width: '100%', color: 'black' })}
               size="2"
             >

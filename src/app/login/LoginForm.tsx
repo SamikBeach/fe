@@ -42,7 +42,14 @@ export default function LoginForm() {
   });
 
   return (
-    <Card className={css({ width: '400px', padding: '40px' })}>
+    <Card
+      className={css({ width: '400px', padding: '40px' })}
+      onKeyDown={e => {
+        if (e.key === 'Enter') {
+          mutate({ email, password });
+        }
+      }}
+    >
       <VStack className={css({ pt: '20px' })} rounded="xl" gap="40px">
         <Logo
           width="80px"

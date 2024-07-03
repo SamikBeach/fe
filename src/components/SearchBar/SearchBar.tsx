@@ -1,18 +1,21 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import SearchPopover from './SearchPopover';
+import SearchDropdownMenu from './SearchDropdownMenu';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
 import useDebounce from '@hooks/useDebounce';
+import { FocusScope } from '@radix-ui/react-focus-scope';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
-  const [isOpenSearchPopover, setIsOpenSearchPopover] = useState(false);
-  const debouncedSearchValue = useDebounce(searchValue, 500);
+  const [isOpenSearchDropdownMenu, setIsOpenSearchDropdownMenu] =
+    useState(false);
+  const debouncedSearchValue = useDebounce(searchValue, 200);
 
-  const textFieldRef = useRef(null);
+  const textFieldRef = useRef<HTMLInputElement>(null);
+  const searchDropdownMenuContentRef = useRef<HTMLDivElement>(null);
 
   const { data: authors = [] } = useQuery({
     queryKey: ['author', debouncedSearchValue],
@@ -22,34 +25,56 @@ function SearchBar() {
     select: response => response.data.data,
   });
 
-  return (
-    <SearchPopover
-      open={isOpenSearchPopover}
-      onOpenChange={setIsOpenSearchPopover}
-      authors={authors}
-    >
-      <TextField.Root
-        ref={textFieldRef}
-        placeholder="Search authors, books..."
-        className={css({ width: '250px' })}
-        value={searchValue}
-        onChange={event => {
-          setSearchValue(event.target.value);
+  const handleKeyDownDropdownMenuItem = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    if (index === 0 && e.key === 'ArrowUp') {
+      textFieldRef.current?.focus();
+    }
+  };
 
-          if (event.target.value !== '') {
-            setIsOpenSearchPopover(true);
-          } else {
-            setIsOpenSearchPopover(false);
-          }
-        }}
-      >
-        <SearchPopover.Trigger>
-          <TextField.Slot>
-            <MagnifyingGlassIcon height="16" width="16" />
-          </TextField.Slot>
-        </SearchPopover.Trigger>
-      </TextField.Root>
-    </SearchPopover>
+  return (
+    <SearchDropdownMenu
+      open={isOpenSearchDropdownMenu}
+      onOpenChange={setIsOpenSearchDropdownMenu}
+      authors={authors}
+      ref={searchDropdownMenuContentRef}
+      onKeyDownDropdownMenuItem={handleKeyDownDropdownMenuItem}
+    >
+      <FocusScope trapped={false}>
+        <TextField.Root
+          ref={textFieldRef}
+          placeholder="Search authors, books..."
+          className={css({ width: '250px' })}
+          value={searchValue}
+          onKeyDown={e => {
+            if (e.key === 'ArrowDown') {
+              searchDropdownMenuContentRef.current?.focus();
+            }
+          }}
+          onChange={event => {
+            setSearchValue(event.target.value);
+
+            setTimeout(() => {
+              event.target.focus();
+            }, 0);
+
+            if (event.target.value !== '') {
+              setIsOpenSearchDropdownMenu(true);
+            } else {
+              setIsOpenSearchDropdownMenu(false);
+            }
+          }}
+        >
+          <SearchDropdownMenu.Trigger>
+            <TextField.Slot>
+              <MagnifyingGlassIcon height="16" width="16" />
+            </TextField.Slot>
+          </SearchDropdownMenu.Trigger>
+        </TextField.Root>
+      </FocusScope>
+    </SearchDropdownMenu>
   );
 }
 

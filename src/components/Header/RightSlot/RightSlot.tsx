@@ -18,7 +18,7 @@ export default function RightSlot() {
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (
-        <HStack gap="14px">
+        <HStack gap="20px">
           <Button
             variant="ghost"
             className={css({ color: 'black', fontWeight: 'medium' })}
@@ -27,7 +27,7 @@ export default function RightSlot() {
             Log in
           </Button>
           <Button
-            variant="soft"
+            variant="ghost"
             onClick={() => router.push('/sign-up')}
             className={css({ color: 'black', fontWeight: 'medium' })}
           >

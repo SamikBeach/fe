@@ -1,3 +1,36 @@
 @layer reset, base, radix_ui, reactflow, tokens, recipes, utilities;
 @import '@radix-ui/themes/styles.css' layer(radix_ui);
 @import 'reactflow/dist/style.css' layer(reactflow);
+
+[data-accent-color='gray'] {
+  --accent-1: #fcfcfd;
+  --accent-2: #f9f9fb;
+  --accent-3: #eff0f3;
+  --accent-4: #e7e8ec;
+  --accent-5: #e0e1e6;
+  --accent-6: #d8d9e0;
+  --accent-7: #cdced7;
+  --accent-8: #b9bbc6;
+  --accent-9: #000;
+  --accent-10: #2c2d33;
+  --accent-11: #62636c;
+  --accent-12: #1e1f24;
+
+  --accent-a1: #00005503;
+  --accent-a2: #00005506;
+  --accent-a3: #00104010;
+  --accent-a4: #000b3618;
+  --accent-a5: #0009321f;
+  --accent-a6: #00073527;
+  --accent-a7: #00063332;
+  --accent-a8: #00083046;
+  --accent-a9: #000000;
+  --accent-a10: #000109d3;
+  --accent-a11: #0002119d;
+  --accent-a12: #000107e1;
+
+  --accent-contrast: #fff;
+  --accent-surface: #f8f8facc;
+  --accent-indicator: #000;
+  --accent-track: #000;
+}

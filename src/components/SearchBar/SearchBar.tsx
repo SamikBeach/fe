@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
 import useDebounce from '@hooks/useDebounce';
-import { FocusScope } from '@radix-ui/react-focus-scope';
+import classNames from 'classnames';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -36,44 +36,52 @@ function SearchBar() {
 
   return (
     <SearchDropdownMenu
+      ref={searchDropdownMenuContentRef}
       open={isOpenSearchDropdownMenu}
       onOpenChange={setIsOpenSearchDropdownMenu}
       authors={authors}
-      ref={searchDropdownMenuContentRef}
+      searchValue={searchValue}
       onKeyDownDropdownMenuItem={handleKeyDownDropdownMenuItem}
     >
-      <FocusScope trapped={false}>
-        <TextField.Root
-          ref={textFieldRef}
-          placeholder="Search authors, books..."
-          className={css({ width: '250px' })}
-          value={searchValue}
-          onKeyDown={e => {
-            if (e.key === 'ArrowDown') {
-              searchDropdownMenuContentRef.current?.focus();
-            }
-          }}
-          onChange={event => {
-            setSearchValue(event.target.value);
+      <TextField.Root
+        ref={textFieldRef}
+        placeholder="Search authors, books..."
+        className={classNames(css({ width: '250px' }), 'search-bar')}
+        value={searchValue}
+        onClick={e => {
+          if (searchValue !== '' && !isOpenSearchDropdownMenu) {
+            setIsOpenSearchDropdownMenu(true);
 
             setTimeout(() => {
-              event.target.focus();
+              (e.target as HTMLInputElement).focus();
             }, 0);
+          }
+        }}
+        onKeyDown={e => {
+          if (e.key === 'ArrowDown') {
+            searchDropdownMenuContentRef.current?.focus();
+          }
+        }}
+        onChange={event => {
+          setSearchValue(event.target.value);
 
-            if (event.target.value !== '') {
-              setIsOpenSearchDropdownMenu(true);
-            } else {
-              setIsOpenSearchDropdownMenu(false);
-            }
-          }}
-        >
-          <SearchDropdownMenu.Trigger>
-            <TextField.Slot>
-              <MagnifyingGlassIcon height="16" width="16" />
-            </TextField.Slot>
-          </SearchDropdownMenu.Trigger>
-        </TextField.Root>
-      </FocusScope>
+          setTimeout(() => {
+            event.target.focus();
+          }, 0);
+
+          if (event.target.value !== '') {
+            setIsOpenSearchDropdownMenu(true);
+          } else {
+            setIsOpenSearchDropdownMenu(false);
+          }
+        }}
+      >
+        <SearchDropdownMenu.Trigger>
+          <TextField.Slot>
+            <MagnifyingGlassIcon height="16" width="16" />
+          </TextField.Slot>
+        </SearchDropdownMenu.Trigger>
+      </TextField.Root>
     </SearchDropdownMenu>
   );
 }

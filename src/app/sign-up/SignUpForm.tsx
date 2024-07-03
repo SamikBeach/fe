@@ -70,7 +70,6 @@ export default function SignUpForm() {
         </TextField.Root>
 
         <Button
-          variant="soft"
           onClick={() => mutate({ email, password })}
           className={css({ width: '300px' })}
           size="3"

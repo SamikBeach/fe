@@ -3,6 +3,7 @@
 import { loginEmail } from '@apis/auth';
 import api from '@apis/config';
 import { isLoggedInAtom } from '@atoms/auth';
+import { Logo } from '@components/Logo';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@radix-ui/react-icons';
 import { Card, Link, TextField } from '@radix-ui/themes';
@@ -44,48 +45,56 @@ export default function LoginForm() {
       <VStack
         className={css({ bgColor: 'white', py: '40px', width: '400px' })}
         rounded="xl"
+        gap="40px"
       >
-        <TextField.Root
-          type="text"
-          placeholder="email"
-          onChange={e => setEmail(e.target.value)}
-          size="3"
-          className={css({ width: '300px' })}
-        >
-          <TextField.Slot>
-            <EnvelopeClosedIcon />
-          </TextField.Slot>
-        </TextField.Root>
+        <Logo
+          width="80px"
+          onClick={() => router.push('/')}
+          className={css({ cursor: 'pointer' })}
+        />
 
-        <TextField.Root
-          type="password"
-          placeholder="Password"
-          onChange={e => setPassword(e.target.value)}
-          size="3"
-          className={css({ width: '300px' })}
-        >
-          <TextField.Slot>
-            <LockClosedIcon />
-          </TextField.Slot>
-        </TextField.Root>
+        <VStack>
+          <TextField.Root
+            type="text"
+            placeholder="Enter email"
+            onChange={e => setEmail(e.target.value)}
+            size="3"
+            className={css({ width: '300px' })}
+          >
+            <TextField.Slot>
+              <EnvelopeClosedIcon />
+            </TextField.Slot>
+          </TextField.Root>
 
-        <Button
-          variant="soft"
-          onClick={() => mutate({ email, password })}
-          className={css({ width: '300px' })}
-          size="3"
-        >
-          Log in
-        </Button>
+          <TextField.Root
+            type="password"
+            placeholder="Enter password"
+            onChange={e => setPassword(e.target.value)}
+            size="3"
+            className={css({ width: '300px' })}
+          >
+            <TextField.Slot>
+              <LockClosedIcon />
+            </TextField.Slot>
+          </TextField.Root>
 
-        <Link
-          href="/sign-up"
-          className={css({
-            color: 'black',
-          })}
-        >
-          Go to the sign up page
-        </Link>
+          <Button
+            onClick={() => mutate({ email, password })}
+            className={css({ width: '300px' })}
+            size="3"
+          >
+            Log in
+          </Button>
+
+          <Link
+            href="/sign-up"
+            className={css({
+              color: 'black',
+            })}
+          >
+            Go to the sign up page
+          </Link>
+        </VStack>
       </VStack>
     </Card>
   );

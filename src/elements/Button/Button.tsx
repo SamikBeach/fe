@@ -12,7 +12,10 @@ const Button = forwardRef<HTMLButtonElement, Props>(function (
   return (
     <RadixButton
       ref={ref}
-      className={classNames(css({ cursor: 'pointer' }), className)}
+      className={classNames(
+        css({ cursor: props.disabled ? undefined : 'pointer' }),
+        className
+      )}
       {...props}
     />
   );

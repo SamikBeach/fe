@@ -7,6 +7,8 @@ import { searchAuthors } from '@apis/author';
 import { useQuery } from '@tanstack/react-query';
 import { searchWritings } from '@apis/writing';
 import { WritingHoverCard } from '@components/WritingHoverCard';
+import AuthorHoverCard from '@components/AuthorHoverCard/AuthorHoverCard';
+import { useRouter } from 'next/navigation';
 
 interface Props extends ComponentProps<typeof DropdownMenu.Root> {
   searchValue: string;
@@ -27,6 +29,8 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
   },
   ref
 ) {
+  const router = useRouter();
+
   const { data: authors = [], isLoading: isLoadingAuthors } = useQuery({
     queryKey: ['author', searchValue],
     queryFn: () => searchAuthors({ where__name__i_like: searchValue, take: 5 }),
@@ -71,28 +75,39 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
           <DropdownMenu.Group title="Author">
             <DropdownMenu.Label>Author</DropdownMenu.Label>
             {authors.map((author, index) => (
-              <DropdownMenu.Item
+              <AuthorHoverCard.Root
                 key={author.id}
-                onKeyDown={e => onKeyDownDropdownMenuItem(e, index)}
-                className={css({
-                  _focus: { backgroundColor: 'gray.50', color: 'black' },
-                })}
+                openDelay={0}
+                closeDelay={0}
               >
-                <Avatar
-                  src={author.image_url ?? undefined}
-                  fallback={author.name[0]}
-                  radius="full"
-                  size="1"
-                />
-                <Highlighter
-                  searchWords={[searchValue]}
-                  textToHighlight={author.name}
-                  highlightClassName={css({
-                    fontWeight: 'bold',
-                    backgroundColor: 'transparent',
-                  })}
-                />
-              </DropdownMenu.Item>
+                <AuthorHoverCard.Trigger>
+                  <DropdownMenu.Item
+                    onKeyDown={e => onKeyDownDropdownMenuItem(e, index)}
+                    className={css({
+                      cursor: 'pointer',
+
+                      _focus: { backgroundColor: 'gray.50', color: 'black' },
+                    })}
+                    onClick={() => router.push(`/author/${author.id}`)}
+                  >
+                    <Avatar
+                      src={author.image_url ?? undefined}
+                      fallback={author.name[0]}
+                      radius="full"
+                      size="1"
+                    />
+                    <Highlighter
+                      searchWords={[searchValue]}
+                      textToHighlight={author.name}
+                      highlightClassName={css({
+                        fontWeight: 'bold',
+                        backgroundColor: 'transparent',
+                      })}
+                    />
+                  </DropdownMenu.Item>
+                </AuthorHoverCard.Trigger>
+                <AuthorHoverCard.Content author={author} side="left" />
+              </AuthorHoverCard.Root>
             ))}
           </DropdownMenu.Group>
         )}
@@ -100,18 +115,24 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
           <DropdownMenu.Group title="Writing">
             <DropdownMenu.Label>Writing</DropdownMenu.Label>
             {writings.map((writing, index) => (
-              <WritingHoverCard.Root key={writing.id} openDelay={500}>
+              <WritingHoverCard.Root
+                key={writing.id}
+                openDelay={0}
+                closeDelay={0}
+              >
                 <WritingHoverCard.Trigger>
                   <DropdownMenu.Item
                     onKeyDown={e => onKeyDownDropdownMenuItem(e, index)}
                     className={css({
                       width: '300px',
+                      cursor: 'pointer',
 
                       _focus: {
                         backgroundColor: 'gray.50',
                         color: 'black',
                       },
                     })}
+                    onClick={() => router.push(`/writing/${writing.id}`)}
                   >
                     <Avatar
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
@@ -133,7 +154,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
                     />
                   </DropdownMenu.Item>
                 </WritingHoverCard.Trigger>
-                <WritingHoverCard.Content writing={writing} />
+                <WritingHoverCard.Content writing={writing} side="left" />
               </WritingHoverCard.Root>
             ))}
           </DropdownMenu.Group>

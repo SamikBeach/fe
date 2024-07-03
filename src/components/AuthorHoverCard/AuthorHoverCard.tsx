@@ -56,10 +56,10 @@ function AuthorHoverCardContent({
           size="7"
         />
         <VStack alignItems="start" gap="0">
-          <Text size="4" weight="bold">
+          <Text size="3" weight="bold">
             {name}
           </Text>
-          <Text size="3">{name_in_kor}</Text>
+          <Text size="2">{name_in_kor}</Text>
           <HStack>
             <Text size="2" color="gray">
               {getBornAndDiedDateText({

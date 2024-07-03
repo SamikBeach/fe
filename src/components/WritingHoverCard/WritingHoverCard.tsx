@@ -16,7 +16,8 @@ function WritingHoverCardContent({
   className,
   ...props
 }: WritingHoverCardContentProps) {
-  const { id, title, title_in_eng, title_in_kor, publication_date } = writing;
+  const { id, title, title_in_eng, title_in_kor, author, publication_date } =
+    writing;
 
   const router = useRouter();
 
@@ -30,7 +31,6 @@ function WritingHoverCardContent({
         }),
         className
       )}
-      side="top"
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -49,11 +49,14 @@ function WritingHoverCardContent({
           <Text size="3" weight="bold">
             {title}
           </Text>
-          <Text size="2" color="gray">
+          <Text size="2" weight="medium" className={css({ color: 'gray.700' })}>
+            {title_in_eng}
+          </Text>
+          <Text size="2" weight="medium" className={css({ color: 'gray.700' })}>
             {title_in_kor}
           </Text>
           <Text size="2" color="gray">
-            {title_in_eng}
+            {author.name}
           </Text>
           <Text size="2" color="gray">
             {publication_date}

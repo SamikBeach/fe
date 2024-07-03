@@ -20,6 +20,8 @@ interface SearchAuthorsRequest {
   mainInterestId?: number;
   schoolId?: number;
   educationId?: number;
+  where__name__i_like?: string;
+  take?: number;
 }
 
 type SearchAuthorsResponse = {
@@ -38,6 +40,8 @@ export function searchAuthors({
   mainInterestId,
   schoolId,
   educationId,
+  where__name__i_like,
+  take,
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
@@ -47,6 +51,8 @@ export function searchAuthors({
       mainInterestId,
       schoolId,
       educationId,
+      where__name__i_like,
+      take,
     },
   });
 }

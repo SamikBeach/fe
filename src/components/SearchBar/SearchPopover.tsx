@@ -1,11 +1,20 @@
+import { AuthorServerModel } from '@models/author';
 import { Button, Popover } from '@radix-ui/themes';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 
-interface Props extends ComponentProps<typeof Popover.Root> {}
+interface Props extends ComponentProps<typeof Popover.Root> {
+  authors: AuthorServerModel[];
+}
 
-function SearchPopover({ children, open, onOpenChange, ...props }: Props) {
+function SearchPopover({
+  children,
+  open,
+  onOpenChange,
+  authors,
+  ...props
+}: Props) {
   return (
     <Popover.Root
       modal={false}
@@ -15,17 +24,18 @@ function SearchPopover({ children, open, onOpenChange, ...props }: Props) {
     >
       {children}
       <Popover.Content
-        onOpenAutoFocus={e => e.preventDefault()}
+        // onOpenAutoFocus={e => e.preventDefault()}
         className={css({ width: '260px' })}
+        autoFocus
       >
         <VStack>
-          {['칸트', '니체', '비트겐슈타인'].map(result => (
+          {authors.map(author => (
             <Button
               variant="ghost"
               className={css({ width: '100%', justifyContent: 'start' })}
               onClick={() => onOpenChange?.(false)}
             >
-              {result}
+              {author.name}
             </Button>
           ))}
         </VStack>

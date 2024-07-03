@@ -6,12 +6,17 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   plugins: ['@typescript-eslint', 'react-hooks'],
   rules: {
+    'react/display-name': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-key': 'warn',
+
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     indent: ['error', 2, { SwitchCase: 1, ignoredNodes: ['TemplateLiteral'] }],

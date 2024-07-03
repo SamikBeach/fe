@@ -24,14 +24,14 @@ interface SearchAuthorsRequest {
   take?: number;
 }
 
-type SearchAuthorsResponse = {
+interface SearchAuthorsResponse {
   cursor: {
     after: number | null;
   };
   coont: number;
   next: string | null;
   data: AuthorServerModel[];
-};
+}
 
 export function searchAuthors({
   nationalityId,

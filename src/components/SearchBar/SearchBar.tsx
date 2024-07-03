@@ -3,8 +3,6 @@ import { TextField } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import SearchDropdownMenu from './SearchDropdownMenu';
 import { useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { searchAuthors } from '@apis/author';
 import useDebounce from '@hooks/useDebounce';
 import classNames from 'classnames';
 
@@ -16,14 +14,6 @@ function SearchBar() {
 
   const textFieldRef = useRef<HTMLInputElement>(null);
   const searchDropdownMenuContentRef = useRef<HTMLDivElement>(null);
-
-  const { data: authors = [] } = useQuery({
-    queryKey: ['author', debouncedSearchValue],
-    queryFn: () =>
-      searchAuthors({ where__name__i_like: debouncedSearchValue, take: 5 }),
-    enabled: debouncedSearchValue !== '',
-    select: response => response.data.data,
-  });
 
   const handleKeyDownDropdownMenuItem = (
     e: React.KeyboardEvent<HTMLDivElement>,
@@ -39,8 +29,7 @@ function SearchBar() {
       ref={searchDropdownMenuContentRef}
       open={isOpenSearchDropdownMenu}
       onOpenChange={setIsOpenSearchDropdownMenu}
-      authors={authors}
-      searchValue={searchValue}
+      searchValue={debouncedSearchValue}
       onKeyDownDropdownMenuItem={handleKeyDownDropdownMenuItem}
     >
       <TextField.Root

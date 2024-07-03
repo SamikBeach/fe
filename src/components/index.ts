@@ -8,4 +8,6 @@ export * from './AuthorCard';
 export * from './BookCard';
 export * from './BookFilterBox';
 
+export * from './WritingHoverCard';
+
 export * from './common';

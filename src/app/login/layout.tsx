@@ -1,10 +1,21 @@
 import { ReactNode } from 'react';
-import { Center } from 'styled-system/jsx/center';
+import { css } from 'styled-system/css';
 
 interface Props {
   children: ReactNode;
 }
 
 export default function Layout({ children }: Props) {
-  return <Center height="600px">{children}</Center>;
+  return (
+    <div
+      className={css({
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+      })}
+    >
+      {children}
+    </div>
+  );
 }

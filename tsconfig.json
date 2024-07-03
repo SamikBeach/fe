@@ -25,7 +25,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@models/*": ["src/models/*"],
       "@parsers/*": ["src/parsers/*"],
-      "@public/*": ["src/public/*"],
+      "@svg/*": ["src/svg/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"]
     },

@@ -62,6 +62,8 @@ function SearchBar() {
         }}
         onKeyDown={e => {
           if (e.key === 'ArrowDown') {
+            e.preventDefault();
+
             searchDropdownMenuContentRef.current?.focus();
           }
         }}

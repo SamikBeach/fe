@@ -27,12 +27,16 @@ function SearchBar() {
   useEffect(() => {
     window.addEventListener('keypress', e => {
       if (e.key === '/') {
+        if (searchValue !== '') {
+          setIsOpenSearchDropdownMenu(true);
+        }
+
         setTimeout(() => {
           textFieldRef.current?.focus();
         }, 0);
       }
     });
-  }, []);
+  }, [searchValue]);
 
   return (
     <SearchDropdownMenu

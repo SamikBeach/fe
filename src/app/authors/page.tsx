@@ -15,6 +15,7 @@ export default function AuthorsPage() {
       className={css({
         position: 'relative',
         bgColor: 'gray.50',
+        paddingTop: viewMode === 'list' ? '140px' : '0px',
       })}
     >
       {viewMode === 'list' ? <AuthorList /> : <AuthorRelationDiagram />}

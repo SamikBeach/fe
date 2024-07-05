@@ -15,7 +15,7 @@ export default function TestButtons({
       <Button
         className={css({
           position: 'absolute',
-          top: 100,
+          top: 200,
           left: 100,
           zIndex: 3,
         })}
@@ -26,7 +26,7 @@ export default function TestButtons({
       <Button
         className={css({
           position: 'absolute',
-          top: 140,
+          top: 240,
           left: 100,
           zIndex: 3,
         })}

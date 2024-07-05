@@ -29,6 +29,7 @@ function EducationFilter({ onValueChange, ...props }: Props) {
         className={css({
           cursor: 'pointer',
           zIndex: 2,
+          backgroundColor: 'white',
         })}
         placeholder="Pick an education"
       />

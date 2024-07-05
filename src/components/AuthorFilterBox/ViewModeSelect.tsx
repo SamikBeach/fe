@@ -8,7 +8,7 @@ export default function ViewModeSelect() {
 
   return (
     <SegmentedControl.Root
-      className={css({ zIndex: 2 })}
+      className={css({ zIndex: 2, backgroundColor: 'white' })}
       defaultValue="list"
       onValueChange={value => setViewMode(value as 'diagram' | 'list')}
     >

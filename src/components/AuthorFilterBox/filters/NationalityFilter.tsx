@@ -29,6 +29,7 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
         className={css({
           cursor: 'pointer',
           zIndex: 2,
+          backgroundColor: 'white',
         })}
         placeholder="Pick a nationality"
       />

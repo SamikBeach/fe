@@ -22,7 +22,6 @@ module.exports = {
     indent: ['error', 2, { SwitchCase: 1, ignoredNodes: ['TemplateLiteral'] }],
     'no-var': 'error',
     'max-len': 'off',
-    indent: 'off',
     'space-infix-ops': 'error',
     'comma-dangle': ['error', 'always-multiline'],
     'arrow-parens': 'off',

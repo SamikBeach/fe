@@ -22,22 +22,32 @@ export function getBornAndDiedDateText({
   bornDateIsBc: boolean;
   diedDateIsBc: boolean;
 }) {
-  return `${bornDateIsBc ? '기원전 ' : ''}${
+  const splitBornDate = bornDate?.split('-');
+
+  const bornDateText = `${bornDateIsBc ? '기원전 ' : ''}${
     !isNil(bornDate) && getIsValidDateString(bornDate)
       ? format(new Date(bornDate), 'y년 M월 d일 ')
-      : '???'
-  } - ${diedDateIsBc ? '기원전 ' : ''}${
+      : splitBornDate?.[1] === '00'
+        ? `${splitBornDate[0]}년`
+        : '???'
+  }`;
+
+  const splitDiedDate = diedDate?.split('-');
+
+  const diedDateText = `${diedDateIsBc ? '기원전 ' : ''}${
     !isNil(diedDate) && getIsValidDateString(diedDate)
       ? format(new Date(diedDate), 'y년 M월 d일 ')
-      : '???'
+      : splitDiedDate?.[1] === '00'
+        ? `${splitDiedDate[0]}년`
+        : '???'
   }`;
+
+  return `${bornDateText} - ${diedDateText}`;
 }
 
 export function getCenturyByDate(date: string) {
   const bornYear = date.split('-')[0];
 
-  return getIsValidDateString(date)
-    ? Math.floor(Number(bornYear) / 100) + 1
-    : null;
+  return Math.floor(Number(bornYear) / 100) + 1;
 }
 //

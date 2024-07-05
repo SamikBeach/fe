@@ -11,8 +11,7 @@ import { AuthorCard } from '@components/AuthorCard';
 import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
-import { css } from 'styled-system/css';
-import { Grid } from 'styled-system/jsx';
+import { HStack } from 'styled-system/jsx';
 
 function AuthorList() {
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
@@ -40,6 +39,7 @@ function AuthorList() {
         mainInterestId: selectedMainInterestId,
         schoolId: selectedSchoolId,
         educationId: selectedEducationId,
+        take: 450,
       }),
     select: response => response.data.data,
   });
@@ -47,11 +47,11 @@ function AuthorList() {
   return (
     <>
       <AuthorFilterBox />
-      <Grid columns={3} className={css({ py: '20px', px: '60px' })} gap="20px">
+      <HStack flexWrap="wrap" gap="20px" justifyContent="center">
         {authors.slice(0, 100).map(author => (
           <AuthorCard key={author.id} author={author} />
         ))}
-      </Grid>
+      </HStack>
     </>
   );
 }

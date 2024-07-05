@@ -2,6 +2,7 @@ import { AuthorServerModel } from '@models/author';
 import { Avatar, HoverCard, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import classNames from 'classnames';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
@@ -26,6 +27,8 @@ function AuthorHoverCardContent({
     died_date,
     born_date_is_bc,
     died_date_is_bc,
+    writings = [],
+    books = [],
   } = author;
 
   const router = useRouter();
@@ -69,6 +72,32 @@ function AuthorHoverCardContent({
                 diedDateIsBc: died_date_is_bc === 1,
               })}
             </Text>
+          </HStack>
+          <HStack>
+            <Link href={`/author/${author.id}#writings`}>
+              <Text
+                size="2"
+                className={css({
+                  color: 'gray.600',
+                  cursor: 'pointer',
+                  _hover: { textDecoration: 'underline' },
+                })}
+              >
+                {writings.length} writings
+              </Text>
+            </Link>
+            <Link href={`/author/${author.id}#books`}>
+              <Text
+                size="2"
+                className={css({
+                  color: 'gray.600',
+                  cursor: 'pointer',
+                  _hover: { textDecoration: 'underline' },
+                })}
+              >
+                {books.length} books
+              </Text>
+            </Link>
           </HStack>
         </VStack>
       </HStack>

@@ -31,7 +31,7 @@ function SchoolFilter({ onValueChange, ...props }: Props) {
           zIndex: 2,
           backgroundColor: 'white',
         })}
-        placeholder="Pick an school"
+        placeholder="School"
       />
       <Select.Content side="bottom" position="popper">
         <Select.Group>
@@ -39,7 +39,16 @@ function SchoolFilter({ onValueChange, ...props }: Props) {
           {schools
             .sort((a, b) => a.school.localeCompare(b.school))
             .map(school => (
-              <Select.Item key={school.id} value={String(school.id)}>
+              <Select.Item
+                key={school.id}
+                value={String(school.id)}
+                className={css({
+                  _focus: {
+                    backgroundColor: 'gray.100',
+                    color: 'black',
+                  },
+                })}
+              >
                 {school.school}
               </Select.Item>
             ))}

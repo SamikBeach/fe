@@ -16,6 +16,7 @@ export default function AuthorsPage() {
         position: 'relative',
         bgColor: 'gray.50',
         paddingTop: viewMode === 'list' ? '140px' : '0px',
+        width: '100%',
       })}
     >
       {viewMode === 'list' ? <AuthorList /> : <AuthorRelationDiagram />}

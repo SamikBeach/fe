@@ -31,7 +31,7 @@ function MainInterestFilter({ onValueChange, ...props }: Props) {
           zIndex: 2,
           backgroundColor: 'white',
         })}
-        placeholder="Pick a mainInterest"
+        placeholder="Main Interest"
       />
       <Select.Content side="bottom" position="popper">
         <Select.Group>
@@ -42,6 +42,12 @@ function MainInterestFilter({ onValueChange, ...props }: Props) {
               <Select.Item
                 key={mainInterest.id}
                 value={String(mainInterest.id)}
+                className={css({
+                  _focus: {
+                    backgroundColor: 'gray.100',
+                    color: 'black',
+                  },
+                })}
               >
                 {mainInterest.main_interest}
               </Select.Item>

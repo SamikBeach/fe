@@ -28,7 +28,7 @@ export function getBornAndDiedDateText({
     !isNil(bornDate) && getIsValidDateString(bornDate)
       ? format(new Date(bornDate), 'y년 M월 d일 ')
       : splitBornDate?.[1] === '00'
-        ? `${splitBornDate[0]}년`
+        ? `${splitBornDate[0]}년 ?월 ?일`
         : '???'
   }`;
 
@@ -38,7 +38,7 @@ export function getBornAndDiedDateText({
     !isNil(diedDate) && getIsValidDateString(diedDate)
       ? format(new Date(diedDate), 'y년 M월 d일 ')
       : splitDiedDate?.[1] === '00'
-        ? `${splitDiedDate[0]}년`
+        ? `${splitDiedDate[0]}년 ?월 ?일`
         : '???'
   }`;
 

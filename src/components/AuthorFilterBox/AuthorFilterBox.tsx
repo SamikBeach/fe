@@ -13,7 +13,7 @@ import {
 } from './filters';
 import { Sort } from './sort';
 import ViewModeSelect from './ViewModeSelect';
-import { HEADER_HEIGHT } from '@constants/common';
+import { FILTER_BOX_HEIGHT, HEADER_HEIGHT } from '@constants/common';
 import { useEffect, useState } from 'react';
 
 interface Props extends HstackProps {
@@ -43,7 +43,7 @@ export default function AuthorFilterBox({
       className={classNames(
         css({
           pointerEvents: 'auto',
-          height: '64px',
+          height: FILTER_BOX_HEIGHT,
           width: '100%',
           px: '20px',
 
@@ -64,12 +64,12 @@ export default function AuthorFilterBox({
     >
       <ViewModeSelect />
       <HStack>
+        <NationalityFilter onValueChange={onValueChange} />
         <EraFilter onValueChange={onValueChange} />
         <RegionFilter onValueChange={onValueChange} />
-        <NationalityFilter onValueChange={onValueChange} />
+        <EducationFilter onValueChange={onValueChange} />
         <MainInterestFilter onValueChange={onValueChange} />
         <SchoolFilter onValueChange={onValueChange} />
-        <EducationFilter onValueChange={onValueChange} />
         <Sort />
       </HStack>
     </HStack>

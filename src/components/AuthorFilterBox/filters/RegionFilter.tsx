@@ -31,7 +31,7 @@ function RegionFilter({ onValueChange, ...props }: Props) {
           zIndex: 2,
           backgroundColor: 'white',
         })}
-        placeholder="Pick a region"
+        placeholder="Region"
       />
       <Select.Content side="bottom" position="popper">
         <Select.Group>
@@ -39,7 +39,16 @@ function RegionFilter({ onValueChange, ...props }: Props) {
           {regions
             .sort((a, b) => a.region.localeCompare(b.region))
             .map(region => (
-              <Select.Item key={region.id} value={String(region.id)}>
+              <Select.Item
+                key={region.id}
+                value={String(region.id)}
+                className={css({
+                  _focus: {
+                    backgroundColor: 'gray.100',
+                    color: 'black',
+                  },
+                })}
+              >
                 {region.region}
               </Select.Item>
             ))}

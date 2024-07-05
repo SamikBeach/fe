@@ -31,7 +31,7 @@ function EraFilter({ onValueChange, ...props }: Props) {
           zIndex: 2,
           backgroundColor: 'white',
         })}
-        placeholder="Pick an era"
+        placeholder="Era"
       />
       <Select.Content side="bottom" position="popper">
         <Select.Group>
@@ -39,7 +39,16 @@ function EraFilter({ onValueChange, ...props }: Props) {
           {eras
             .sort((a, b) => a.era.localeCompare(b.era))
             .map(era => (
-              <Select.Item key={era.id} value={String(era.id)}>
+              <Select.Item
+                key={era.id}
+                value={String(era.id)}
+                className={css({
+                  _focus: {
+                    backgroundColor: 'gray.100',
+                    color: 'black',
+                  },
+                })}
+              >
                 {era.era}
               </Select.Item>
             ))}

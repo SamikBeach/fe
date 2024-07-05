@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Logo } from '../../Logo';
 import { HStack } from 'styled-system/jsx';
+import Link from 'next/link';
 
 export default function LeftSlot() {
   const router = useRouter();
@@ -11,13 +12,16 @@ export default function LeftSlot() {
 
   return (
     <HStack gap="40px">
-      <Logo
-        width="60px"
-        onClick={() => router.push('/')}
-        className={css({ cursor: 'pointer' })}
-      />
+      <Link href="/">
+        <Logo
+          width="60px"
+          onClick={() => router.push('/')}
+          className={css({ cursor: 'pointer' })}
+        />
+      </Link>
       <HStack gap="30px">
         <Button
+          asChild
           variant="ghost"
           size="3"
           className={css({
@@ -28,12 +32,12 @@ export default function LeftSlot() {
               ? 'gray.100'
               : undefined,
           })}
-          onClick={() => router.push('/authors')}
         >
-          <HStack gap="6px">Authors</HStack>
+          <Link href="/authors">Authors</Link>
         </Button>
 
         <Button
+          asChild
           variant="ghost"
           size="3"
           className={css({
@@ -43,9 +47,8 @@ export default function LeftSlot() {
               ? 'gray.100'
               : undefined,
           })}
-          onClick={() => router.push('/books')}
         >
-          <HStack gap="6px">Books</HStack>
+          <Link href="/books">Books</Link>
         </Button>
       </HStack>
     </HStack>

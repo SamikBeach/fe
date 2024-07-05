@@ -1,3 +1,5 @@
+'use client';
+
 import { viewModeAtom } from '@atoms/viewMode';
 import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
@@ -13,7 +15,7 @@ import {
 } from './filters';
 import { Sort } from './sort';
 import ViewModeSelect from './ViewModeSelect';
-import { FILTER_BOX_HEIGHT, HEADER_HEIGHT } from '@constants/common';
+import { FILTER_BOX_HEIGHT } from '@constants/common';
 import { useEffect, useState } from 'react';
 
 interface Props extends HstackProps {
@@ -29,6 +31,10 @@ export default function AuthorFilterBox({
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    if (viewMode !== 'list') {
+      return;
+    }
+
     const scrollHandler = () => {
       setScrollY(window.scrollY);
     };
@@ -36,7 +42,7 @@ export default function AuthorFilterBox({
     window.addEventListener('scroll', scrollHandler);
 
     return () => window.removeEventListener('scroll', scrollHandler);
-  }, []);
+  }, [viewMode]);
 
   return (
     <HStack
@@ -47,8 +53,8 @@ export default function AuthorFilterBox({
           width: '100%',
           px: '20px',
 
-          position: viewMode === 'list' ? 'fixed' : 'absolute',
-          top: HEADER_HEIGHT,
+          top: viewMode === 'list' ? '64px' : '0px',
+          position: viewMode === 'list' ? 'sticky' : 'absolute',
           backgroundColor: viewMode === 'list' ? 'gray.50' : undefined,
 
           zIndex: 4,

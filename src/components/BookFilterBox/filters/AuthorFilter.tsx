@@ -11,11 +11,24 @@ function AuthorFilter() {
         })}
         placeholder="Pick a author"
       />
-      <Select.Content side="bottom" position="popper">
+      <Select.Content
+        side="bottom"
+        position="popper"
+        className={css({ maxHeight: '400px' })}
+      >
         <Select.Group>
           <Select.Label>작가</Select.Label>
           {['프리드리히 니체', '임마누엘 칸트'].map(author => (
-            <Select.Item key={author} value={String(author)}>
+            <Select.Item
+              key={author}
+              value={String(author)}
+              className={css({
+                _focus: {
+                  backgroundColor: 'gray.100',
+                  color: 'black',
+                },
+              })}
+            >
               {author}
             </Select.Item>
           ))}

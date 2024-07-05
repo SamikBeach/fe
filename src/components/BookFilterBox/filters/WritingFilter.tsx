@@ -11,11 +11,24 @@ function WritingFilter() {
         })}
         placeholder="Pick a writing"
       />
-      <Select.Content side="bottom" position="popper">
+      <Select.Content
+        side="bottom"
+        position="popper"
+        className={css({ maxHeight: '400px' })}
+      >
         <Select.Group>
           <Select.Label>Writing</Select.Label>
           {['Thus spoke Zarathustra', 'The Birth of Traged'].map(writing => (
-            <Select.Item key={writing} value={String(writing)}>
+            <Select.Item
+              key={writing}
+              value={String(writing)}
+              className={css({
+                _focus: {
+                  backgroundColor: 'gray.100',
+                  color: 'black',
+                },
+              })}
+            >
               {writing}
             </Select.Item>
           ))}

@@ -23,7 +23,8 @@ function BookCard({ book, className, ...props }: Props) {
     <Card
       className={classNames(
         css({
-          height: '300px',
+          width: '460px',
+          height: '290px',
           padding: '20px',
         }),
         className

@@ -55,7 +55,7 @@ function AuthorList() {
         <HStack py="30px" justify="center">
           <div className={css({ width: '1460px', px: '20px' })}>
             <HStack flexWrap="wrap" justifyContent="start" gap="20px">
-              {authors.slice(0, 100).map(author => (
+              {authors.map(author => (
                 <AuthorCard key={author.id} author={author} />
               ))}
             </HStack>

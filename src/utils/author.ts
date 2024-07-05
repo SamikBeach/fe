@@ -26,7 +26,7 @@ export function getBornAndDiedDateText({
 
   const bornDateText = `${bornDateIsBc ? '기원전 ' : ''}${
     !isNil(bornDate) && getIsValidDateString(bornDate)
-      ? format(new Date(bornDate), 'y년 M월 d일 ')
+      ? format(new Date(bornDate), 'y년 M월 d일')
       : splitBornDate?.[1] === '00'
         ? `${splitBornDate[0]}년 ?월 ?일`
         : '???'
@@ -36,7 +36,7 @@ export function getBornAndDiedDateText({
 
   const diedDateText = `${diedDateIsBc ? '기원전 ' : ''}${
     !isNil(diedDate) && getIsValidDateString(diedDate)
-      ? format(new Date(diedDate), 'y년 M월 d일 ')
+      ? format(new Date(diedDate), 'y년 M월 d일')
       : splitDiedDate?.[1] === '00'
         ? `${splitDiedDate[0]}년 ?월 ?일`
         : '???'

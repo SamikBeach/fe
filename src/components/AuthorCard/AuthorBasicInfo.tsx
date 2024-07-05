@@ -27,13 +27,15 @@ export default function AuthorBasicInfo({ author }: Props) {
   return (
     <HStack alignItems="start" gap="20px">
       <Avatar
+        asChild
         src={author.image_url ?? undefined}
         fallback="폴백"
         radius="full"
         size="7"
         className={css({ cursor: 'pointer' })}
-        onClick={() => router.push(`/author/${author.id}`)}
-      />
+      >
+        <Link href={`/author/${author.id}`} />
+      </Avatar>
       <VStack alignItems="start" gap="0" width="100%">
         <HStack width="100%">
           <Link href={`/author/${author.id}`}>

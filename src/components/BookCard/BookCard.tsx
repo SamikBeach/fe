@@ -5,8 +5,8 @@ import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 import { useRouter } from 'next/navigation';
-import WritingInfo from './WritingInfo';
-import BookInfo from './BookInfo';
+import BookAdditionalInfo from './BookAdditionalInfo';
+import BookBasicInfo from './BookBasicInfo';
 
 interface Props extends ComponentProps<typeof Card> {
   book: BookServerModel;
@@ -14,6 +14,10 @@ interface Props extends ComponentProps<typeof Card> {
 
 function BookCard({ book, className, ...props }: Props) {
   const router = useRouter();
+
+  const {
+    info: { cover },
+  } = book;
 
   return (
     <Card
@@ -26,19 +30,10 @@ function BookCard({ book, className, ...props }: Props) {
       )}
       {...props}
     >
-      <HStack alignItems="start" gap="20px">
-        <img
-          src="https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788970132099.jpg"
-          height={140}
-          width={100}
-          onClick={() => router.push(`/book/${book.id}`)}
-          className={css({ cursor: 'pointer' })}
-        />
-        <VStack alignItems="start" gap="0">
-          <BookInfo book={book} />
-          <WritingInfo />
-        </VStack>
-      </HStack>
+      <VStack gap="6px" alignItems="start">
+        <BookBasicInfo book={book} />
+        <BookAdditionalInfo book={book} />
+      </VStack>
     </Card>
   );
 }

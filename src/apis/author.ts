@@ -28,7 +28,7 @@ interface SearchAuthorsResponse {
   cursor: {
     after: number | null;
   };
-  coont: number;
+  count: number;
   next: string | null;
   data: AuthorServerModel[];
 }

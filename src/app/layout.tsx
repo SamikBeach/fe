@@ -3,6 +3,7 @@ import ReactQueryProviders from '@components/common/ReactQueryProviders';
 import { Theme } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { css } from 'styled-system/css';
+import NextTopLoader from 'nextjs-toploader';
 
 import '@styles/globals.css';
 
@@ -15,12 +16,24 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <NextTopLoader
+          color="black"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={2}
+          crawl={true}
+          easing="ease"
+          speed={200}
+          shadow={false}
+          showSpinner={false}
+          zIndex={1600}
+          showAtBottom={false}
+        />
         <Theme accentColor="gray" radius="large">
           <ReactQueryProviders>
             <main
               className={css({
                 bgColor: 'gray.50',
-                height: '100vh',
               })}
             >
               <Header />

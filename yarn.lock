@@ -2139,7 +2139,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/9206dda3ea3eaa382ecb4e1304bb03810582f08a374050cac98e792edb977418f5cba0fd4c07d8c9e4612f77f53f3b693600543a9784773da691debe21d73a27
+  checksum: 10c0/1c2a8a7aebd1909da976c6fac61d9484a84cab467f8fef94bc0cf46f0199eec73a3fedf9a1002d8a3e215c29b0c6b6450512cbbc013eeaa6fec20eb20e4df66a
   languageName: node
   linkType: hard
 
@@ -4185,6 +4185,7 @@ __metadata:
     jotai: "npm:^2.8.3"
     lodash: "npm:^4.17.21"
     next: "npm:^14.2.3"
+    nextjs-toploader: "npm:^1.6.12"
     postcss-import: "npm:^16.1.0"
     prettier: "npm:^3.3.1"
     rc-drawer: "npm:^7.2.0"
@@ -5649,6 +5650,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nextjs-toploader@npm:^1.6.12":
+  version: 1.6.12
+  resolution: "nextjs-toploader@npm:1.6.12"
+  dependencies:
+    nprogress: "npm:^0.2.0"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    next: ">= 6.0.0"
+    react: ">= 16.0.0"
+    react-dom: ">= 16.0.0"
+  checksum: 10c0/0ea939842800df92da1844a2bc63a6a2d190d12156b84f758d9117fab47e23809766e6791c3a3f27093656588b09616e8e9d97f17d0555c3ba2b7f48fe1eb7dc
+  languageName: node
+  linkType: hard
+
 "node-eval@npm:^2.0.0":
   version: 2.0.0
   resolution: "node-eval@npm:2.0.0"
@@ -5700,6 +5715,13 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 10c0/e008c8142bcc335b5e38cf0d63cfd39d6cf2d97480af9abdbe9a439221fd4d749763bab492a8ee708ce7a194bb00c9da6d0a115018672310850489137b3da046
+  languageName: node
+  linkType: hard
+
+"nprogress@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "nprogress@npm:0.2.0"
+  checksum: 10c0/eab9a923a1ad1eed71a455ecfbc358442dd9bcd71b9fa3fa1c67eddf5159360b182c218f76fca320c97541a1b45e19ced04e6dcb044a662244c5419f8ae9e821
   languageName: node
   linkType: hard
 

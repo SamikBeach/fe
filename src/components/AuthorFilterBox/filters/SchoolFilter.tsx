@@ -33,7 +33,11 @@ function SchoolFilter({ onValueChange, ...props }: Props) {
         })}
         placeholder="School"
       />
-      <Select.Content side="bottom" position="popper">
+      <Select.Content
+        side="bottom"
+        position="popper"
+        className={css({ maxHeight: '400px' })}
+      >
         <Select.Group>
           <Select.Label>School</Select.Label>
           {schools

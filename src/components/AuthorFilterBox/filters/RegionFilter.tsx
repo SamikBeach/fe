@@ -33,7 +33,11 @@ function RegionFilter({ onValueChange, ...props }: Props) {
         })}
         placeholder="Region"
       />
-      <Select.Content side="bottom" position="popper">
+      <Select.Content
+        side="bottom"
+        position="popper"
+        className={css({ maxHeight: '400px' })}
+      >
         <Select.Group>
           <Select.Label>Region</Select.Label>
           {regions

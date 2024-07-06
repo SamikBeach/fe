@@ -39,8 +39,8 @@ export default function WritingSidePeek({
         <SidePeek.Content
           className={css({
             width: '400px',
-            height: 'calc(100% - 120px)',
-            marginRight: '16px',
+            height: 'calc(100% - 100px)',
+            marginRight: '6px',
           })}
         >
           <Flex direction="column" gap="16px" height="100%">

@@ -12,7 +12,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         minHeight: 'calc(100vh - 64px)',
       })}
     >
-      <AuthorFilterBox />
       {children}
     </div>
   );

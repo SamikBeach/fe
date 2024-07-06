@@ -36,6 +36,7 @@ function SchoolFilter({ onValueChange, ...props }: Props) {
       <Select.Content
         side="bottom"
         position="popper"
+        variant="soft"
         className={css({ maxHeight: '400px' })}
       >
         <Select.Group>
@@ -43,16 +44,7 @@ function SchoolFilter({ onValueChange, ...props }: Props) {
           {schools
             .sort((a, b) => a.school.localeCompare(b.school))
             .map(school => (
-              <Select.Item
-                key={school.id}
-                value={String(school.id)}
-                className={css({
-                  _focus: {
-                    backgroundColor: 'gray.100',
-                    color: 'black',
-                  },
-                })}
-              >
+              <Select.Item key={school.id} value={String(school.id)}>
                 {school.school}
               </Select.Item>
             ))}

@@ -36,6 +36,7 @@ function RegionFilter({ onValueChange, ...props }: Props) {
       <Select.Content
         side="bottom"
         position="popper"
+        variant="soft"
         className={css({ maxHeight: '400px' })}
       >
         <Select.Group>
@@ -43,16 +44,7 @@ function RegionFilter({ onValueChange, ...props }: Props) {
           {regions
             .sort((a, b) => a.region.localeCompare(b.region))
             .map(region => (
-              <Select.Item
-                key={region.id}
-                value={String(region.id)}
-                className={css({
-                  _focus: {
-                    backgroundColor: 'gray.100',
-                    color: 'black',
-                  },
-                })}
-              >
+              <Select.Item key={region.id} value={String(region.id)}>
                 {region.region}
               </Select.Item>
             ))}

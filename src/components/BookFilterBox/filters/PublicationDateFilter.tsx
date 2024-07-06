@@ -9,26 +9,18 @@ function PublicationDateFilter() {
           cursor: 'pointer',
           zIndex: 2,
         })}
-        placeholder="Pick a publicationDate"
+        placeholder="Publication Date"
       />
       <Select.Content
         side="bottom"
         position="popper"
+        variant="soft"
         className={css({ maxHeight: '400px' })}
       >
         <Select.Group>
           <Select.Label>출판년도</Select.Label>
           {['19C', '20C'].map(publicationDate => (
-            <Select.Item
-              key={publicationDate}
-              value={String(publicationDate)}
-              className={css({
-                _focus: {
-                  backgroundColor: 'gray.100',
-                  color: 'black',
-                },
-              })}
-            >
+            <Select.Item key={publicationDate} value={String(publicationDate)}>
               {publicationDate}
             </Select.Item>
           ))}

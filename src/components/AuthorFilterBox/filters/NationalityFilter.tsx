@@ -36,6 +36,7 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
       <Select.Content
         side="bottom"
         position="popper"
+        variant="soft"
         className={css({ maxHeight: '400px' })}
       >
         <Select.Group>
@@ -43,16 +44,7 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
           {nationalities
             .sort((a, b) => a.nationality.localeCompare(b.nationality))
             .map(nationality => (
-              <Select.Item
-                key={nationality.id}
-                value={String(nationality.id)}
-                className={css({
-                  _focus: {
-                    backgroundColor: 'gray.100',
-                    color: 'black',
-                  },
-                })}
-              >
+              <Select.Item key={nationality.id} value={String(nationality.id)}>
                 {nationality.nationality}
               </Select.Item>
             ))}

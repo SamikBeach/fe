@@ -50,4 +50,3 @@ export function getCenturyByDate(date: string) {
 
   return Math.floor(Number(bornYear) / 100) + 1;
 }
-//

@@ -21,7 +21,7 @@ export default function BookAdditionalInfo({ book }: Props) {
         Related writings
       </Text>
       <HStack className={css({ cursor: 'pointer' })}>
-        {writings.map((writing, index) => (
+        {writings.map(writing => (
           <WritingHoverCard.Root key={writing.id}>
             <WritingHoverCard.Trigger>
               <Link href={`/writing/${writing.id}`}>

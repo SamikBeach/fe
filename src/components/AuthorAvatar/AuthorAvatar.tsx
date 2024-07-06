@@ -18,7 +18,7 @@ function AuthorAvatar({ author, ...props }: Props) {
           {...props}
         />
       </AuthorHoverCard.Trigger>
-      <AuthorHoverCard.Content author={author} />
+      <AuthorHoverCard.Content author={author} side="top" />
     </AuthorHoverCard.Root>
   );
 }

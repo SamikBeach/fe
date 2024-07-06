@@ -30,7 +30,7 @@ export default function BookInfo({ book }: Props) {
         onClick={() => router.push(`/book/${book.id}`)}
       />
       <VStack alignItems="start" gap="0">
-        <Link href={`/author/${book.id}`}>
+        <Link href={`/book/${book.id}`}>
           <Text
             size="4"
             weight="bold"

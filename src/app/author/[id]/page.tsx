@@ -2,30 +2,42 @@
 
 import { getAuthorById } from '@apis/author';
 import { useQuery } from '@tanstack/react-query';
-import { Separator } from '@radix-ui/themes';
+import { Separator, Spinner } from '@radix-ui/themes';
 import { VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
-import WritingList from './WritingList';
-import BookList from './BookList';
+import WritingTable from './WritingTable';
 import { AuthorInfo } from './AuthorInfo';
+import BookTable from './BookTable';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
-  const { data: author } = useQuery({
+  const { data: author, isLoading } = useQuery({
     queryKey: ['author', params.id],
     queryFn: () => getAuthorById({ id: params.id }),
     select: response => response.data,
   });
+
+  if (isLoading) {
+    return (
+      <VStack height="calc(100vh - 64px)" justify="center">
+        <Spinner size="3" />
+      </VStack>
+    );
+  }
 
   if (author === undefined) {
     return null;
   }
 
   return (
-    <VStack alignItems="start" className={css({ width: '1160px' })} gap="40px">
+    <VStack
+      alignItems="center"
+      className={css({ width: '1280px', py: '60px' })}
+      gap="30px"
+    >
       <AuthorInfo author={author} />
-      <WritingList writings={author.writings} />
       <Separator className={css({ width: '100%' })} />
-      <BookList books={author.books} />
+      <WritingTable writings={author.writings} />
+      <BookTable books={author.books} />
     </VStack>
   );
 }

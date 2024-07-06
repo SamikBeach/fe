@@ -1,8 +1,5 @@
 import { AuthorServerModel } from '@models/author';
-import { Avatar, Text } from '@radix-ui/themes';
-import { getBornAndDiedDateText } from '@utils/author';
-import { HStack, VStack } from 'styled-system/jsx';
-import AuthorInfoDataList from './AuthorInfoDataList';
+import { HStack } from 'styled-system/jsx';
 import AuthorBasicInfo from './AuthorBasicInfo';
 
 interface Props {

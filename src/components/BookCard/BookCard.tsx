@@ -3,8 +3,7 @@ import { Card } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
-import { useRouter } from 'next/navigation';
+import { VStack } from 'styled-system/jsx';
 import BookAdditionalInfo from './BookAdditionalInfo';
 import BookBasicInfo from './BookBasicInfo';
 
@@ -13,12 +12,6 @@ interface Props extends ComponentProps<typeof Card> {
 }
 
 function BookCard({ book, className, ...props }: Props) {
-  const router = useRouter();
-
-  const {
-    info: { cover },
-  } = book;
-
   return (
     <Card
       className={classNames(

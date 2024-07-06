@@ -6,7 +6,6 @@ import { css } from 'styled-system/css';
 import { getWritingById } from '@apis/writing';
 
 import WritingInfo from './WritingInfo';
-import BookList from './BookTable';
 import { Separator, Spinner } from '@radix-ui/themes';
 import BookTable from './BookTable';
 
@@ -30,7 +29,11 @@ export default function WritingPage({ params }: { params: { id: number } }) {
   }
 
   return (
-    <VStack alignItems="start" className={css({ width: '1160px' })} gap="40px">
+    <VStack
+      alignItems="center"
+      className={css({ width: '1280px', py: '60px' })}
+      gap="30px"
+    >
       <WritingInfo writing={writing} />
       <Separator className={css({ width: '100%' })} />
       <BookTable books={writing.books} />

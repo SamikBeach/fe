@@ -1,4 +1,3 @@
-import { AuthorAvatar } from '@components/AuthorAvatar';
 import AuthorHoverCard from '@components/AuthorHoverCard/AuthorHoverCard';
 import { BookServerModel } from '@models/book';
 import { Text } from '@radix-ui/themes';

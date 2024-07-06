@@ -8,8 +8,12 @@ import { css } from 'styled-system/css';
 import WritingTable from './WritingTable';
 import { AuthorInfo } from './AuthorInfo';
 import BookTable from './BookTable';
+import { useState } from 'react';
+import TableSegmentControl from './TableSegmentControl';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
+  const [tableType, setTableType] = useState<'writing' | 'book'>('writing');
+
   const { data: author, isLoading } = useQuery({
     queryKey: ['author', params.id],
     queryFn: () => getAuthorById({ id: params.id }),
@@ -36,8 +40,12 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
     >
       <AuthorInfo author={author} />
       <Separator className={css({ width: '100%' })} />
-      <WritingTable writings={author.writings} />
-      <BookTable books={author.books} />
+      <TableSegmentControl tableType={tableType} setTableType={setTableType} />
+      {tableType === 'writing' ? (
+        <WritingTable writings={author.writings} />
+      ) : (
+        <BookTable books={author.books} />
+      )}
     </VStack>
   );
 }

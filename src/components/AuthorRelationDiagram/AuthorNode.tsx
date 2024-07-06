@@ -1,3 +1,4 @@
+import { AuthorSidePeek } from '@components/AuthorSidePeek';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getCenturyByDate } from '@utils/author';
@@ -74,11 +75,11 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         id="bottom"
         className={css({ visibility: 'hidden' })}
       />
-      {/* <AuthorSidePeek
+      <AuthorSidePeek
         authorId={data.id}
         open={isOpenAuthorSidePeek}
         onOpenChange={setIsOpenAuthorSidePeek}
-      /> */}
+      />
     </>
   );
 }

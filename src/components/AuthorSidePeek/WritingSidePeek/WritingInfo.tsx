@@ -1,45 +1,36 @@
-import { AuthorAvatar } from '@components/AuthorAvatar';
-import { MOCK_AUTHOR } from '@constants/mocks';
 import { WritingServerModel } from '@models/writing';
-import { Text } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import { Text } from '@radix-ui/themes';
 
 interface Props {
   writing: WritingServerModel;
 }
 
-function WritingInfo({ writing }: Props) {
-  const { title, publication_date, author, books } = writing;
+export default function WritingInfo({ writing }: Props) {
+  const { title, title_in_kor, title_in_eng, author, publication_date } =
+    writing;
 
   return (
-    <HStack gap="16px" alignItems="start">
+    <HStack gap="40px" alignItems="start" width="100%">
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-        height={140}
+        alt="writing_image"
         width={100}
+        height={140}
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Die_Traumdeutung_%28Congress_scan%29.jpg/440px-Die_Traumdeutung_%28Congress_scan%29.jpg"
       />
-      <VStack alignItems="start" gap="0px">
-        <Text
-          weight="bold"
-          className={css({ fontWeight: 'bold', fontSize: '20px' })}
-        >
+      <VStack alignItems="start" gap="2px">
+        <Text size="3" weight="bold">
           {title}
         </Text>
-        <Text className={css({ fontSize: '14px', color: 'gray.500' })}>
-          {publication_date}
-        </Text>
-        <HStack>
-          <AuthorAvatar author={MOCK_AUTHOR} />
-          <Text size="4">{author.name}</Text>
-        </HStack>
-        <Text>{books.length} books</Text>
+        <Text size="2">{title_in_eng}</Text>
+        <Text size="2">{title_in_kor}</Text>
         <Text size="2" color="gray">
-          Ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur.
+          {author.name}
+        </Text>
+        <Text size="2" color="gray">
+          {publication_date}
         </Text>
       </VStack>
     </HStack>
   );
 }
-
-export default WritingInfo;

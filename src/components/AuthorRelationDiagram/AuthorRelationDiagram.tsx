@@ -23,6 +23,8 @@ import {
   useInitialNodes,
   useReactflowHandlers,
 } from './hooks';
+import { VStack } from 'styled-system/jsx';
+import { Spinner } from '@radix-ui/themes';
 
 function RelationDiagram() {
   const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
@@ -79,7 +81,11 @@ function RelationDiagram() {
   }, [isSuccess, setNodes, setEdges, initialNodes, initialEdges]);
 
   if (isLoading) {
-    return 'loading...';
+    return (
+      <VStack height="calc(100vh - 128px)" justify="center">
+        <Spinner size="3" />
+      </VStack>
+    );
   }
 
   console.log('rerender');

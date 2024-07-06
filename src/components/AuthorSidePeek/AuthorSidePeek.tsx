@@ -1,14 +1,15 @@
 import { SidePeek } from '@elements/SidePeek';
-import { Flex, Separator } from '@radix-ui/themes';
+import { Flex, Separator, Spinner } from '@radix-ui/themes';
 import { ComponentProps, useState } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
 import { useQuery } from '@tanstack/react-query';
 import { getAuthorById } from '@apis/author';
-import WritingInfo from './WritingInfo';
-import BookInfo from './BookInfo';
+import WritingTable from './WritingTable';
+import BookInfo from './BookTable';
 import { AuthorInfo } from './AuthorInfo';
-import WritingAndBookSegmentedControl from './WritingAndBookSegmentedControl';
+import TableSegmentControl from './TableSegmentControl';
+import { VStack } from 'styled-system/jsx';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   authorId: number;
@@ -25,20 +26,16 @@ export default function AuthorSidePeek({
     null
   );
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
-  const [selectedTab, setSelectedTab] = useState<'writing' | 'book'>('writing');
+  const [tableType, setTableType] = useState<'writing' | 'book'>('writing');
 
   const isOpenSidePeek = selectedWritingId !== null || selectedBookId !== null;
 
-  const { data: author } = useQuery({
+  const { data: author, isLoading } = useQuery({
     queryKey: ['author', authorId],
     queryFn: () => getAuthorById({ id: authorId }),
     select: response => response.data,
     enabled: open,
   });
-
-  if (author === undefined) {
-    return null;
-  }
 
   return (
     <SidePeek.Root
@@ -69,29 +66,36 @@ export default function AuthorSidePeek({
               })}
             />
           )}
-          <Flex direction="column" gap="16px" height="100%">
-            <AuthorInfo author={author} />
-            <Separator orientation="horizontal" size="4" />
-            <WritingAndBookSegmentedControl
-              onValueChange={value =>
-                setSelectedTab(value as 'writing' | 'book')
-              }
-            />
-            {selectedTab === 'writing' && (
-              <WritingInfo
-                selectedWritingId={selectedWritingId}
-                setSelectedWritingId={setSelectedWritingId}
-                writings={author.writings ?? []}
+          {isLoading || author === undefined ? (
+            <VStack height="100%" justify="center">
+              <Spinner size="3" />
+            </VStack>
+          ) : (
+            <Flex direction="column" gap="16px" height="100%">
+              <AuthorInfo author={author} />
+              <Separator orientation="horizontal" size="4" />
+              <TableSegmentControl
+                defaultValue={tableType}
+                onValueChange={value =>
+                  setTableType(value as 'writing' | 'book')
+                }
               />
-            )}
-            {selectedTab === 'book' && (
-              <BookInfo
-                selectedBookId={selectedBookId}
-                setSelectedBookId={setSelectedBookId}
-                books={author?.books ?? []}
-              />
-            )}
-          </Flex>
+              {tableType === 'writing' && (
+                <WritingTable
+                  selectedWritingId={selectedWritingId}
+                  setSelectedWritingId={setSelectedWritingId}
+                  writings={author.writings ?? []}
+                />
+              )}
+              {tableType === 'book' && (
+                <BookInfo
+                  selectedBookId={selectedBookId}
+                  setSelectedBookId={setSelectedBookId}
+                  books={author?.books ?? []}
+                />
+              )}
+            </Flex>
+          )}
           <SidePeek.CloseButton />
         </SidePeek.Content>
       </SidePeek.Portal>

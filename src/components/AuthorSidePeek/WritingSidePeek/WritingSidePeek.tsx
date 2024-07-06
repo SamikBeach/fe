@@ -1,12 +1,12 @@
 import { SidePeek } from '@elements/SidePeek';
-import { Flex } from '@radix-ui/themes';
+import { Flex, Separator } from '@radix-ui/themes';
 import { ComponentProps, ReactNode } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
 import { getWritingById } from '@apis/writing';
 import { useQuery } from '@tanstack/react-query';
-import BookInfo from './BookInfo';
 import WritingInfo from './WritingInfo';
+import BookTable from './BookTable';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   children?: ReactNode;
@@ -45,7 +45,8 @@ export default function WritingSidePeek({
         >
           <Flex direction="column" gap="16px" height="100%">
             <WritingInfo writing={writing} />
-            <BookInfo books={writing.books} />
+            <Separator className={css({ width: '100%' })} />
+            <BookTable books={writing.books} />
           </Flex>
           <SidePeek.CloseButton />
         </SidePeek.Content>

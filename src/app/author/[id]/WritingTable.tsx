@@ -11,6 +11,10 @@ interface Props {
 export default function WritingTable({ writings = [] }: Props) {
   const router = useRouter();
 
+  if (writings.length === 0) {
+    return null;
+  }
+
   return (
     <HStack
       width="100%"

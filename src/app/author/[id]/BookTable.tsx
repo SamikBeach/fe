@@ -12,6 +12,10 @@ interface Props {
 export default function BookTable({ books = [] }: Props) {
   const router = useRouter();
 
+  if (books.length === 0) {
+    return null;
+  }
+
   return (
     <HStack alignItems="start" flexWrap="wrap" wordBreak="break-all" px="20px">
       <Table.Root>

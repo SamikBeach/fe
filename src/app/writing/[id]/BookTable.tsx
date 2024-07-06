@@ -1,8 +1,8 @@
 import { BookServerModel } from '@models/book';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import { HStack } from 'styled-system/jsx';
-import { Table } from '@radix-ui/themes';
+import { HStack, VStack } from 'styled-system/jsx';
+import { Link, Table, Text } from '@radix-ui/themes';
 import { format } from 'date-fns';
 
 interface Props {

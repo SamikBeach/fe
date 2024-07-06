@@ -1,4 +1,5 @@
 import { AuthorAvatar } from '@components/AuthorAvatar';
+import AuthorHoverCard from '@components/AuthorHoverCard/AuthorHoverCard';
 import { BookServerModel } from '@models/book';
 import { Text } from '@radix-ui/themes';
 import { format } from 'date-fns';
@@ -20,7 +21,7 @@ export default function BookInfo({ book }: Props) {
   } = book;
 
   return (
-    <HStack alignItems="start" gap="20px">
+    <HStack alignItems="start" gap="30px">
       <img
         src={cover}
         height={140}
@@ -42,19 +43,24 @@ export default function BookInfo({ book }: Props) {
           </Text>
         </Link>
         {authors.map(_author => (
-          <Link href={`/author/${_author.id}`}>
-            <HStack gap="4px">
-              <Text
-                className={css({
-                  cursor: 'pointer',
-                  _hover: { textDecoration: 'underline' },
-                })}
-              >
-                {_author.name}
-              </Text>
-              <AuthorAvatar size="1" key={_author.id} author={_author} />
-            </HStack>
-          </Link>
+          <AuthorHoverCard.Root key={_author.id}>
+            <AuthorHoverCard.Trigger>
+              <Link href={`/author/${_author.id}`}>
+                <HStack gap="4px">
+                  <Text
+                    size="2"
+                    className={css({
+                      cursor: 'pointer',
+                      _hover: { textDecoration: 'underline' },
+                    })}
+                  >
+                    {_author.name}
+                  </Text>
+                </HStack>
+              </Link>
+            </AuthorHoverCard.Trigger>
+            <AuthorHoverCard.Content author={_author} side="right" />
+          </AuthorHoverCard.Root>
         ))}
         <Text size="2" color="gray">
           {publisher}

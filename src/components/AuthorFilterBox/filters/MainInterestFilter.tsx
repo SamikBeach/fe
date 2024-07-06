@@ -39,7 +39,7 @@ function MainInterestFilter({ onValueChange, ...props }: Props) {
         className={css({ maxHeight: '400px' })}
       >
         <Select.Group>
-          <Select.Label>MainInterest</Select.Label>
+          <Select.Label>Main Interest</Select.Label>
           {mainInterests
             .sort((a, b) => a.main_interest.localeCompare(b.main_interest))
             .map(mainInterest => (

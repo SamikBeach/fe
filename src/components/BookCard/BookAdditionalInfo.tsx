@@ -1,6 +1,6 @@
 import { WritingHoverCard } from '@components/WritingHoverCard';
 import { BookServerModel } from '@models/book';
-import { Text } from '@radix-ui/themes';
+import { Badge, Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
@@ -31,13 +31,14 @@ export default function BookAdditionalInfo({ book }: Props) {
                     _hover: { textDecoration: 'underline' },
                   })}
                 >
-                  {writing.title}
-                  {index !== writings.length - 1 && ', '}
+                  <Badge variant="outline" size="1" radius="full">
+                    {writing.title}
+                  </Badge>
                 </Text>
               </Link>
             </WritingHoverCard.Trigger>
             <WritingHoverCard.Content
-              side="top"
+              side="right"
               writing={{ ...writing, author: authors[0] }}
             />
           </WritingHoverCard.Root>

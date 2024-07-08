@@ -16,16 +16,34 @@ function SearchBar() {
   const searchDropdownMenuContentRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDownDropdownMenuItem = (
-    e: React.KeyboardEvent<HTMLDivElement>,
-    index: number
+    e: React.KeyboardEvent<HTMLDivElement>
   ) => {
-    if (index === 0 && e.key === 'ArrowUp') {
+    if (
+      e.key.length === 1 &&
+      (e.key.match(/[a-z]/i) || e.key.match(/[0-9]/i))
+    ) {
+      setTimeout(() => {
+        setSearchValue(prev => prev + e.key);
+        textFieldRef.current?.focus();
+      }, 0);
+    }
+
+    if (e.key === 'Backspace') {
+      setSearchValue(prev => prev.slice(0, -1));
       textFieldRef.current?.focus();
     }
   };
 
   useEffect(() => {
     window.addEventListener('keypress', e => {
+      console.log('keypress');
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        console.log('ArrowDown or ArrowUp');
+        setTimeout(() => {
+          textFieldRef.current?.focus();
+        }, 1000);
+      }
+
       if (e.key === '/') {
         if (searchValue !== '') {
           setIsOpenSearchDropdownMenu(true);

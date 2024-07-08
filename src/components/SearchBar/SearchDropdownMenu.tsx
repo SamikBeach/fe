@@ -183,6 +183,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
 
           onOpenChange?.(false);
         }}
+        onKeyDown={e => e.preventDefault()}
       >
         {renderDropdonwMenuContentInner()}
       </DropdownMenu.Content>

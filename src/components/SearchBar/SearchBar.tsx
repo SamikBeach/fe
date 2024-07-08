@@ -20,17 +20,19 @@ function SearchBar() {
   ) => {
     if (
       e.key.length === 1 &&
-      (e.key.match(/[a-z]/i) || e.key.match(/[0-9]/i))
+      (e.key.match(/[a-z]/i) ||
+        e.key.match(/[0-9]/i) ||
+        e.key.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i))
     ) {
       setTimeout(() => {
-        setSearchValue(prev => prev + e.key);
         textFieldRef.current?.focus();
+        setSearchValue(prev => prev + e.key);
       }, 0);
     }
 
     if (e.key === 'Backspace') {
-      setSearchValue(prev => prev.slice(0, -1));
       textFieldRef.current?.focus();
+      setSearchValue(prev => prev.slice(0, -1));
     }
   };
 

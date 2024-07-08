@@ -1,1 +1,1 @@
-export { default as AuthorCard } from './AuthorHoverCard';
+export { default as AuthorHoverCard } from './AuthorHoverCard';

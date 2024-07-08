@@ -117,6 +117,10 @@ function SearchPopover({
                     background: 'gray.100',
                   },
                 })}
+                onClick={() => {
+                  router.push(`/author/${author.id}`);
+                  onOpenChange?.(false);
+                }}
               >
                 <Avatar
                   src={author.image_url ?? undefined}
@@ -165,6 +169,10 @@ function SearchPopover({
                     background: 'gray.100',
                   },
                 })}
+                onClick={() => {
+                  router.push(`/writing/${writing.id}`);
+                  onOpenChange?.(false);
+                }}
               >
                 <Avatar
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"

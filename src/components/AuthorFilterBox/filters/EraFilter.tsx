@@ -54,6 +54,9 @@ function EraFilter({ onValueChange, ...props }: Props) {
           backgroundColor: 'white',
         })}
         placeholder="Era"
+        onPointerDown={e => {
+          console.log('onPointerDown', e);
+        }}
       />
       <Select.Content
         side="bottom"
@@ -66,6 +69,9 @@ function EraFilter({ onValueChange, ...props }: Props) {
             paddingTop: '0px',
           },
         })}
+        onPointerDownOutside={e => {
+          console.log('onPointerDownOutside', e);
+        }}
       >
         <SearchTextField
           searchValue={searchValue}

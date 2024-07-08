@@ -1,12 +1,12 @@
 import { getAllRegions } from '@apis/region';
 import { selectedRegionIdAtom } from '@atoms/filter';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Select, TextField, Text } from '@radix-ui/themes';
+import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { ComponentProps, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
+import SearchTextField from './SearchTextField';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 
@@ -59,24 +59,19 @@ function RegionFilter({ onValueChange, ...props }: Props) {
         side="bottom"
         position="popper"
         variant="soft"
-        className={css({ maxHeight: '400px' })}
+        className={css({
+          maxHeight: '400px',
+
+          '& .rt-SelectViewport': {
+            paddingTop: '0px',
+          },
+        })}
       >
-        <TextField.Root
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-          ref={textFieldRef}
-          placeholder="Search region..."
-          mb="6px"
-          onKeyDown={e => {
-            if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') {
-              e.stopPropagation();
-            }
-          }}
-        >
-          <TextField.Slot>
-            <MagnifyingGlassIcon height="16" width="16" />
-          </TextField.Slot>
-        </TextField.Root>
+        <SearchTextField
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          textFieldRef={textFieldRef}
+        />
         {searchedRegions.length === 0 ? (
           <VStack height="200px" alignItems="center" justify="center">
             <Text>No Results</Text>

@@ -3,18 +3,19 @@ import { ComponentProps, forwardRef } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 import Highlighter from 'react-highlight-words';
-import { searchAuthors } from '@apis/author';
-import { useQuery } from '@tanstack/react-query';
-import { searchWritings } from '@apis/writing';
 import { WritingHoverCard } from '@components/WritingHoverCard';
 import AuthorHoverCard from '@components/AuthorHoverCard/AuthorHoverCard';
 import { useRouter } from 'next/navigation';
+import { AuthorServerModel } from '@models/author';
+import { WritingServerModel } from '@models/writing';
 
 interface Props extends ComponentProps<typeof DropdownMenu.Root> {
+  authors: AuthorServerModel[];
+  writings: WritingServerModel[];
+  isLoading: boolean;
   searchValue: string;
-  onKeyDownDropdownMenuItem: (
-    e: React.KeyboardEvent<HTMLDivElement>,
-    index: number
+  onKeyDownDropdownMenuContent: (
+    e: React.KeyboardEvent<HTMLDivElement>
   ) => void;
 }
 
@@ -23,30 +24,16 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
     children,
     open,
     onOpenChange,
+    authors,
+    writings,
+    isLoading,
     searchValue,
-    onKeyDownDropdownMenuItem,
+    onKeyDownDropdownMenuContent,
     ...props
   },
   ref
 ) {
   const router = useRouter();
-
-  const { data: authors = [], isLoading: isLoadingAuthors } = useQuery({
-    queryKey: ['author', searchValue],
-    queryFn: () => searchAuthors({ where__name__i_like: searchValue, take: 5 }),
-    enabled: searchValue !== '',
-    select: response => response.data.data,
-  });
-
-  const { data: writings = [], isLoading: isLoadingWritings } = useQuery({
-    queryKey: ['writing', searchValue],
-    queryFn: () =>
-      searchWritings({ where__title__i_like: searchValue, take: 5 }),
-    enabled: searchValue !== '',
-    select: response => response.data.data,
-  });
-
-  const isLoading = isLoadingAuthors || isLoadingWritings;
 
   const hasAuthors = authors.length > 0;
   const hasWritings = writings.length > 0;
@@ -74,7 +61,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
         {hasAuthors && (
           <DropdownMenu.Group title="Author">
             <DropdownMenu.Label>Author</DropdownMenu.Label>
-            {authors.map((author, index) => (
+            {authors.map(author => (
               <AuthorHoverCard.Root
                 key={author.id}
                 openDelay={0}
@@ -82,7 +69,6 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
               >
                 <AuthorHoverCard.Trigger>
                   <DropdownMenu.Item
-                    onKeyDown={e => onKeyDownDropdownMenuItem(e, index)}
                     className={css({
                       cursor: 'pointer',
 
@@ -114,7 +100,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
         {hasWritings && (
           <DropdownMenu.Group title="Writing">
             <DropdownMenu.Label>Writing</DropdownMenu.Label>
-            {writings.map((writing, index) => (
+            {writings.map(writing => (
               <WritingHoverCard.Root
                 key={writing.id}
                 openDelay={0}
@@ -122,7 +108,6 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
               >
                 <WritingHoverCard.Trigger>
                   <DropdownMenu.Item
-                    onKeyDown={e => onKeyDownDropdownMenuItem(e, index)}
                     className={css({
                       width: '300px',
                       cursor: 'pointer',
@@ -183,7 +168,9 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
 
           onOpenChange?.(false);
         }}
-        onKeyDown={e => e.preventDefault()}
+        onKeyDown={e => {
+          onKeyDownDropdownMenuContent(e);
+        }}
       >
         {renderDropdonwMenuContentInner()}
       </DropdownMenu.Content>

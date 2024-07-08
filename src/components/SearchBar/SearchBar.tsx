@@ -5,6 +5,9 @@ import SearchDropdownMenu from './SearchDropdownMenu';
 import { useEffect, useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import classNames from 'classnames';
+import { useQuery } from '@tanstack/react-query';
+import { searchAuthors } from '@apis/author';
+import { searchWritings } from '@apis/writing';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -15,9 +18,32 @@ function SearchBar() {
   const textFieldRef = useRef<HTMLInputElement>(null);
   const searchDropdownMenuContentRef = useRef<HTMLDivElement>(null);
 
-  const handleKeyDownDropdownMenuItem = (
+  const { data: authors = [], isLoading: isLoadingAuthors } = useQuery({
+    queryKey: ['author', searchValue],
+    queryFn: () => searchAuthors({ where__name__i_like: searchValue, take: 5 }),
+    enabled: searchValue !== '',
+    select: response => response.data.data,
+  });
+
+  const { data: writings = [], isLoading: isLoadingWritings } = useQuery({
+    queryKey: ['writing', searchValue],
+    queryFn: () =>
+      searchWritings({ where__title__i_like: searchValue, take: 5 }),
+    enabled: searchValue !== '',
+    select: response => response.data.data,
+  });
+
+  const isLoading = isLoadingAuthors || isLoadingWritings;
+
+  const hasAuthors = authors.length > 0;
+  const hasWritings = writings.length > 0;
+  const hasResults = hasAuthors && hasWritings;
+
+  const handleKeyDownDropdownMenuContent = (
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
+    e.preventDefault();
+
     if (
       e.key.length === 1 &&
       (e.key.match(/[a-z]/i) ||
@@ -38,14 +64,6 @@ function SearchBar() {
 
   useEffect(() => {
     window.addEventListener('keypress', e => {
-      console.log('keypress');
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        console.log('ArrowDown or ArrowUp');
-        setTimeout(() => {
-          textFieldRef.current?.focus();
-        }, 1000);
-      }
-
       if (e.key === '/') {
         if (searchValue !== '') {
           setIsOpenSearchDropdownMenu(true);
@@ -63,13 +81,21 @@ function SearchBar() {
       ref={searchDropdownMenuContentRef}
       open={isOpenSearchDropdownMenu}
       onOpenChange={setIsOpenSearchDropdownMenu}
+      authors={authors}
+      writings={writings}
+      isLoading={isLoading}
       searchValue={debouncedSearchValue}
-      onKeyDownDropdownMenuItem={handleKeyDownDropdownMenuItem}
+      onKeyDownDropdownMenuContent={handleKeyDownDropdownMenuContent}
     >
       <TextField.Root
         ref={textFieldRef}
         placeholder="Search authors, books..."
-        className={classNames(css({ width: '250px' }), 'search-bar')}
+        className={classNames(
+          css({
+            width: '250px',
+          }),
+          'search-bar'
+        )}
         value={searchValue}
         onClick={e => {
           if (searchValue !== '' && !isOpenSearchDropdownMenu) {
@@ -82,6 +108,10 @@ function SearchBar() {
         }}
         onKeyDown={e => {
           if (e.key === 'ArrowDown') {
+            if (!hasResults) {
+              return;
+            }
+
             e.preventDefault();
 
             searchDropdownMenuContentRef.current?.focus();

@@ -1,8 +1,8 @@
 import { getAllNationalities } from '@apis/nationality';
-import { selectedNationalityIdAtom } from '@atoms/filter';
+import { isFilterOpenAtom, selectedNationalityIdAtom } from '@atoms/filter';
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ComponentProps, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
@@ -12,10 +12,12 @@ interface Props extends ComponentProps<typeof Select.Root> {}
 
 function NationalityFilter({ onValueChange, ...props }: Props) {
   const [searchValue, setSearchValue] = useState('');
+  const [open, setOpen] = useState(false);
 
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   const setSelectedNationalityId = useSetAtom(selectedNationalityIdAtom);
+  const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
 
   const { data: nationalities = [] } = useQuery({
     queryKey: ['nationality'],
@@ -36,6 +38,7 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
   return (
     <Select.Root
       onValueChange={handleValueChange}
+      open={open}
       onOpenChange={opened => {
         if (opened) {
           setTimeout(() => {
@@ -44,6 +47,8 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
         }
 
         setSearchValue('');
+        setIsFilterOpen(opened);
+        setOpen(opened);
       }}
       {...props}
     >
@@ -54,6 +59,11 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
           backgroundColor: 'white',
         })}
         placeholder="Nationality"
+        onPointerDown={e => {
+          if (isFilterOpen) {
+            e.preventDefault();
+          }
+        }}
       />
       <Select.Content
         side="bottom"

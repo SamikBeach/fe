@@ -1,8 +1,8 @@
 import { getAllEras } from '@apis/era';
-import { selectedEraIdAtom } from '@atoms/filter';
+import { isFilterOpenAtom, selectedEraIdAtom } from '@atoms/filter';
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ComponentProps, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
@@ -12,10 +12,12 @@ interface Props extends ComponentProps<typeof Select.Root> {}
 
 function EraFilter({ onValueChange, ...props }: Props) {
   const [searchValue, setSearchValue] = useState('');
+  const [open, setOpen] = useState(false);
 
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   const setSelectedEraId = useSetAtom(selectedEraIdAtom);
+  const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
 
   const { data: eras = [] } = useQuery({
     queryKey: ['era'],
@@ -36,6 +38,7 @@ function EraFilter({ onValueChange, ...props }: Props) {
   return (
     <Select.Root
       onValueChange={handleValueChange}
+      open={open}
       onOpenChange={opened => {
         if (opened) {
           setTimeout(() => {
@@ -44,6 +47,8 @@ function EraFilter({ onValueChange, ...props }: Props) {
         }
 
         setSearchValue('');
+        setIsFilterOpen(opened);
+        setOpen(opened);
       }}
       {...props}
     >
@@ -55,7 +60,9 @@ function EraFilter({ onValueChange, ...props }: Props) {
         })}
         placeholder="Era"
         onPointerDown={e => {
-          console.log('onPointerDown', e);
+          if (isFilterOpen) {
+            e.preventDefault();
+          }
         }}
       />
       <Select.Content
@@ -69,9 +76,6 @@ function EraFilter({ onValueChange, ...props }: Props) {
             paddingTop: '0px',
           },
         })}
-        onPointerDownOutside={e => {
-          console.log('onPointerDownOutside', e);
-        }}
       >
         <SearchTextField
           searchValue={searchValue}

@@ -1,8 +1,8 @@
 import { getAllRegions } from '@apis/region';
-import { selectedRegionIdAtom } from '@atoms/filter';
+import { isFilterOpenAtom, selectedRegionIdAtom } from '@atoms/filter';
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ComponentProps, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
@@ -12,10 +12,12 @@ interface Props extends ComponentProps<typeof Select.Root> {}
 
 function RegionFilter({ onValueChange, ...props }: Props) {
   const [searchValue, setSearchValue] = useState('');
+  const [open, setOpen] = useState(false);
 
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   const setSelectedRegionId = useSetAtom(selectedRegionIdAtom);
+  const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
 
   const { data: regions = [] } = useQuery({
     queryKey: ['region'],
@@ -36,6 +38,7 @@ function RegionFilter({ onValueChange, ...props }: Props) {
   return (
     <Select.Root
       onValueChange={handleValueChange}
+      open={open}
       onOpenChange={opened => {
         if (opened) {
           setTimeout(() => {
@@ -44,6 +47,8 @@ function RegionFilter({ onValueChange, ...props }: Props) {
         }
 
         setSearchValue('');
+        setIsFilterOpen(opened);
+        setOpen(opened);
       }}
       {...props}
     >
@@ -54,6 +59,11 @@ function RegionFilter({ onValueChange, ...props }: Props) {
           backgroundColor: 'white',
         })}
         placeholder="Region"
+        onPointerDown={e => {
+          if (isFilterOpen) {
+            e.preventDefault();
+          }
+        }}
       />
       <Select.Content
         side="bottom"

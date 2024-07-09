@@ -6,3 +6,5 @@ export const selectedRegionIdAtom = atom<number | undefined>(undefined);
 export const selectedMainInterestIdAtom = atom<number | undefined>(undefined);
 export const selectedSchoolIdAtom = atom<number | undefined>(undefined);
 export const selectedEducationIdAtom = atom<number | undefined>(undefined);
+
+export const isFilterOpenAtom = atom<boolean>(false);

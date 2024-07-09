@@ -16,68 +16,70 @@ import {
 import { Sort } from './sort';
 import ViewModeSelect from './ViewModeSelect';
 import { FILTER_BOX_HEIGHT } from '@constants/common';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 interface Props extends HstackProps {
   onValueChange?: (value: string) => void;
 }
 
-export default function AuthorFilterBox({
-  className,
-  onValueChange,
-  ...props
-}: Props) {
-  const viewMode = useAtomValue(viewModeAtom);
-  const [scrollY, setScrollY] = useState(0);
+const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
+  ({ className, onValueChange, ...props }, ref) => {
+    const viewMode = useAtomValue(viewModeAtom);
+    const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    if (viewMode !== 'list') {
-      return;
-    }
+    useEffect(() => {
+      if (viewMode !== 'list') {
+        return;
+      }
 
-    const scrollHandler = () => {
-      setScrollY(window.scrollY);
-    };
+      const scrollHandler = () => {
+        setScrollY(window.scrollY);
+      };
 
-    window.addEventListener('scroll', scrollHandler);
+      window.addEventListener('scroll', scrollHandler);
 
-    return () => window.removeEventListener('scroll', scrollHandler);
-  }, [viewMode]);
+      return () => window.removeEventListener('scroll', scrollHandler);
+    }, [viewMode]);
 
-  return (
-    <HStack
-      className={classNames(
-        css({
-          pointerEvents: 'auto',
-          height: FILTER_BOX_HEIGHT,
-          width: '100%',
-          px: '20px',
+    return (
+      <HStack
+        ref={ref}
+        className={classNames(
+          css({
+            pointerEvents: 'auto',
+            minHeight: FILTER_BOX_HEIGHT,
+            width: '100%',
+            padding: '20px',
 
-          top: viewMode === 'list' ? '64px' : '0px',
-          position: viewMode === 'list' ? 'sticky' : 'absolute',
-          backgroundColor: viewMode === 'list' ? 'gray.50' : undefined,
+            top: viewMode === 'list' ? '64px' : '0px',
+            position: viewMode === 'list' ? 'sticky' : 'absolute',
+            backgroundColor: viewMode === 'list' ? 'gray.50' : undefined,
 
-          zIndex: 4,
+            zIndex: 4,
 
-          borderBottom:
-            viewMode === 'list' && scrollY !== 0 ? '1px solid' : undefined,
-          borderColor: 'gray.200',
-        }),
-        className
-      )}
-      gap="30px"
-      {...props}
-    >
-      <ViewModeSelect />
-      <HStack>
-        <NationalityFilter onValueChange={onValueChange} />
-        <EraFilter onValueChange={onValueChange} />
-        <RegionFilter onValueChange={onValueChange} />
-        <EducationFilter onValueChange={onValueChange} />
-        <MainInterestFilter onValueChange={onValueChange} />
-        <SchoolFilter onValueChange={onValueChange} />
-        <Sort />
+            borderBottom:
+              viewMode === 'list' && scrollY !== 0 ? '1px solid' : undefined,
+            borderColor: 'gray.200',
+          }),
+          className
+        )}
+        gap="30px"
+        alignItems="start"
+        {...props}
+      >
+        <ViewModeSelect />
+        <HStack flexWrap="wrap" gap="6px">
+          <NationalityFilter onValueChange={onValueChange} />
+          <EraFilter onValueChange={onValueChange} />
+          <RegionFilter onValueChange={onValueChange} />
+          <EducationFilter onValueChange={onValueChange} />
+          <MainInterestFilter onValueChange={onValueChange} />
+          <SchoolFilter onValueChange={onValueChange} />
+          <Sort />
+        </HStack>
       </HStack>
-    </HStack>
-  );
-}
+    );
+  }
+);
+
+export default AuthorFilterBox;

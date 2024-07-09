@@ -6,6 +6,6 @@ export * from './era';
 export * from './region';
 export * from './writing';
 export * from './nationality';
-export * from './main_interest';
+export * from './main-interest';
 export * from './school';
 export * from './education';

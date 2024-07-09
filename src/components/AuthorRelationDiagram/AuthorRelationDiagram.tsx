@@ -9,11 +9,7 @@ import { css } from 'styled-system/css';
 import { useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
 import { useAtomValue } from 'jotai';
-import {
-  selectedEraIdAtom,
-  selectedNationalityIdAtom,
-  selectedRegionIdAtom,
-} from '@atoms/filter';
+import { filterAtom } from '@atoms/filter';
 import { useEffect } from 'react';
 import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import TestButtons from './TestButtons';
@@ -27,9 +23,7 @@ import { VStack } from 'styled-system/jsx';
 import { Spinner } from '@radix-ui/themes';
 
 function RelationDiagram() {
-  const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
-  const selectedEraId = useAtomValue(selectedEraIdAtom);
-  const selectedRegionId = useAtomValue(selectedRegionIdAtom);
+  const selectedFilters = useAtomValue(filterAtom);
 
   const {
     data: authors = [],
@@ -42,12 +36,7 @@ function RelationDiagram() {
       // selectedEraId,
       // selectedRegionId,
     ],
-    queryFn: () =>
-      searchAuthors({
-        nationalityId: selectedNationalityId,
-        eraId: selectedEraId,
-        regionId: selectedRegionId,
-      }),
+    queryFn: () => searchAuthors(selectedFilters),
     select: response => response.data.data,
   });
 

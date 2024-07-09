@@ -20,7 +20,6 @@ export default function SearchTextField({
         position: 'sticky',
         top: 0,
         zIndex: 1,
-
         paddingTop: '8px',
         paddingBottom: '2px',
         backgroundColor: 'white',

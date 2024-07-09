@@ -1,10 +1,13 @@
+import { Filter, FilterType } from '@components/AuthorFilterBox/Filter/models';
 import { atom } from 'jotai';
 
-export const selectedNationalityIdAtom = atom<number | undefined>(undefined);
-export const selectedEraIdAtom = atom<number | undefined>(undefined);
-export const selectedRegionIdAtom = atom<number | undefined>(undefined);
-export const selectedMainInterestIdAtom = atom<number | undefined>(undefined);
-export const selectedSchoolIdAtom = atom<number | undefined>(undefined);
-export const selectedEducationIdAtom = atom<number | undefined>(undefined);
+export const filterAtom = atom<Filter>({
+  [FilterType.Era]: [],
+  [FilterType.Education]: [],
+  [FilterType.MainInterest]: [],
+  [FilterType.Nationality]: [],
+  [FilterType.Region]: [],
+  [FilterType.School]: [],
+});
 
 export const isFilterOpenAtom = atom<boolean>(false);

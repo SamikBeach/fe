@@ -1,46 +1,23 @@
 import { searchAuthors } from '@apis/author';
-import {
-  selectedEducationIdAtom,
-  selectedEraIdAtom,
-  selectedMainInterestIdAtom,
-  selectedNationalityIdAtom,
-  selectedRegionIdAtom,
-  selectedSchoolIdAtom,
-} from '@atoms/filter';
+import { filterAtom } from '@atoms/filter';
 import { AuthorCard } from '@components/AuthorCard';
 import { Spinner } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
-function AuthorList() {
-  const selectedNationalityId = useAtomValue(selectedNationalityIdAtom);
-  const selectedEraId = useAtomValue(selectedEraIdAtom);
-  const selectedRegionId = useAtomValue(selectedRegionIdAtom);
-  const selectedMainInterestId = useAtomValue(selectedMainInterestIdAtom);
-  const selectedSchoolId = useAtomValue(selectedSchoolIdAtom);
-  const selectedEducationId = useAtomValue(selectedEducationIdAtom);
+interface Props extends HstackProps {}
+
+function AuthorList(props: Props) {
+  const selectedFilters = useAtomValue(filterAtom);
 
   const { data: authors = [], isLoading } = useQuery({
-    queryKey: [
-      'author',
-      selectedNationalityId,
-      selectedEraId,
-      selectedRegionId,
-      selectedMainInterestId,
-      selectedSchoolId,
-      selectedEducationId,
-    ],
+    queryKey: ['author', selectedFilters],
     queryFn: () =>
       searchAuthors({
-        nationalityId: selectedNationalityId,
-        eraId: selectedEraId,
-        regionId: selectedRegionId,
-        mainInterestId: selectedMainInterestId,
-        schoolId: selectedSchoolId,
-        educationId: selectedEducationId,
-        take: 450,
+        ...selectedFilters,
+        take: 4,
       }),
     select: response => response.data.data,
   });
@@ -52,7 +29,7 @@ function AuthorList() {
           <Spinner size="3" />
         </VStack>
       ) : (
-        <HStack py="30px" justify="center">
+        <HStack py="30px" justify="center" {...props}>
           <div className={css({ width: '1460px', px: '20px' })}>
             <HStack flexWrap="wrap" justifyContent="start" gap="20px">
               {authors.map(author => (

@@ -20,6 +20,7 @@ function AuthorList(props: Props) {
         take: 4,
       }),
     select: response => response.data.data,
+    placeholderData: prev => prev,
   });
 
   return (

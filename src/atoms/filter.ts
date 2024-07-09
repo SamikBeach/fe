@@ -9,5 +9,3 @@ export const filterAtom = atom<Filter>({
   [FilterType.Region]: [],
   [FilterType.School]: [],
 });
-
-export const isFilterOpenAtom = atom<boolean>(false);

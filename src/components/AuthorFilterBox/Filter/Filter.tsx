@@ -1,4 +1,4 @@
-import { filterAtom, isFilterOpenAtom } from '@atoms/filter';
+import { filterAtom } from '@atoms/filter';
 import {
   Badge,
   ChevronDownIcon,
@@ -33,13 +33,10 @@ export default function Filter({
   const textFieldRef = useRef<HTMLInputElement>(null);
 
   const [selectedFilters, setSelectedFilters] = useAtom(filterAtom);
-  const [isFilterOpen, setIsFilterOpen] = useAtom(isFilterOpenAtom);
 
   const searchedItems = items.filter(item =>
     item.value.toLowerCase().includes(searchValue.toLowerCase())
   );
-
-  console.log({ selectedFilters });
 
   const handleValueChange = (value: string) => {
     if (
@@ -76,7 +73,6 @@ export default function Filter({
           }, 0);
 
           setOpen(true);
-          setIsFilterOpen(true);
         }
 
         setSearchValue('');
@@ -178,7 +174,6 @@ export default function Filter({
         })}
         onPointerDownOutside={() => {
           setOpen(false);
-          setIsFilterOpen(false);
         }}
       >
         <SearchTextField

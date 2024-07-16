@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
 import { HStack, HstackProps, VStack } from 'styled-system/jsx';
+import AuthorTable from './AuthorTable';
 
 interface Props extends HstackProps {}
 
@@ -17,7 +18,7 @@ function AuthorList(props: Props) {
     queryFn: () =>
       searchAuthors({
         ...selectedFilters,
-        take: 4,
+        take: 50,
       }),
     select: response => response.data.data,
     placeholderData: prev => prev,
@@ -30,15 +31,16 @@ function AuthorList(props: Props) {
           <Spinner size="3" />
         </VStack>
       ) : (
-        <HStack py="30px" justify="center" {...props}>
-          <div className={css({ width: '1460px', px: '20px' })}>
-            <HStack flexWrap="wrap" justifyContent="start" gap="20px">
-              {authors.map(author => (
-                <AuthorCard key={author.id} author={author} />
-              ))}
-            </HStack>
-          </div>
-        </HStack>
+        <AuthorTable authors={authors} />
+        // <HStack py="30px" justify="center" {...props}>
+        //   <div className={css({ width: '1460px', px: '20px' })}>
+        //     <HStack flexWrap="wrap" justifyContent="start" gap="20px">
+        //       {authors.map(author => (
+        //         <AuthorCard key={author.id} author={author} />
+        //       ))}
+        //     </HStack>
+        //   </div>
+        // </HStack>
       )}
     </>
   );

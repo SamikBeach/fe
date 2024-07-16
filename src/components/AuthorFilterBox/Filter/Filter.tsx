@@ -175,6 +175,11 @@ export default function Filter({
         onPointerDownOutside={() => {
           setOpen(false);
         }}
+        onKeyDown={e => {
+          if (e.key === 'Escape' || e.key === 'Esc') {
+            setOpen(false);
+          }
+        }}
       >
         <SearchTextField
           searchValue={searchValue}
@@ -201,6 +206,8 @@ export default function Filter({
                   ) {
                     textFieldRef.current?.focus();
                   }
+
+                  e.preventDefault();
                 }}
                 className={css({
                   cursor: 'pointer',

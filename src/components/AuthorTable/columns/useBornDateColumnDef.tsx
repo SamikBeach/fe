@@ -9,7 +9,7 @@ export default function useBornDateColumnDef(): ColumnDef<
   return {
     id: 'bornDate',
     header: 'Born date',
-    size: 136,
+    size: 156,
     accessorFn: row => row,
     cell: row =>
       getBornDateText({

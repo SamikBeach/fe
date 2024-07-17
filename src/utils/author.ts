@@ -22,9 +22,9 @@ export function getBornDateText({
 
   return `${bornDateIsBc ? 'BC ' : ''}${
     !isNil(bornDate) && getIsValidDateString(bornDate)
-      ? format(new Date(bornDate), 'y년 M월 d일')
+      ? format(new Date(bornDate), 'd MMMM y')
       : splitBornDate?.[1] === '00'
-        ? `${splitBornDate[0]}년 ?월 ?일`
+        ? splitBornDate[0]
         : '???'
   }`;
 }
@@ -40,9 +40,9 @@ export function getDiedDateText({
 
   return `${diedDateIsBc ? 'BC ' : ''}${
     !isNil(diedDate) && getIsValidDateString(diedDate)
-      ? format(new Date(diedDate), 'y년 M월 d일')
+      ? format(new Date(diedDate), 'd MMMM y')
       : splitDiedDate?.[1] === '00'
-        ? `${splitDiedDate[0]}년 ?월 ?일`
+        ? splitDiedDate[0]
         : '???'
   }`;
 }

@@ -9,7 +9,7 @@ export default function useDiedDateColumnDef(): ColumnDef<
   return {
     id: 'diedDate',
     header: 'Died date',
-    size: 136,
+    size: 156,
     accessorFn: row => row,
     cell: row =>
       getBornDateText({

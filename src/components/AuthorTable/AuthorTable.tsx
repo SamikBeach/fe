@@ -18,7 +18,9 @@ import { VStack } from 'styled-system/jsx';
 import { Spinner } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
 import { filterAtom } from '@atoms/filter';
-import { columns } from './columns';
+
+import { css } from 'styled-system/css';
+import { useColumnDefs } from './columns';
 
 export default function AuthorTable() {
   const selectedFilters = useAtomValue(filterAtom);
@@ -34,50 +36,77 @@ export default function AuthorTable() {
     placeholderData: prev => prev,
   });
 
+  const columnDefs = useColumnDefs();
+
   const table = useReactTable({
     state: {},
-    columns: columns,
+    columns: columnDefs,
     data: authors,
     getCoreRowModel: getCoreRowModel(),
   });
 
   if (isLoading) {
     return (
-      <VStack height="calc(100vh - 128px)" justify="center">
+      <VStack height="calc(100vh - 140px)" justify="center">
         <Spinner size="3" />
       </VStack>
     );
   }
 
   return (
-    <Table>
-      <THead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <HeaderCell key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-              </HeaderCell>
-            ))}
-          </HeaderRow>
-        ))}
-      </THead>
-      <TBody>
-        {table.getRowModel().rows.map(row => (
-          <Row key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <Cell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </Cell>
-            ))}
-          </Row>
-        ))}
-      </TBody>
-    </Table>
+    <div
+      className={css({
+        height: 'calc(100vh - 140px)',
+        width: '100%',
+        overflow: 'auto',
+
+        '&::-webkit-scrollbar': {
+          backgroundColor: '#f5f5f5',
+          borderRadius: '10px',
+          width: '8px',
+          height: '8px',
+        },
+
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'gray.400',
+          borderRadius: '10px',
+        },
+      })}
+    >
+      <Table style={{ width: table.getTotalSize() }}>
+        <THead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <HeaderCell
+                  key={header.id}
+                  style={{
+                    width: header.column.getSize(),
+                  }}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </HeaderCell>
+              ))}
+            </HeaderRow>
+          ))}
+        </THead>
+        <TBody>
+          {table.getRowModel().rows.map(row => (
+            <Row key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <Cell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Cell>
+              ))}
+            </Row>
+          ))}
+        </TBody>
+      </Table>
+    </div>
   );
 }

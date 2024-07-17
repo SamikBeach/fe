@@ -2,13 +2,14 @@ import { AuthorServerModel } from '@models/author';
 import { ColumnDef } from '@tanstack/react-table';
 import { getBornDateText } from '@utils/author';
 
-export default function getDiedDateColumnDef(): ColumnDef<
+export default function useDiedDateColumnDef(): ColumnDef<
   AuthorServerModel,
   AuthorServerModel
 > {
   return {
     id: 'diedDate',
     header: 'Died date',
+    size: 136,
     accessorFn: row => row,
     cell: row =>
       getBornDateText({

@@ -18,7 +18,7 @@ function BookList() {
     </VStack>
   ) : (
     <HStack py="30px" justify="center">
-      <div className={css({ width: '1460px', px: '20px' })}>
+      <div className={css({ width: '1280px', px: '20px' })}>
         <HStack flexWrap="wrap" justifyContent="start" gap="20px">
           {books.map(book => (
             <BookCard key={book.id} book={book} />

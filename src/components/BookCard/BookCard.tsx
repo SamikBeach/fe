@@ -1,34 +1,45 @@
 import { BookServerModel } from '@models/book';
-import { Card } from '@radix-ui/themes';
-import classNames from 'classnames';
-import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
-import { VStack } from 'styled-system/jsx';
-import BookAdditionalInfo from './BookAdditionalInfo';
-import BookBasicInfo from './BookBasicInfo';
+import { HStack } from 'styled-system/jsx';
+import { useRouter } from 'next/navigation';
+import BookInfo from './BookInfo';
 
-interface Props extends ComponentProps<typeof Card> {
+interface Props {
   book: BookServerModel;
 }
 
-function BookCard({ book, className, ...props }: Props) {
+function BookCard({ book }: Props) {
+  const router = useRouter();
+
+  const {
+    info: { cover },
+  } = book;
+
   return (
-    <Card
-      className={classNames(
-        css({
-          width: '460px',
-          height: '290px',
-          padding: '20px',
-        }),
-        className
-      )}
-      {...props}
+    <HStack
+      className={css({
+        backgroundColor: 'white',
+        width: '600px',
+        height: '200px',
+        borderRadius: '6px',
+      })}
+      alignItems="start"
+      gap="0px"
     >
-      <VStack gap="6px" alignItems="start">
-        <BookBasicInfo book={book} />
-        <BookAdditionalInfo book={book} />
-      </VStack>
-    </Card>
+      <img
+        src={cover}
+        width={140}
+        height={200}
+        className={css({
+          cursor: 'pointer',
+          borderLeftRadius: '6px',
+          height: '200px',
+          width: '140px',
+        })}
+        onClick={() => router.push(`/book/${book.id}`)}
+      />
+      <BookInfo book={book} />
+    </HStack>
   );
 }
 

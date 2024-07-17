@@ -2,18 +2,18 @@ import { AuthorServerModel } from '@models/author';
 import { ColumnDef } from '@tanstack/react-table';
 import { getBornDateText } from '@utils/author';
 
-export default function getBornDateColumnDef(): ColumnDef<
+export default function getDiedDateColumnDef(): ColumnDef<
   AuthorServerModel,
   AuthorServerModel
 > {
   return {
-    id: 'bornDate',
-    header: 'Born date',
+    id: 'diedDate',
+    header: 'Died date',
     accessorFn: row => row,
     cell: row =>
       getBornDateText({
-        bornDate: row.getValue().born_date,
-        bornDateIsBc: row.getValue().born_date_is_bc === 1,
+        bornDate: row.getValue().died_date,
+        bornDateIsBc: row.getValue().died_date_is_bc === 1,
       }),
   };
 }

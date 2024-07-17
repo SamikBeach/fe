@@ -13,7 +13,6 @@ export default function getNameColumnDef(): ColumnDef<
     header: 'Name',
     accessorFn: row => row,
     cell: row => {
-      console.log({ row });
       const rowValue = row.getValue();
 
       return (

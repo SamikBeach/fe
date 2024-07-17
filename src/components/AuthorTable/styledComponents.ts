@@ -34,6 +34,11 @@ export const TBody = styled('tbody', {
 export const Row = styled('tr', {
   base: {
     height: '60px',
+    cursor: 'pointer',
+
+    _hover: {
+      backgroundColor: 'gray.50',
+    },
   },
 });
 

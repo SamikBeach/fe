@@ -19,7 +19,6 @@ module.exports = {
 
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    indent: ['error', 2, { SwitchCase: 1, ignoredNodes: ['TemplateLiteral'] }],
     'no-var': 'error',
     'max-len': 'off',
     'space-infix-ops': 'error',

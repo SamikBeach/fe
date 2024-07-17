@@ -1,10 +1,6 @@
 import { styled } from 'styled-system/jsx';
 
-export const Table = styled('table', {
-  base: {
-    height: '100%',
-  },
-});
+export const Table = styled('table', {});
 
 export const THead = styled('thead', {
   base: {

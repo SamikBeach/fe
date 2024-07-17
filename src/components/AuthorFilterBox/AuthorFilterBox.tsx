@@ -65,9 +65,9 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
         )}
         gap="30px"
         alignItems="start"
+        justify="space-between"
         {...props}
       >
-        <ViewModeSelect />
         <HStack flexWrap="wrap" gap="6px">
           <NationalityFilter onValueChange={onValueChange} />
           <EraFilter onValueChange={onValueChange} />
@@ -77,6 +77,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
           <SchoolFilter onValueChange={onValueChange} />
           <Sort />
         </HStack>
+        <ViewModeSelect />
       </HStack>
     );
   }

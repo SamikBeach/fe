@@ -16,10 +16,11 @@ export function getAuthorById({ id }: { id: number }) {
 
 interface SearchAuthorsRequest extends Partial<Filter> {
   where__name__i_like?: string;
+  where__id__more_than?: number;
   take?: number;
 }
 
-interface SearchAuthorsResponse {
+export interface SearchAuthorsResponse {
   cursor: {
     after: number | null;
   };
@@ -31,6 +32,7 @@ interface SearchAuthorsResponse {
 export function searchAuthors({
   take,
   where__name__i_like,
+  where__id__more_than,
   ...filter
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
@@ -42,6 +44,7 @@ export function searchAuthors({
       educationIds: filter[FilterType.Education]?.map(item => item.id),
       mainInterestIds: filter[FilterType.MainInterest]?.map(item => item.id),
       where__name__i_like,
+      where__id__more_than,
       take,
     },
   });

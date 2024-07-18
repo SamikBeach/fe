@@ -39,15 +39,10 @@ export const TBody = styled('tbody', {
     border: '1px solid',
     borderTop: 'none',
     borderColor: 'gray.100',
-    backgroundColor: 'white',
   },
 });
 
-export const Row = styled('tr', {
-  base: {
-    height: '60px',
-  },
-});
+export const Row = styled('tr', {});
 
 export const Cell = styled('td', {
   base: {

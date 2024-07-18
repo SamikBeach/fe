@@ -1,8 +1,8 @@
 import { BookServerModel } from '@models/book';
-import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import { VStack } from 'styled-system/jsx';
-import { Text } from '@radix-ui/themes';
+import { HStack } from 'styled-system/jsx';
+import { useRouter } from 'next/navigation';
+import BookInfo from './BookInfo';
 
 interface Props {
   book: BookServerModel;
@@ -12,11 +12,20 @@ function BookCard({ book }: Props) {
   const router = useRouter();
 
   const {
-    info: { cover, title },
+    info: { cover },
   } = book;
 
   return (
-    <VStack gap="4px">
+    <HStack
+      className={css({
+        backgroundColor: 'white',
+        width: '600px',
+        height: '200px',
+        borderRadius: '6px',
+      })}
+      alignItems="start"
+      gap="0px"
+    >
       <img
         src={cover}
         width={140}
@@ -29,8 +38,8 @@ function BookCard({ book }: Props) {
         })}
         onClick={() => router.push(`/book/${book.id}`)}
       />
-      <Text>{title}</Text>
-    </VStack>
+      <BookInfo book={book} />
+    </HStack>
   );
 }
 

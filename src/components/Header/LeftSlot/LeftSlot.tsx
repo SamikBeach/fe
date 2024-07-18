@@ -28,12 +28,28 @@ export default function LeftSlot() {
             color: 'black',
             fontWeight: 'medium',
 
-            backgroundColor: pathname.startsWith('/author')
+            backgroundColor: pathname.startsWith('/authors')
               ? 'gray.100'
               : undefined,
           })}
         >
           <Link href="/authors">Authors</Link>
+        </Button>
+
+        <Button
+          asChild
+          variant="ghost"
+          size="3"
+          className={css({
+            color: 'black',
+            fontWeight: 'medium',
+
+            backgroundColor: pathname.startsWith('/originals')
+              ? 'gray.100'
+              : undefined,
+          })}
+        >
+          <Link href="/originals">Originals</Link>
         </Button>
 
         <Button

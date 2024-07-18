@@ -20,12 +20,12 @@ export default function useEraColumnDef() {
           <Tooltip
             content={
               <Text size="2">
-                {rowValue.regions?.map(region => region.region).join(', ')}
+                {rowValue.eras?.map(era => era.era).join(', ')}
               </Text>
             }
           >
             <Text className={css({ lineClamp: 2 })}>
-              {rowValue.regions?.map(region => region.region).join(', ')}
+              {rowValue.eras?.map(era => era.era).join(', ')}
             </Text>
           </Tooltip>
         );

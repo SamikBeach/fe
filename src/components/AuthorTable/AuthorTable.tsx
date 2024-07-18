@@ -30,7 +30,6 @@ export default function AuthorTable() {
   >({
     queryKey: ['author', selectedFilters],
     queryFn: ({ pageParam = 0 }) => {
-      console.log({ pageParam });
       return searchAuthors({
         ...selectedFilters,
         where__id__more_than: pageParam as number,
@@ -42,7 +41,7 @@ export default function AuthorTable() {
       return param.data?.cursor.after;
     },
     refetchOnWindowFocus: false,
-    placeholderData: keepPreviousData,
+    // placeholderData: keepPreviousData,
   });
 
   // console.log({ data });

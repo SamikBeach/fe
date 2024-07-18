@@ -4,7 +4,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { HeaderCell, HeaderRow, TBody, THead, Table } from './styledComponents';
-import { SearchAuthorsResponse, searchAuthors } from '@apis/author';
+import { SearchWritingsResponse, searchWritings } from '@apis/writing';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { VStack } from 'styled-system/jsx';
 import { Spinner } from '@radix-ui/themes';
@@ -17,17 +17,17 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
 
-export default function AuthorTable() {
+export default function WritingTable() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const selectedFilters = useAtomValue(filterAtom);
 
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
-    AxiosResponse<SearchAuthorsResponse>
+    AxiosResponse<SearchWritingsResponse>
   >({
-    queryKey: ['author', selectedFilters],
+    queryKey: ['writing', selectedFilters],
     queryFn: async ({ pageParam = 0 }) => {
-      return await searchAuthors({
+      return await searchWritings({
         ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 30,

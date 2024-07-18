@@ -9,10 +9,11 @@ export function getWritingById({ id }: { id: number }) {
 
 interface SearchWritingsRequest {
   where__title__i_like?: string;
+  where__id__more_than?: number;
   take?: number;
 }
 
-interface SearchWritingsResponse {
+export interface SearchWritingsResponse {
   cursor: {
     after: number | null;
   };
@@ -23,11 +24,13 @@ interface SearchWritingsResponse {
 
 export function searchWritings({
   where__title__i_like,
+  where__id__more_than,
   take,
 }: SearchWritingsRequest) {
   return api.get<SearchWritingsResponse>('/writing/search', {
     params: {
       where__title__i_like,
+      where__id__more_than,
       take,
     },
   });

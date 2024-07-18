@@ -5,11 +5,7 @@ import {
 } from '@tanstack/react-table';
 import { HeaderCell, HeaderRow, TBody, THead, Table } from './styledComponents';
 import { SearchAuthorsResponse, searchAuthors } from '@apis/author';
-import {
-  UseInfiniteQueryResult,
-  keepPreviousData,
-  useInfiniteQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { VStack } from 'styled-system/jsx';
 import { Spinner } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
@@ -19,6 +15,7 @@ import { useColumnDefs } from './columns';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import MemoizedRow from './MemoizedRow';
+import { AxiosResponse } from 'axios';
 
 export default function AuthorTable() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -26,11 +23,11 @@ export default function AuthorTable() {
   const selectedFilters = useAtomValue(filterAtom);
 
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
-    UseInfiniteQueryResult<SearchAuthorsResponse>
+    AxiosResponse<SearchAuthorsResponse>
   >({
     queryKey: ['author', selectedFilters],
-    queryFn: ({ pageParam = 0 }) => {
-      return searchAuthors({
+    queryFn: async ({ pageParam = 0 }) => {
+      return await searchAuthors({
         ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 30,
@@ -38,18 +35,16 @@ export default function AuthorTable() {
     },
     initialPageParam: 0,
     getNextPageParam: param => {
-      return param.data?.cursor.after;
+      return param.data.cursor.after;
     },
     refetchOnWindowFocus: false,
     // placeholderData: keepPreviousData,
   });
 
-  // console.log({ data });
   const flatData = useMemo(
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
-  // console.log({ flatData });
 
   const columnDefs = useColumnDefs();
 

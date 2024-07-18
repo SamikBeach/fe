@@ -38,7 +38,7 @@ export default function useAuthorColumnDef() {
                   {rowValue.author.name}
                 </Text>
               </Link>
-              <Link href={`/author/${rowValue.id}`}>
+              <Link href={`/author/${rowValue.author.id}`}>
                 <Text
                   className={css({
                     fontSize: '13px',

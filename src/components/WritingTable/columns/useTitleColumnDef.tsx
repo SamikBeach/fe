@@ -21,38 +21,40 @@ export default function useTitleColumnDef() {
         const rowValue = row.getValue();
 
         return (
-          <Tooltip
-            content={
+          <VStack
+            alignItems="start"
+            gap="0px"
+            onClick={() => router.push(`/writing/${rowValue.id}`)}
+          >
+            <Tooltip
+              content={
+                <VStack alignItems="start" gap="0px">
+                  <Text weight="bold">{rowValue.title}</Text>
+                  <Text
+                    className={css({
+                      fontSize: '13px',
+                    })}
+                  >
+                    {rowValue.title_in_eng}
+                  </Text>
+                </VStack>
+              }
+            >
               <VStack alignItems="start" gap="0px">
-                <Text weight="bold">{rowValue.title}</Text>
+                <Text weight="bold" className={css({ lineClamp: 1 })}>
+                  {rowValue.title}
+                </Text>
                 <Text
                   className={css({
                     fontSize: '13px',
+                    lineClamp: 1,
                   })}
                 >
                   {rowValue.title_in_eng}
                 </Text>
               </VStack>
-            }
-          >
-            <VStack
-              alignItems="start"
-              gap="0px"
-              onClick={() => router.push(`/author/${rowValue.id}`)}
-            >
-              <Text weight="bold" className={css({ lineClamp: 1 })}>
-                {rowValue.title}
-              </Text>
-              <Text
-                className={css({
-                  fontSize: '13px',
-                  lineClamp: 1,
-                })}
-              >
-                {rowValue.title_in_eng}
-              </Text>
-            </VStack>
-          </Tooltip>
+            </Tooltip>
+          </VStack>
         );
       },
     };

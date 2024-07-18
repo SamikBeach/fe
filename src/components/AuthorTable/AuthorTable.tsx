@@ -3,15 +3,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import {
-  Cell,
-  HeaderCell,
-  HeaderRow,
-  Row,
-  TBody,
-  THead,
-  Table,
-} from './styledComponents';
+import { HeaderCell, HeaderRow, TBody, THead, Table } from './styledComponents';
 import { SearchAuthorsResponse, searchAuthors } from '@apis/author';
 import {
   UseInfiniteQueryResult,

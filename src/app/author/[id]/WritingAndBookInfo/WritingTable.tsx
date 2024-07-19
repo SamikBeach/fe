@@ -19,7 +19,7 @@ export default function WritingTable({ authorId }: Props) {
 
   if (isLoading) {
     return (
-      <VStack justify="center" height="500px">
+      <VStack justify="center" height="500px" width="100%">
         <Spinner size="3" />
       </VStack>
     );
@@ -33,15 +33,16 @@ export default function WritingTable({ authorId }: Props) {
           <Table.ColumnHeaderCell width="140px">
             Publication date
           </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell width="100px">
+          <Table.ColumnHeaderCell width="110px">
             Editions
           </Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-        {writings.map(
-          ({ id, title, title_in_eng, publication_date, books }) => (
+        {writings
+          .sort((a, b) => b.books.length - a.books.length)
+          .map(({ id, title, title_in_eng, publication_date, books }) => (
             <Table.Row
               key={id}
               className={css({
@@ -66,8 +67,7 @@ export default function WritingTable({ authorId }: Props) {
                 </Text>
               </Table.Cell>
             </Table.Row>
-          )
-        )}
+          ))}
       </Table.Body>
     </Table.Root>
   );

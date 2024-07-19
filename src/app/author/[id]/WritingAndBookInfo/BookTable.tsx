@@ -21,17 +21,17 @@ export default function BookTable({ authorId }: Props) {
 
   if (isLoading) {
     return (
-      <VStack justify="center" height="500px">
+      <VStack justify="center" height="500px" width="100%">
         <Spinner size="3" />
       </VStack>
     );
   }
 
   return (
-    <Table.Root className={css({ width: '100%' })}>
+    <Table.Root className={css({ width: '100%', py: '10px' })}>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell width="80px"></Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell width="200px"></Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
           <Table.ColumnHeaderCell width="140px">
             Publication date
@@ -56,7 +56,7 @@ export default function BookTable({ authorId }: Props) {
             onClick={() => router.push(`/book/${id}`)}
           >
             <Table.RowHeaderCell>
-              <img src={info.cover} width={40} height={60} />
+              <img src={info.cover} width={200} height={60} />
             </Table.RowHeaderCell>
             <Table.Cell>{info.title}</Table.Cell>
             <Table.Cell>

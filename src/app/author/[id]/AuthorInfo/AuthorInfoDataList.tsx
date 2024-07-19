@@ -66,7 +66,7 @@ export default function AuthorInfoDataList({ author }: Props) {
         <DataList.Item>
           <DataList.Label minWidth="88px">School</DataList.Label>
           <DataList.Value>
-            {schools.map(school => capitalize(school.school)).join(',')}
+            {schools.map(school => capitalize(school.school)).join(', ')}
           </DataList.Value>
         </DataList.Item>
       )}

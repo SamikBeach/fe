@@ -1,37 +1,33 @@
-import { Tabs } from '@radix-ui/themes';
-import { ComponentProps } from 'react';
-import { css } from 'styled-system/css';
+import { SegmentedControl } from '@radix-ui/themes';
+import { useState } from 'react';
 import WritingTable from './WritingTable';
 import BookTable from './BookTable';
 import { AuthorServerModel } from '@models/author';
+import { VStack, VstackProps } from 'styled-system/jsx';
 
-interface Props extends ComponentProps<typeof Tabs.Root> {
+interface Props extends VstackProps {
   author: AuthorServerModel;
 }
 
 export default function WritingAndBookInfo({ author, ...props }: Props) {
+  const [selected, setSelected] = useState<'originals' | 'books'>('originals');
+
   return (
-    <Tabs.Root defaultValue="originals" {...props}>
-      <Tabs.List size="2">
-        <Tabs.Trigger
-          value="originals"
-          className={css({ fontSize: '16px', cursor: 'pointer' })}
-        >
+    <VStack alignItems="start" gap="10px" pt="20px" {...props}>
+      <SegmentedControl.Root
+        defaultValue="originals"
+        onValueChange={value => setSelected(value as 'originals' | 'books')}
+      >
+        <SegmentedControl.Item value="originals">
           Originals
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          value="books"
-          className={css({ fontSize: '16px', cursor: 'pointer' })}
-        >
-          Books
-        </Tabs.Trigger>
-      </Tabs.List>
-      <Tabs.Content value="originals">
+        </SegmentedControl.Item>
+        <SegmentedControl.Item value="books">Books</SegmentedControl.Item>
+      </SegmentedControl.Root>
+      {selected === 'originals' ? (
         <WritingTable authorId={author.id} />
-      </Tabs.Content>
-      <Tabs.Content value="books">
+      ) : (
         <BookTable authorId={author.id} />
-      </Tabs.Content>
-    </Tabs.Root>
+      )}
+    </VStack>
   );
 }

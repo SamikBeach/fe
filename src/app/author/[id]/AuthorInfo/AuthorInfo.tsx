@@ -9,7 +9,7 @@ interface Props extends HstackProps {
 
 export default function AuthorInfo({ author, ...props }: Props) {
   return (
-    <VStack gap="20px" alignItems="start" padding="20px" {...props}>
+    <VStack gap="20px" alignItems="start" px="20px" {...props}>
       <AuthorBasicInfo author={author} />
       <AuthorInfoDataList author={author} />
     </VStack>

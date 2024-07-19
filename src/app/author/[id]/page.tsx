@@ -31,11 +31,11 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
     <HStack
       alignItems="start"
       justify="space-between"
-      className={css({ width: '1180px', py: '60px' })}
+      className={css({ width: '1180px', py: '40px' })}
       gap="30px"
     >
       <AuthorInfo author={author} width="400px" />
-      <WritingAndBookInfo author={author} className={css({ width: '600px' })} />
+      <WritingAndBookInfo author={author} className={css({ width: '720px' })} />
     </HStack>
   );
 }

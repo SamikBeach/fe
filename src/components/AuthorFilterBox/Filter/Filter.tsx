@@ -8,7 +8,7 @@ import {
   Text,
 } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
-import { ComponentProps, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
@@ -64,22 +64,24 @@ export default function Filter({
     onValueChange?.(value);
   };
 
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        textFieldRef.current?.focus();
+      }, 0);
+    } else {
+      setSearchValue('');
+    }
+  }, [open]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      textFieldRef.current?.focus();
+    }, 0);
+  }, [searchedItems.length]);
+
   return (
-    <Select.Root
-      open={open}
-      onOpenChange={opened => {
-        if (opened) {
-          setTimeout(() => {
-            textFieldRef.current?.focus();
-          }, 0);
-
-          setOpen(true);
-        }
-
-        setSearchValue('');
-      }}
-      {...props}
-    >
+    <Select.Root open={open} {...props}>
       <HStack
         onClick={() => {
           setOpen(true);
@@ -238,7 +240,13 @@ export default function Filter({
                     textFieldRef.current?.focus();
                   }
 
-                  e.preventDefault();
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleValueChange(String(item.id));
+                  }
+
+                  if (e.key.length === 1) {
+                    e.preventDefault();
+                  }
                 }}
                 className={css({
                   cursor: 'pointer',

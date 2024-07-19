@@ -1,11 +1,10 @@
-import { AuthorAvatar } from '@components/AuthorAvatar';
 import { AuthorHoverCard } from '@components/AuthorHoverCard';
 import { AuthorServerModel } from '@models/author';
-import { Badge, DataList, Text } from '@radix-ui/themes';
+import { DataList, Text } from '@radix-ui/themes';
 import { capitalize } from 'lodash';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { VStack } from 'styled-system/jsx';
 
 interface Props {
   author: AuthorServerModel;
@@ -83,7 +82,6 @@ export default function AuthorInfoDataList({ author }: Props) {
                       <Link
                         key={influenced_by.id}
                         href={`/author/${influenced_by.id}`}
-                        as="span"
                       >
                         <Text
                           className={css({
@@ -114,11 +112,7 @@ export default function AuthorInfoDataList({ author }: Props) {
               <>
                 <AuthorHoverCard.Root>
                   <AuthorHoverCard.Trigger>
-                    <Link
-                      key={influenced.id}
-                      href={`/author/${influenced.id}`}
-                      as="span"
-                    >
+                    <Link key={influenced.id} href={`/author/${influenced.id}`}>
                       <Text
                         className={css({
                           cursor: 'pointer',

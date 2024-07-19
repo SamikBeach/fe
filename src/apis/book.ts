@@ -16,6 +16,7 @@ export function getBookById({ id }: { id: number }) {
 interface SearchBooksRequest {
   where__title__i_like?: string;
   take?: number;
+  authorId?: number;
 }
 
 type SearchBooksResponse = {
@@ -30,11 +31,13 @@ type SearchBooksResponse = {
 export function searchBooks({
   where__title__i_like,
   take,
+  authorId,
 }: SearchBooksRequest) {
   return api.get<SearchBooksResponse>('/book/search', {
     params: {
       where__title__i_like,
       take,
+      authorId,
     },
   });
 }

@@ -1,17 +1,28 @@
-import { WritingServerModel } from '@models/writing';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import { Table } from '@radix-ui/themes';
+import { Spinner, Table } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import { searchWritings } from '@apis/writing';
+import { VStack } from 'styled-system/jsx';
 
 interface Props {
-  writings?: WritingServerModel[];
+  authorId?: number;
 }
 
-export default function WritingTable({ writings = [] }: Props) {
+export default function WritingTable({ authorId }: Props) {
   const router = useRouter();
+  const { data: writings = [], isLoading } = useQuery({
+    queryKey: ['search/writing', authorId],
+    queryFn: () => searchWritings({ take: 10, authorId }),
+    select: response => response.data.data,
+  });
 
-  if (writings.length === 0) {
-    return null;
+  if (isLoading) {
+    return (
+      <VStack justify="center" height="500px">
+        <Spinner size="3" />
+      </VStack>
+    );
   }
 
   return (
@@ -51,7 +62,7 @@ export default function WritingTable({ writings = [] }: Props) {
             </Table.RowHeaderCell>
             <Table.Cell>{title}</Table.Cell>
             <Table.Cell>{publication_date}</Table.Cell>
-            <Table.Cell>3 editions</Table.Cell>
+            <Table.Cell>{books.length} Editions</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

@@ -1,18 +1,30 @@
-import { BookServerModel } from '@models/book';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
-import { Table } from '@radix-ui/themes';
+import { Spinner, Table } from '@radix-ui/themes';
 import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
+import { searchBooks } from '@apis/book';
+import { VStack } from 'styled-system/jsx';
 
 interface Props {
-  books?: BookServerModel[];
+  authorId?: number;
 }
 
-export default function BookTable({ books = [] }: Props) {
+export default function BookTable({ authorId }: Props) {
   const router = useRouter();
 
-  if (books.length === 0) {
-    return null;
+  const { data: books = [], isLoading } = useQuery({
+    queryKey: ['search/book', authorId],
+    queryFn: () => searchBooks({ take: 10, authorId }),
+    select: response => response.data.data,
+  });
+
+  if (isLoading) {
+    return (
+      <VStack justify="center" height="500px">
+        <Spinner size="3" />
+      </VStack>
+    );
   }
 
   return (

@@ -5,15 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Spinner } from '@radix-ui/themes';
 import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
-import WritingTable from './WritingTable';
 import { AuthorInfo } from './AuthorInfo';
-import BookTable from './BookTable';
-import { useState } from 'react';
-import TableSegmentControl from './TableSegmentControl';
+import { WritingAndBookInfo } from './WritingAndBookInfo';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
-  const [tableType, setTableType] = useState<'writing' | 'book'>('writing');
-
   const { data: author, isLoading } = useQuery({
     queryKey: ['author', params.id],
     queryFn: () => getAuthorById({ id: params.id }),
@@ -35,16 +30,12 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
   return (
     <HStack
       alignItems="start"
+      justify="space-between"
       className={css({ width: '1180px', py: '60px' })}
       gap="30px"
     >
-      <AuthorInfo author={author} />
-      {/* <TableSegmentControl tableType={tableType} setTableType={setTableType} /> */}
-      {tableType === 'writing' ? (
-        <WritingTable writings={author.writings} />
-      ) : (
-        <BookTable books={author.books} />
-      )}
+      <AuthorInfo author={author} width="400px" />
+      <WritingAndBookInfo author={author} className={css({ width: '600px' })} />
     </HStack>
   );
 }

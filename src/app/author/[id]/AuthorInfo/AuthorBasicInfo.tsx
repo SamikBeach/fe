@@ -37,7 +37,7 @@ export default function AuthorInfo({ author }: Props) {
           {name}
         </Text>
         <Text size="4">{name_in_kor}</Text>
-        <Text size="2" color="gray">
+        <Text size="3">
           {getBornAndDiedDateText({
             bornDate: born_date,
             diedDate: died_date,

@@ -165,9 +165,9 @@ export default function Filter({
         position="popper"
         variant="soft"
         className={css({
-          maxHeight: '400px',
-          width: '300px',
-          maxWidth: '300px',
+          maxHeight: '300px',
+          width: '260px',
+          maxWidth: '260px',
 
           '& .rt-SelectViewport': {
             paddingTop: '0px',

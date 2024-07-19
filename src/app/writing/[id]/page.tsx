@@ -1,12 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { VStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { getWritingById } from '@apis/writing';
 
 import WritingInfo from './WritingInfo';
-import { Separator, Spinner } from '@radix-ui/themes';
+import { Spinner } from '@radix-ui/themes';
 import BookTable from './BookTable';
 
 export default function WritingPage({ params }: { params: { id: number } }) {
@@ -29,14 +29,14 @@ export default function WritingPage({ params }: { params: { id: number } }) {
   }
 
   return (
-    <VStack
-      alignItems="center"
-      className={css({ width: '1280px', py: '60px' })}
+    <HStack
+      alignItems="start"
+      justify="space-between"
+      className={css({ width: '1180px', py: '40px' })}
       gap="30px"
     >
-      <WritingInfo writing={writing} />
-      <Separator className={css({ width: '100%' })} />
+      <WritingInfo writing={writing} width="400px" />
       <BookTable books={writing.books} />
-    </VStack>
+    </HStack>
   );
 }

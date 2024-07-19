@@ -3,12 +3,13 @@ import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Table } from '@radix-ui/themes';
 import { format } from 'date-fns';
+import { VStack, VstackProps } from 'styled-system/jsx';
 
-interface Props {
+interface Props extends VstackProps {
   books?: BookServerModel[];
 }
 
-export default function BookTable({ books = [] }: Props) {
+export default function BookTable({ books = [], ...props }: Props) {
   const router = useRouter();
 
   if (books.length === 0) {
@@ -16,44 +17,46 @@ export default function BookTable({ books = [] }: Props) {
   }
 
   return (
-    <Table.Root className={css({ width: '100%' })}>
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeaderCell width="80px"></Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell width="140px">
-            Publication date
-          </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell width="420px">
-            Author & Translator
-          </Table.ColumnHeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        {books.map(({ id, info }) => (
-          <Table.Row
-            key={id}
-            className={css({
-              cursor: 'pointer',
-              _hover: {
-                backgroundColor: 'gray.50',
-              },
-            })}
-            align="center"
-            onClick={() => router.push(`/book/${id}`)}
-          >
-            <Table.RowHeaderCell>
-              <img src={info.cover} width={40} height={60} />
-            </Table.RowHeaderCell>
-            <Table.Cell>{info.title}</Table.Cell>
-            <Table.Cell>
-              {format(new Date(info.pubDate), 'y년 M월 d일')}
-            </Table.Cell>
-            <Table.Cell>{info.author}</Table.Cell>
+    <VStack alignItems="start" gap="10px" pt="20px" {...props}>
+      <Table.Root className={css({ width: '100%' })}>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell width="80px"></Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width="140px">
+              Publication date
+            </Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width="420px">
+              Author & Translator
+            </Table.ColumnHeaderCell>
           </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+        </Table.Header>
+
+        <Table.Body>
+          {books.map(({ id, info }) => (
+            <Table.Row
+              key={id}
+              className={css({
+                cursor: 'pointer',
+                _hover: {
+                  backgroundColor: 'gray.50',
+                },
+              })}
+              align="center"
+              onClick={() => router.push(`/book/${id}`)}
+            >
+              <Table.RowHeaderCell>
+                <img src={info.cover} width={40} height={60} />
+              </Table.RowHeaderCell>
+              <Table.Cell>{info.title}</Table.Cell>
+              <Table.Cell>
+                {format(new Date(info.pubDate), 'y년 M월 d일')}
+              </Table.Cell>
+              <Table.Cell>{info.author}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+    </VStack>
   );
 }

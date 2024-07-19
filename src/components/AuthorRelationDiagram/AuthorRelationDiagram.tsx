@@ -11,7 +11,6 @@ import { searchAuthors } from '@apis/author';
 import { useAtomValue } from 'jotai';
 import { filterAtom } from '@atoms/filter';
 import { useEffect } from 'react';
-import { AuthorFilterBox } from '@components/AuthorFilterBox';
 import TestButtons from './TestButtons';
 import { edgeTypes, nodeTypes } from './constants';
 import {
@@ -83,8 +82,6 @@ function RelationDiagram() {
     <div
       className={css({
         width: '100%',
-        borderLeft: '1px solid',
-        borderColor: 'gray.200',
       })}
     >
       {/* <TestButtons

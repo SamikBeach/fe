@@ -1,7 +1,8 @@
 import { getAllRegions } from '@apis/region';
-import { Select } from '@radix-ui/themes';
+import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
+import { VStack } from 'styled-system/jsx';
 import { Filter } from '../Filter';
 import { FilterType } from '../Filter/models';
 
@@ -18,7 +19,14 @@ function RegionFilter({ onValueChange, ...props }: Props) {
       })),
   });
 
-  return <Filter items={regions} filterType={FilterType.Region} {...props} />;
+  return (
+    <VStack alignItems="start" width="100%" gap="2px">
+      <Text ml="4px" size="2">
+        Region
+      </Text>
+      <Filter items={regions} filterType={FilterType.Region} {...props} />
+    </VStack>
+  );
 }
 
 export default RegionFilter;

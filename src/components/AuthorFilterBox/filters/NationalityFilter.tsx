@@ -1,14 +1,15 @@
 import { getAllNationalities } from '@apis/nationality';
-import { Select } from '@radix-ui/themes';
+import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
+import { VStack } from 'styled-system/jsx';
 import { Filter } from '../Filter';
 import { FilterType } from '../Filter/models';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 
 function NationalityFilter({ onValueChange, ...props }: Props) {
-  const { data: nationalitys = [] } = useQuery({
+  const { data: nationalties = [] } = useQuery({
     queryKey: ['nationality'],
     queryFn: getAllNationalities,
     select: response =>
@@ -19,11 +20,16 @@ function NationalityFilter({ onValueChange, ...props }: Props) {
   });
 
   return (
-    <Filter
-      items={nationalitys}
-      filterType={FilterType.Nationality}
-      {...props}
-    />
+    <VStack alignItems="start" width="100%" gap="2px">
+      <Text ml="4px" size="2">
+        Nationality
+      </Text>
+      <Filter
+        items={nationalties}
+        filterType={FilterType.Nationality}
+        {...props}
+      />
+    </VStack>
   );
 }
 

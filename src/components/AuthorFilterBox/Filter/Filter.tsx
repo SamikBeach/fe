@@ -83,6 +83,7 @@ export default function Filter({
         onClick={() => {
           setOpen(true);
         }}
+        width="100%"
       >
         <Select.Trigger
           className={css({
@@ -99,7 +100,7 @@ export default function Filter({
             padding: '3px',
             borderRadius: '6px',
             minHeight: '36px',
-            minWidth: '100px',
+            width: '100%',
 
             _hover: {
               borderColor: 'gray.400',

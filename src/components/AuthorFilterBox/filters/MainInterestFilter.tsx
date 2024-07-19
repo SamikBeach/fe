@@ -1,9 +1,10 @@
-import { Select } from '@radix-ui/themes';
+import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
 import { Filter } from '../Filter';
 import { FilterType } from '../Filter/models';
 import { getAllMainInterests } from '@apis/main-interest';
+import { VStack } from 'styled-system/jsx';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 
@@ -19,11 +20,16 @@ function MainInterestFilter({ onValueChange, ...props }: Props) {
   });
 
   return (
-    <Filter
-      items={mainInterests}
-      filterType={FilterType.MainInterest}
-      {...props}
-    />
+    <VStack alignItems="start" width="100%" gap="2px">
+      <Text ml="4px" size="2">
+        Main interest
+      </Text>
+      <Filter
+        items={mainInterests}
+        filterType={FilterType.MainInterest}
+        {...props}
+      />
+    </VStack>
   );
 }
 

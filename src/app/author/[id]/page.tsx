@@ -2,8 +2,8 @@
 
 import { getAuthorById } from '@apis/author';
 import { useQuery } from '@tanstack/react-query';
-import { Separator, Spinner } from '@radix-ui/themes';
-import { VStack } from 'styled-system/jsx';
+import { Spinner } from '@radix-ui/themes';
+import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import WritingTable from './WritingTable';
 import { AuthorInfo } from './AuthorInfo';
@@ -33,19 +33,18 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
   }
 
   return (
-    <VStack
-      alignItems="center"
-      className={css({ width: '1280px', py: '60px' })}
+    <HStack
+      alignItems="start"
+      className={css({ width: '1180px', py: '60px' })}
       gap="30px"
     >
       <AuthorInfo author={author} />
-      <Separator className={css({ width: '100%' })} />
-      <TableSegmentControl tableType={tableType} setTableType={setTableType} />
+      {/* <TableSegmentControl tableType={tableType} setTableType={setTableType} /> */}
       {tableType === 'writing' ? (
         <WritingTable writings={author.writings} />
       ) : (
         <BookTable books={author.books} />
       )}
-    </VStack>
+    </HStack>
   );
 }

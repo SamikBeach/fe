@@ -1,6 +1,7 @@
 import { AuthorServerModel } from '@models/author';
-import { HStack } from 'styled-system/jsx';
+import { VStack } from 'styled-system/jsx';
 import AuthorBasicInfo from './AuthorBasicInfo';
+import AuthorInfoDataList from './AuthorInfoDataList';
 
 interface Props {
   author: AuthorServerModel;
@@ -8,8 +9,9 @@ interface Props {
 
 export default function AuthorInfo({ author }: Props) {
   return (
-    <HStack gap="40px" alignItems="start" width="100%">
+    <VStack gap="20px" alignItems="start" width="600px" padding="20px">
       <AuthorBasicInfo author={author} />
-    </HStack>
+      <AuthorInfoDataList author={author} />
+    </VStack>
   );
 }

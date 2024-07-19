@@ -1,5 +1,5 @@
 import api from '@apis/config';
-import { Filter, FilterType } from '@components/AuthorFilterBox/Filter/models';
+import { Filter, FilterType } from '@components/AuthorFilterBox/Filter2/models';
 import { AuthorServerModel } from '@models/author';
 
 type GetAllAuthorsResponse = AuthorServerModel[];

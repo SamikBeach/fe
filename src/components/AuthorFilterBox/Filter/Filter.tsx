@@ -1,22 +1,43 @@
 import { filterAtom } from '@atoms/filter';
-import { SelectItem } from '@models/common';
+import {
+  Badge,
+  Button,
+  ChevronDownIcon,
+  IconButton,
+  Select,
+  Text,
+} from '@radix-ui/themes';
 import { useAtom } from 'jotai';
-import { HStack } from 'styled-system/jsx';
-import { FilterType } from './models';
+import { ComponentProps, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
-import { Badge, ChevronDownIcon, IconButton, Text } from '@radix-ui/themes';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { HStack, VStack } from 'styled-system/jsx';
+import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
+import SearchTextField from './SearchTextField';
 import { filterLabelMap } from './utils';
-import FilterPopover from './FilterPopover';
+import { FilterType } from './models';
+import { SelectItem } from '@models/common';
 
-interface Props {
+interface Props extends ComponentProps<typeof Select.Root> {
   items: SelectItem[];
   filterType: FilterType;
-  onValueChange?: (value: string) => void;
 }
 
-export default function Filter({ onValueChange, filterType, items }: Props) {
+export default function Filter({
+  onValueChange,
+  filterType,
+  items,
+  ...props
+}: Props) {
+  const [searchValue, setSearchValue] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const textFieldRef = useRef<HTMLInputElement>(null);
+
   const [selectedFilters, setSelectedFilters] = useAtom(filterAtom);
+
+  const searchedItems = items.filter(item =>
+    item.value.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const handleValueChange = (value: string) => {
     if (
@@ -44,8 +65,35 @@ export default function Filter({ onValueChange, filterType, items }: Props) {
   };
 
   return (
-    <FilterPopover items={items}>
-      <FilterPopover.Trigger>
+    <Select.Root
+      open={open}
+      onOpenChange={opened => {
+        if (opened) {
+          setTimeout(() => {
+            textFieldRef.current?.focus();
+          }, 0);
+
+          setOpen(true);
+        }
+
+        setSearchValue('');
+      }}
+      {...props}
+    >
+      <HStack
+        onClick={() => {
+          setOpen(true);
+        }}
+        width="100%"
+        position="relative"
+      >
+        <Select.Trigger
+          className={css({
+            visibility: 'hidden',
+            position: 'absolute',
+            bottom: 0,
+          })}
+        />
         <HStack
           className={css({
             backgroundColor: 'white',
@@ -54,7 +102,7 @@ export default function Filter({ onValueChange, filterType, items }: Props) {
             cursor: 'pointer',
             padding: '3px',
             borderRadius: '6px',
-            minHeight: '36px',
+            minHeight: '30px',
             width: '100%',
 
             _hover: {
@@ -70,8 +118,11 @@ export default function Filter({ onValueChange, filterType, items }: Props) {
             selectedFilters[filterType].map(item => (
               <Badge
                 key={item.id}
-                size="3"
+                size="2"
                 className={css({
+                  py: '2px',
+                  px: '6px',
+
                   _hover: {
                     backgroundColor: 'gray.200',
 
@@ -85,10 +136,9 @@ export default function Filter({ onValueChange, filterType, items }: Props) {
                   variant="soft"
                   color="gray"
                   radius="full"
-                  size="1"
                   className={css({
-                    width: '20px',
-                    height: '20px',
+                    width: '18px',
+                    height: '18px',
                     padding: '3px',
                     bgColor: 'gray.200',
 
@@ -109,12 +159,110 @@ export default function Filter({ onValueChange, filterType, items }: Props) {
             ))
           ) : (
             <HStack px="8px" justify="space-between" width="100%" color="gray">
-              <Text size="2">{filterLabelMap[filterType]}</Text>
+              <Text size="1">Select {filterLabelMap[filterType]}...</Text>
               <ChevronDownIcon />
             </HStack>
           )}
         </HStack>
-      </FilterPopover.Trigger>
-    </FilterPopover>
+        {selectedFilters[filterType].length > 0 && (
+          <Button
+            className={css({
+              position: 'absolute',
+              top: '-18px',
+              right: '6px',
+
+              height: '12px',
+              padding: '4px',
+              fontSize: '11px',
+              cursor: 'pointer',
+            })}
+            variant="ghost"
+            onClick={e => {
+              e.stopPropagation();
+
+              setSelectedFilters({
+                ...selectedFilters,
+                [filterType]: [],
+              });
+            }}
+          >
+            Clear
+          </Button>
+        )}
+      </HStack>
+      <Select.Content
+        side="bottom"
+        position="popper"
+        variant="soft"
+        className={css({
+          maxHeight: '300px',
+          width: '260px',
+          maxWidth: '260px',
+
+          '& .rt-SelectViewport': {
+            paddingTop: '0px',
+          },
+        })}
+        onPointerDownOutside={() => {
+          setOpen(false);
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Escape' || e.key === 'Esc') {
+            setOpen(false);
+          }
+        }}
+      >
+        <SearchTextField
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          textFieldRef={textFieldRef}
+        />
+        {searchedItems.length === 0 ? (
+          <VStack height="200px" alignItems="center" justify="center">
+            <Text>No Results</Text>
+          </VStack>
+        ) : (
+          searchedItems
+            .sort((a, b) => a.value.localeCompare(b.value))
+            .map((item, index) => (
+              <Select.Item
+                key={item.id}
+                value={String(item.id)}
+                onPointerDown={() => handleValueChange(String(item.id))}
+                onKeyDown={e => {
+                  if (
+                    (index === 0 && e.key === 'ArrowUp') ||
+                    (index === searchedItems.length - 1 &&
+                      e.key === 'ArrowDown')
+                  ) {
+                    textFieldRef.current?.focus();
+                  }
+
+                  e.preventDefault();
+                }}
+                className={css({
+                  cursor: 'pointer',
+
+                  '& > .rt-SelectItemIndicator': {
+                    display: 'none',
+                  },
+                })}
+              >
+                <HStack>
+                  {selectedFilters[filterType]
+                    .map(filter => filter.id)
+                    .includes(item.id) && (
+                    <CheckIcon
+                      color="black"
+                      className={css({ position: 'absolute', left: '4px' })}
+                    />
+                  )}
+                  <Text>{item.value}</Text>
+                </HStack>
+              </Select.Item>
+            ))
+        )}
+      </Select.Content>
+    </Select.Root>
   );
 }

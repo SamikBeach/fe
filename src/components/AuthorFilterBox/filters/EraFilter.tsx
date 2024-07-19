@@ -2,8 +2,8 @@ import { getAllEras } from '@apis/era';
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
-import { Filter } from '../Filter2';
-import { FilterType } from '../Filter2/models';
+import { Filter } from '../Filter';
+import { FilterType } from '../Filter/models';
 import { VStack } from 'styled-system/jsx';
 
 interface Props extends ComponentProps<typeof Select.Root> {}

@@ -46,6 +46,10 @@ function SearchPopover({
   const resultCount = authors.length + writings.length;
 
   useEffect(() => {
+    if (!open) {
+      return;
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
         setFocusedIndex(prev => (prev === resultCount - 1 ? prev : prev + 1));
@@ -69,7 +73,15 @@ function SearchPopover({
     window.addEventListener('keydown', handleKeyDown);
 
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [resultCount, authors, focusedIndex, router, writings, onOpenChange]);
+  }, [
+    open,
+    resultCount,
+    authors,
+    focusedIndex,
+    router,
+    writings,
+    onOpenChange,
+  ]);
 
   const renderPopoverContentInner = () => {
     if (isLoading || searchValue === '') {

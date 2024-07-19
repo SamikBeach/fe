@@ -3,7 +3,7 @@
 import { viewModeAtom } from '@atoms/viewMode';
 import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
-import { HStack, HstackProps } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 import classNames from 'classnames';
 import {
   EducationFilter,
@@ -42,7 +42,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
     }, [viewMode]);
 
     return (
-      <HStack
+      <VStack
         ref={ref}
         className={classNames(
           css({
@@ -50,16 +50,6 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
             minHeight: FILTER_BOX_HEIGHT,
             width: '100%',
             padding: '20px',
-
-            top: viewMode === 'list' ? '64px' : '0px',
-            position: viewMode === 'list' ? 'sticky' : 'absolute',
-            // backgroundColor: viewMode === 'list' ? '' : undefined,
-
-            zIndex: 4,
-
-            borderBottom:
-              viewMode === 'list' && scrollY !== 0 ? '1px solid' : undefined,
-            borderColor: 'gray.200',
           }),
           className
         )}
@@ -68,6 +58,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
         justify="space-between"
         {...props}
       >
+        <ViewModeSelect />
         <HStack flexWrap="wrap" gap="6px">
           <NationalityFilter onValueChange={onValueChange} />
           <EraFilter onValueChange={onValueChange} />
@@ -77,8 +68,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
           <SchoolFilter onValueChange={onValueChange} />
           <Sort />
         </HStack>
-        <ViewModeSelect />
-      </HStack>
+      </VStack>
     );
   }
 );

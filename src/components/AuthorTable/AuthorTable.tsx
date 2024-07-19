@@ -89,7 +89,12 @@ export default function AuthorTable() {
 
   if (isLoading) {
     return (
-      <VStack height="calc(100vh - 64px)" justify="center">
+      <VStack
+        width="calc(100vw - 400px)"
+        height="calc(100vh - 64px)"
+        justify="center"
+        backgroundColor="white"
+      >
         <Spinner size="3" />
       </VStack>
     );

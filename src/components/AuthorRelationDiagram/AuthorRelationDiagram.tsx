@@ -71,7 +71,7 @@ function RelationDiagram() {
 
   if (isLoading) {
     return (
-      <VStack height="calc(100vh - 128px)" justify="center">
+      <VStack height="calc(100vh - 128px)" width="calc(100vw)" justify="center">
         <Spinner size="3" />
       </VStack>
     );
@@ -80,11 +80,17 @@ function RelationDiagram() {
   console.log('rerender');
 
   return (
-    <>
-      <TestButtons
+    <div
+      className={css({
+        width: '100%',
+        borderLeft: '1px solid',
+        borderColor: 'gray.200',
+      })}
+    >
+      {/* <TestButtons
         onClickShowSelected={showOnlySelectedNodes}
         onClickShowAll={showAllNodes}
-      />
+      /> */}
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -100,7 +106,7 @@ function RelationDiagram() {
         edgeTypes={edgeTypes}
         className={reactflowClassName}
       >
-        <AuthorFilterBox onValueChange={handleFilterValueChange} />
+        {/* <AuthorFilterBox onValueChange={handleFilterValueChange} /> */}
         <MiniMap
           nodeColor={node => (node.selected ? 'red' : 'gray')}
           nodeStrokeWidth={3}
@@ -110,7 +116,7 @@ function RelationDiagram() {
         {/* <Background id="1" style={{ backgroundColor: 'blue' }} /> */}
         <Controls showFitView showZoom showInteractive position="bottom-left" />
       </ReactFlow>
-    </>
+    </div>
   );
 }
 

@@ -47,6 +47,8 @@ export default function WritingTable({ authorId }: Props) {
               key={id}
               className={css({
                 cursor: 'pointer',
+                height: '66px',
+
                 _hover: {
                   backgroundColor: 'gray.50',
                 },

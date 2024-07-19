@@ -53,7 +53,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
 
             top: viewMode === 'list' ? '64px' : '0px',
             position: viewMode === 'list' ? 'sticky' : 'absolute',
-            backgroundColor: viewMode === 'list' ? 'gray.50' : undefined,
+            // backgroundColor: viewMode === 'list' ? '' : undefined,
 
             zIndex: 4,
 

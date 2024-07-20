@@ -2,7 +2,9 @@ import { BookServerModel } from '@models/book';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
-import { Text } from '@radix-ui/themes';
+import { Link, Text } from '@radix-ui/themes';
+import { AuthorAvatar, WritingHoverCard } from '..';
+import { format } from 'date-fns';
 
 interface Props {
   book: BookServerModel;
@@ -12,7 +14,9 @@ function BookCard({ book }: Props) {
   const router = useRouter();
 
   const {
-    info: { cover, title },
+    info: { cover, title, pubDate, publisher },
+    authors,
+    writings,
   } = book;
 
   return (
@@ -22,8 +26,7 @@ function BookCard({ book }: Props) {
       width="100%"
       borderRadius="8px"
       backgroundColor="white"
-      px="20px"
-      py="10px"
+      padding="10px"
     >
       <img
         src={cover}
@@ -37,7 +40,50 @@ function BookCard({ book }: Props) {
         })}
         onClick={() => router.push(`/book/${book.id}`)}
       />
-      <Text>{title}</Text>
+      <VStack alignItems="start" gap="2px">
+        <Text weight="bold" size="4">
+          {title}
+        </Text>
+        {authors.map(author => (
+          <HStack key={author.id} gap="4px">
+            <AuthorAvatar author={author} size="1" />
+            <Text
+              className={css({
+                cursor: 'pointer',
+
+                _hover: { textDecoration: 'underline' },
+              })}
+              onClick={() => router.push(`/author/${author.id}`)}
+            >
+              {author.name}
+            </Text>
+          </HStack>
+        ))}
+        <Text>{format(new Date(pubDate), 'yyyy MMMM dd')}</Text>
+        <Text>{publisher}</Text>
+        {writings.map(writing => (
+          <>
+            <WritingHoverCard.Root key={writing.id}>
+              <WritingHoverCard.Trigger>
+                <Link href={`/writing/${writing.id}`}>
+                  <Text
+                    className={css({
+                      cursor: 'pointer',
+                      _hover: { textDecoration: 'underline' },
+                    })}
+                  >
+                    {writing.title}
+                  </Text>
+                </Link>
+              </WritingHoverCard.Trigger>
+              <WritingHoverCard.Content
+                side="right"
+                writing={{ ...writing, author: authors[0] }}
+              />
+            </WritingHoverCard.Root>
+          </>
+        ))}
+      </VStack>
     </HStack>
   );
 }

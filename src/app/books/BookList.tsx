@@ -1,8 +1,7 @@
 import { SearchBooksResponse, searchBooks } from '@apis/book';
-import { SearchWritingsResponse } from '@apis/writing';
 import { BookCard } from '@components/BookCard';
 import { Spinner } from '@radix-ui/themes';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { VStack } from 'styled-system/jsx';

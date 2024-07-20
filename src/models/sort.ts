@@ -6,6 +6,8 @@ export enum SortType {
   Education = 'education',
   MainInterest = 'main-interest',
   School = 'school',
+  BornDate = 'born_date',
+  DiedDate = 'died_date',
   // Author = 'author',
   // Writing = 'writing',
 }

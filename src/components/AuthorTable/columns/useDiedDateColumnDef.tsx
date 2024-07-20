@@ -2,6 +2,8 @@ import { AuthorServerModel } from '@models/author';
 import { ColumnDef } from '@tanstack/react-table';
 import { getBornDateText } from '@utils/author';
 import { useMemo } from 'react';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useDiedDateColumnDef() {
   const column = useMemo<
@@ -9,9 +11,9 @@ export default function useDiedDateColumnDef() {
   >(() => {
     return {
       id: 'diedDate',
-      header: 'Died date',
       size: 156,
       accessorFn: row => row,
+      header: () => <ColumnHeader type={SortType.DiedDate} />,
       cell: row =>
         getBornDateText({
           bornDate: row.getValue().died_date,

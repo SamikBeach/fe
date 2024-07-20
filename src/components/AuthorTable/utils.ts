@@ -9,4 +9,6 @@ export const columnHeaderNameMap: Record<string, string> = {
   [SortType.Education]: 'Education',
   [SortType.MainInterest]: 'Main Interest',
   [SortType.School]: 'School',
+  [SortType.BornDate]: 'Born date',
+  [SortType.DiedDate]: 'Died date',
 };

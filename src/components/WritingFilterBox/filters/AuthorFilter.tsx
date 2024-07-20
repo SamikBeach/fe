@@ -4,8 +4,8 @@ import { ComponentProps } from 'react';
 
 import { VStack } from 'styled-system/jsx';
 import { getAllAuthors } from '@apis/author';
-import { FilterType } from '@components/Filter/models';
 import { Filter } from '@components/Filter';
+import { FilterType } from '@models/filter';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 

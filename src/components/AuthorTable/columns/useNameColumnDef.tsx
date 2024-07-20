@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import ColumnHeader from '../ColumnHeader';
 
 export default function useNameColumnDef() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function useNameColumnDef() {
   >(() => {
     return {
       id: 'name',
-      header: 'Name',
+      header: ColumnHeader,
       accessorFn: row => row,
       size: 300,
       cell: row => {

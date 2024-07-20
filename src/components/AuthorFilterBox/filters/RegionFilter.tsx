@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
 import { VStack } from 'styled-system/jsx';
 import { Filter } from '@components/Filter';
-import { FilterType } from '@components/Filter/models';
+import { FilterType } from '@models/filter';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 

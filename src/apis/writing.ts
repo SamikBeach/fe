@@ -1,5 +1,5 @@
 import api from '@apis/config';
-import { Filter, FilterType } from '@components/Filter/models';
+import { Filter, FilterType } from '@models/filter';
 import { WritingServerModel } from '@models/writing';
 
 type GetAllWritingsResponse = WritingServerModel[];

@@ -1,6 +1,6 @@
 import { getAllEducations } from '@apis/education';
 import { Filter } from '@components/Filter';
-import { FilterType } from '@components/Filter/models';
+import { FilterType } from '@models/filter';
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';

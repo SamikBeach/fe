@@ -1,4 +1,4 @@
-import { FilterType } from './models';
+import { FilterType } from '@models/filter';
 
 export const filterLabelMap: Record<string, string> = {
   [FilterType.Era]: 'Era',

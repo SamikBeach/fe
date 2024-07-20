@@ -14,8 +14,8 @@ import { HStack, VStack } from 'styled-system/jsx';
 import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
 import SearchTextField from './SearchTextField';
 import { filterLabelMap } from './utils';
-import { FilterType } from './models';
 import { SelectItem } from '@models/common';
+import { FilterType } from '@models/filter';
 
 interface Props extends ComponentProps<typeof Select.Root> {
   items: SelectItem[];

@@ -1,7 +1,6 @@
 import api from '@apis/config';
-import { Filter } from '@components/Filter/models';
-import { FilterType } from '@components/Filter/models';
 import { AuthorServerModel } from '@models/author';
+import { Filter, FilterType } from '@models/filter';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
 

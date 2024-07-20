@@ -3,7 +3,7 @@ import { TextField } from '@radix-ui/themes';
 import { RefObject } from 'react';
 import { css } from 'styled-system/css';
 import { filterLabelMap } from './utils';
-import { FilterType } from './models';
+import { FilterType } from '@models/filter';
 
 interface Props {
   searchValue: string;

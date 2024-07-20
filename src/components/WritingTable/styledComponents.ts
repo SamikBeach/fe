@@ -50,6 +50,7 @@ export const Cell = styled('td', {
       position: 'sticky',
       left: 0,
       backgroundColor: 'white',
+      zIndex: 2,
 
       boxShadow:
         'inset 1px 0 0 rgba(0, 0, 0, 0.05), inset -1px 0 0 rgba(0, 0, 0, 0.05)',

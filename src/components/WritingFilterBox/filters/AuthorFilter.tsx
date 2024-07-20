@@ -14,10 +14,15 @@ function AuthorFilter({ onValueChange, ...props }: Props) {
     queryKey: ['author'],
     queryFn: getAllAuthors,
     select: response =>
-      response.data.map(author => ({
-        id: author.id,
-        value: author.name,
-      })),
+      response.data
+        .filter(
+          author =>
+            author.writings?.length !== undefined && author.writings.length > 0
+        )
+        .map(author => ({
+          id: author.id,
+          value: author.name,
+        })),
   });
 
   return (

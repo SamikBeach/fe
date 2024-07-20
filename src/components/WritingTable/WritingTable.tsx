@@ -101,7 +101,7 @@ export default function WritingTable() {
         onScroll={e => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
         ref={tableContainerRef}
         className={css({
-          height: 'calc(100vh - 140px)',
+          height: 'calc(100vh - 64px)',
           width: '100%',
           overflow: 'auto',
 

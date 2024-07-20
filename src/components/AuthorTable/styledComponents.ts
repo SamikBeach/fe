@@ -1,10 +1,6 @@
 import { styled } from 'styled-system/jsx';
 
-export const Table = styled('table', {
-  base: {
-    // boxShadow: 'inset 1px 0 0 rgba(0, 0, 0, 0.05)',
-  },
-});
+export const Table = styled('table', {});
 
 export const THead = styled('thead', {
   base: {

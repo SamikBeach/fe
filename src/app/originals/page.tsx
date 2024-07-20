@@ -1,7 +1,25 @@
 'use client';
 
-import WritingList from './WritingList';
+import { HStack, VStack } from 'styled-system/jsx';
+import { css } from 'styled-system/css';
+import { WritingTable } from '@components/WritingTable';
+import { WritingFilterBox } from '@components/WritingFilterBox';
 
-export default function Page() {
-  return <WritingList />;
+export default function WritingPage() {
+  return (
+    <HStack gap="0px" height="calc(100vh - 64px)" alignItems="start">
+      <VStack
+        width="300px"
+        height="100%"
+        className={css({
+          boxShadow: '1px 0 0 rgba(0, 0, 0, 0.05)',
+        })}
+      >
+        <WritingFilterBox />
+      </VStack>
+      <HStack width="calc(100vw - 300px)">
+        <WritingTable />
+      </HStack>
+    </HStack>
+  );
 }

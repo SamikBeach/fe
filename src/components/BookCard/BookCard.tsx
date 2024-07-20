@@ -19,6 +19,8 @@ function BookCard({ book }: Props) {
     writings,
   } = book;
 
+  console.log({ book });
+
   return (
     <HStack
       alignItems="start"

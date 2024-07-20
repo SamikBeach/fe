@@ -8,6 +8,7 @@ export enum FilterType {
   Region = 'region',
   School = 'school',
   Author = 'author',
+  Writing = 'writing',
 }
 
 export interface Filter {
@@ -18,4 +19,5 @@ export interface Filter {
   [FilterType.Region]: SelectItem[];
   [FilterType.School]: SelectItem[];
   [FilterType.Author]: SelectItem[];
+  [FilterType.Writing]: SelectItem[];
 }

@@ -7,7 +7,7 @@ import { getWritingById } from '@apis/writing';
 
 import WritingInfo from './WritingInfo';
 import { Spinner } from '@radix-ui/themes';
-import BookTable from './BookTable';
+import BookList from './BookList';
 
 export default function WritingPage({ params }: { params: { id: number } }) {
   const { data: writing, isLoading } = useQuery({
@@ -36,7 +36,7 @@ export default function WritingPage({ params }: { params: { id: number } }) {
       gap="30px"
     >
       <WritingInfo writing={writing} width="400px" />
-      <BookTable books={writing.books} />
+      <BookList writingId={writing.id} />
     </HStack>
   );
 }

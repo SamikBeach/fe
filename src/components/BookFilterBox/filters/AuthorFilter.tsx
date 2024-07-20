@@ -1,32 +1,37 @@
-import { Select } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
+import { Select, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import { ComponentProps } from 'react';
 
-function AuthorFilter() {
+import { VStack } from 'styled-system/jsx';
+import { getAllAuthors } from '@apis/author';
+import { FilterType } from '@components/Filter/models';
+import { Filter } from '@components/Filter';
+
+interface Props extends ComponentProps<typeof Select.Root> {}
+
+function AuthorFilter({ onValueChange, ...props }: Props) {
+  const { data: authors = [] } = useQuery({
+    queryKey: ['author'],
+    queryFn: getAllAuthors,
+    select: response =>
+      response.data
+        .filter(
+          author =>
+            author.writings?.length !== undefined && author.writings.length > 0
+        )
+        .map(author => ({
+          id: author.id,
+          value: author.name,
+        })),
+  });
+
   return (
-    <Select.Root>
-      <Select.Trigger
-        className={css({
-          cursor: 'pointer',
-          zIndex: 2,
-        })}
-        placeholder="Author"
-      />
-      <Select.Content
-        side="bottom"
-        position="popper"
-        variant="soft"
-        className={css({ maxHeight: '400px' })}
-      >
-        <Select.Group>
-          <Select.Label>작가</Select.Label>
-          {['프리드리히 니체', '임마누엘 칸트'].map(author => (
-            <Select.Item key={author} value={String(author)}>
-              {author}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <VStack alignItems="start" width="100%" gap="2px">
+      <Text ml="4px" size="2">
+        Author
+      </Text>
+      <Filter items={authors} filterType={FilterType.Author} {...props} />
+    </VStack>
   );
 }
 

@@ -1,32 +1,37 @@
-import { Select } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
+import { Select, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
+import { ComponentProps } from 'react';
 
-function WritingFilter() {
+import { VStack } from 'styled-system/jsx';
+import { getAllWritings } from '@apis/writing';
+import { FilterType } from '@components/Filter/models';
+import { Filter } from '@components/Filter';
+
+interface Props extends ComponentProps<typeof Select.Root> {}
+
+function WritingFilter({ onValueChange, ...props }: Props) {
+  const { data: writings = [] } = useQuery({
+    queryKey: ['writing'],
+    queryFn: getAllWritings,
+    select: response =>
+      response.data
+        .filter(
+          writing =>
+            writing.books?.length !== undefined && writing.books.length > 0
+        )
+        .map(writing => ({
+          id: writing.id,
+          value: writing.title,
+        })),
+  });
+
   return (
-    <Select.Root>
-      <Select.Trigger
-        className={css({
-          cursor: 'pointer',
-          zIndex: 2,
-        })}
-        placeholder="Writing"
-      />
-      <Select.Content
-        side="bottom"
-        position="popper"
-        variant="soft"
-        className={css({ maxHeight: '400px' })}
-      >
-        <Select.Group>
-          <Select.Label>Writing</Select.Label>
-          {['Thus spoke Zarathustra', 'The Birth of Traged'].map(writing => (
-            <Select.Item key={writing} value={String(writing)}>
-              {writing}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <VStack alignItems="start" width="100%" gap="2px">
+      <Text ml="4px" size="2">
+        Writing
+      </Text>
+      <Filter items={writings} filterType={FilterType.Writing} {...props} />
+    </VStack>
   );
 }
 

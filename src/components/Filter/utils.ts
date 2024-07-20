@@ -8,4 +8,5 @@ export const filterLabelMap: Record<string, string> = {
   [FilterType.Region]: 'Region',
   [FilterType.School]: 'School',
   [FilterType.Author]: 'Author',
+  [FilterType.Writing]: 'Writing',
 };

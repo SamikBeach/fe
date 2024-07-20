@@ -132,7 +132,16 @@ export default function Filter({
                   },
                 })}
               >
-                {item.value}
+                <Text
+                  className={css({
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    maxWidth: '216px',
+                  })}
+                >
+                  {item.value}
+                </Text>
                 <IconButton
                   asChild
                   variant="soft"
@@ -251,6 +260,7 @@ export default function Filter({
                 }}
                 className={css({
                   cursor: 'pointer',
+                  paddingRight: 0,
 
                   '& > .rt-SelectItemIndicator': {
                     display: 'none',
@@ -266,7 +276,16 @@ export default function Filter({
                       className={css({ position: 'absolute', left: '4px' })}
                     />
                   )}
-                  <Text>{item.value}</Text>
+                  <Text
+                    className={css({
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      maxWidth: '210px',
+                    })}
+                  >
+                    {item.value}
+                  </Text>
                 </HStack>
               </Select.Item>
             ))

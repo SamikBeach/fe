@@ -9,4 +9,5 @@ export const filterAtom = atom<Filter>({
   [FilterType.Region]: [],
   [FilterType.School]: [],
   [FilterType.Author]: [],
+  [FilterType.Writing]: [],
 });

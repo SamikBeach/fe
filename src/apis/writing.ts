@@ -2,6 +2,12 @@ import api from '@apis/config';
 import { Filter, FilterType } from '@components/Filter/models';
 import { WritingServerModel } from '@models/writing';
 
+type GetAllWritingsResponse = WritingServerModel[];
+
+export function getAllWritings() {
+  return api.get<GetAllWritingsResponse>('/writing');
+}
+
 type GetWritingByIdResponse = WritingServerModel;
 
 export function getWritingById({ id }: { id: number }) {

@@ -1,27 +1,28 @@
 import { SearchBooksResponse, searchBooks } from '@apis/book';
-import { filterAtom } from '@atoms/filter';
 import { BookCard } from '@components/BookCard';
 import { Spinner } from '@radix-ui/themes';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { useAtomValue } from 'jotai';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { VStack } from 'styled-system/jsx';
 
-function BookList() {
-  const listContainerRef = useRef<HTMLDivElement>(null);
+interface Props {
+  writingId: number;
+}
 
-  const selectedFilters = useAtomValue(filterAtom);
+function BookList({ writingId }: Props) {
+  const listContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, fetchNextPage, isFetching } = useInfiniteQuery<
     AxiosResponse<SearchBooksResponse>
   >({
-    queryKey: ['book', selectedFilters],
+    queryKey: ['book', writingId],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchBooks({
-        ...selectedFilters,
+        // ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 10,
+        writingId,
       });
     },
     initialPageParam: 0,
@@ -41,7 +42,7 @@ function BookList() {
       if (containerRefElement) {
         const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
         //once the user has scrolled within 500px of the bottom of the table, fetch more data if we can
-        if (scrollHeight - scrollTop - clientHeight < 100 && !isFetching) {
+        if (scrollHeight - scrollTop - clientHeight < 500 && !isFetching) {
           fetchNextPage();
         }
       }
@@ -64,10 +65,9 @@ function BookList() {
   return (
     <VStack
       ref={listContainerRef}
-      gap="20px"
       px="40px"
       py="20px"
-      height="calc(100vh - 64px)"
+      // height="calc(100vh - 64px)"
       width="100%"
       minWidth="600px"
       overflow="auto"

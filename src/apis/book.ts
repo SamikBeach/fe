@@ -15,11 +15,12 @@ export function getBookById({ id }: { id: number }) {
 
 interface SearchBooksRequest {
   where__title__i_like?: string;
+  where__id__more_than?: number;
   take?: number;
   authorId?: number;
 }
 
-type SearchBooksResponse = {
+export type SearchBooksResponse = {
   cursor: {
     after: number | null;
   };
@@ -30,12 +31,14 @@ type SearchBooksResponse = {
 
 export function searchBooks({
   where__title__i_like,
+  where__id__more_than,
   take,
   authorId,
 }: SearchBooksRequest) {
   return api.get<SearchBooksResponse>('/book/search', {
     params: {
       where__title__i_like,
+      where__id__more_than,
       take,
       authorId,
     },

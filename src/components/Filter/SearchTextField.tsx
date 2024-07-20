@@ -2,17 +2,21 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { RefObject } from 'react';
 import { css } from 'styled-system/css';
+import { filterLabelMap } from './utils';
+import { FilterType } from './models';
 
 interface Props {
   searchValue: string;
   setSearchValue: (value: string) => void;
   textFieldRef: RefObject<HTMLInputElement>;
+  filterType: FilterType;
 }
 
 export default function SearchTextField({
   searchValue,
   setSearchValue,
   textFieldRef,
+  filterType,
 }: Props) {
   return (
     <div
@@ -29,7 +33,7 @@ export default function SearchTextField({
         value={searchValue}
         onChange={e => setSearchValue(e.target.value)}
         ref={textFieldRef}
-        placeholder="Search era..."
+        placeholder={`Search ${filterLabelMap[filterType]}...`}
         mb="6px"
         className={css({
           backgroundColor: 'white',

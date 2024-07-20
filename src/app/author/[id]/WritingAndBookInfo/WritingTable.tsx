@@ -13,7 +13,8 @@ export default function WritingTable({ authorId }: Props) {
   const router = useRouter();
   const { data: writings = [], isLoading } = useQuery({
     queryKey: ['search/writing', authorId],
-    queryFn: () => searchWritings({ authorId }),
+    queryFn: () =>
+      searchWritings({ author: [{ id: authorId ?? 0, value: '' }] }),
     select: response => response.data.data,
   });
 

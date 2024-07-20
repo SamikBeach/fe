@@ -218,6 +218,7 @@ export default function Filter({
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           textFieldRef={textFieldRef}
+          filterType={filterType}
         />
         {searchedItems.length === 0 ? (
           <VStack height="200px" alignItems="center" justify="center">

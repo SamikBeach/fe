@@ -1,5 +1,3 @@
-import classNames from 'classnames';
-import { css } from 'styled-system/css';
 import { HStack, HstackProps } from 'styled-system/jsx';
 import {
   AuthorFilter,
@@ -7,35 +5,27 @@ import {
   PublisherFilter,
   WritingFilter,
 } from './filters';
-import { Sort } from './sort';
+import { forwardRef } from 'react';
+import { FilterBox } from '@components/FilterBox';
 
-interface Props extends HstackProps {}
-
-export default function BookFilterBox({ className, ...props }: Props) {
-  return (
-    <HStack
-      className={classNames(
-        css({
-          pointerEvents: 'auto',
-          height: '64px',
-          width: '100%',
-          px: '20px',
-
-          top: '0px',
-        }),
-        className
-      )}
-      gap="30px"
-      {...props}
-    >
-      <HStack>
-        <AuthorFilter />
-        {/* AuthorFitler의 조건부 필터 */}
-        <WritingFilter />
-        <PublisherFilter />
-        <PublicationDateFilter />
-        <Sort />
-      </HStack>
-    </HStack>
-  );
+interface Props extends HstackProps {
+  onValueChange?: (value: string) => void;
 }
+
+const BookFilterBox = forwardRef<HTMLDivElement, Props>(
+  ({ className, onValueChange, ...props }, ref) => {
+    return (
+      <FilterBox ref={ref} {...props}>
+        <HStack flexWrap="wrap" gap="6px" width="100%">
+          <AuthorFilter />
+          {/* AuthorFitler의 조건부 필터 */}
+          <WritingFilter />
+          <PublisherFilter />
+          <PublicationDateFilter />
+        </HStack>
+      </FilterBox>
+    );
+  }
+);
+
+export default BookFilterBox;

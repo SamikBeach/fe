@@ -89,7 +89,7 @@ export default function WritingTable() {
 
   if (isLoading) {
     return (
-      <VStack height="calc(100vh - 140px)" justify="center">
+      <VStack height="calc(100vh - 140px)" width="100%" justify="center">
         <Spinner size="3" />
       </VStack>
     );

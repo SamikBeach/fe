@@ -90,7 +90,7 @@ export default function AuthorTable() {
   if (isLoading) {
     return (
       <VStack
-        width="calc(100vw - 400px)"
+        width="100%"
         height="calc(100vh - 64px)"
         justify="center"
         backgroundColor="white"

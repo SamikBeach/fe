@@ -22,11 +22,9 @@ function BookCard({ book }: Props) {
   return (
     <HStack
       alignItems="start"
-      gap="20px"
       width="100%"
       borderRadius="8px"
       backgroundColor="white"
-      padding="10px"
     >
       <img
         src={cover}
@@ -34,13 +32,13 @@ function BookCard({ book }: Props) {
         height={200}
         className={css({
           cursor: 'pointer',
-          borderRadius: '6px',
+          borderLeftRadius: '6px',
           height: '200px',
           width: '140px',
         })}
         onClick={() => router.push(`/book/${book.id}`)}
       />
-      <VStack alignItems="start" gap="2px">
+      <VStack alignItems="start" gap="2px" padding="14px">
         <Text weight="bold" size="4">
           {title}
         </Text>

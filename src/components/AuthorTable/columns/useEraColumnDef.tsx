@@ -3,6 +3,8 @@ import { Tooltip, Text } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useEraColumnDef() {
   const column = useMemo<
@@ -10,9 +12,9 @@ export default function useEraColumnDef() {
   >(() => {
     return {
       id: 'era',
-      header: 'Era',
       size: 190,
       accessorFn: row => row,
+      header: () => <ColumnHeader type={SortType.Era} />,
       cell: row => {
         const rowValue = row.getValue();
 

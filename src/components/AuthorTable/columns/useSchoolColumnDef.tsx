@@ -1,8 +1,10 @@
 import { AuthorServerModel } from '@models/author';
+import { SortType } from '@models/sort';
 import { Tooltip, Text } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
+import ColumnHeader from '../ColumnHeader';
 
 export default function useSchoolColumnDef() {
   const column = useMemo<
@@ -10,9 +12,9 @@ export default function useSchoolColumnDef() {
   >(() => {
     return {
       id: 'school',
-      header: 'School',
       accessorFn: row => row,
       size: 200,
+      header: () => <ColumnHeader type={SortType.School} />,
       cell: row => {
         const rowValue = row.getValue();
 

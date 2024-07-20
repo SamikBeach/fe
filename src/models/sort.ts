@@ -1,12 +1,13 @@
 export enum SortType {
+  Name = 'name',
+  Nationality = 'nationality',
   Era = 'era',
+  Region = 'region',
   Education = 'education',
   MainInterest = 'main-interest',
-  Nationality = 'nationality',
-  Region = 'region',
   School = 'school',
-  Author = 'author',
-  Writing = 'writing',
+  // Author = 'author',
+  // Writing = 'writing',
 }
 
 export type SortDirection = 'asc' | 'desc';

@@ -3,6 +3,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Text, Tooltip } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { useMemo } from 'react';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useEducationColumnDef() {
   const column = useMemo<
@@ -10,9 +12,9 @@ export default function useEducationColumnDef() {
   >(() => {
     return {
       id: 'education',
-      header: 'Education',
       size: 200,
       accessorFn: row => row,
+      header: () => <ColumnHeader type={SortType.Education} />,
       cell: row => {
         const rowValue = row.getValue();
 

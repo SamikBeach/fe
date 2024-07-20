@@ -4,6 +4,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import { capitalize } from 'lodash';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useMainInterestColumnDef() {
   const column = useMemo<
@@ -11,9 +13,9 @@ export default function useMainInterestColumnDef() {
   >(() => {
     return {
       id: 'main_interest',
-      header: 'Main interest',
       size: 200,
       accessorFn: row => row,
+      header: () => <ColumnHeader type={SortType.MainInterest} />,
       cell: row => {
         const rowValue = row.getValue();
 

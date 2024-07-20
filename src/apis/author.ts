@@ -1,6 +1,7 @@
 import api from '@apis/config';
 import { AuthorServerModel } from '@models/author';
 import { Filter, FilterType } from '@models/filter';
+import { Sort } from '@models/sort';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
 
@@ -18,6 +19,7 @@ interface SearchAuthorsRequest extends Partial<Filter> {
   where__name__i_like?: string;
   where__id__more_than?: number;
   take?: number;
+  sort?: Sort;
 }
 
 export interface SearchAuthorsResponse {
@@ -33,6 +35,7 @@ export function searchAuthors({
   take,
   where__name__i_like,
   where__id__more_than,
+  sort,
   ...filter
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
@@ -46,6 +49,7 @@ export function searchAuthors({
       where__name__i_like,
       where__id__more_than,
       take,
+      sort,
     },
   });
 }

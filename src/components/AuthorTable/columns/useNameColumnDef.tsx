@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useNameColumnDef() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function useNameColumnDef() {
   >(() => {
     return {
       id: 'name',
-      header: ColumnHeader,
+      header: () => <ColumnHeader type={SortType.Name} />,
       accessorFn: row => row,
       size: 300,
       cell: row => {

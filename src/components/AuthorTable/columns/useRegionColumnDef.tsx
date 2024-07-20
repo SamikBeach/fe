@@ -3,6 +3,8 @@ import { Tooltip, Text } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useRegionColumnDef() {
   const column = useMemo<
@@ -10,9 +12,9 @@ export default function useRegionColumnDef() {
   >(() => {
     return {
       id: 'region',
-      header: 'Region',
       accessorFn: row => row,
       size: 160,
+      header: () => <ColumnHeader type={SortType.Region} />,
       cell: row => {
         const rowValue = row.getValue();
 

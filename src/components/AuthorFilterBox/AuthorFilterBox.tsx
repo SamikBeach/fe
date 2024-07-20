@@ -12,7 +12,6 @@ import {
   SchoolFilter,
 } from './filters';
 import ViewModeSelect from './ViewModeSelect';
-import { FILTER_BOX_HEIGHT } from '@constants/common';
 import { forwardRef } from 'react';
 
 interface Props extends HstackProps {
@@ -26,8 +25,6 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
         ref={ref}
         className={classNames(
           css({
-            pointerEvents: 'auto',
-            minHeight: FILTER_BOX_HEIGHT,
             width: '100%',
             padding: '20px',
           }),

@@ -1,4 +1,4 @@
-import { Filter, FilterType } from '@components/AuthorFilterBox/Filter/models';
+import { Filter, FilterType } from '@components/Filter/models';
 import { atom } from 'jotai';
 
 export const filterAtom = atom<Filter>({
@@ -8,4 +8,5 @@ export const filterAtom = atom<Filter>({
   [FilterType.Nationality]: [],
   [FilterType.Region]: [],
   [FilterType.School]: [],
+  [FilterType.Author]: [],
 });

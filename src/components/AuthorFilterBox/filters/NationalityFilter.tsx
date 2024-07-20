@@ -3,8 +3,8 @@ import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
 import { VStack } from 'styled-system/jsx';
-import { Filter } from '../Filter';
-import { FilterType } from '../Filter/models';
+import { Filter } from '@components/Filter';
+import { FilterType } from '@components/Filter/models';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 

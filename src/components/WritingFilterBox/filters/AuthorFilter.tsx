@@ -1,10 +1,11 @@
 import { Select, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { ComponentProps } from 'react';
-import { Filter } from '../../Filter';
-import { FilterType } from '../../Filter/models';
+
 import { VStack } from 'styled-system/jsx';
 import { getAllAuthors } from '@apis/author';
+import { FilterType } from '@components/Filter/models';
+import { Filter } from '@components/Filter';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 

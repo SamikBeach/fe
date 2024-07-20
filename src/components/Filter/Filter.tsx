@@ -1,4 +1,4 @@
-import { authorFilterAtom } from '@atoms/filter';
+import { filterAtom } from '@atoms/filter';
 import {
   Badge,
   Button,
@@ -14,12 +14,12 @@ import { HStack, VStack } from 'styled-system/jsx';
 import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons';
 import SearchTextField from './SearchTextField';
 import { filterLabelMap } from './utils';
-import { AuthorFilterType, OriginalFilterType } from './models';
+import { FilterType } from './models';
 import { SelectItem } from '@models/common';
 
 interface Props extends ComponentProps<typeof Select.Root> {
   items: SelectItem[];
-  filterType: AuthorFilterType | OriginalFilterType;
+  filterType: FilterType;
 }
 
 export default function Filter({
@@ -33,7 +33,7 @@ export default function Filter({
 
   const textFieldRef = useRef<HTMLInputElement>(null);
 
-  const [selectedFilters, setSelectedFilters] = useAtom(authorFilterAtom);
+  const [selectedFilters, setSelectedFilters] = useAtom(filterAtom);
 
   const searchedItems = items.filter(item =>
     item.value.toLowerCase().includes(searchValue.toLowerCase())

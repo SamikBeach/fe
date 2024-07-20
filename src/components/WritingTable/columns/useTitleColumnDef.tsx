@@ -16,7 +16,7 @@ export default function useTitleColumnDef() {
       id: 'title',
       header: 'Title',
       accessorFn: row => row,
-      size: 500,
+      size: 700,
       cell: row => {
         const rowValue = row.getValue();
 

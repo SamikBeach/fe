@@ -13,7 +13,7 @@ export default function useAuthorColumnDef() {
     return {
       id: 'author',
       header: 'Author',
-      size: 240,
+      size: 310,
       accessorFn: row => row,
       cell: row => {
         const rowValue = row.getValue();

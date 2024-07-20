@@ -103,6 +103,7 @@ export default function WritingTable() {
         className={css({
           height: 'calc(100vh - 64px)',
           width: '100%',
+          minWidth: '100%',
           overflow: 'auto',
 
           '&::-webkit-scrollbar': {
@@ -119,7 +120,10 @@ export default function WritingTable() {
         })}
       >
         <Table
-          style={{ width: table.getTotalSize(), backgroundColor: 'white' }}
+          style={{
+            width: table.getTotalSize(),
+            backgroundColor: 'white',
+          }}
         >
           <THead>
             {table.getHeaderGroups().map(headerGroup => (

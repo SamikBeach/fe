@@ -22,7 +22,7 @@ function BookList({ writingId }: Props) {
         // ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 10,
-        writingId,
+        writingIds: [writingId],
       });
     },
     initialPageParam: 0,

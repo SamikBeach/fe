@@ -15,7 +15,11 @@ export default function BookTable({ authorId }: Props) {
 
   const { data: books = [], isLoading } = useQuery({
     queryKey: ['search/book', authorId],
-    queryFn: () => searchBooks({ take: 10, authorId }),
+    queryFn: () =>
+      searchBooks({
+        take: 10,
+        authorIds: authorId !== undefined ? [authorId] : undefined,
+      }),
     select: response => response.data.data,
   });
 

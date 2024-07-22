@@ -1,28 +1,28 @@
-import { SearchBooksResponse, searchBooks } from '@apis/book';
-import { BookCard } from '@components/BookCard';
 import { Spinner } from '@radix-ui/themes';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { SearchBooksResponse, searchBooks } from '@apis/book';
+import { VStack } from 'styled-system/jsx';
+import { BookCard } from '@components/BookCard';
 import { AxiosResponse } from 'axios';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { VStack } from 'styled-system/jsx';
 
 interface Props {
-  writingId: number;
+  authorId?: number;
 }
 
-function BookList({ writingId }: Props) {
+export default function BookList({ authorId }: Props) {
   const listContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, fetchNextPage, isFetching } = useInfiniteQuery<
     AxiosResponse<SearchBooksResponse>
   >({
-    queryKey: ['book', writingId],
+    queryKey: ['book', authorId],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchBooks({
         // ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 10,
-        writingIds: [writingId],
+        authorIds: authorId !== undefined ? [authorId] : undefined,
       });
     },
     initialPageParam: 0,
@@ -42,7 +42,7 @@ function BookList({ writingId }: Props) {
       if (containerRefElement) {
         const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
         //once the user has scrolled within 500px of the bottom of the table, fetch more data if we can
-        if (scrollHeight - scrollTop - clientHeight < 10 && !isFetching) {
+        if (scrollHeight - scrollTop - clientHeight < 500 && !isFetching) {
           fetchNextPage();
         }
       }
@@ -67,7 +67,6 @@ function BookList({ writingId }: Props) {
       ref={listContainerRef}
       px="40px"
       py="20px"
-      width="100%"
       minWidth="600px"
       maxWidth="700px"
       overflow="auto"
@@ -79,5 +78,3 @@ function BookList({ writingId }: Props) {
     </VStack>
   );
 }
-
-export default BookList;

@@ -13,10 +13,6 @@ interface Props extends ComponentProps<typeof Select.Root> {}
 
 function WritingFilter({ onValueChange, ...props }: Props) {
   const selectedFilter = useAtomValue(filterAtom);
-  console.log(
-    'selectedFilter[FilterType.Author]:',
-    selectedFilter[FilterType.Author]
-  );
 
   const { data: writings = [] } = useQuery({
     queryKey: ['writing'],

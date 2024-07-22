@@ -1,7 +1,7 @@
 import { SegmentedControl } from '@radix-ui/themes';
 import { useState } from 'react';
 import WritingTable from './WritingTable';
-import BookTable from './BookTable';
+import BookTable from './BookList';
 import { AuthorServerModel } from '@models/author';
 import { VStack, VstackProps } from 'styled-system/jsx';
 

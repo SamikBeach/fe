@@ -1,5 +1,4 @@
 import { BookServerModel } from '@models/book';
-import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
@@ -11,8 +10,6 @@ interface Props extends HstackProps {
 }
 
 function BookCard({ book, ...props }: Props) {
-  const router = useRouter();
-
   const {
     info: { cover, title, pubDate, publisher },
     authors,
@@ -37,7 +34,6 @@ function BookCard({ book, ...props }: Props) {
           width: '70px',
           height: '100px',
         })}
-        onClick={() => router.push(`/book/${book.id}`)}
       />
       <VStack alignItems="start" gap="2px" padding="2px">
         <Text weight="bold" size="3">
@@ -52,7 +48,6 @@ function BookCard({ book, ...props }: Props) {
                 _hover: { textDecoration: 'underline' },
               })}
               size="2"
-              onClick={() => router.push(`/author/${author.id}`)}
             >
               {author.name}
             </Text>
@@ -71,7 +66,6 @@ function BookCard({ book, ...props }: Props) {
                     _hover: { textDecoration: 'underline' },
                   })}
                   size="1"
-                  onClick={() => router.push(`/writing/${writing.id}`)}
                 >
                   {writing.title}
                 </Text>

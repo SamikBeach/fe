@@ -6,10 +6,18 @@ import { VStack } from 'styled-system/jsx';
 import { getAllWritings } from '@apis/writing';
 import { Filter } from '@components/Filter';
 import { FilterType } from '@models/filter';
+import { useAtomValue } from 'jotai';
+import { filterAtom } from '@atoms/filter';
 
 interface Props extends ComponentProps<typeof Select.Root> {}
 
 function WritingFilter({ onValueChange, ...props }: Props) {
+  const selectedFilter = useAtomValue(filterAtom);
+  console.log(
+    'selectedFilter[FilterType.Author]:',
+    selectedFilter[FilterType.Author]
+  );
+
   const { data: writings = [] } = useQuery({
     queryKey: ['writing'],
     queryFn: getAllWritings,
@@ -17,7 +25,11 @@ function WritingFilter({ onValueChange, ...props }: Props) {
       response.data
         .filter(
           writing =>
-            writing.books?.length !== undefined && writing.books.length > 0
+            writing.books?.length !== undefined &&
+            writing.books.length > 0 &&
+            selectedFilter[FilterType.Author]
+              ?.map(author => author.id)
+              .includes(writing.author.id)
         )
         .map(writing => ({
           id: writing.id,

@@ -20,6 +20,7 @@ interface SearchWritingsRequest extends Partial<Filter> {
   where__id__more_than?: number;
   take?: number;
   sort?: Sort;
+  keyword?: string;
 }
 
 export interface SearchWritingsResponse {
@@ -36,6 +37,7 @@ export function searchWritings({
   where__id__more_than,
   take,
   sort,
+  keyword,
   ...filter
 }: SearchWritingsRequest) {
   return api.get<SearchWritingsResponse>('/writing/search', {
@@ -44,6 +46,7 @@ export function searchWritings({
       where__id__more_than,
       take,
       sort,
+      keyword: keyword === '' || keyword === undefined ? undefined : keyword,
       authorIds: filter[FilterType.Author]?.map(item => item.id),
     },
   });

@@ -17,22 +17,25 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
 import { sortAtom } from '@atoms/sort';
+import { writingSearchKeywordAtom } from '@atoms/searchKeyword';
 
 export default function WritingTable() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const selectedFilters = useAtomValue(filterAtom);
   const sort = useAtomValue(sortAtom);
+  const searchKeyword = useAtomValue(writingSearchKeywordAtom);
 
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchWritingsResponse>
   >({
-    queryKey: ['writing', selectedFilters, sort],
+    queryKey: ['writing', selectedFilters, sort, searchKeyword],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchWritings({
         ...selectedFilters,
         sort,
         where__id__more_than: pageParam as number,
+        keyword: searchKeyword,
         take: 30,
       });
     },

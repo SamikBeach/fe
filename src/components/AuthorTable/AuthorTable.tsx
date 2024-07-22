@@ -17,14 +17,14 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
 import { sortAtom } from '@atoms/sort';
-import { searchKeywordAtom } from '@atoms/searchKeyword';
+import { authorSearchKeywordAtom } from '@atoms/searchKeyword';
 
 export default function AuthorTable() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const selectedFilters = useAtomValue(filterAtom);
   const sort = useAtomValue(sortAtom);
-  const searchKeyword = useAtomValue(searchKeywordAtom);
+  const searchKeyword = useAtomValue(authorSearchKeywordAtom);
 
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchAuthorsResponse>

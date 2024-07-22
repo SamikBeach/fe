@@ -1,4 +1,4 @@
-import { searchKeywordAtom } from '@atoms/searchKeyword';
+import { authorSearchKeywordAtom } from '@atoms/searchKeyword';
 import useDebounce from '@hooks/useDebounce';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 export default function KeywordSearch() {
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const [searchKeyword, setSearchKeyword] = useAtom(authorSearchKeywordAtom);
   const [searchValue, setSearchValue] = useState(searchKeyword);
 
   const debouncedSearchKeyword = useDebounce(searchValue, 200);

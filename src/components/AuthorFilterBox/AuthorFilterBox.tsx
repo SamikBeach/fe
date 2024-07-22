@@ -13,6 +13,7 @@ import {
 } from './filters';
 import ViewModeSelect from './ViewModeSelect';
 import { forwardRef } from 'react';
+import KeywordSearch from './KeywordSearch';
 
 interface Props extends HstackProps {
   onValueChange?: (value: string) => void;
@@ -37,6 +38,7 @@ const AuthorFilterBox = forwardRef<HTMLDivElement, Props>(
       >
         <ViewModeSelect />
         <HStack flexWrap="wrap" gap="6px">
+          <KeywordSearch />
           <NationalityFilter onValueChange={onValueChange} />
           <EraFilter onValueChange={onValueChange} />
           <RegionFilter onValueChange={onValueChange} />

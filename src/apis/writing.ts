@@ -1,5 +1,6 @@
 import api from '@apis/config';
 import { Filter, FilterType } from '@models/filter';
+import { Sort } from '@models/sort';
 import { WritingServerModel } from '@models/writing';
 
 type GetAllWritingsResponse = WritingServerModel[];
@@ -18,6 +19,7 @@ interface SearchWritingsRequest extends Partial<Filter> {
   where__title__i_like?: string;
   where__id__more_than?: number;
   take?: number;
+  sort?: Sort;
 }
 
 export interface SearchWritingsResponse {
@@ -33,6 +35,7 @@ export function searchWritings({
   where__title__i_like,
   where__id__more_than,
   take,
+  sort,
   ...filter
 }: SearchWritingsRequest) {
   return api.get<SearchWritingsResponse>('/writing/search', {
@@ -40,6 +43,7 @@ export function searchWritings({
       where__title__i_like,
       where__id__more_than,
       take,
+      sort,
       authorIds: filter[FilterType.Author]?.map(item => item.id),
     },
   });

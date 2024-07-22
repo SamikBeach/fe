@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useAuthorColumnDef() {
   const column = useMemo<
@@ -12,9 +14,9 @@ export default function useAuthorColumnDef() {
   >(() => {
     return {
       id: 'author',
-      header: 'Author',
       size: 310,
       accessorFn: row => row,
+      header: () => <ColumnHeader type={SortType.Author} />,
       cell: row => {
         const rowValue = row.getValue();
 

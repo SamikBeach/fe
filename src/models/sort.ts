@@ -4,12 +4,17 @@ export enum SortType {
   Era = 'era',
   Region = 'region',
   Education = 'education',
-  MainInterest = 'main-interest',
+  MainInterest = 'main_interest',
   School = 'school',
   BornDate = 'born_date',
   DiedDate = 'died_date',
-  // Author = 'author',
+
+  Author = 'author',
   // Writing = 'writing',
+
+  Title = 'title',
+  TitleInKor = 'title_in_kor',
+  PublicationDate = 'publication_date',
 }
 
 export type SortDirection = 'asc' | 'desc';

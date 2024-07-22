@@ -31,7 +31,7 @@ export default function AuthorTable() {
     queryFn: async ({ pageParam = 0 }) => {
       return await searchAuthors({
         ...selectedFilters,
-        sort: sort,
+        sort,
         where__id__more_than: pageParam as number,
         take: 30,
       });

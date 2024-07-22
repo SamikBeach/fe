@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
+import ColumnHeader from '../ColumnHeader';
+import { SortType } from '@models/sort';
 
 export default function useTitleColumnDef() {
   const router = useRouter();
@@ -14,9 +16,9 @@ export default function useTitleColumnDef() {
   >(() => {
     return {
       id: 'title',
-      header: 'Title',
       accessorFn: row => row,
       size: 480,
+      header: () => <ColumnHeader type={SortType.Title} />,
       cell: row => {
         const rowValue = row.getValue();
 

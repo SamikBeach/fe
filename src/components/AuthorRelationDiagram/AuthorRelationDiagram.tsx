@@ -35,7 +35,7 @@ function RelationDiagram() {
       // selectedEraId,
       // selectedRegionId,
     ],
-    queryFn: () => searchAuthors(selectedFilters),
+    queryFn: () => searchAuthors({ ...selectedFilters, take: 50 }),
     select: response => response.data.data,
   });
 

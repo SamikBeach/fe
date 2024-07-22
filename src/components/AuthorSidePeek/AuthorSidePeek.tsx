@@ -1,15 +1,13 @@
 import { SidePeek } from '@elements/SidePeek';
-import { Flex, Separator, Spinner } from '@radix-ui/themes';
+import { Spinner } from '@radix-ui/themes';
 import { ComponentProps, useState } from 'react';
 import '@styles/globals.css';
 import { css } from 'styled-system/css';
 import { useQuery } from '@tanstack/react-query';
 import { getAuthorById } from '@apis/author';
-import WritingTable from './WritingTable';
-import BookInfo from './BookTable';
 import { AuthorInfo } from './AuthorInfo';
-import TableSegmentControl from './TableSegmentControl';
-import { VStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
+import { WritingAndBookInfo } from './WritingAndBookInfo';
 
 interface Props extends ComponentProps<typeof SidePeek.Root> {
   authorId: number;
@@ -26,7 +24,6 @@ export default function AuthorSidePeek({
     null
   );
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
-  const [tableType, setTableType] = useState<'writing' | 'book'>('writing');
 
   const isOpenSidePeek = selectedWritingId !== null || selectedBookId !== null;
 
@@ -71,30 +68,21 @@ export default function AuthorSidePeek({
               <Spinner size="3" />
             </VStack>
           ) : (
-            <Flex direction="column" gap="16px" height="100%">
-              <AuthorInfo author={author} />
-              <Separator orientation="horizontal" size="4" />
-              <TableSegmentControl
-                defaultValue={tableType}
-                onValueChange={value =>
-                  setTableType(value as 'writing' | 'book')
-                }
+            <HStack
+              alignItems="start"
+              justify="space-between"
+              className={css({ width: '100%', height: '100%' })}
+              gap="0px"
+            >
+              <AuthorInfo author={author} width="300px" />
+              <WritingAndBookInfo
+                author={author}
+                selectedWritingId={selectedWritingId}
+                setSelectedWritingId={setSelectedWritingId}
+                selectedBookId={selectedBookId}
+                setSelectedBookId={setSelectedBookId}
               />
-              {tableType === 'writing' && (
-                <WritingTable
-                  selectedWritingId={selectedWritingId}
-                  setSelectedWritingId={setSelectedWritingId}
-                  writings={author.writings ?? []}
-                />
-              )}
-              {tableType === 'book' && (
-                <BookInfo
-                  selectedBookId={selectedBookId}
-                  setSelectedBookId={setSelectedBookId}
-                  books={author?.books ?? []}
-                />
-              )}
-            </Flex>
+            </HStack>
           )}
           <SidePeek.CloseButton />
         </SidePeek.Content>

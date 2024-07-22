@@ -34,7 +34,7 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
       className={css({ width: '1180px', py: '40px' })}
       gap="30px"
     >
-      <AuthorInfo author={author} width="400px" />
+      <AuthorInfo author={author} width="400px" height="100%" />
       <WritingAndBookInfo author={author} className={css({ width: '720px' })} />
     </HStack>
   );

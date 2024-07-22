@@ -17,23 +17,26 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
 import { sortAtom } from '@atoms/sort';
+import { searchKeywordAtom } from '@atoms/searchKeyword';
 
 export default function AuthorTable() {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
   const selectedFilters = useAtomValue(filterAtom);
   const sort = useAtomValue(sortAtom);
+  const searchKeyword = useAtomValue(searchKeywordAtom);
 
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchAuthorsResponse>
   >({
-    queryKey: ['author', selectedFilters, sort],
+    queryKey: ['author', selectedFilters, sort, searchKeyword],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchAuthors({
         ...selectedFilters,
         sort,
         where__id__more_than: pageParam as number,
         take: 30,
+        keyword: searchKeyword,
       });
     },
     initialPageParam: 0,

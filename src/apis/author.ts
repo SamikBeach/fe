@@ -20,6 +20,7 @@ interface SearchAuthorsRequest extends Partial<Filter> {
   where__id__more_than?: number;
   take?: number;
   sort?: Sort;
+  keyword?: string;
 }
 
 export interface SearchAuthorsResponse {
@@ -36,6 +37,7 @@ export function searchAuthors({
   where__name__i_like,
   where__id__more_than,
   sort,
+  keyword,
   ...filter
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
@@ -50,6 +52,7 @@ export function searchAuthors({
       where__id__more_than,
       take,
       sort,
+      keyword: keyword === '' || keyword === undefined ? undefined : keyword,
     },
   });
 }

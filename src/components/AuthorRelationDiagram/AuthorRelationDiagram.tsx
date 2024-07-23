@@ -36,7 +36,7 @@ function RelationDiagram() {
       searchAuthors({
         ...selectedFilters,
         keyword: authorSearchKeyword,
-        take: 50,
+        fields: {},
       }),
     select: response => response.data.data,
     placeholderData: keepPreviousData,

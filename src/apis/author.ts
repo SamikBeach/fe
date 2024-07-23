@@ -21,6 +21,9 @@ interface SearchAuthorsRequest extends Partial<Filter> {
   take?: number;
   sort?: Sort;
   keyword?: string;
+  fields?: {
+    [K in keyof AuthorServerModel]?: boolean;
+  };
 }
 
 export interface SearchAuthorsResponse {
@@ -38,6 +41,7 @@ export function searchAuthors({
   where__id__more_than,
   sort,
   keyword,
+  fields,
   ...filter
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
@@ -52,6 +56,7 @@ export function searchAuthors({
       where__id__more_than,
       take,
       sort,
+      fields,
       keyword: keyword === '' || keyword === undefined ? undefined : keyword,
     },
   });

@@ -7,52 +7,45 @@ interface Params {
 }
 
 export default function useInitialNodes({ authors = [] }: Params) {
-  const initialNodes = useMemo(() => {
-    return (
-      authors.map<Node<AuthorServerModel>>(author => {
-        const bornYear =
-          author.born_date?.split('-')[0] === undefined
-            ? 0
-            : Number(author.born_date?.split('-')[0]);
+  const initialNodes = useMemo<Node<AuthorServerModel>[]>(() => {
+    return authors.reduce<Node<AuthorServerModel>[]>((acc, author) => {
+      if (author.born_date?.split('-')[0] === undefined) {
+        return acc;
+      }
 
-        const bornCentury = Math.floor(Number(bornYear) / 100) + 1;
+      const bornYear = Number(author.born_date.split('-')[0]);
 
-        const authorIndex = authors
-          .filter(_author => {
-            if (bornCentury < 17) {
-              return (
-                Math.floor(Number(_author.born_date?.split('-')[0]) / 100) +
-                  1 ===
-                bornCentury
-              );
-            }
+      const bornCentury = Math.floor(Number(bornYear) / 100) + 1;
 
-            return (
-              Math.floor(Number(_author.born_date?.split('-')[0]) / 10) * 10 ===
-              Math.floor(bornYear / 10) * 10
-            );
-          })
-          .findIndex(_author => _author.id === author.id);
+      const authorIndex = authors
+        .filter(
+          _author =>
+            Math.floor(Number(_author.born_date?.split('-')[0]) / 100) + 1 ===
+            bornCentury
+        )
+        .findIndex(_author => _author.id === author.id);
 
-        return {
+      if (authorIndex > 1) {
+        return acc;
+      }
+
+      return [
+        ...acc,
+        {
           id: author.id.toString(),
           type: 'authorNode',
           draggable: false,
           position: {
             x: authorIndex * 250,
-            y:
-              bornCentury < 17
-                ? bornCentury * 100
-                : 1600 + (Math.floor(bornYear / 10) * 10 - 1600) * 10,
+            y: bornCentury * 100,
           },
           data: {
             label: author.id.toString(),
-
             ...author,
           },
-        };
-      }) ?? []
-    );
+        },
+      ];
+    }, []);
   }, [authors]);
 
   return initialNodes;

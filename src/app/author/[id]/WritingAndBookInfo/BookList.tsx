@@ -65,7 +65,6 @@ export default function BookList({ authorId }: Props) {
   return (
     <VStack
       ref={listContainerRef}
-      px="40px"
       py="20px"
       minWidth="600px"
       maxWidth="700px"

@@ -6,7 +6,7 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import { css } from 'styled-system/css';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
 import { useAtomValue } from 'jotai';
 import { filterAtom } from '@atoms/filter';
@@ -20,23 +20,26 @@ import {
 } from './hooks';
 import { VStack } from 'styled-system/jsx';
 import { Spinner } from '@radix-ui/themes';
+import { authorSearchKeywordAtom } from '@atoms/searchKeyword';
 
 function RelationDiagram() {
   const selectedFilters = useAtomValue(filterAtom);
+  const authorSearchKeyword = useAtomValue(authorSearchKeywordAtom);
 
   const {
     data: authors = [],
     isLoading,
     isSuccess,
   } = useQuery({
-    queryKey: [
-      'author',
-      // selectedNationalityId,
-      // selectedEraId,
-      // selectedRegionId,
-    ],
-    queryFn: () => searchAuthors({ ...selectedFilters, take: 50 }),
+    queryKey: ['author', selectedFilters, authorSearchKeyword],
+    queryFn: () =>
+      searchAuthors({
+        ...selectedFilters,
+        keyword: authorSearchKeyword,
+        take: 50,
+      }),
     select: response => response.data.data,
+    placeholderData: keepPreviousData,
   });
 
   const initialNodes = useInitialNodes({ authors });
@@ -84,10 +87,10 @@ function RelationDiagram() {
         width: '100%',
       })}
     >
-      {/* <TestButtons
+      <TestButtons
         onClickShowSelected={showOnlySelectedNodes}
         onClickShowAll={showAllNodes}
-      /> */}
+      />
       <ReactFlow
         nodes={nodes}
         edges={edges}

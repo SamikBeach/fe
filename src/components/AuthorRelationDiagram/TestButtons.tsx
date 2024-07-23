@@ -16,7 +16,7 @@ export default function TestButtons({
         className={css({
           position: 'absolute',
           top: 200,
-          left: 100,
+          left: 400,
           zIndex: 3,
         })}
         onClick={onClickShowSelected}
@@ -27,7 +27,7 @@ export default function TestButtons({
         className={css({
           position: 'absolute',
           top: 240,
-          left: 100,
+          left: 400,
           zIndex: 3,
         })}
         onClick={onClickShowAll}

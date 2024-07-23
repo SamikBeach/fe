@@ -33,7 +33,7 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
         className={classNames(
           css({
             width: '240px',
-            cursor: 'pointer',
+            cursor: 'auto',
 
             borderRadius: '8px',
             border: selected ? '1px solid brown' : '1px solid lightgray',
@@ -51,13 +51,26 @@ function AuthorNode({ selected, data }: AuthorNodeProps) {
             animation: 'fadein 0.2s',
           })
         )}
-        onPointerUp={() => {
-          setIsOpenAuthorSidePeek(true);
-        }}
       >
-        <Avatar src={image_url ?? undefined} fallback="니체" radius="full" />
+        <Avatar
+          src={image_url ?? undefined}
+          fallback={name[0]}
+          radius="full"
+          className={css({ cursor: 'pointer' })}
+          onClick={() => setIsOpenAuthorSidePeek(true)}
+        />
         <VStack gap="0" alignItems="start">
-          <Text className={css({ color: 'black' })} weight="bold" size="2">
+          <Text
+            className={css({
+              color: 'black',
+              cursor: 'pointer',
+
+              _hover: { textDecoration: 'underline' },
+            })}
+            weight="bold"
+            size="2"
+            onClick={() => setIsOpenAuthorSidePeek(true)}
+          >
             {name}
           </Text>
           <Text size="1" color="gray">

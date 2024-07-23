@@ -59,8 +59,6 @@ function BookCard({ book, setSelectedBookId, ...props }: Props) {
                 <Text
                   className={css({
                     cursor: 'pointer',
-
-                    _hover: { textDecoration: 'underline' },
                   })}
                   size="1"
                 >

@@ -11,7 +11,7 @@ export default function WritingInfo({ writing }: Props) {
     writing;
 
   return (
-    <HStack gap="40px" alignItems="start" width="100%">
+    <HStack gap="20px" alignItems="start" width="100%">
       <img
         alt="writing_image"
         width={100}

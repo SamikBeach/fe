@@ -3,41 +3,29 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { SearchBooksResponse, searchBooks } from '@apis/book';
 import { VStack } from 'styled-system/jsx';
 import { AxiosResponse } from 'axios';
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
-import BookCard from './BookCard';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BookSidePeek } from '../BookSidePeek';
 import { css } from 'styled-system/css';
+import BookCard from './BookCard';
 
 interface Props {
-  authorId?: number;
-  selectedBookId: number | null;
-  setSelectedBookId: Dispatch<SetStateAction<number | null>>;
+  writingId?: number;
 }
 
-export default function BookList({
-  authorId,
-  selectedBookId,
-  setSelectedBookId,
-}: Props) {
+export default function BookList({ writingId }: Props) {
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
+
   const listContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, fetchNextPage, isFetching } = useInfiniteQuery<
     AxiosResponse<SearchBooksResponse>
   >({
-    queryKey: ['book', authorId],
+    queryKey: ['book', writingId],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchBooks({
-        // ...selectedFilters,
         where__id__more_than: pageParam as number,
         take: 10,
-        authorIds: authorId !== undefined ? [authorId] : undefined,
+        writingIds: writingId !== undefined ? [writingId] : undefined,
       });
     },
     initialPageParam: 0,
@@ -81,9 +69,9 @@ export default function BookList({
     <>
       <VStack
         ref={listContainerRef}
-        py="20px"
         overflow="auto"
         height="calc(100vh - 180px)"
+        width="100%"
         className={css({
           '&::-webkit-scrollbar': {
             backgroundColor: '#f5f5f5',

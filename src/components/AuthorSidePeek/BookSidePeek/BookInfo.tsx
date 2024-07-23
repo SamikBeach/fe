@@ -11,7 +11,7 @@ export default function BookInfo({ book }: Props) {
   const { info } = book;
 
   return (
-    <HStack gap="40px" alignItems="start" width="100%">
+    <HStack gap="20px" alignItems="start" width="100%">
       <img alt="writing_image" width={100} height={140} src={info.cover} />
       <VStack alignItems="start" gap="2px">
         <Text size="3" weight="bold">

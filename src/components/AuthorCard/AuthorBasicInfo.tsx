@@ -2,7 +2,6 @@ import { AuthorServerModel } from '@models/author';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -11,8 +10,6 @@ interface Props {
 }
 
 export default function AuthorBasicInfo({ author }: Props) {
-  const router = useRouter();
-
   const {
     name,
     name_in_kor,

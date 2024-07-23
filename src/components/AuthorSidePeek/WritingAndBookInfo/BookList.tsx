@@ -13,6 +13,7 @@ import {
 } from 'react';
 import BookCard from './BookCard';
 import { BookSidePeek } from '../BookSidePeek';
+import { css } from 'styled-system/css';
 
 interface Props {
   authorId?: number;
@@ -82,6 +83,20 @@ export default function BookList({
         ref={listContainerRef}
         py="20px"
         overflow="auto"
+        height="calc(100vh - 180px)"
+        className={css({
+          '&::-webkit-scrollbar': {
+            backgroundColor: '#f5f5f5',
+            borderRadius: '10px',
+            width: '4px',
+            height: '8px',
+          },
+
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'gray.300',
+            borderRadius: '10px',
+          },
+        })}
         onScroll={e => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
       >
         {flatData.map(book => (

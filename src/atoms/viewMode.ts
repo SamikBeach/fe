@@ -1,3 +1,3 @@
 import { atom } from 'jotai';
 
-export const viewModeAtom = atom<'diagram' | 'list'>('list');
+export const viewModeAtom = atom<'diagram' | 'list'>('diagram');

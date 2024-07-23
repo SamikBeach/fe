@@ -1,10 +1,10 @@
 import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
 import { Dispatch, SetStateAction, useState } from 'react';
-import WritingTable from './WritingTable';
 import BookList from './BookList';
 import { AuthorServerModel } from '@models/author';
 import { VStack, VstackProps } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
+import { WritingTable } from './WritingTable';
 
 interface Props extends VstackProps {
   author: AuthorServerModel;

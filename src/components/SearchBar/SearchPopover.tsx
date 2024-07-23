@@ -86,7 +86,7 @@ function SearchPopover({
   const renderPopoverContentInner = () => {
     if (isLoading || searchValue === '') {
       return (
-        <VStack width="300px" height="388px" justify="center">
+        <VStack width="400px" height="388px" justify="center">
           <Spinner />
         </VStack>
       );
@@ -94,7 +94,7 @@ function SearchPopover({
 
     if (!hasResults) {
       return (
-        <VStack width="300px" height="388px" justify="center">
+        <VStack width="400px" height="388px" justify="center">
           <Text>No Results</Text>
         </VStack>
       );
@@ -116,7 +116,7 @@ function SearchPopover({
                 key={index}
                 gap="10px"
                 className={css({
-                  width: '300px',
+                  width: '400px',
                   py: '4px',
                   px: '8px',
                   background:
@@ -166,7 +166,7 @@ function SearchPopover({
                 key={index}
                 gap="10px"
                 className={css({
-                  width: '300px',
+                  width: '400px',
                   py: '4px',
                   px: '8px',
                   background:

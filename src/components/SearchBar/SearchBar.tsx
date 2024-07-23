@@ -31,7 +31,7 @@ function SearchBar() {
         ref={textFieldRef}
         placeholder="Search authors, books..."
         className={css({
-          width: '250px',
+          width: '400px',
         })}
         value={searchValue}
         onClick={() => {

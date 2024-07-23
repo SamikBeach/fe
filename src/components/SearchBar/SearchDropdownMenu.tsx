@@ -42,7 +42,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
   const renderDropdonwMenuContentInner = () => {
     if (isLoading || searchValue === '') {
       return (
-        <VStack width="316px" height="400px" justify="center">
+        <VStack width="416px" height="400px" justify="center">
           <Spinner />
         </VStack>
       );
@@ -50,7 +50,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
 
     if (!hasResults) {
       return (
-        <VStack width="316px" height="400px" justify="center">
+        <VStack width="416px" height="400px" justify="center">
           <Text>No Results</Text>
         </VStack>
       );
@@ -109,7 +109,7 @@ const SearchDropdownMenu = forwardRef<HTMLDivElement, Props>(function (
                 <WritingHoverCard.Trigger>
                   <DropdownMenu.Item
                     className={css({
-                      width: '300px',
+                      width: '400px',
                       cursor: 'pointer',
 
                       _focus: {

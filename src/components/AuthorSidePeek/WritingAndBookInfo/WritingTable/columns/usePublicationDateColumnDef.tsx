@@ -1,11 +1,16 @@
 import { WritingServerModel } from '@models/writing';
 import { Text } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import ColumnHeader from '../ColumnHeader';
-import { SortType } from '@models/sort';
+import { Sort, SortType } from '@models/sort';
 
-export default function usePublicationDateColumnDef() {
+interface Props {
+  sort: Sort;
+  setSort: Dispatch<SetStateAction<Sort>>;
+}
+
+export default function usePublicationDateColumnDef({ sort, setSort }: Props) {
   const column = useMemo<
     ColumnDef<WritingServerModel, WritingServerModel>
   >(() => {
@@ -13,7 +18,13 @@ export default function usePublicationDateColumnDef() {
       id: 'publicationDate',
       size: 120,
       accessorFn: row => row,
-      header: () => <ColumnHeader type={SortType.PublicationDate} />,
+      header: () => (
+        <ColumnHeader
+          type={SortType.PublicationDate}
+          sort={sort}
+          setSort={setSort}
+        />
+      ),
       cell: row => {
         const rowValue = row.getValue();
 
@@ -25,7 +36,7 @@ export default function usePublicationDateColumnDef() {
         );
       },
     };
-  }, []);
+  }, [setSort, sort]);
 
   return column;
 }

@@ -1,17 +1,22 @@
-import { sortAtom } from '@atoms/sort';
-import { SortType } from '@models/sort';
+import { Sort, SortType } from '@models/sort';
 import { IconButton } from '@radix-ui/themes';
-import { useAtom } from 'jotai';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa6';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { columnHeaderNameMap } from './utils';
+import { Dispatch, SetStateAction } from 'react';
 
-export default function ColumnHeader({ type }: { type: SortType }) {
-  const [sorts, setSorts] = useAtom(sortAtom);
-
-  const hasSort = sorts.filter(sort => sort.type === type).length > 0;
-  const sortDirection = sorts.find(sort => sort.type === type)?.direction;
+export default function ColumnHeader({
+  type,
+  sort,
+  setSort,
+}: {
+  type: SortType;
+  sort: Sort;
+  setSort: Dispatch<SetStateAction<Sort>>;
+}) {
+  const hasSort = sort.filter(s => s.type === type).length > 0;
+  const sortDirection = sort.find(s => s.type === type)?.direction;
 
   return (
     <HStack justify="space-between">
@@ -20,14 +25,14 @@ export default function ColumnHeader({ type }: { type: SortType }) {
         variant="ghost"
         className={css({ cursor: 'pointer' })}
         onClick={() => {
-          const newSorts = sorts.filter(sort => sort.type !== type);
+          const newSort = sort.filter(s => s.type !== type);
 
           if (sortDirection === 'asc') {
-            setSorts([...newSorts, { type, direction: 'desc' }]);
+            setSort([...newSort, { type, direction: 'desc' }]);
           } else if (sortDirection === 'desc') {
-            setSorts([...newSorts]);
+            setSort([...newSort]);
           } else {
-            setSorts([...newSorts, { type, direction: 'asc' }]);
+            setSort([...newSort, { type, direction: 'asc' }]);
           }
         }}
       >

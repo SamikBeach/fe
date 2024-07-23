@@ -18,10 +18,12 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
 import { WritingSidePeek } from '@components/AuthorSidePeek/WritingSidePeek';
+import { Sort } from '@models/sort';
 
 interface Props {
   authorId?: number;
@@ -36,15 +38,18 @@ export default function WritingTable({
 }: Props) {
   const tableContainerRef = useRef<HTMLDivElement>(null);
 
+  const [sort, setSort] = useState<Sort>([]);
+
   const { data, fetchNextPage, isFetching, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchWritingsResponse>
   >({
-    queryKey: ['writing', authorId],
+    queryKey: ['writing', authorId, sort],
     queryFn: async ({ pageParam = 0 }) => {
       return await searchWritings({
         where__id__more_than: pageParam as number,
         take: 30,
         author: [{ id: authorId ?? 0, value: '' }],
+        sort,
       });
     },
     initialPageParam: 0,
@@ -60,7 +65,7 @@ export default function WritingTable({
     [data]
   );
 
-  const columnDefs = useColumnDefs({ setSelectedWritingId });
+  const columnDefs = useColumnDefs({ setSelectedWritingId, sort, setSort });
 
   const table = useReactTable({
     state: {},

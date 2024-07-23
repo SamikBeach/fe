@@ -5,13 +5,19 @@ import { Dispatch, SetStateAction, useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 import ColumnHeader from '../ColumnHeader';
-import { SortType } from '@models/sort';
+import { Sort, SortType } from '@models/sort';
 
 interface Props {
   setSelectedWritingId: Dispatch<SetStateAction<number | null>>;
+  sort: Sort;
+  setSort: Dispatch<SetStateAction<Sort>>;
 }
 
-export default function useTitleColumnDef({ setSelectedWritingId }: Props) {
+export default function useTitleColumnDef({
+  setSelectedWritingId,
+  sort,
+  setSort,
+}: Props) {
   const column = useMemo<
     ColumnDef<WritingServerModel, WritingServerModel>
   >(() => {
@@ -19,7 +25,9 @@ export default function useTitleColumnDef({ setSelectedWritingId }: Props) {
       id: 'title',
       accessorFn: row => row,
       size: 270,
-      header: () => <ColumnHeader type={SortType.Title} />,
+      header: () => (
+        <ColumnHeader type={SortType.Title} sort={sort} setSort={setSort} />
+      ),
       cell: row => {
         const rowValue = row.getValue();
 
@@ -70,7 +78,7 @@ export default function useTitleColumnDef({ setSelectedWritingId }: Props) {
         );
       },
     };
-  }, [setSelectedWritingId]);
+  }, [setSelectedWritingId, sort, setSort]);
 
   return column;
 }

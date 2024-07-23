@@ -33,7 +33,7 @@ export default function useEditionsColumnDef({ setSelectedWritingId }: Props) {
         );
       },
     };
-  }, []);
+  }, [setSelectedWritingId]);
 
   return column;
 }

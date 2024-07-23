@@ -16,7 +16,7 @@ export const HeaderRow = styled('tr', {});
 export const HeaderCell = styled('th', {
   base: {
     fontSize: '13px',
-    backgroundColor: 'gray.50',
+    backgroundColor: 'white',
     boxShadow: 'inset -1px -1px 0 rgba(0, 0, 0, 0.05)',
     textAlign: 'start',
     px: '14px',

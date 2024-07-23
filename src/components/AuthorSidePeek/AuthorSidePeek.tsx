@@ -54,7 +54,7 @@ export default function AuthorSidePeek({
               className={css({
                 background: 'rgba(0 0 0 / 0.2)',
                 position: 'fixed',
-                zIndex: 1,
+                zIndex: 2,
                 top: 0,
                 left: 0,
                 right: 0,

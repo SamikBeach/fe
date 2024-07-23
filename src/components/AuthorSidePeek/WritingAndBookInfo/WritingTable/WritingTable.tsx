@@ -21,6 +21,7 @@ import {
 } from 'react';
 import MemoizedRow from './MemoizedRow';
 import { AxiosResponse } from 'axios';
+import { WritingSidePeek } from '@components/AuthorSidePeek/WritingSidePeek';
 
 interface Props {
   authorId?: number;
@@ -59,7 +60,7 @@ export default function WritingTable({
     [data]
   );
 
-  const columnDefs = useColumnDefs();
+  const columnDefs = useColumnDefs({ setSelectedWritingId });
 
   const table = useReactTable({
     state: {},
@@ -172,13 +173,19 @@ export default function WritingTable({
                   rows={rows}
                   virtualRow={virtualRow}
                   rowVirtualizer={rowVirtualizer}
-                  onClick={() => setSelectedWritingId(virtualRow.index)}
                 />
               );
             })}
           </TBody>
         </Table>
       </div>
+      <WritingSidePeek
+        writingId={selectedWritingId ?? 0}
+        open={selectedWritingId !== null}
+        onOpenChange={open =>
+          setSelectedWritingId(open ? selectedWritingId : null)
+        }
+      />
     </>
   );
 }

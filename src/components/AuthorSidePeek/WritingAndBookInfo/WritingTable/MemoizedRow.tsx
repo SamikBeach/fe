@@ -4,7 +4,6 @@ import { Row as StyledRow } from './styledComponents';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 import { ComponentProps, memo } from 'react';
 import { WritingServerModel } from '@models/writing';
-import { css } from 'styled-system/css';
 
 interface Props extends ComponentProps<typeof StyledRow> {
   rows: Row<WritingServerModel>[];
@@ -25,7 +24,6 @@ function MemoizedRow({ rows, virtualRow, rowVirtualizer, ...props }: Props) {
         backgroundColor: 'white',
         transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
       }}
-      className={css({})}
       {...props}
     >
       {row.getVisibleCells().map(cell => {

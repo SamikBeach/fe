@@ -1,11 +1,14 @@
 import { WritingServerModel } from '@models/writing';
 import { Text } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
-import Link from 'next/link';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { css } from 'styled-system/css';
 
-export default function useEditionsColumnDef() {
+interface Props {
+  setSelectedWritingId: Dispatch<SetStateAction<number | null>>;
+}
+
+export default function useEditionsColumnDef({ setSelectedWritingId }: Props) {
   const column = useMemo<
     ColumnDef<WritingServerModel, WritingServerModel>
   >(() => {
@@ -18,16 +21,15 @@ export default function useEditionsColumnDef() {
         const rowValue = row.getValue();
 
         return (
-          <Link href={`/writing/${rowValue.id}`}>
-            <Text
-              className={css({
-                cursor: 'pointer',
-                _hover: { textDecoration: 'underline' },
-              })}
-            >
-              {rowValue.books.length} editions
-            </Text>
-          </Link>
+          <Text
+            className={css({
+              cursor: 'pointer',
+              _hover: { textDecoration: 'underline' },
+            })}
+            onClick={() => setSelectedWritingId(rowValue.id)}
+          >
+            {rowValue.books.length} editions
+          </Text>
         );
       },
     };

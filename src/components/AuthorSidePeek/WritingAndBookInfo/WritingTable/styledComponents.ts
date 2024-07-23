@@ -7,7 +7,7 @@ export const THead = styled('thead', {
     height: '36px',
     position: 'sticky',
     top: 0,
-    zIndex: 2,
+    zIndex: 1,
   },
 });
 
@@ -20,7 +20,7 @@ export const HeaderCell = styled('th', {
     boxShadow: 'inset -1px -1px 0 rgba(0, 0, 0, 0.05)',
     textAlign: 'start',
     px: '14px',
-    zIndex: 2,
+    zIndex: 1,
   },
 });
 

@@ -1,16 +1,17 @@
 import { WritingServerModel } from '@models/writing';
 import { Text, Tooltip } from '@radix-ui/themes';
 import { ColumnDef } from '@tanstack/react-table';
-import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 import ColumnHeader from '../ColumnHeader';
 import { SortType } from '@models/sort';
 
-export default function useTitleColumnDef() {
-  const router = useRouter();
+interface Props {
+  setSelectedWritingId: Dispatch<SetStateAction<number | null>>;
+}
 
+export default function useTitleColumnDef({ setSelectedWritingId }: Props) {
   const column = useMemo<
     ColumnDef<WritingServerModel, WritingServerModel>
   >(() => {
@@ -23,11 +24,7 @@ export default function useTitleColumnDef() {
         const rowValue = row.getValue();
 
         return (
-          <VStack
-            alignItems="start"
-            gap="0px"
-            onClick={() => router.push(`/writing/${rowValue.id}`)}
-          >
+          <VStack alignItems="start" gap="0px">
             <Tooltip
               content={
                 <VStack alignItems="start" gap="0px">
@@ -51,6 +48,7 @@ export default function useTitleColumnDef() {
 
                     _hover: { textDecoration: 'underline' },
                   })}
+                  onClick={() => setSelectedWritingId(rowValue.id)}
                 >
                   {rowValue.title}
                 </Text>
@@ -62,6 +60,7 @@ export default function useTitleColumnDef() {
 
                     _hover: { textDecoration: 'underline' },
                   })}
+                  onClick={() => setSelectedWritingId(rowValue.id)}
                 >
                   {rowValue.title_in_eng}
                 </Text>
@@ -71,7 +70,7 @@ export default function useTitleColumnDef() {
         );
       },
     };
-  }, [router]);
+  }, [setSelectedWritingId]);
 
   return column;
 }

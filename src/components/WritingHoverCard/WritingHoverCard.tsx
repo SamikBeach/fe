@@ -16,8 +16,7 @@ function WritingHoverCardContent({
   className,
   ...props
 }: WritingHoverCardContentProps) {
-  const { id, title, title_in_eng, title_in_kor, author, publication_date } =
-    writing;
+  const { id, title, title_in_eng, author, publication_date } = writing;
 
   const router = useRouter();
 
@@ -51,9 +50,6 @@ function WritingHoverCardContent({
           </Text>
           <Text size="2" weight="medium" className={css({ color: 'gray.700' })}>
             {title_in_eng}
-          </Text>
-          <Text size="2" weight="medium" className={css({ color: 'gray.700' })}>
-            {title_in_kor}
           </Text>
           <Text size="2" color="gray">
             {author.name}

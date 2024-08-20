@@ -1,8 +1,8 @@
 import { AuthorServerModel } from '@models/author';
+import { HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, HoverCard, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import classNames from 'classnames';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
@@ -21,7 +21,6 @@ function AuthorHoverCardContent({
   const {
     id,
     name,
-    name_in_kor,
     image_url,
     born_date,
     died_date,
@@ -58,11 +57,10 @@ function AuthorHoverCardContent({
           radius="full"
           size="7"
         />
-        <VStack alignItems="start" gap="0">
+        <VStack alignItems="start">
           <Text size="3" weight="bold">
             {name}
           </Text>
-          <Text size="2">{name_in_kor}</Text>
           <HStack>
             <Text size="2" color="gray">
               {getBornAndDiedDateText({
@@ -74,30 +72,12 @@ function AuthorHoverCardContent({
             </Text>
           </HStack>
           <HStack>
-            <Link href={`/author/${author.id}#writings`}>
-              <Text
-                size="2"
-                className={css({
-                  color: 'gray.600',
-                  cursor: 'pointer',
-                  _hover: { textDecoration: 'underline' },
-                })}
-              >
-                {writings.length} writings
-              </Text>
-            </Link>
-            <Link href={`/author/${author.id}#books`}>
-              <Text
-                size="2"
-                className={css({
-                  color: 'gray.600',
-                  cursor: 'pointer',
-                  _hover: { textDecoration: 'underline' },
-                })}
-              >
-                {books.length} books
-              </Text>
-            </Link>
+            <Text size="2">{writings.length} writings</Text>
+            <Text size="2">{books.length} books</Text>
+            <HStack gap="0">
+              <Text size="2">351</Text>
+              <HeartFilledIcon color="pink" width="24px" />
+            </HStack>
           </HStack>
         </VStack>
       </HStack>

@@ -23,7 +23,7 @@ export default function RightSide() {
       <VStack gap="8px" position="fixed" width="300px" alignItems="start">
         <p className={css({ fontWeight: 'medium' })}>Trending Now</p>
         <Section>
-          <Text>Author</Text>
+          <Text>Authors</Text>
           <AuthorAvatar author={MOCK_AUTHOR} withName />
           <AuthorAvatar author={MOCK_AUTHOR2} withName />
           <AuthorAvatar author={MOCK_AUTHOR3} withName />

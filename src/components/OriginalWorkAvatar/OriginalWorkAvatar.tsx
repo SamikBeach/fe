@@ -40,7 +40,7 @@ export default function OriginalWorkAvatar({
               >
                 {writing.title}
               </Text>
-              <Text className={css({ fontSize: '11px' })} color="gray">
+              <Text className={css({ fontSize: '12px' })} color="gray">
                 {writing.title_in_eng}
               </Text>
             </VStack>

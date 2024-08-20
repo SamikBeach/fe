@@ -32,6 +32,8 @@ export default function OriginalWorkAvatar({
               <Text
                 weight="medium"
                 className={css({
+                  fontSize: '14px',
+
                   cursor: 'pointer',
                   _hover: {
                     textDecoration: 'underline',

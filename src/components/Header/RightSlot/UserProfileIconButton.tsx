@@ -22,6 +22,13 @@ export default function UserProfileIconButton() {
       <DropdownMenu.Content>
         <DropdownMenu.Item
           onSelect={() => {
+            router.push('/my-page');
+          }}
+        >
+          My page
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onSelect={() => {
             setIsLoggedIn(false);
             router.push('/login');
           }}

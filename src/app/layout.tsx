@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ReactQueryProviders>
             <main
               className={css({
-                bgColor: 'gray.50',
+                bgColor: 'white',
               })}
             >
               <Header />

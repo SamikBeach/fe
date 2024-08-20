@@ -25,7 +25,7 @@ export default function useInitialNodes({ authors = [] }: Params) {
         )
         .findIndex(_author => _author.id === author.id);
 
-      if (authorIndex > 1) {
+      if (authorIndex > 6) {
         return acc;
       }
 

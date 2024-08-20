@@ -49,7 +49,7 @@ export default function LeftSlot() {
               : undefined,
           })}
         >
-          <Link href="/originals">Originals</Link>
+          <Link href="/originals">Original works</Link>
         </Button>
 
         <Button
@@ -64,7 +64,7 @@ export default function LeftSlot() {
               : undefined,
           })}
         >
-          <Link href="/books">Books</Link>
+          <Link href="/books">Editions</Link>
         </Button>
       </HStack>
     </HStack>

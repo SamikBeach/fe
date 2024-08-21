@@ -30,9 +30,8 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
   return (
     <HStack
       alignItems="start"
-      justify="space-between"
-      className={css({ width: '1180px' })}
-      gap="30px"
+      justify="center"
+      className={css({ width: '100%' })}
     >
       <AuthorInfo author={author} height="100%" />
       <CommentList />

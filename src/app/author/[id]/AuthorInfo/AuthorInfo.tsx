@@ -18,15 +18,21 @@ export default function AuthorInfo({ author, ...props }: Props) {
 
   return (
     <ScrollArea
-      type="hover"
       scrollbars="vertical"
       className={css({
         height: 'calc(100vh - 64px)',
-        minWidth: '420px',
-        maxWidth: '420px',
+        flex: 2,
       })}
     >
-      <VStack gap="20px" alignItems="start" px="20px" pt="40px" {...props}>
+      <VStack
+        gap="20px"
+        width="420px"
+        alignItems="start"
+        px="20px"
+        pt="40px"
+        ml="auto"
+        {...props}
+      >
         <AuthorBasicInfo author={author} />
 
         <SegmentedControl.Root

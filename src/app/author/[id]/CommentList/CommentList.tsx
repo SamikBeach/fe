@@ -1,18 +1,31 @@
 import { VStack } from 'styled-system/jsx';
 import CommentItem from './CommentItem';
+import { css } from 'styled-system/css';
+import { ScrollArea } from '@radix-ui/themes';
 
 export default function CommentList() {
   return (
-    <VStack
-      width="100%"
-      alignItems="start"
-      padding="40px"
-      fontSize="14px"
-      gap="20px"
+    <ScrollArea
+      scrollbars="vertical"
+      className={css({
+        height: 'calc(100vh - 64px)',
+        flex: 3,
+      })}
     >
-      <CommentItem />
-      <CommentItem />
-      <CommentItem />
-    </VStack>
+      <VStack
+        alignItems="start"
+        padding="40px"
+        fontSize="14px"
+        gap="20px"
+        width="800px"
+      >
+        <CommentItem />
+        <CommentItem />
+        <CommentItem />
+        <CommentItem />
+        <CommentItem />
+        <CommentItem />
+      </VStack>
+    </ScrollArea>
   );
 }

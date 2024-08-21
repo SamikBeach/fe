@@ -1,7 +1,8 @@
-import { VStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
 import CommentItem from './CommentItem';
 import { css } from 'styled-system/css';
 import { ScrollArea } from '@radix-ui/themes';
+import SubCommentItem from './SubCommentItem';
 
 export default function CommentList() {
   return (
@@ -19,7 +20,10 @@ export default function CommentList() {
         gap="20px"
         width="800px"
       >
-        <CommentItem />
+        <VStack gap="10px">
+          <CommentItem />
+          <SubCommentItem />
+        </VStack>
         <CommentItem />
         <CommentItem />
         <CommentItem />

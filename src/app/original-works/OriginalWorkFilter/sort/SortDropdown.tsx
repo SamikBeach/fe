@@ -42,15 +42,9 @@ export default function SortDropdown() {
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Birth date')}
+            onSelect={() => setValue('Publication year')}
           >
-            Birth date
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Death date')}
-          >
-            Death date
+            Publication year
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}

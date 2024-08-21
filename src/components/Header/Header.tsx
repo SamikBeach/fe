@@ -28,7 +28,7 @@ const StyledHeader = styled('header', {
     width: '100%',
     px: '20px',
 
-    position: 'sticky',
+    position: 'fixed',
     top: '0px',
 
     zIndex: 3,

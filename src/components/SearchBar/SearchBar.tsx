@@ -29,7 +29,7 @@ function SearchBar() {
     >
       <TextField.Root
         ref={textFieldRef}
-        placeholder="Search authors, books..."
+        placeholder="Search authors, original works, and editions..."
         className={css({
           width: '400px',
         })}

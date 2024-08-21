@@ -2,15 +2,15 @@
 
 import { HStack } from 'styled-system/jsx';
 import {
+  AuthorFilter,
   EraFilter,
   FieldFilter,
-  MainInterestFilter,
-  SchoolFilter,
+  PublicationYearFilter,
 } from './filters';
 import { SortDropdown } from './sort';
 import SearchTextField from './SearchTextField';
 
-export default function AuthorFilter() {
+export default function OriginalWorkFilter() {
   return (
     <HStack
       position="fixed"
@@ -28,9 +28,9 @@ export default function AuthorFilter() {
       >
         <HStack>
           <FieldFilter />
+          <AuthorFilter />
           <EraFilter />
-          <SchoolFilter />
-          <MainInterestFilter />
+          <PublicationYearFilter />
         </HStack>
         <HStack>
           <SearchTextField />

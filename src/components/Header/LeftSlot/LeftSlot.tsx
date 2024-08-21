@@ -44,12 +44,12 @@ export default function LeftSlot() {
             color: 'black',
             fontWeight: 'medium',
 
-            backgroundColor: pathname.startsWith('/originals')
+            backgroundColor: pathname.startsWith('/original-works')
               ? 'gray.100'
               : undefined,
           })}
         >
-          <Link href="/originals">Original works</Link>
+          <Link href="/original-works">Original works</Link>
         </Button>
 
         <Button

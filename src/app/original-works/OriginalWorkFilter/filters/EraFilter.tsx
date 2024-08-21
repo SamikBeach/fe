@@ -1,8 +1,9 @@
-import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { Button, DropdownMenu } from '@radix-ui/themes';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 
-export default function SortDropdown() {
+export default function EraFilter() {
   const [value, setValue] = useState<string | null>(null);
 
   return (
@@ -15,48 +16,36 @@ export default function SortDropdown() {
             color: value === null ? 'gray' : 'black',
           })}
         >
-          {value === null ? 'Sort by' : value}
+          {value === null ? 'Era' : value}
           <ChevronDownIcon />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Group title="Sort by">
-          <DropdownMenu.Label>Sort by</DropdownMenu.Label>
+        <DropdownMenu.Group title="Era">
+          <DropdownMenu.Label>Era</DropdownMenu.Label>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Trending')}
+            onSelect={() => setValue('Ancient')}
           >
-            Trending
+            Ancient
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Top likes')}
+            onSelect={() => setValue('Medieval')}
           >
-            Top likes
+            Medieval
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Top comments')}
+            onSelect={() => setValue('Modern')}
           >
-            Top comments
+            Modern
           </DropdownMenu.Item>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Birth date')}
+            onSelect={() => setValue('Contemporary')}
           >
-            Birth date
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Death date')}
-          >
-            Death date
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Alphabetical')}
-          >
-            Alphabetical
+            Contemporary
           </DropdownMenu.Item>
         </DropdownMenu.Group>
       </DropdownMenu.Content>

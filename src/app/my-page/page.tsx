@@ -25,6 +25,7 @@ export default function MyPage() {
       justify="space-between"
       className={css({ width: '1180px', py: '40px' })}
       gap="50px"
+      mt="64px"
     >
       <VStack gap="20px" width="260px" alignItems="start">
         <Avatar

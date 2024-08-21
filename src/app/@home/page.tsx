@@ -7,7 +7,7 @@ import LeftSide from './LeftSide';
 
 export default function Home() {
   return (
-    <Flex justify="center" minHeight="100vh" py="20px" gap="30px">
+    <Flex justify="center" minHeight="100vh" py="20px" gap="30px" mt="64px">
       <LeftSide />
       <FeedList />
       <RightSide />

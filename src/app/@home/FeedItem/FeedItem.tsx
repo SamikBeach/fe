@@ -16,20 +16,19 @@ export default function FeedItem() {
       border="1px solid"
       borderColor="gray.200"
       fontSize="14px"
+      display="inline"
     >
-      <p>
-        <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '}
-        <BoldText>Bonggeun Jeong</BoldText> likes{' '}
-        <AuthorAvatar
-          author={MOCK_AUTHOR}
-          mb="4px"
-          className={css({ cursor: 'pointer' })}
-          withName
-        />{' '}
-        <span className={css({ fontSize: '13px', color: 'gray.500' })}>
-          10m ago
-        </span>
-      </p>
+      <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '}
+      <BoldText>Bonggeun Jeong</BoldText> likes{' '}
+      <AuthorAvatar
+        author={MOCK_AUTHOR}
+        mb="4px"
+        className={css({ cursor: 'pointer' })}
+        withName
+      />{' '}
+      <span className={css({ fontSize: '13px', color: 'gray.500' })}>
+        10m ago
+      </span>
     </VStack>
   );
 }

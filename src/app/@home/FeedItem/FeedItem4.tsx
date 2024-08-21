@@ -19,7 +19,7 @@ export default function FeedItem() {
       borderColor="gray.200"
       fontSize="14px"
     >
-      <p>
+      <div className={css({ display: 'inline' })}>
         <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '}
         <BoldText>Bonggeun Jeong</BoldText> left a comment on{' '}
         <WritingHoverCard.Root>
@@ -49,7 +49,7 @@ export default function FeedItem() {
         <span className={css({ fontSize: '13px', color: 'gray.500' })}>
           10m ago
         </span>
-      </p>
+      </div>
       <p
         className={css({
           backgroundColor: ' gray.100',

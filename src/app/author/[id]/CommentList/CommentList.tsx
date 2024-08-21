@@ -1,4 +1,4 @@
-import { HStack, VStack } from 'styled-system/jsx';
+import { VStack } from 'styled-system/jsx';
 import CommentItem from './CommentItem';
 import { css } from 'styled-system/css';
 import { ScrollArea } from '@radix-ui/themes';

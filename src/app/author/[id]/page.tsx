@@ -6,7 +6,7 @@ import { Spinner } from '@radix-ui/themes';
 import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { AuthorInfo } from './AuthorInfo';
-import { WritingAndBookInfo } from './WritingAndBookInfo';
+import { CommentList } from './CommentList';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
   const { data: author, isLoading } = useQuery({
@@ -31,11 +31,11 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
     <HStack
       alignItems="start"
       justify="space-between"
-      className={css({ width: '1180px', py: '40px' })}
+      className={css({ width: '1180px' })}
       gap="30px"
     >
-      <AuthorInfo author={author} width="400px" height="100%" />
-      <WritingAndBookInfo author={author} className={css({ width: '720px' })} />
+      <AuthorInfo author={author} height="100%" />
+      <CommentList />
     </HStack>
   );
 }

@@ -11,7 +11,6 @@ interface Props {
 export default function AuthorInfo({ author }: Props) {
   const {
     name,
-    name_in_kor,
     image_url,
     born_date,
     died_date,
@@ -36,7 +35,6 @@ export default function AuthorInfo({ author }: Props) {
         <Text size="6" weight="bold">
           {name}
         </Text>
-        <Text size="4">{name_in_kor}</Text>
         <Text size="3">
           {getBornAndDiedDateText({
             bornDate: born_date,

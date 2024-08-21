@@ -1,17 +1,51 @@
 import { AuthorServerModel } from '@models/author';
 import { HstackProps, VStack } from 'styled-system/jsx';
 import AuthorBasicInfo from './AuthorBasicInfo';
-import AuthorInfoDataList from './AuthorInfoDataList';
+import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
+import { useState } from 'react';
+import { OriginalWorkList } from './OriginalWorkList';
+import { EditionList } from './EditionList';
+import { css } from 'styled-system/css';
 
 interface Props extends HstackProps {
   author: AuthorServerModel;
 }
 
 export default function AuthorInfo({ author, ...props }: Props) {
+  const [selected, setSelected] = useState<'original-works' | 'editions'>(
+    'original-works'
+  );
+
   return (
-    <VStack gap="20px" alignItems="start" px="20px" {...props}>
-      <AuthorBasicInfo author={author} />
-      <AuthorInfoDataList author={author} />
-    </VStack>
+    <ScrollArea
+      type="hover"
+      scrollbars="vertical"
+      className={css({
+        height: 'calc(100vh - 64px)',
+        minWidth: '420px',
+        maxWidth: '420px',
+      })}
+    >
+      <VStack gap="20px" alignItems="start" px="20px" pt="40px" {...props}>
+        <AuthorBasicInfo author={author} />
+
+        <SegmentedControl.Root
+          defaultValue="original-works"
+          onValueChange={value =>
+            setSelected(value as 'original-works' | 'editions')
+          }
+          size="1"
+        >
+          <SegmentedControl.Item value="original-works">
+            Originals
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="editions">
+            Editions
+          </SegmentedControl.Item>
+        </SegmentedControl.Root>
+
+        {selected === 'original-works' ? <OriginalWorkList /> : <EditionList />}
+      </VStack>
+    </ScrollArea>
   );
 }

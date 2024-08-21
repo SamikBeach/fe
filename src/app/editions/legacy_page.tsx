@@ -1,7 +1,7 @@
 'use client';
 
 import { HStack, VStack } from 'styled-system/jsx';
-import BookList from './BookList';
+import BookList from './legacy_BookList';
 import { css } from 'styled-system/css';
 import { BookFilterBox } from '@components/BookFilterBox';
 

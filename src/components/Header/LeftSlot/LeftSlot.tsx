@@ -59,12 +59,12 @@ export default function LeftSlot() {
           className={css({
             color: 'black',
             fontWeight: 'medium',
-            backgroundColor: pathname.startsWith('/books')
+            backgroundColor: pathname.startsWith('/editions')
               ? 'gray.100'
               : undefined,
           })}
         >
-          <Link href="/books">Editions</Link>
+          <Link href="/editions">Editions</Link>
         </Button>
       </HStack>
     </HStack>

@@ -11,8 +11,6 @@ export const MOCK_AUTHOR: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/472px-Nietzsche187a.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR2: AuthorServerModel = {
@@ -25,8 +23,6 @@ export const MOCK_AUTHOR2: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Immanuel_Kant_-_Gemaelde_1.jpg/440px-Immanuel_Kant_-_Gemaelde_1.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR3: AuthorServerModel = {
@@ -39,8 +35,6 @@ export const MOCK_AUTHOR3: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Ludwig_Wittgenstein_1929.jpg/220px-Ludwig_Wittgenstein_1929.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR4: AuthorServerModel = {
@@ -53,8 +47,6 @@ export const MOCK_AUTHOR4: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Arthur_Schopenhauer_by_J_Sch%C3%A4fer%2C_1859b.jpg/220px-Arthur_Schopenhauer_by_J_Sch%C3%A4fer%2C_1859b.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR5: AuthorServerModel = {
@@ -67,8 +59,6 @@ export const MOCK_AUTHOR5: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/220px-Plato_Silanion_Musei_Capitolini_MC1377.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 

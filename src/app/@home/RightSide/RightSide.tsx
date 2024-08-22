@@ -19,8 +19,8 @@ import { GiBlackBook } from 'react-icons/gi';
 
 export default function RightSide() {
   return (
-    <VStack width="300px">
-      <VStack gap="8px" position="fixed" width="300px" alignItems="start">
+    <VStack minWidth="300px" position="sticky" top="0" pt="84px">
+      <VStack gap="8px" width="100%" alignItems="start">
         <Text className={css({ fontWeight: 'medium' })}>Trending Now</Text>
         <Section>
           <Text>Authors</Text>

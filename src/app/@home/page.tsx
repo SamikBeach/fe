@@ -1,9 +1,9 @@
 'use client';
 
 import FeedList from './FeedList';
-import RightSide from './RightSide';
 import LeftSide from './LeftSide';
 import { HStack } from 'styled-system/jsx';
+import { RightSide } from './RightSide';
 
 export default function Home() {
   return (

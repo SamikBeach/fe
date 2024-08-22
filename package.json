@@ -44,6 +44,7 @@
     "nextjs-toploader": "^1.6.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-highlight-words": "^0.20.0"
+    "react-highlight-words": "^0.20.0",
+    "react-infinite-scroll-component": "^6.1.0"
   }
 }

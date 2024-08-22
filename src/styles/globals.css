@@ -1,6 +1,5 @@
-@layer reset, base, radix_ui, reactflow, tokens, recipes, utilities;
+@layer reset, base, radix_ui,  tokens, recipes, utilities;
 @import '@radix-ui/themes/styles.css' layer(radix_ui);
-@import 'reactflow/dist/style.css' layer(reactflow);
 
 [data-accent-color='gray'] {
   --accent-1: #fcfcfd;

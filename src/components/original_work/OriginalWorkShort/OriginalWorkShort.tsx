@@ -3,17 +3,17 @@ import { OriginalWorkServerModel } from '@models/original_work';
 import { Text } from '@radix-ui/themes';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
-interface Props {
+interface Props extends HstackProps {
   originalWork: OriginalWorkServerModel;
 }
 
-export default function OriginalWorkShort({ originalWork }: Props) {
+export default function OriginalWorkShort({ originalWork, ...props }: Props) {
   return (
     <OriginalWorkHoverCard.Root>
       <OriginalWorkHoverCard.Trigger>
-        <HStack gap="6px">
+        <HStack gap="6px" {...props}>
           <GiSecretBook
             className={css({
               display: 'inline',

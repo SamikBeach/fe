@@ -9,7 +9,13 @@ export default function EraFilter() {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <FilterTriggerButton value={value} onClear={() => setValue(null)} />
+        <div>
+          <FilterTriggerButton
+            value={value}
+            label="Era"
+            onClear={() => setValue(null)}
+          />
+        </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group title="Era">

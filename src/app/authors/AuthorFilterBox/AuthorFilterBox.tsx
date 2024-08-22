@@ -13,6 +13,7 @@ export default function AuthorFilterBox() {
       bgColor="white"
       width="100%"
       justify="center"
+      zIndex={2}
     >
       <HStack
         justify="space-between"

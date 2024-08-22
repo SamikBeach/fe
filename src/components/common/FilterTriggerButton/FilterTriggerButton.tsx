@@ -1,24 +1,30 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Button, ChevronDownIcon } from '@radix-ui/themes';
+import { forwardRef } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 
 interface Props {
   value?: string | null;
+  label: string;
   onClear: () => void;
 }
-export default function FilterTriggerButton({ value, onClear }: Props) {
+
+const FilterTriggerButton = forwardRef<HTMLButtonElement, Props>(function (
+  { value, label, onClear }: Props,
+  ref
+) {
   return (
     <Button
+      ref={ref}
       variant="outline"
       className={css({
         cursor: 'pointer',
-
         color: value === null ? 'gray' : 'black',
         gap: '4px',
       })}
     >
-      {value === null ? 'Field' : value}
+      {value === null ? label : value}
       {value === null ? (
         <ChevronDownIcon />
       ) : (
@@ -37,4 +43,6 @@ export default function FilterTriggerButton({ value, onClear }: Props) {
       )}
     </Button>
   );
-}
+});
+
+export default FilterTriggerButton;

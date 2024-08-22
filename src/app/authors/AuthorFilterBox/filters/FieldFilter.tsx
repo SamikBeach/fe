@@ -4,12 +4,18 @@ import { useState } from 'react';
 import { css } from 'styled-system/css';
 
 export default function FieldFilter() {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>('Philosophy');
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <FilterTriggerButton value={value} onClear={() => setValue(null)} />
+        <div>
+          <FilterTriggerButton
+            value={value}
+            label="Field"
+            onClear={() => setValue(null)}
+          />
+        </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group title="Field">

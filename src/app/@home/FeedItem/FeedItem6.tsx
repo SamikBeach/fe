@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { AuthorAvatar } from '@components/AuthorAvatar';
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { MOCK_AUTHOR } from '@constants/mocks';
 import { Avatar } from '@radix-ui/themes';
 import { css } from 'styled-system/css';

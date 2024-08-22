@@ -1,4 +1,4 @@
-import { AuthorAvatar } from '@components/AuthorAvatar';
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import {
   MOCK_AUTHOR,
   MOCK_AUTHOR2,
@@ -14,7 +14,7 @@ import {
 import { css } from 'styled-system/css';
 import { HStack, VStack, styled } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
-import { OriginalWorkAvatar } from '@components/OriginalWorkAvatar';
+import { OriginalWorkShort } from '@components/original_work/OriginalWorkShort';
 import { GiBlackBook } from 'react-icons/gi';
 
 export default function RightSide() {
@@ -32,11 +32,11 @@ export default function RightSide() {
         </Section>
         <Section className={css({ gap: '2px' })}>
           <Text>Original works</Text>
-          <OriginalWorkAvatar originalWork={MOCK_ORIGINAL_WORK1} withName />
-          <OriginalWorkAvatar originalWork={MOCK_ORIGINAL_WORK2} withName />
-          <OriginalWorkAvatar originalWork={MOCK_ORIGINAL_WORK3} withName />
-          <OriginalWorkAvatar originalWork={MOCK_ORIGINAL_WORK4} withName />
-          <OriginalWorkAvatar originalWork={MOCK_ORIGINAL_WORK5} withName />
+          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK1} />
+          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK2} />
+          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK3} />
+          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK4} />
+          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK5} />
         </Section>
         <Section className={css({ gap: '12px' })}>
           <Text>Editions</Text>

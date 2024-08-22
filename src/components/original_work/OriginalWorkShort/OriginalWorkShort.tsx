@@ -1,4 +1,4 @@
-import { OriginalWorkHoverCard } from '@components/OriginalWorkHoverCard';
+import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
 import { OriginalWorkServerModel } from '@models/original_work';
 import { Text } from '@radix-ui/themes';
 import { GiSecretBook } from 'react-icons/gi';
@@ -7,13 +7,9 @@ import { HStack, VStack } from 'styled-system/jsx';
 
 interface Props {
   originalWork: OriginalWorkServerModel;
-  withName?: boolean;
 }
 
-export default function OriginalWorkAvatar({
-  originalWork,
-  withName = false,
-}: Props) {
+export default function OriginalWorkShort({ originalWork }: Props) {
   return (
     <OriginalWorkHoverCard.Root>
       <OriginalWorkHoverCard.Trigger>
@@ -27,26 +23,24 @@ export default function OriginalWorkAvatar({
             })}
             size="24px"
           />{' '}
-          {withName && (
-            <VStack gap="0" alignItems="start">
-              <Text
-                weight="medium"
-                className={css({
-                  fontSize: '14px',
+          <VStack gap="0" alignItems="start">
+            <Text
+              weight="medium"
+              className={css({
+                fontSize: '14px',
 
-                  cursor: 'pointer',
-                  _hover: {
-                    textDecoration: 'underline',
-                  },
-                })}
-              >
-                {originalWork.title}
-              </Text>
-              <Text className={css({ fontSize: '12px' })} color="gray">
-                {originalWork.title_in_eng}
-              </Text>
-            </VStack>
-          )}
+                cursor: 'pointer',
+                _hover: {
+                  textDecoration: 'underline',
+                },
+              })}
+            >
+              {originalWork.title}
+            </Text>
+            <Text className={css({ fontSize: '12px' })} color="gray">
+              {originalWork.title_in_eng}
+            </Text>
+          </VStack>
         </HStack>
       </OriginalWorkHoverCard.Trigger>
       <OriginalWorkHoverCard.Content originalWork={originalWork} side="top" />

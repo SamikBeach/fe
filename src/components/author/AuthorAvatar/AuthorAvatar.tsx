@@ -1,4 +1,4 @@
-import { AuthorHoverCard } from '@components/AuthorHoverCard';
+import { AuthorHoverCard } from '@components/author/AuthorHoverCard';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, AvatarProps, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
@@ -13,7 +13,7 @@ function AuthorAvatar({ author, withName = false, ...props }: Props) {
   return (
     <AuthorHoverCard.Root>
       <AuthorHoverCard.Trigger>
-        <HStack gap="6px" display="inline">
+        <HStack display="inline">
           <Avatar
             size="2"
             radius="full"

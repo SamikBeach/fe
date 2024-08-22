@@ -1,4 +1,4 @@
-import { OriginalWorkHoverCard } from '@components/OriginalWorkHoverCard';
+import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
 import { OriginalWorkServerModel } from '@models/original_work';
 import { Text } from '@radix-ui/themes';
 import { GiSecretBook } from 'react-icons/gi';

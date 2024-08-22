@@ -1,4 +1,4 @@
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Logo } from '../../Logo';
 import { HStack } from 'styled-system/jsx';
@@ -12,16 +12,12 @@ const MENU_ITEMS = [
 ];
 
 export default function LeftSlot() {
-  const router = useRouter();
   const pathname = usePathname();
 
   return (
     <HStack gap="40px">
       <Link href="/">
-        <Logo
-          onClick={() => router.push('/')}
-          className={css({ cursor: 'pointer' })}
-        />
+        <Logo className={css({ cursor: 'pointer' })} />
       </Link>
 
       <HStack gap="30px">

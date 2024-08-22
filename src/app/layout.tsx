@@ -1,5 +1,5 @@
-import { Header } from '@components/Header';
-import { ReactQueryProvider } from '@components/ReactQueryProvider';
+import { Header } from '@components/common/Header';
+import { ReactQueryProvider } from '@components/common/ReactQueryProvider';
 import { Theme } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { css } from 'styled-system/css';

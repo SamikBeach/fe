@@ -4,7 +4,6 @@ import { HStack, styled } from 'styled-system/jsx';
 
 import RightSlot from './RightSlot/RightSlot';
 import LeftSlot from './LeftSlot/LeftSlot';
-import { HEADER_HEIGHT } from '@constants/common';
 
 export default function Header() {
   return (
@@ -22,7 +21,7 @@ const StyledHeader = styled('header', {
     position: 'fixed',
     top: '0px',
 
-    height: HEADER_HEIGHT,
+    height: '64px',
     width: '100%',
 
     backgroundColor: 'white',

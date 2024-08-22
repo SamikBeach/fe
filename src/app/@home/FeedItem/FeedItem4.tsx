@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import { AuthorAvatar } from '@components/AuthorAvatar';
-import { OriginalWorkHoverCard } from '@components/OriginalWorkHoverCard';
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
+import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
 import { MOCK_AUTHOR, MOCK_ORIGINAL_WORK1 } from '@constants/mocks';
 import { Avatar } from '@radix-ui/themes';
 import { css } from 'styled-system/css';

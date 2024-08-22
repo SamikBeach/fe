@@ -1,5 +1,5 @@
 import { OriginalWorkServerModel } from '@models/original_work';
-import { Avatar, HoverCard, Text } from '@radix-ui/themes';
+import { Avatar, HoverCard, Text, Tooltip } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
@@ -44,19 +44,48 @@ function OriginalWorkHoverCardContent({
           fallback="폴백"
           size="7"
         />
-        <VStack alignItems="start" gap="0">
-          <Text size="3" weight="bold">
-            {title}
-          </Text>
-          <Text size="2" weight="medium" className={css({ color: 'gray.700' })}>
-            {title_in_eng}
-          </Text>
-          <Text size="2" color="gray">
-            {author.name}
-          </Text>
-          <Text size="2" color="gray">
-            {publication_date}
-          </Text>
+        <VStack alignItems="start" gap="4px">
+          <VStack alignItems="start" gap="0">
+            <Tooltip content={title}>
+              <Text
+                size="3"
+                weight="bold"
+                className={css({
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  maxWidth: '240px',
+                })}
+              >
+                {title}
+              </Text>
+            </Tooltip>
+
+            <Tooltip content={title_in_eng}>
+              <Text
+                size="2"
+                weight="medium"
+                className={css({ color: 'gray.700' })}
+              >
+                {title_in_eng}
+              </Text>
+            </Tooltip>
+            <Text size="2" color="gray">
+              {publication_date}
+            </Text>
+          </VStack>
+
+          <HStack gap="4px">
+            <Avatar
+              src={author.image_url ?? undefined}
+              fallback={author.name[0]}
+              size="1"
+              radius="full"
+            />
+            <Text size="2" color="gray">
+              {author.name}
+            </Text>
+          </HStack>
         </VStack>
       </HStack>
     </HoverCard.Content>

@@ -1,5 +1,5 @@
 import { AuthorServerModel } from '@models/author';
-import { HeartFilledIcon } from '@radix-ui/react-icons';
+import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, HoverCard, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import classNames from 'classnames';
@@ -52,30 +52,51 @@ function AuthorHoverCardContent({
       <HStack alignItems="start" gap="20px">
         <Avatar
           src={image_url ?? undefined}
-          fallback="폴백"
+          fallback={name[0]}
           radius="full"
           size="7"
         />
-        <VStack alignItems="start">
-          <Text size="3" weight="bold">
-            {name}
-          </Text>
-          <HStack>
-            <Text size="2" color="gray">
-              {getBornAndDiedDateText({
-                bornDate: born_date,
-                diedDate: died_date,
-                bornDateIsBc: born_date_is_bc === 1,
-                diedDateIsBc: died_date_is_bc === 1,
-              })}
+        <VStack alignItems="start" justify="space-between">
+          <VStack alignItems="start" gap="0">
+            <Text size="3" weight="bold">
+              {name}
             </Text>
-          </HStack>
-          <HStack>
-            <Text size="2">{original_works.length} original works</Text>
-            <Text size="2">3 books</Text>
+
+            <HStack>
+              <Text size="2" color="gray">
+                {getBornAndDiedDateText({
+                  bornDate: born_date,
+                  diedDate: died_date,
+                  bornDateIsBc: born_date_is_bc === 1,
+                  diedDateIsBc: died_date_is_bc === 1,
+                })}
+              </Text>
+            </HStack>
+
+            <HStack>
+              <Text size="2" color="gray">
+                {original_works.length} original works
+              </Text>
+              <Text size="2" color="gray">
+                3 editions
+              </Text>
+            </HStack>
+          </VStack>
+
+          <HStack gap="2px">
             <HStack gap="0">
               <Text size="2">351</Text>
-              <HeartFilledIcon color="pink" width="24px" />
+              <HeartFilledIcon
+                color="gray"
+                width="24px"
+                className={css({ ml: '-2px' })}
+              />
+            </HStack>
+            <HStack gap="3px">
+              <Text size="2" color="gray">
+                12
+              </Text>
+              <ChatBubbleIcon color="gray" />
             </HStack>
           </HStack>
         </VStack>

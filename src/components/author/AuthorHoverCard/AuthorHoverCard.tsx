@@ -85,7 +85,9 @@ function AuthorHoverCardContent({
 
           <HStack gap="2px">
             <HStack gap="0">
-              <Text size="2">351</Text>
+              <Text size="2" color="gray">
+                351
+              </Text>
               <HeartFilledIcon
                 color="gray"
                 width="24px"

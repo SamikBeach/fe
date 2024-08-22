@@ -8,7 +8,7 @@ import FeedItem6 from './FeedItem/FeedItem6';
 
 function FeedList() {
   return (
-    <VStack gap="10px">
+    <VStack gap="10px" pt="84px">
       <FeedItem />
       <FeedItem2 />
       <FeedItem3 />

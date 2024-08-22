@@ -19,32 +19,47 @@ import { GiBlackBook } from 'react-icons/gi';
 
 export default function RightSide() {
   return (
-    <VStack minWidth="300px" position="sticky" top="0" pt="84px">
-      <VStack gap="8px" width="100%" alignItems="start">
+    <VStack width="300px">
+      <VStack gap="8px" position="fixed" width="300px" alignItems="start">
         <Text className={css({ fontWeight: 'medium' })}>Trending Now</Text>
         <Section>
           <Text>Authors</Text>
-          <AuthorAvatar author={MOCK_AUTHOR} withName />
-          <AuthorAvatar author={MOCK_AUTHOR2} withName />
-          <AuthorAvatar author={MOCK_AUTHOR3} withName />
-          <AuthorAvatar author={MOCK_AUTHOR4} withName />
-          <AuthorAvatar author={MOCK_AUTHOR5} withName />
+          {[
+            MOCK_AUTHOR,
+            MOCK_AUTHOR2,
+            MOCK_AUTHOR3,
+            MOCK_AUTHOR4,
+            MOCK_AUTHOR5,
+          ].map(author => (
+            <AuthorAvatar key={author.id} author={author} withName />
+          ))}
         </Section>
         <Section className={css({ gap: '2px' })}>
           <Text>Original works</Text>
-          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK1} />
-          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK2} />
-          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK3} />
-          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK4} />
-          <OriginalWorkShort originalWork={MOCK_ORIGINAL_WORK5} />
+          {[
+            MOCK_ORIGINAL_WORK1,
+            MOCK_ORIGINAL_WORK2,
+            MOCK_ORIGINAL_WORK3,
+            MOCK_ORIGINAL_WORK4,
+            MOCK_ORIGINAL_WORK5,
+          ].map(originalWork => (
+            <OriginalWorkShort
+              key={originalWork.id}
+              originalWork={originalWork}
+            />
+          ))}
         </Section>
         <Section className={css({ gap: '12px' })}>
           <Text>Editions</Text>
-          <EditionItem title="Also sprach Zarathustra" />
-          <EditionItem title="History of the Peoples" />
-          <EditionItem title="Passover Sermon" />
-          <EditionItem title="The Gresham Lectures" />
-          <EditionItem title="Woman's Rights" />
+          {[
+            'Also sprach Zarathustra',
+            'History of the Peoples',
+            'Passover Sermon',
+            'The Gresham Lectures',
+            'Womans Rights',
+          ].map(title => (
+            <EditionItem key={title} title={title} />
+          ))}
         </Section>
       </VStack>
     </VStack>

@@ -1,10 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { MOCK_AUTHOR } from '@constants/mocks';
+import { AuthorServerModel } from '@models/author';
+import { UserServerModel } from '@models/user';
 import { Avatar } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
 
+// TODO: 컴포넌트화
 export default function FeedItem() {
   return (
     <VStack

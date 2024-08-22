@@ -7,6 +7,11 @@ import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import Link from 'next/link';
 
+const BUTTONS = [
+  { href: '/login', label: 'Log in' },
+  { href: '/sign-up', label: 'Sign up' },
+];
+
 export default function RightSlot() {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
 
@@ -17,20 +22,16 @@ export default function RightSlot() {
         <UserProfileIconButton />
       ) : (
         <HStack gap="20px">
-          <Button
-            asChild
-            variant="ghost"
-            className={css({ color: 'black', fontWeight: 'medium' })}
-          >
-            <Link href="/login">Log in</Link>
-          </Button>
-          <Button
-            asChild
-            variant="ghost"
-            className={css({ color: 'black', fontWeight: 'medium' })}
-          >
-            <Link href="/sign-up">Sign up</Link>
-          </Button>
+          {BUTTONS.map(({ href, label }) => (
+            <Button
+              key={href}
+              asChild
+              variant="ghost"
+              className={css({ color: 'black', fontWeight: 'medium' })}
+            >
+              <Link href={href}>{label}</Link>
+            </Button>
+          ))}
         </HStack>
       )}
     </HStack>

@@ -1,35 +1,35 @@
 'use client';
 
-import { Flex } from '@radix-ui/themes';
-import { styled } from 'styled-system/jsx';
+import { HStack, styled } from 'styled-system/jsx';
 
 import RightSlot from './RightSlot/RightSlot';
 import LeftSlot from './LeftSlot/LeftSlot';
+import { HEADER_HEIGHT } from '@constants/common';
 
 export default function Header() {
   return (
     <StyledHeader>
-      <Flex align="center" width="100%" height="100%" justify="between">
+      <HStack justify="space-between" width="100%" height="100%">
         <LeftSlot />
         <RightSlot />
-      </Flex>
+      </HStack>
     </StyledHeader>
   );
 }
 
-Header.RightSlot = RightSlot;
-
 const StyledHeader = styled('header', {
   base: {
-    height: '64px',
+    position: 'fixed',
+    top: '0px',
+
+    height: HEADER_HEIGHT,
+    width: '100%',
+
     backgroundColor: 'white',
     borderBottom: '1px solid',
     borderColor: 'gray.200',
-    width: '100%',
-    px: '20px',
 
-    position: 'fixed',
-    top: '0px',
+    px: '20px',
 
     zIndex: 3,
   },

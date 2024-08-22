@@ -16,19 +16,19 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@apis/*": ["src/apis/*"],
-      "@app/*": ["src/app/*"],
-      "@atoms/*": ["src/atoms/*"],
-      "@elements/*": ["src/elements/*"],
-      "@components/*": ["src/components/*"],
-      "@constants/*": ["src/constants/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@models/*": ["src/models/*"],
-      "@parsers/*": ["src/parsers/*"],
-      "@svg/*": ["src/svg/*"],
-      "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"],
-      "@fonts/*": ["src/fonts/*"]
+      "@apis/*": ["legacy_src/apis/*"],
+      "@app/*": ["legacy_src/app/*"],
+      "@atoms/*": ["legacy_src/atoms/*"],
+      "@elements/*": ["legacy_src/elements/*"],
+      "@components/*": ["legacy_src/components/*"],
+      "@constants/*": ["legacy_src/constants/*"],
+      "@hooks/*": ["legacy_src/hooks/*"],
+      "@models/*": ["legacy_src/models/*"],
+      "@parsers/*": ["legacy_src/parsers/*"],
+      "@svg/*": ["legacy_src/svg/*"],
+      "@styles/*": ["legacy_src/styles/*"],
+      "@utils/*": ["legacy_src/utils/*"],
+      "@fonts/*": ["legacy_src/fonts/*"]
     },
     "plugins": [
       {

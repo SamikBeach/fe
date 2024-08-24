@@ -52,7 +52,7 @@ export default function AuthorList() {
       hasMore={true}
       loader={<></>}
     >
-      <HStack flexWrap="wrap" width="1180px" mt="128px">
+      <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px">
         {isLoading
           ? Array(24)
               .fill(0)

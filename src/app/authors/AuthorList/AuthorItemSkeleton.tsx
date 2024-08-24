@@ -1,7 +1,4 @@
-import { AuthorServerModel } from '@models/author';
-import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
-import { Avatar, Skeleton, Text } from '@radix-ui/themes';
-import { getBornAndDiedDateText } from '@utils/author';
+import { Avatar, Skeleton } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 

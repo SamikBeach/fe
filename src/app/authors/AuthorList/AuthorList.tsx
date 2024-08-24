@@ -11,13 +11,14 @@ import { authorFilterAtom } from '@atoms/filter';
 import { useAtomValue } from 'jotai';
 import { authorSortAtom } from '@atoms/sort';
 import { authorSearchKeywordAtom } from '@atoms/searchKeyword';
+import AuthorItemSkeleton from './AuthorItemSkeleton';
 
 export default function AuthorList() {
   const authorFilter = useAtomValue(authorFilterAtom);
   const authorSort = useAtomValue(authorSortAtom);
   const searchKeyword = useAtomValue(authorSearchKeywordAtom);
 
-  const { data, fetchNextPage } = useInfiniteQuery<
+  const { data, fetchNextPage, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchAuthorsResponse>
   >({
     queryKey: ['author/search', authorFilter.eraId, authorSort, searchKeyword],
@@ -52,9 +53,13 @@ export default function AuthorList() {
       loader={<></>}
     >
       <HStack flexWrap="wrap" width="1180px" mt="128px">
-        {authors.map(author => (
-          <AuthorItem key={author.id} author={author} />
-        ))}
+        {isLoading
+          ? Array(24)
+              .fill(0)
+              .map((_, index) => <AuthorItemSkeleton key={index} />)
+          : authors.map(author => (
+              <AuthorItem key={author.id} author={author} />
+            ))}
       </HStack>
     </InfiniteScroll>
   );

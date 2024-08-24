@@ -1,5 +1,5 @@
 import api from '@apis/config';
-import { Sort } from '@atoms/sort';
+import { AuthorSort } from '@atoms/sort';
 import { AuthorServerModel } from '@models/author';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
@@ -21,7 +21,7 @@ interface SearchAuthorsRequest {
   take?: number;
   keyword?: string;
   eraId?: number | null;
-  sort: Sort;
+  sort?: AuthorSort;
 }
 
 export interface SearchAuthorsResponse {

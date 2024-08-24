@@ -1,4 +1,5 @@
 import api from '@apis/config';
+import { OriginalWorkSort } from '@atoms/sort';
 import { OriginalWorkServerModel } from '@models/original_work';
 
 type GetAllOriginalWorksResponse = OriginalWorkServerModel[];
@@ -16,7 +17,9 @@ export function getOriginalWorkById({ id }: { id: number }) {
 interface SearchOriginalWorksRequest {
   where__title__i_like?: string;
   where__id__more_than?: number;
+  authorId?: number | null;
   take?: number;
+  sort?: OriginalWorkSort;
   keyword?: string;
 }
 
@@ -33,13 +36,17 @@ export function searchOriginalWorks({
   where__title__i_like,
   where__id__more_than,
   take,
+  sort,
+  authorId,
   keyword,
 }: SearchOriginalWorksRequest) {
-  return api.get<SearchOriginalWorksResponse>('/originalWork/search', {
+  return api.get<SearchOriginalWorksResponse>('/original-work/search', {
     params: {
       where__title__i_like,
       where__id__more_than,
       take,
+      sort,
+      authorId,
       keyword: keyword === '' || keyword === undefined ? undefined : keyword,
     },
   });

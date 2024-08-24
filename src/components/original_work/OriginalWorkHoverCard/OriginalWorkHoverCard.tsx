@@ -16,7 +16,14 @@ function OriginalWorkHoverCardContent({
   className,
   ...props
 }: OriginalWorkHoverCardContentProps) {
-  const { id, title, title_in_eng, author, publication_date } = originalWork;
+  const {
+    id,
+    title,
+    title_in_eng,
+    author,
+    publication_date,
+    publication_date_is_bc,
+  } = originalWork;
 
   const router = useRouter();
 
@@ -71,6 +78,7 @@ function OriginalWorkHoverCardContent({
               </Text>
             </Tooltip>
             <Text size="2" color="gray">
+              {publication_date_is_bc === 1 ? 'BC' : ''}
               {publication_date}
             </Text>
           </VStack>

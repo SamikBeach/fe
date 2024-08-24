@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-export type Sort =
+export type AuthorSort =
   | 'trending'
   | 'top_likes'
   | 'top_comments'
@@ -8,4 +8,13 @@ export type Sort =
   | 'death_date'
   | 'alphabetical';
 
-export const authorSortAtom = atom<Sort>('trending');
+export const authorSortAtom = atom<AuthorSort>('trending');
+
+export type OriginalWorkSort =
+  | 'trending'
+  | 'top_likes'
+  | 'top_comments'
+  | 'publication_date'
+  | 'alphabetical';
+
+export const originalWorkSortAtom = atom<OriginalWorkSort>('trending');

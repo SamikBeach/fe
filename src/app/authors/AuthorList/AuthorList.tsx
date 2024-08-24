@@ -43,8 +43,6 @@ export default function AuthorList() {
     [data]
   );
 
-  console.log({ data, authors });
-
   return (
     <InfiniteScroll
       dataLength={authors.length}

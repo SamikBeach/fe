@@ -1,20 +1,19 @@
-import { AuthorSort, authorSortAtom } from '@atoms/sort';
+import { OriginalWorkSort, originalWorkSortAtom } from '@atoms/sort';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { capitalize } from 'lodash';
 import { css } from 'styled-system/css';
 
-const SORT_OPTIONS: { label: string; value: AuthorSort }[] = [
+const SORT_OPTIONS: { label: string; value: OriginalWorkSort }[] = [
   { label: 'Trending', value: 'trending' },
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Birth date', value: 'birth_date' },
-  { label: 'Death date', value: 'death_date' },
+  { label: 'Publication date', value: 'publication_date' },
   { label: 'Alphabetical', value: 'alphabetical' },
 ];
 
 export default function SortDropdown() {
-  const [authorSort, setAuthorSort] = useAtom(authorSortAtom);
+  const [originalWorkSort, setOriginalWorkSort] = useAtom(originalWorkSortAtom);
 
   return (
     <DropdownMenu.Root>
@@ -27,7 +26,8 @@ export default function SortDropdown() {
           })}
         >
           {capitalize(
-            SORT_OPTIONS.find(option => option.value === authorSort)?.label
+            SORT_OPTIONS.find(option => option.value === originalWorkSort)
+              ?.label
           )}
           <ChevronDownIcon />
         </Button>
@@ -39,7 +39,7 @@ export default function SortDropdown() {
             <DropdownMenu.Item
               key={option.value}
               className={css({ cursor: 'pointer' })}
-              onSelect={() => setAuthorSort(option.value)}
+              onSelect={() => setOriginalWorkSort(option.value)}
             >
               {capitalize(option.label)}
             </DropdownMenu.Item>

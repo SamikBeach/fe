@@ -5,3 +5,7 @@ export const authorFilterAtom = atom<{
 }>({
   eraId: null,
 });
+
+export const originalWorkFilterAtom = atom<{ authorId: number | null }>({
+  authorId: null,
+});

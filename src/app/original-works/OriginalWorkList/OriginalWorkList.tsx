@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   SearchOriginalWorksResponse,
   searchOriginalWorks,
-} from '@apis/original_work';
+} from '@apis/original-work';
 import { useAtomValue } from 'jotai';
 import { originalWorkFilterAtom } from '@atoms/filter';
 import { originalWorkSortAtom } from '@atoms/sort';

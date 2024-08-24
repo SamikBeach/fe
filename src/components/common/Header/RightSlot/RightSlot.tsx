@@ -1,11 +1,11 @@
 import { isLoggedInAtom } from '@atoms/auth';
-// import { SearchBar } from '@components/SearchBar';
 import { Button } from '@elements/Button';
 import { useAtomValue } from 'jotai';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import Link from 'next/link';
+import { SearchBar } from './SearchBar';
 
 const BUTTONS = [
   { href: '/login', label: 'Log in' },
@@ -17,7 +17,7 @@ export default function RightSlot() {
 
   return (
     <HStack gap="30px">
-      {/* <SearchBar /> */}
+      <SearchBar />
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (

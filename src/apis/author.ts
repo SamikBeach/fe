@@ -17,6 +17,7 @@ export function getAuthorById({ id }: { id: number }) {
 interface SearchAuthorsRequest {
   where__name__i_like?: string;
   where__id__more_than?: number;
+  order__name?: 'ASC' | 'DESC';
   take?: number;
   keyword?: string;
   eraId?: number | null;
@@ -36,6 +37,7 @@ export function searchAuthors({
   take,
   where__name__i_like,
   where__id__more_than,
+  order__name = 'ASC',
   keyword,
   eraId,
   sort,
@@ -44,6 +46,7 @@ export function searchAuthors({
     params: {
       where__name__i_like,
       where__id__more_than,
+      order__name,
       take,
       keyword: keyword === '' ? undefined : keyword,
       eraId,

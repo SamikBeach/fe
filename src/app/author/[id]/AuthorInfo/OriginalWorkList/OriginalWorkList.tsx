@@ -1,16 +1,34 @@
 import { VStack } from 'styled-system/jsx';
-import OriginalWorkItem from './OriginalWorkItem';
+import { searchOriginalWorks } from '@apis/original-work';
+import { useQuery } from '@tanstack/react-query';
+import {
+  OriginalWorkItem,
+  OriginalWorkItemSkeleton,
+} from '@components/original_work/OriginalWorkItem';
 
-export default function OriginalWorkList() {
+interface Props {
+  authorId: number;
+}
+
+export default function OriginalWorkList({ authorId }: Props) {
+  const { data: originalWorks = [], isLoading } = useQuery({
+    queryKey: ['original-work', authorId],
+    queryFn: () => searchOriginalWorks({ authorId }),
+    select: data => data.data.data,
+  });
+
   return (
     <VStack pb="40px">
-      <OriginalWorkItem />
-      <OriginalWorkItem />
-      <OriginalWorkItem />
-      <OriginalWorkItem />
-      <OriginalWorkItem />
-      <OriginalWorkItem />
-      <OriginalWorkItem />
+      {isLoading
+        ? Array(24)
+            .fill(0)
+            .map((_, index) => <OriginalWorkItemSkeleton key={index} />)
+        : originalWorks.map(originalWork => (
+            <OriginalWorkItem
+              key={originalWork.id}
+              originalWork={originalWork}
+            />
+          ))}
     </VStack>
   );
 }

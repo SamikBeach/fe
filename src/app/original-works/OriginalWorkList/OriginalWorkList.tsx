@@ -1,7 +1,6 @@
 'use client';
 
 import { HStack } from 'styled-system/jsx';
-import OriginalWorkItem from './OriginalWorkItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   SearchOriginalWorksResponse,
@@ -14,7 +13,10 @@ import { originalWorkSearchKeywordAtom } from '@atoms/searchKeyword';
 import { AxiosResponse } from 'axios';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import OriginalWorkItemSkeleton from './OriginalWorkItemSkeleton';
+import {
+  OriginalWorkItem,
+  OriginalWorkItemSkeleton,
+} from '@components/original_work/OriginalWorkItem';
 
 export default function OriginalWorkList() {
   const originalWorkFilter = useAtomValue(originalWorkFilterAtom);
@@ -45,8 +47,6 @@ export default function OriginalWorkList() {
     },
     placeholderData: keepPreviousData,
   });
-
-  console.log({ data });
 
   const originalWorks = useMemo(
     () => data?.pages?.flatMap(page => page.data.data) ?? [],

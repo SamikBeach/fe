@@ -42,15 +42,25 @@ export default function AuthorInfo({ author, ...props }: Props) {
           }
           size="1"
         >
-          <SegmentedControl.Item value="original-works">
+          <SegmentedControl.Item
+            value="original-works"
+            className={css({ cursor: 'pointer' })}
+          >
             Originals
           </SegmentedControl.Item>
-          <SegmentedControl.Item value="editions">
+          <SegmentedControl.Item
+            value="editions"
+            className={css({ cursor: 'pointer' })}
+          >
             Editions
           </SegmentedControl.Item>
         </SegmentedControl.Root>
 
-        {selected === 'original-works' ? <OriginalWorkList /> : <EditionList />}
+        {selected === 'original-works' ? (
+          <OriginalWorkList authorId={author.id} />
+        ) : (
+          <EditionList />
+        )}
       </VStack>
     </ScrollArea>
   );

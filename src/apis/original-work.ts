@@ -27,7 +27,7 @@ export interface SearchOriginalWorksResponse {
   cursor: {
     after: number | null;
   };
-  coont: number;
+  count: number;
   next: string | null;
   data: OriginalWorkServerModel[];
 }

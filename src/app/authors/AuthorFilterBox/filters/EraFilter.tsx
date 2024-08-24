@@ -1,49 +1,50 @@
+import { getAllEras } from '@apis/era';
+import { authorFilterAtom } from '@atoms/filter';
 import { FilterTriggerButton } from '@components/common/FilterTriggerButton';
 import { DropdownMenu } from '@radix-ui/themes';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { capitalize } from 'lodash';
 import { css } from 'styled-system/css';
 
 export default function EraFilter() {
-  const [value, setValue] = useState<string | null>(null);
+  const [authorFilter, setAuthorFilter] = useAtom(authorFilterAtom);
+
+  const { data: eras = [] } = useQuery({
+    queryKey: ['era'],
+    queryFn: getAllEras,
+    select: response =>
+      response.data.map(era => ({
+        id: era.id,
+        value: era.era,
+      })),
+  });
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <div>
           <FilterTriggerButton
-            value={value}
+            value={eras.find(era => era.id === authorFilter.eraId)?.value}
             label="Era"
-            onClear={() => setValue(null)}
+            onClear={() => setAuthorFilter(prev => ({ ...prev, eraId: null }))}
           />
         </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group title="Era">
           <DropdownMenu.Label>Era</DropdownMenu.Label>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Ancient')}
-          >
-            Ancient
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Medieval')}
-          >
-            Medieval
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Modern')}
-          >
-            Modern
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Contemporary')}
-          >
-            Contemporary
-          </DropdownMenu.Item>
+          {eras.map(era => (
+            <DropdownMenu.Item
+              key={era.id}
+              className={css({ cursor: 'pointer' })}
+              onSelect={() =>
+                setAuthorFilter(prev => ({ ...prev, eraId: era.id }))
+              }
+            >
+              {capitalize(era.value)}
+            </DropdownMenu.Item>
+          ))}
         </DropdownMenu.Group>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

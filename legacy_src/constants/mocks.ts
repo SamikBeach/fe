@@ -11,8 +11,6 @@ export const MOCK_AUTHOR: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/472px-Nietzsche187a.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR2: AuthorServerModel = {
@@ -25,8 +23,6 @@ export const MOCK_AUTHOR2: AuthorServerModel = {
   died_date_is_bc: null,
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Immanuel_Kant_-_Gemaelde_1.jpg/440px-Immanuel_Kant_-_Gemaelde_1.jpg',
-  influenceds: [],
-  influenced_bys: [],
   original_works: [],
 };
 export const MOCK_AUTHOR3: AuthorServerModel = {

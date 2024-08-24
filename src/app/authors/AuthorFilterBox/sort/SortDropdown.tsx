@@ -1,9 +1,20 @@
+import { Sort, authorSortAtom } from '@atoms/sort';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { capitalize } from 'lodash';
 import { css } from 'styled-system/css';
 
+const SORT_OPTIONS: { label: string; value: Sort }[] = [
+  { label: 'Trending', value: 'trending' },
+  { label: 'Top likes', value: 'top_likes' },
+  { label: 'Top comments', value: 'top_comments' },
+  { label: 'Birth date', value: 'birth_date' },
+  { label: 'Death date', value: 'death_date' },
+  { label: 'Alphabetical', value: 'alphabetical' },
+];
+
 export default function SortDropdown() {
-  const [value, setValue] = useState<string | null>(null);
+  const [authorSort, setAuthorSort] = useAtom(authorSortAtom);
 
   return (
     <DropdownMenu.Root>
@@ -12,52 +23,27 @@ export default function SortDropdown() {
           variant="outline"
           className={css({
             cursor: 'pointer',
-            color: value === null ? 'gray' : 'black',
+            color: 'black',
           })}
         >
-          {value === null ? 'Sort by' : value}
+          {capitalize(
+            SORT_OPTIONS.find(option => option.value === authorSort)?.label
+          )}
           <ChevronDownIcon />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Group title="Sort by">
           <DropdownMenu.Label>Sort by</DropdownMenu.Label>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Trending')}
-          >
-            Trending
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Top likes')}
-          >
-            Top likes
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Top comments')}
-          >
-            Top comments
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Birth date')}
-          >
-            Birth date
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Death date')}
-          >
-            Death date
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Alphabetical')}
-          >
-            Alphabetical
-          </DropdownMenu.Item>
+          {SORT_OPTIONS.map(option => (
+            <DropdownMenu.Item
+              key={option.value}
+              className={css({ cursor: 'pointer' })}
+              onSelect={() => setAuthorSort(option.value)}
+            >
+              {capitalize(option.label)}
+            </DropdownMenu.Item>
+          ))}
         </DropdownMenu.Group>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

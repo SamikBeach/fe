@@ -1,4 +1,5 @@
 import api from '@apis/config';
+import { Sort } from '@atoms/sort';
 import { AuthorServerModel } from '@models/author';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
@@ -18,6 +19,8 @@ interface SearchAuthorsRequest {
   where__id__more_than?: number;
   take?: number;
   keyword?: string;
+  eraId?: number | null;
+  sort: Sort;
 }
 
 export interface SearchAuthorsResponse {
@@ -34,13 +37,17 @@ export function searchAuthors({
   where__name__i_like,
   where__id__more_than,
   keyword,
+  eraId,
+  sort,
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
       where__name__i_like,
       where__id__more_than,
       take,
-      keyword: keyword === '' || keyword === undefined ? undefined : keyword,
+      keyword: keyword === '' ? undefined : keyword,
+      eraId,
+      sort,
     },
   });
 }

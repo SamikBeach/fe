@@ -3,6 +3,7 @@ import { DropdownMenu, IconButton } from '@radix-ui/themes';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
+import { googleLogout } from '@react-oauth/google';
 
 export default function UserProfileIconButton() {
   const router = useRouter();
@@ -24,14 +25,16 @@ export default function UserProfileIconButton() {
           onSelect={() => {
             router.push('/my-page');
           }}
+          className={css({ cursor: 'pointer' })}
         >
           My page
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onSelect={() => {
+            googleLogout();
             setIsLoggedIn(false);
-            router.push('/login');
           }}
+          className={css({ cursor: 'pointer' })}
         >
           Log out
         </DropdownMenu.Item>

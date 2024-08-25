@@ -4,6 +4,7 @@ import { Theme } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { css } from 'styled-system/css';
 import NextTopLoader from 'nextjs-toploader';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import '@styles/globals.css';
 
@@ -30,16 +31,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           showAtBottom={false}
         />
         <Theme accentColor="gray" radius="large">
-          <ReactQueryProvider>
-            <main
-              className={css({
-                bgColor: 'white',
-              })}
-            >
-              <Header />
-              {children}
-            </main>
-          </ReactQueryProvider>
+          <GoogleOAuthProvider
+            clientId={process.env.GOOGLE_OAUTH_CLIENT_ID ?? ''}
+          >
+            <ReactQueryProvider>
+              <main
+                className={css({
+                  bgColor: 'white',
+                })}
+              >
+                <Header />
+                {children}
+              </main>
+            </ReactQueryProvider>
+          </GoogleOAuthProvider>
           {/* <ThemePanel /> */}
         </Theme>
       </body>

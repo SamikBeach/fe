@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { useEffect, useRef, useState } from 'react';
-import useDebounce from 'legacy_src/hooks/useDebounce';
+import useDebounce from '@hooks/useDebounce';
 import SearchPopover from './SearchPopover';
 
 function SearchBar() {

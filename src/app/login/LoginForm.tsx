@@ -10,17 +10,18 @@ import { Card, Link, TextField, Text } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const setIsLoggedIn = useSetAtom(isLoggedInAtom);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
   const router = useRouter();
 
@@ -40,6 +41,12 @@ export default function LoginForm() {
       );
     },
   });
+
+  if (isLoggedIn) {
+    router.push('/');
+
+    return;
+  }
 
   return (
     <Card

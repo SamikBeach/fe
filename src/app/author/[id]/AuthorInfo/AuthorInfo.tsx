@@ -28,7 +28,7 @@ export default function AuthorInfo({ author, ...props }: Props) {
         gap="20px"
         width="420px"
         alignItems="start"
-        px="20px"
+        px="10px"
         pt="40px"
         ml="auto"
         {...props}

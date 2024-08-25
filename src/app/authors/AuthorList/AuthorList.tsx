@@ -1,7 +1,6 @@
 'use client';
 
 import { HStack } from 'styled-system/jsx';
-import AuthorItem from './AuthorItem';
 import { AxiosResponse } from 'axios';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { SearchAuthorsResponse, searchAuthors } from '@apis/author';
@@ -11,7 +10,10 @@ import { authorFilterAtom } from '@atoms/filter';
 import { useAtomValue } from 'jotai';
 import { authorSortAtom } from '@atoms/sort';
 import { authorSearchKeywordAtom } from '@atoms/searchKeyword';
-import AuthorItemSkeleton from './AuthorItemSkeleton';
+import {
+  AuthorItemSkeleton,
+  AuthorItem,
+} from '../../../components/author/AuthorItem';
 
 export default function AuthorList() {
   const authorFilter = useAtomValue(authorFilterAtom);

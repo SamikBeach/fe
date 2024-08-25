@@ -4,6 +4,9 @@ import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import { SearchBar } from './SearchBar';
 import { GoogleLogin } from '@react-oauth/google';
+import { useMutation } from '@tanstack/react-query';
+import { loginWithGoogle } from '@apis/auth';
+import api from '@apis/config';
 
 // const BUTTONS = [
 //   { href: '/login', label: 'Log in' },
@@ -12,6 +15,17 @@ import { GoogleLogin } from '@react-oauth/google';
 
 export default function RightSlot() {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+
+  const { mutate } = useMutation({
+    mutationFn: loginWithGoogle,
+    onSuccess: ({ data }) => {
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      console.log({ data });
+      setIsLoggedIn(true);
+    },
+  });
 
   return (
     <HStack gap="30px">
@@ -22,8 +36,7 @@ export default function RightSlot() {
         <HStack gap="20px">
           <GoogleLogin
             onSuccess={credentialResponse => {
-              console.log(credentialResponse);
-              setIsLoggedIn(true);
+              mutate({ token: credentialResponse.credential ?? '' });
             }}
             onError={() => {
               console.log('Login Failed');

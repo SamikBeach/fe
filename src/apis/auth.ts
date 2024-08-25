@@ -1,6 +1,10 @@
 import api from '@apis/config';
 import base64 from 'base-64';
 
+export function loginWithGoogle({ token }: { token: string }) {
+  return api.post('/auth/login/google', { token });
+}
+
 interface LoginEmailRequest {
   email: string;
   password: string;

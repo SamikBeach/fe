@@ -15,7 +15,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
-import { GoogleLogin } from '@react-oauth/google';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');

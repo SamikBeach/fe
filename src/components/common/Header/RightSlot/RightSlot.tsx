@@ -3,16 +3,13 @@ import { useAtom } from 'jotai';
 import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import { SearchBar } from './SearchBar';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useMutation } from '@tanstack/react-query';
 import { loginWithGoogle } from '@apis/auth';
 import api from '@apis/config';
 import { Button } from '@radix-ui/themes';
-
-// const BUTTONS = [
-//   { href: '/login', label: 'Log in' },
-//   { href: '/sign-up', label: 'Sign up' },
-// ];
+import { css } from 'styled-system/css';
+import Google from '@svg/google';
 
 export default function RightSlot() {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
@@ -35,24 +32,22 @@ export default function RightSlot() {
   });
 
   return (
-    <HStack gap="30px">
+    <HStack gap="20px">
       <SearchBar />
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (
-        <HStack gap="20px">
-          <Button onClick={login}>Log in</Button>
-          {/* {BUTTONS.map(({ href, label }) => (
-            <Button
-              key={href}
-              asChild
-              variant="ghost"
-              className={css({ color: 'black', fontWeight: 'medium' })}
-            >
-              <Link href={href}>{label}</Link>
-            </Button>
-          ))} */}
-        </HStack>
+        <Button
+          variant="outline"
+          className={css({
+            cursor: 'pointer',
+            color: 'black',
+            fontWeight: 'medium',
+          })}
+          onClick={login}
+        >
+          Sign in with <Google width={14} height={14} />
+        </Button>
       )}
     </HStack>
   );

@@ -1,14 +1,25 @@
+'use client';
 import { isLoggedInAtom } from '@atoms/auth';
 import { DropdownMenu, IconButton } from '@radix-ui/themes';
 import { useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { googleLogout } from '@react-oauth/google';
+import { useMutation } from '@tanstack/react-query';
+import { logout } from '@apis/auth';
 
 export default function UserProfileIconButton() {
   const router = useRouter();
 
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
+
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setIsLoggedIn(false);
+      googleLogout();
+    },
+  });
 
   return (
     <DropdownMenu.Root>
@@ -31,8 +42,7 @@ export default function UserProfileIconButton() {
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onSelect={() => {
-            googleLogout();
-            setIsLoggedIn(false);
+            mutate();
           }}
           className={css({ cursor: 'pointer' })}
         >

@@ -5,6 +5,10 @@ export function loginWithGoogle({ code }: { code: string }) {
   return api.post('/auth/login/google', { code });
 }
 
+export function logout() {
+  return api.post('/auth/logout');
+}
+
 interface LoginEmailRequest {
   email: string;
   password: string;

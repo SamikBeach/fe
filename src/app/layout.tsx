@@ -5,8 +5,10 @@ import { ReactNode } from 'react';
 import { css } from 'styled-system/css';
 import NextTopLoader from 'nextjs-toploader';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { cookies } from 'next/headers';
 
 import '@styles/globals.css';
+import SilentRefresh from './SilentRefresh';
 
 export const metadata = {
   title: 'samik beach',
@@ -40,6 +42,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   bgColor: 'white',
                 })}
               >
+                <SilentRefresh
+                  refreshToken={cookies().get('refreshToken')?.value}
+                />
                 <Header />
                 {children}
               </main>

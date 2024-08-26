@@ -3,10 +3,11 @@ import { useAtom } from 'jotai';
 import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import { SearchBar } from './SearchBar';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { useMutation } from '@tanstack/react-query';
 import { loginWithGoogle } from '@apis/auth';
 import api from '@apis/config';
+import { Button } from '@radix-ui/themes';
 
 // const BUTTONS = [
 //   { href: '/login', label: 'Log in' },
@@ -22,9 +23,15 @@ export default function RightSlot() {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
-      console.log({ data });
       setIsLoggedIn(true);
     },
+  });
+
+  const login = useGoogleLogin({
+    onSuccess: codeResponse => {
+      mutate({ code: codeResponse.code });
+    },
+    flow: 'auth-code',
   });
 
   return (
@@ -34,15 +41,7 @@ export default function RightSlot() {
         <UserProfileIconButton />
       ) : (
         <HStack gap="20px">
-          <GoogleLogin
-            onSuccess={credentialResponse => {
-              mutate({ token: credentialResponse.credential ?? '' });
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            useOneTap
-          />
+          <Button onClick={login}>Log in</Button>
           {/* {BUTTONS.map(({ href, label }) => (
             <Button
               key={href}

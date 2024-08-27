@@ -1,6 +1,7 @@
 import api from '@apis/config';
 import { AuthorSort } from '@atoms/sort';
 import { AuthorServerModel } from '@models/author';
+import { Comment } from '@models/comment';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
 
@@ -115,6 +116,16 @@ interface FindAuthorAllLikesResponse {
 
 export function findAuthorAllLikes({ authorId }: FindAuthorAllLikesRequest) {
   return api.get<FindAuthorAllLikesResponse>(`/author-like/${authorId}/count`);
+}
+
+interface GetAllCommentsRequest {
+  authorId: number;
+}
+
+type GetAllCommentsResponse = Comment[];
+
+export function getAllAuthorComments({ authorId }: GetAllCommentsRequest) {
+  return api.get<GetAllCommentsResponse>(`/author-comment/${authorId}`);
 }
 
 interface AddAuthorCommentRequest {

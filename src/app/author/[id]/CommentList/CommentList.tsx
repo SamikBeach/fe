@@ -3,8 +3,43 @@ import CommentItem from './CommentItem';
 import { css } from 'styled-system/css';
 import { ScrollArea, Text } from '@radix-ui/themes';
 import SubCommentItem from './SubCommentItem';
+import { CommentEditor } from './CommentEditor';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { addAuthorComment, getAllAuthorComments } from '@apis/author';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@atoms/user';
 
-export default function CommentList() {
+interface Props {
+  authorId: number;
+}
+
+export default function CommentList({ authorId }: Props) {
+  const user = useAtomValue(userAtom);
+
+  const { data: comments = [], refetch: refetchGetAllAuthorComments } =
+    useQuery({
+      queryKey: ['author-comment'],
+      queryFn: () => getAllAuthorComments({ authorId }),
+      select: response => response.data,
+    });
+
+  const { mutate: addComment } = useMutation({
+    mutationFn: ({ comment }: { comment: string }) => {
+      if (user === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return addAuthorComment({
+        authorId,
+        userId: user.id,
+        comment,
+      });
+    },
+    onSuccess: () => {
+      refetchGetAllAuthorComments();
+    },
+  });
+
   return (
     <ScrollArea
       scrollbars="vertical"
@@ -20,10 +55,14 @@ export default function CommentList() {
         gap="20px"
         width="800px"
       >
+        <CommentEditor onSubmit={addComment} />
         <Text size="3" weight="medium">
-          Comment(40)
+          {`Comment(${comments.length})`}
         </Text>
-        <VStack gap="10px">
+        {comments.map(comment => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))}
+        {/* <VStack gap="10px">
           <CommentItem />
           <SubCommentItem />
         </VStack>
@@ -31,7 +70,7 @@ export default function CommentList() {
         <CommentItem />
         <CommentItem />
         <CommentItem />
-        <CommentItem />
+        <CommentItem /> */}
       </VStack>
     </ScrollArea>
   );

@@ -54,3 +54,23 @@ export function searchAuthors({
     },
   });
 }
+
+export function addAuthorLike({
+  authorId,
+  userId,
+}: {
+  authorId: number;
+  userId: number;
+}) {
+  return api.post(`/author-like/${authorId}`, { userId });
+}
+
+export function removeAuthorLike({
+  authorId,
+  userId,
+}: {
+  authorId: number;
+  userId: number;
+}) {
+  return api.delete(`/author-like/${authorId}`, { params: { userId } });
+}

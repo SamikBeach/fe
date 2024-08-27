@@ -1,9 +1,11 @@
 import { AuthorServerModel } from '@models/author';
 import { HStack, VStack } from 'styled-system/jsx';
-import { Avatar, Text } from '@radix-ui/themes';
+import { Avatar, Button, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import { css } from 'styled-system/css';
 import { HeartFilledIcon } from '@radix-ui/react-icons';
+import { useMutation } from '@tanstack/react-query';
+import { addAuthorLike, removeAuthorLike } from '@apis/author';
 
 interface Props {
   author: AuthorServerModel;
@@ -11,6 +13,7 @@ interface Props {
 
 export default function AuthorInfo({ author }: Props) {
   const {
+    id,
     name,
     image_url,
     born_date,
@@ -19,8 +22,18 @@ export default function AuthorInfo({ author }: Props) {
     died_date_is_bc,
   } = author;
 
+  const { mutate } = useMutation({
+    mutationFn: () => addAuthorLike({ authorId: id, userId: 1 }),
+  });
+
+  const { mutate: remove } = useMutation({
+    mutationFn: () => removeAuthorLike({ authorId: id, userId: 1 }),
+  });
+
   return (
     <VStack alignItems="start" gap="20px" width="100%">
+      <Button onClick={() => mutate()}>like</Button>
+      <Button onClick={() => remove()}>remove</Button>
       <VStack position="relative" width="100%">
         <Avatar
           radius="full"

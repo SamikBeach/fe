@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function CommentItem({ comment: commentProps }: Props) {
-  const { comment } = commentProps;
+  const { comment, like_count } = commentProps;
 
   return (
     <HStack alignItems="start" width="100%">
@@ -55,7 +55,7 @@ export default function CommentItem({ comment: commentProps }: Props) {
               size="1"
               className={css({ cursor: 'pointer' })}
             >
-              44 likes
+              {like_count} likes
             </Text>
             <Text
               weight="medium"

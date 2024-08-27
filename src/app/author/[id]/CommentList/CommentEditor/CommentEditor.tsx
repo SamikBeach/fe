@@ -16,6 +16,12 @@ export default function CommentEditor({ onSubmit }: Props) {
         value={comment}
         onChange={e => setComment(e.target.value)}
         className={css({ width: '100%' })}
+        onKeyDown={e => {
+          if (e.metaKey && e.key === 'Enter') {
+            onSubmit({ comment });
+            setComment('');
+          }
+        }}
       />
       <Button
         onClick={() => {

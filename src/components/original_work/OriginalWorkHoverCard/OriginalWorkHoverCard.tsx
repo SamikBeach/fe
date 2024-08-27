@@ -1,4 +1,4 @@
-import { OriginalWorkServerModel } from '@models/original_work';
+import { OriginalWorkServerModel } from '@models/original-work';
 import { HoverCard } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';

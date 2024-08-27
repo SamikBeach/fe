@@ -1,5 +1,5 @@
 import { AuthorServerModel } from '@models/author';
-import { OriginalWorkServerModel } from '@models/original_work';
+import { OriginalWorkServerModel } from '@models/original-work';
 
 export const MOCK_AUTHOR: AuthorServerModel = {
   id: 1,

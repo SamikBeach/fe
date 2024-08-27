@@ -1,5 +1,5 @@
 import { EraServerModel } from './era';
-import { OriginalWorkServerModel } from './original_work';
+import { OriginalWorkServerModel } from './original-work';
 
 export interface AuthorServerModel {
   id: number;

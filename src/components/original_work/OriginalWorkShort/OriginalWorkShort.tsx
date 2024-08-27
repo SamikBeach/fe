@@ -1,5 +1,5 @@
 import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
-import { OriginalWorkServerModel } from '@models/original_work';
+import { OriginalWorkServerModel } from '@models/original-work';
 import { Text } from '@radix-ui/themes';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';

@@ -1,4 +1,4 @@
-import { OriginalWorkServerModel } from '@models/original_work';
+import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';

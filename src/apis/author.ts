@@ -55,22 +55,52 @@ export function searchAuthors({
   });
 }
 
-export function addAuthorLike({
-  authorId,
-  userId,
-}: {
+interface AddAuthorLikeRequest {
   authorId: number;
   userId: number;
-}) {
-  return api.post(`/author-like/${authorId}`, { userId });
+}
+
+interface AddAuthorLikeResponse {
+  id: number;
+  author_id: number;
+  user_id: number;
+}
+
+export function addAuthorLike({ authorId, userId }: AddAuthorLikeRequest) {
+  return api.post<AddAuthorLikeResponse>(`/author-like/${authorId}`, {
+    userId,
+  });
+}
+
+interface RemoveAuthorLikeRequest {
+  authorId: number;
+  userId: number;
+}
+
+interface RemoveAuthorLikeResponse {
+  affected: number;
 }
 
 export function removeAuthorLike({
   authorId,
   userId,
-}: {
+}: RemoveAuthorLikeRequest) {
+  return api.delete<RemoveAuthorLikeResponse>(`/author-like/${authorId}`, {
+    params: { userId },
+  });
+}
+
+interface FindAuthorLikeRequest {
   authorId: number;
   userId: number;
-}) {
-  return api.delete(`/author-like/${authorId}`, { params: { userId } });
+}
+
+interface FindAuthorLikeResponse {
+  isExist: boolean;
+}
+
+export function findAuthorLike({ authorId, userId }: FindAuthorLikeRequest) {
+  return api.get<FindAuthorLikeResponse>(`/author-like/${authorId}`, {
+    params: { userId },
+  });
 }

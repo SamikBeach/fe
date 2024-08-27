@@ -1,11 +1,11 @@
 import { AuthorServerModel } from '@models/author';
 import { HStack, VStack } from 'styled-system/jsx';
-import { Avatar, Button, Text } from '@radix-ui/themes';
+import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import { css } from 'styled-system/css';
-import { HeartFilledIcon } from '@radix-ui/react-icons';
-import { useMutation } from '@tanstack/react-query';
-import { addAuthorLike, removeAuthorLike } from '@apis/author';
+import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { addAuthorLike, findAuthorLike, removeAuthorLike } from '@apis/author';
 
 interface Props {
   author: AuthorServerModel;
@@ -22,18 +22,28 @@ export default function AuthorInfo({ author }: Props) {
     died_date_is_bc,
   } = author;
 
-  const { mutate } = useMutation({
+  const { mutate: addLike } = useMutation({
     mutationFn: () => addAuthorLike({ authorId: id, userId: 1 }),
+    onSuccess: () => {
+      refetch();
+    },
   });
 
-  const { mutate: remove } = useMutation({
+  const { mutate: removeLike } = useMutation({
     mutationFn: () => removeAuthorLike({ authorId: id, userId: 1 }),
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const { data, refetch } = useQuery({
+    queryKey: ['author-like', id],
+    queryFn: () => findAuthorLike({ authorId: id, userId: 1 }),
+    select: response => response.data,
   });
 
   return (
     <VStack alignItems="start" gap="20px" width="100%">
-      <Button onClick={() => mutate()}>like</Button>
-      <Button onClick={() => remove()}>remove</Button>
       <VStack position="relative" width="100%">
         <Avatar
           radius="full"
@@ -46,17 +56,35 @@ export default function AuthorInfo({ author }: Props) {
             margin: '0 auto',
           })}
         />
-        <HeartFilledIcon
-          color="pink"
-          width="40px"
-          height="40px"
-          className={css({
-            zIndex: 2,
-            position: 'absolute',
-            right: '70px',
-            bottom: '30px',
-          })}
-        />
+        {data?.isExist ? (
+          <HeartFilledIcon
+            color="pink"
+            width="40px"
+            height="40px"
+            className={css({
+              zIndex: 2,
+              position: 'absolute',
+              right: '70px',
+              bottom: '30px',
+            })}
+            cursor="pointer"
+            onClick={() => removeLike()}
+          />
+        ) : (
+          <HeartIcon
+            color="pink"
+            width="40px"
+            height="40px"
+            className={css({
+              zIndex: 2,
+              position: 'absolute',
+              right: '70px',
+              bottom: '30px',
+            })}
+            cursor="pointer"
+            onClick={() => addLike()}
+          />
+        )}
       </VStack>
       <VStack alignItems="start" gap="2px">
         <Text size="6" weight="bold">

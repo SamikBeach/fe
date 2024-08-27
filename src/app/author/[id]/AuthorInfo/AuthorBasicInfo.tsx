@@ -5,7 +5,12 @@ import { getBornAndDiedDateText } from '@utils/author';
 import { css } from 'styled-system/css';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { addAuthorLike, findAuthorLike, removeAuthorLike } from '@apis/author';
+import {
+  addAuthorLike,
+  findAuthorAllLikes,
+  findAuthorLike,
+  removeAuthorLike,
+} from '@apis/author';
 
 interface Props {
   author: AuthorServerModel;
@@ -25,21 +30,29 @@ export default function AuthorInfo({ author }: Props) {
   const { mutate: addLike } = useMutation({
     mutationFn: () => addAuthorLike({ authorId: id, userId: 1 }),
     onSuccess: () => {
-      refetch();
+      refetchAuthorLike();
+      refetchAuthorAllLikes();
     },
   });
 
   const { mutate: removeLike } = useMutation({
     mutationFn: () => removeAuthorLike({ authorId: id, userId: 1 }),
     onSuccess: () => {
-      refetch();
+      refetchAuthorLike();
+      refetchAuthorAllLikes();
     },
   });
 
-  const { data, refetch } = useQuery({
+  const { data: authorLike, refetch: refetchAuthorLike } = useQuery({
     queryKey: ['author-like', id],
     queryFn: () => findAuthorLike({ authorId: id, userId: 1 }),
     select: response => response.data,
+  });
+
+  const { data: authorAllLikes, refetch: refetchAuthorAllLikes } = useQuery({
+    queryKey: ['author-like/count', id],
+    queryFn: () => findAuthorAllLikes({ authorId: id }),
+    select: response => response.data.count,
   });
 
   return (
@@ -56,7 +69,7 @@ export default function AuthorInfo({ author }: Props) {
             margin: '0 auto',
           })}
         />
-        {data?.isExist ? (
+        {authorLike?.isExist ? (
           <HeartFilledIcon
             color="pink"
             width="40px"
@@ -99,7 +112,7 @@ export default function AuthorInfo({ author }: Props) {
           })}
         </Text>
         <HStack gap="2px">
-          <Text>444</Text>
+          <Text>{authorAllLikes}</Text>
           <HeartFilledIcon color="pink" />
         </HStack>
       </VStack>

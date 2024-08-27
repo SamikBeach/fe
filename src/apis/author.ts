@@ -104,3 +104,15 @@ export function findAuthorLike({ authorId, userId }: FindAuthorLikeRequest) {
     params: { userId },
   });
 }
+
+interface FindAuthorAllLikesRequest {
+  authorId: number;
+}
+
+interface FindAuthorAllLikesResponse {
+  count: number;
+}
+
+export function findAuthorAllLikes({ authorId }: FindAuthorAllLikesRequest) {
+  return api.get<FindAuthorAllLikesResponse>(`/author-like/${authorId}/count`);
+}

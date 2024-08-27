@@ -1,6 +1,8 @@
-export interface Comment {
+import { UserServerModel } from './user';
+
+export interface CommentServerModel {
   id: number;
-  user_id: number;
+  user: UserServerModel;
   comment: string;
   author_id: number;
   target_comment_id?: number;

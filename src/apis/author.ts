@@ -1,7 +1,7 @@
 import api from '@apis/config';
 import { AuthorSort } from '@atoms/sort';
 import { AuthorServerModel } from '@models/author';
-import { Comment } from '@models/comment';
+import { CommentServerModel } from '@models/comment';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
 
@@ -122,7 +122,7 @@ interface GetAllCommentsRequest {
   authorId: number;
 }
 
-type GetAllCommentsResponse = Comment[];
+type GetAllCommentsResponse = CommentServerModel[];
 
 export function getAllAuthorComments({ authorId }: GetAllCommentsRequest) {
   return api.get<GetAllCommentsResponse>(`/author-comment/${authorId}`);

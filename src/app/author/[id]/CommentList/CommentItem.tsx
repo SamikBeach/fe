@@ -1,14 +1,14 @@
 import { HStack, VStack, styled } from 'styled-system/jsx';
 import { Avatar, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import { Comment } from '@models/comment';
+import { CommentServerModel } from '@models/comment';
 
 interface Props {
-  comment: Comment;
+  comment: CommentServerModel;
 }
 
 export default function CommentItem({ comment: commentProps }: Props) {
-  const { comment, like_count } = commentProps;
+  const { comment, like_count, user } = commentProps;
 
   return (
     <HStack alignItems="start" width="100%">
@@ -16,7 +16,7 @@ export default function CommentItem({ comment: commentProps }: Props) {
       <VStack gap="4px" alignItems="start" width="100%">
         <CommentBox>
           <Text weight="medium" className={css({ display: 'block' })}>
-            Bonggeun Jeong{' '}
+            {user.name}{' '}
             <span
               className={css({
                 fontSize: '12px',

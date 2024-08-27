@@ -116,3 +116,32 @@ interface FindAuthorAllLikesResponse {
 export function findAuthorAllLikes({ authorId }: FindAuthorAllLikesRequest) {
   return api.get<FindAuthorAllLikesResponse>(`/author-like/${authorId}/count`);
 }
+
+interface AddAuthorCommentRequest {
+  authorId: number;
+  userId: number;
+  comment: string;
+  targetCommentId?: number;
+  targetUserId?: number;
+}
+
+interface AddAuthorCommentResponse {
+  id: number;
+  author_id: number;
+  user_id: number;
+}
+
+export function addAuthorComment({
+  authorId,
+  userId,
+  comment,
+  targetCommentId,
+  targetUserId,
+}: AddAuthorCommentRequest) {
+  return api.post<AddAuthorCommentResponse>(`/author-comment/${authorId}`, {
+    userId,
+    comment,
+    targetCommentId,
+    targetUserId,
+  });
+}

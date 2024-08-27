@@ -2,13 +2,75 @@ import { HStack, VStack, styled } from 'styled-system/jsx';
 import { Avatar, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { CommentServerModel } from '@models/comment';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  addAuthorCommentLike,
+  getAuthorCommentLikeCount,
+  getMyAuthorCommentLikeExist,
+  removeAuthorCommentLike,
+} from '@apis/author';
+import { currentUserAtom } from '@atoms/user';
+import { useAtomValue } from 'jotai';
 
 interface Props {
   comment: CommentServerModel;
 }
 
 export default function CommentItem({ comment: commentProps }: Props) {
-  const { comment, like_count, user } = commentProps;
+  const { id, comment, user } = commentProps;
+
+  const currentUser = useAtomValue(currentUserAtom);
+
+  const { mutate: addLike } = useMutation({
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return addAuthorCommentLike({
+        authorCommentId: id,
+        userId: currentUser.id,
+      });
+    },
+    onSuccess: () => {
+      refetchAuthorCommentLike();
+      refetchAuthorCommentAllLikes();
+    },
+  });
+
+  const { mutate: removeLike } = useMutation({
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return removeAuthorCommentLike({
+        authorCommentId: id,
+        userId: currentUser.id,
+      });
+    },
+    onSuccess: () => {
+      refetchAuthorCommentLike();
+      refetchAuthorCommentAllLikes();
+    },
+  });
+
+  const { data: authorCommentLike, refetch: refetchAuthorCommentLike } =
+    useQuery({
+      queryKey: ['author-comment-like', id],
+      queryFn: () =>
+        getMyAuthorCommentLikeExist({ authorCommentId: id, userId: 1 }),
+      select: response => response.data,
+    });
+
+  const {
+    data: authorCommentAllLikes = 0,
+    refetch: refetchAuthorCommentAllLikes,
+  } = useQuery({
+    queryKey: ['author-comment-like/count', id],
+    queryFn: () => getAuthorCommentLikeCount({ authorCommentId: id }),
+    select: response => response.data.count,
+  });
 
   return (
     <HStack alignItems="start" width="100%">
@@ -32,10 +94,16 @@ export default function CommentItem({ comment: commentProps }: Props) {
         <HStack justify="space-between" width="100%">
           <HStack ml="8px">
             <Text
-              weight="medium"
-              color="gray"
               size="1"
-              className={css({ cursor: 'pointer' })}
+              className={css({
+                cursor: 'pointer',
+                fontWeight: authorCommentLike?.isExist ? 'bold' : 'medium',
+                color: authorCommentLike?.isExist ? 'black' : 'gray',
+                userSelect: 'none',
+              })}
+              onClick={() =>
+                authorCommentLike?.isExist ? removeLike() : addLike()
+              }
             >
               Like
             </Text>
@@ -43,9 +111,9 @@ export default function CommentItem({ comment: commentProps }: Props) {
               weight="medium"
               color="gray"
               size="1"
-              className={css({ cursor: 'pointer' })}
+              className={css({ cursor: 'pointer', userSelect: 'none' })}
             >
-              Comment
+              Reply
             </Text>
           </HStack>
           <HStack mr="8px">
@@ -55,7 +123,7 @@ export default function CommentItem({ comment: commentProps }: Props) {
               size="1"
               className={css({ cursor: 'pointer' })}
             >
-              {like_count} likes
+              {authorCommentAllLikes} likes
             </Text>
             <Text
               weight="medium"

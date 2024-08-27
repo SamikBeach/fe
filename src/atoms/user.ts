@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 
-export const userAtom = atom<{
+export const currentUserAtom = atom<{
   id: number;
   name: string;
   email: string;

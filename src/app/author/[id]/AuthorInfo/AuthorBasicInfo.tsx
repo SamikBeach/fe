@@ -7,10 +7,12 @@ import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addAuthorLike,
-  findAuthorAllLikes,
-  findAuthorLike,
+  getAuthorLikeCount,
+  getMyAuthorLikeExist,
   removeAuthorLike,
 } from '@apis/author';
+import { useAtomValue } from 'jotai';
+import { currentUserAtom } from '@atoms/user';
 
 interface Props {
   author: AuthorServerModel;
@@ -27,8 +29,16 @@ export default function AuthorInfo({ author }: Props) {
     died_date_is_bc,
   } = author;
 
+  const currentUser = useAtomValue(currentUserAtom);
+
   const { mutate: addLike } = useMutation({
-    mutationFn: () => addAuthorLike({ authorId: id, userId: 1 }),
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return addAuthorLike({ authorId: id, userId: currentUser.id });
+    },
     onSuccess: () => {
       refetchAuthorLike();
       refetchAuthorAllLikes();
@@ -36,7 +46,13 @@ export default function AuthorInfo({ author }: Props) {
   });
 
   const { mutate: removeLike } = useMutation({
-    mutationFn: () => removeAuthorLike({ authorId: id, userId: 1 }),
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return removeAuthorLike({ authorId: id, userId: currentUser.id });
+    },
     onSuccess: () => {
       refetchAuthorLike();
       refetchAuthorAllLikes();
@@ -45,13 +61,19 @@ export default function AuthorInfo({ author }: Props) {
 
   const { data: authorLike, refetch: refetchAuthorLike } = useQuery({
     queryKey: ['author-like', id],
-    queryFn: () => findAuthorLike({ authorId: id, userId: 1 }),
+    queryFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return getMyAuthorLikeExist({ authorId: id, userId: currentUser.id });
+    },
     select: response => response.data,
   });
 
   const { data: authorAllLikes, refetch: refetchAuthorAllLikes } = useQuery({
     queryKey: ['author-like/count', id],
-    queryFn: () => findAuthorAllLikes({ authorId: id }),
+    queryFn: () => getAuthorLikeCount({ authorId: id }),
     select: response => response.data.count,
   });
 

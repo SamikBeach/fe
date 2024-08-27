@@ -4,17 +4,17 @@ import { css } from 'styled-system/css';
 import { ScrollArea, Text } from '@radix-ui/themes';
 import SubCommentItem from './SubCommentItem';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { addAuthorComment, getAllAuthorComments } from '@apis/author';
 import { useAtomValue } from 'jotai';
-import { userAtom } from '@atoms/user';
+import { currentUserAtom } from '@atoms/user';
 import { CommentEditor } from './CommentEditor';
+import { addAuthorComment, getAllAuthorComments } from '@apis/author';
 
 interface Props {
   authorId: number;
 }
 
 export default function CommentList({ authorId }: Props) {
-  const user = useAtomValue(userAtom);
+  const currentUser = useAtomValue(currentUserAtom);
 
   const { data: comments = [], refetch: refetchGetAllAuthorComments } =
     useQuery({
@@ -25,13 +25,13 @@ export default function CommentList({ authorId }: Props) {
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
-      if (user === null) {
+      if (currentUser === null) {
         throw new Error('User is not logged in');
       }
 
       return addAuthorComment({
         authorId,
-        userId: user.id,
+        userId: currentUser.id,
         comment,
       });
     },

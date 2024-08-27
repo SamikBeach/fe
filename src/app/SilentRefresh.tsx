@@ -4,7 +4,7 @@ import { getNewAccessToken } from '@apis/auth';
 import api from '@apis/config';
 import { getMyUserInfo } from '@apis/user';
 import { isLoggedInAtom } from '@atoms/auth';
-import { userAtom } from '@atoms/user';
+import { currentUserAtom } from '@atoms/user';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ interface Props {
 
 export default function SilentRefresh({ refreshToken }: Props) {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const setUser = useSetAtom(userAtom);
+  const setCurrentUser = useSetAtom(currentUserAtom);
 
   const [isEnabledGetMyUserInfo, setIsEnabledGetMyUserInfo] = useState(false);
 
@@ -40,9 +40,9 @@ export default function SilentRefresh({ refreshToken }: Props) {
 
   useEffect(() => {
     if (userInfo !== undefined) {
-      setUser(userInfo);
+      setCurrentUser(userInfo);
     }
-  }, [userInfo, setUser]);
+  }, [userInfo, setCurrentUser]);
 
   useEffect(() => {
     if (!isLoggedIn && refreshToken !== undefined && refreshToken !== '') {

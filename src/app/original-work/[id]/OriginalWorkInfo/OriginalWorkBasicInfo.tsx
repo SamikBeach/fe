@@ -10,7 +10,7 @@ import {
   findOriginalWorkLike,
   removeOriginalWorkLike,
 } from '@apis/original-work';
-import { userAtom } from '@atoms/user';
+import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
 
 interface Props {
@@ -21,15 +21,18 @@ export default function OriginalWorkBasicInfo({ originalWork }: Props) {
   const { id, title, title_in_eng, publication_date, publication_date_is_bc } =
     originalWork;
 
-  const user = useAtomValue(userAtom);
+  const currentUser = useAtomValue(currentUserAtom);
 
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
-      if (user === null) {
+      if (currentUser === null) {
         throw new Error('User is not logged in');
       }
 
-      return addOriginalWorkLike({ originalWorkId: id, userId: user.id });
+      return addOriginalWorkLike({
+        originalWorkId: id,
+        userId: currentUser.id,
+      });
     },
     onSuccess: () => {
       refetchOriginalWorkLike();
@@ -39,11 +42,14 @@ export default function OriginalWorkBasicInfo({ originalWork }: Props) {
 
   const { mutate: removeLike } = useMutation({
     mutationFn: () => {
-      if (user === null) {
+      if (currentUser === null) {
         throw new Error('User is not logged in');
       }
 
-      return removeOriginalWorkLike({ originalWorkId: id, userId: user.id });
+      return removeOriginalWorkLike({
+        originalWorkId: id,
+        userId: currentUser.id,
+      });
     },
     onSuccess: () => {
       refetchOriginalWorkLike();

@@ -11,11 +11,22 @@ export default function CommentEditor({ onSubmit }: Props) {
   const [comment, setComment] = useState('');
 
   return (
-    <VStack alignItems="end" width="100%">
+    <VStack
+      alignItems="end"
+      width="800px"
+      position="absolute"
+      left="0px"
+      bottom="0px"
+      bgColor="white"
+      padding="20px"
+      borderTop="1px solid"
+      borderColor="gray.200"
+      zIndex={2}
+    >
       <TextArea
         value={comment}
         onChange={e => setComment(e.target.value)}
-        className={css({ width: '100%' })}
+        className={css({ width: '100%', height: '60px', pr: '80px' })}
         onKeyDown={e => {
           if (e.metaKey && e.key === 'Enter') {
             onSubmit({ comment });
@@ -30,7 +41,12 @@ export default function CommentEditor({ onSubmit }: Props) {
         }}
         size="2"
         variant="outline"
-        className={css({ cursor: 'pointer' })}
+        className={css({
+          cursor: 'pointer',
+          position: 'absolute',
+          right: '30px',
+          bottom: '30px',
+        })}
       >
         Submit
       </Button>

@@ -117,12 +117,7 @@ export default function CommentItem({ comment: commentProps }: Props) {
             </Text>
           </HStack>
           <HStack mr="8px">
-            <Text
-              weight="medium"
-              color="gray"
-              size="1"
-              className={css({ cursor: 'pointer' })}
-            >
+            <Text weight="medium" color="gray" size="1">
               {authorCommentAllLikes} likes
             </Text>
             <Text

@@ -1,15 +1,9 @@
 import { currentUserAtom } from '@atoms/user';
 import { CommentServerModel } from '@models/comment';
-import {
-  AlertDialog,
-  Avatar,
-  Button,
-  Dialog,
-  TextArea,
-} from '@radix-ui/themes';
+import { AlertDialog, Avatar, Button, TextArea } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 
@@ -23,12 +17,14 @@ interface Props {
   }) => void;
   onClose?: () => void;
   comment?: CommentServerModel;
+  width?: string;
 }
 
 export default function CommentEditor({
   onSubmit,
   onClose,
   comment: commentProps,
+  width = '100%',
 }: Props) {
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -41,14 +37,14 @@ export default function CommentEditor({
 
   return (
     <>
-      <HStack alignItems="start" width="100%">
+      <HStack alignItems="start" width="100%" justify="end">
         <Avatar
           fallback={currentUser?.name[0] ?? ''}
           radius="full"
           size="2"
           mt="4px"
         />
-        <div className={css({ width: '100%', position: 'relative' })}>
+        <div className={css({ width: width, position: 'relative' })}>
           <TextArea
             ref={textAreaRef}
             autoFocus

@@ -179,7 +179,12 @@ export default function AuthorCommentItem({
       )}
       {showSubComments &&
         subComments.map(subComment => (
-          <AuthorSubCommentItem key={subComment.id} comment={subComment} />
+          <AuthorSubCommentItem
+            key={subComment.id}
+            comment={subComment}
+            onDelete={refetchGetAllAuthorSubCommentsByCommentId}
+            onEdit={refetchGetAllAuthorSubCommentsByCommentId}
+          />
         ))}
       {showSubComments && (
         <div className={css({ width: '100%', pl: '48px' })}>

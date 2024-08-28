@@ -3,19 +3,31 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import {
   addAuthorCommentLike,
+  deleteAuthorComment,
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
+  updateAuthorComment,
 } from '@apis/author';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import CommentItem from '@components/common/Comment/CommentItem';
+import CommentEditor from '@components/common/Comment/CommentEditor';
+import { useState } from 'react';
 
 interface Props {
   comment: CommentServerModel;
+  onDelete: () => void;
+  onEdit: () => void;
 }
 
-export default function SubCommentItem({ comment: commentProps }: Props) {
+export default function SubCommentItem({
+  comment: commentProps,
+  onDelete,
+  onEdit,
+}: Props) {
   const { id, user } = commentProps;
+
+  const [isEditing, setIsEditing] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -70,11 +82,52 @@ export default function SubCommentItem({ comment: commentProps }: Props) {
     select: response => response.data.count,
   });
 
-  return (
+  const { mutate: deleteComment } = useMutation({
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return deleteAuthorComment({
+        commentId: id,
+      });
+    },
+    onSuccess: () => {
+      onDelete();
+    },
+  });
+
+  const { mutate: updateComment } = useMutation({
+    mutationFn: (param: { comment: string }) => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return updateAuthorComment({
+        commentId: id,
+        comment: param.comment,
+      });
+    },
+    onSuccess: () => {
+      setIsEditing(false);
+      onEdit();
+    },
+  });
+
+  return isEditing ? (
+    <CommentEditor
+      onSubmit={updateComment}
+      onClose={() => setIsEditing(false)}
+      comment={commentProps}
+      width="630px"
+    />
+  ) : (
     <CommentItem
       onClickLike={() =>
         authorCommentLike?.isExist ? removeLike() : addLike()
       }
+      onEdit={() => setIsEditing(true)}
+      onDelete={deleteComment}
       likeCount={authorCommentAllLikes}
       myLikeExist={authorCommentLike?.isExist ?? false}
       user={user}

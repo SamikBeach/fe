@@ -1,12 +1,9 @@
-import { HStack, VStack, styled } from 'styled-system/jsx';
-import { Avatar, Text } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
+import { VStack } from 'styled-system/jsx';
 import { CommentServerModel } from '@models/comment';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addAuthorComment,
   addAuthorCommentLike,
-  getAllAuthorComments,
   getAllAuthorSubCommentsByCommentId,
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
@@ -14,21 +11,21 @@ import {
 } from '@apis/author';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
-import { format } from 'date-fns';
-import { ReplyCommentEditor } from './ReplyCommentEditor';
 import { useState } from 'react';
-import SubCommentItem from './SubCommentItem';
+import AuthorSubCommentItem from './AuthorSubCommentItem';
+import CommentItem from '@components/common/Comment/CommentItem';
+import SubCommentEditor from '@components/common/Comment/SubCommentEditor';
 
 interface Props {
   authorId: number;
   comment: CommentServerModel;
 }
 
-export default function CommentItem({
+export default function AuthorCommentItem({
   authorId,
   comment: commentProps,
 }: Props) {
-  const { id, comment, user, created_at } = commentProps;
+  const { id, user } = commentProps;
 
   const [showSubComments, setShowSubComments] = useState(false);
   const [showReplyEditor, setShowReplyEditor] = useState(false);
@@ -115,83 +112,29 @@ export default function CommentItem({
 
   return (
     <VStack width="100%">
-      <HStack alignItems="start" width="100%">
-        <Avatar fallback="B" radius="full" size="2" mt="4px" />
-        <VStack gap="4px" alignItems="start" width="100%">
-          <CommentBox>
-            <Text weight="medium" className={css({ display: 'block' })}>
-              {user.name}{' '}
-              <span
-                className={css({
-                  fontSize: '12px',
-                  fontWeight: 'normal',
-                  color: 'gray',
-                })}
-              >
-                {format(created_at, 'd MMMM y HH:mm')}
-              </span>
-            </Text>
-            {comment}
-          </CommentBox>
-          <HStack justify="space-between" width="100%">
-            <HStack ml="8px">
-              <Text
-                size="1"
-                className={css({
-                  cursor: 'pointer',
-                  fontWeight: authorCommentLike?.isExist ? 'bold' : 'medium',
-                  color: authorCommentLike?.isExist ? 'black' : 'gray',
-                  userSelect: 'none',
-                })}
-                onClick={() =>
-                  authorCommentLike?.isExist ? removeLike() : addLike()
-                }
-              >
-                Like
-              </Text>
-              <Text
-                weight="medium"
-                color="gray"
-                size="1"
-                className={css({
-                  cursor: 'pointer',
-                  userSelect: 'none',
-                })}
-                onClick={() => setShowReplyEditor(prev => !prev)}
-              >
-                Reply
-              </Text>
-            </HStack>
-            <HStack mr="8px">
-              <Text weight="medium" color="gray" size="1">
-                {authorCommentAllLikes} likes
-              </Text>
-              {subComments.length > 0 && (
-                <Text
-                  weight="medium"
-                  color="gray"
-                  size="1"
-                  className={css({ cursor: 'pointer', userSelect: 'none' })}
-                  onClick={() => {
-                    setShowSubComments(prev => !prev);
-                    setShowReplyEditor(prev => !prev);
-                  }}
-                >
-                  {showSubComments
-                    ? 'Hide replies'
-                    : `View replies (${subComments.length})`}
-                </Text>
-              )}
-            </HStack>
-          </HStack>
-        </VStack>
-      </HStack>
+      <CommentItem
+        onClickLike={() =>
+          authorCommentLike?.isExist ? removeLike() : addLike()
+        }
+        onClickReply={() => setShowReplyEditor(prev => !prev)}
+        onClickToggleShowSubComments={() => {
+          setShowSubComments(prev => !prev);
+          setShowReplyEditor(prev => !prev);
+        }}
+        likeCount={authorCommentAllLikes}
+        subCommentCount={subComments.length}
+        myLikeExist={authorCommentLike?.isExist ?? false}
+        isShowSubComments={showSubComments}
+        user={user}
+        comment={commentProps}
+        width="678px"
+      />
       {showSubComments &&
         subComments.map(subComment => (
-          <SubCommentItem key={subComment.id} comment={subComment} />
+          <AuthorSubCommentItem key={subComment.id} comment={subComment} />
         ))}
       {showReplyEditor && (
-        <ReplyCommentEditor
+        <SubCommentEditor
           onSubmit={({ comment: cmt }) => {
             addComment({ comment: cmt });
 
@@ -202,12 +145,3 @@ export default function CommentItem({
     </VStack>
   );
 }
-
-const CommentBox = styled('div', {
-  base: {
-    width: '678px',
-    padding: '10px',
-    bgColor: 'gray.100',
-    borderRadius: '6px',
-  },
-});

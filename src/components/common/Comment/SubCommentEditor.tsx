@@ -7,7 +7,7 @@ interface Props {
   onSubmit: ({ comment }: { comment: string }) => void;
 }
 
-export default function ReplyCommentEditor({ onSubmit }: Props) {
+export default function SubCommentEditor({ onSubmit }: Props) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const [comment, setComment] = useState('');
@@ -20,7 +20,7 @@ export default function ReplyCommentEditor({ onSubmit }: Props) {
       zIndex={2}
       position="relative"
       width="100%"
-      pl="100px"
+      pl="90px"
     >
       <TextArea
         ref={textAreaRef}

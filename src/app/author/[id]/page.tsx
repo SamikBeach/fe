@@ -6,7 +6,7 @@ import { Spinner } from '@radix-ui/themes';
 import { HStack, VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { AuthorInfo } from './AuthorInfo';
-import { CommentList } from './CommentList';
+import { AuthorCommentList } from './AuthorCommentList';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
   const { data: author, isLoading } = useQuery({
@@ -34,7 +34,7 @@ export default function AuthorPage({ params }: { params: { id: number } }) {
       className={css({ width: '100%' })}
     >
       <AuthorInfo author={author} height="100%" />
-      <CommentList authorId={author.id} />
+      <AuthorCommentList authorId={author.id} />
     </HStack>
   );
 }

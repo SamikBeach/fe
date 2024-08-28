@@ -1,19 +1,18 @@
-import { VStack } from 'styled-system/jsx';
-import CommentItem from './CommentItem';
+import AuthorCommentItem from './AuthorCommentItem';
 import { css } from 'styled-system/css';
-import { ScrollArea, Text } from '@radix-ui/themes';
-import SubCommentItem from './SubCommentItem';
+import { Text } from '@radix-ui/themes';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
-import { CommentEditor } from './CommentEditor';
 import { addAuthorComment, getAllAuthorComments } from '@apis/author';
+import CommentListBox from '@components/common/Comment/CommentListBox';
+import CommentEditor from '@components/common/Comment/CommentEditor';
 
 interface Props {
   authorId: number;
 }
 
-export default function CommentList({ authorId }: Props) {
+export default function AuthorCommentList({ authorId }: Props) {
   const currentUser = useAtomValue(currentUserAtom);
 
   const { data: comments = [], refetch: refetchGetAllAuthorComments } =
@@ -48,29 +47,18 @@ export default function CommentList({ authorId }: Props) {
         height: 'calc(100vh - 64px)',
       })}
     >
-      <ScrollArea
-        scrollbars="vertical"
-        className={css({ height: 'calc(100vh - 168px)' })}
-      >
-        <VStack
-          alignItems="start"
-          fontSize="14px"
-          gap="20px"
-          width="800px"
-          padding="40px"
-        >
-          <Text size="3" weight="medium">
-            {`Comment(${comments.length})`}
-          </Text>
-          {comments.map(comment => (
-            <CommentItem
-              key={comment.id}
-              authorId={authorId}
-              comment={comment}
-            />
-          ))}
-        </VStack>
-      </ScrollArea>
+      <CommentListBox>
+        <Text size="3" weight="medium">
+          {`Comment(${comments.length})`}
+        </Text>
+        {comments.map(comment => (
+          <AuthorCommentItem
+            key={comment.id}
+            authorId={authorId}
+            comment={comment}
+          />
+        ))}
+      </CommentListBox>
       <CommentEditor onSubmit={addComment} />
     </div>
   );

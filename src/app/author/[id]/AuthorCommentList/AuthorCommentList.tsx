@@ -57,10 +57,25 @@ export default function AuthorCommentList({ authorId }: Props) {
             authorId={authorId}
             comment={comment}
             onDelete={refetchGetAllAuthorComments}
+            onEdit={refetchGetAllAuthorComments}
           />
         ))}
       </CommentListBox>
-      <CommentEditor onSubmit={addComment} />
+      <div
+        className={css({
+          width: '800px',
+          position: 'absolute',
+          left: '0px',
+          bottom: '0px',
+          bgColor: 'white',
+          padding: '20px',
+          borderTop: '1px solid',
+          borderColor: 'gray.200',
+          zIndex: 2,
+        })}
+      >
+        <CommentEditor onSubmit={addComment} />
+      </div>
     </div>
   );
 }

@@ -16,10 +16,10 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 
 interface Props extends HstackProps {
-  onClickReply: () => void;
   onClickLike: () => void;
   onClickToggleShowSubComments?: () => void;
   onDelete?: () => void;
+  onEdit?: () => void;
   likeCount: number;
   subCommentCount?: number;
   myLikeExist: boolean;
@@ -30,10 +30,10 @@ interface Props extends HstackProps {
 }
 
 export default function CommentItem({
-  onClickReply,
   onClickLike,
   onClickToggleShowSubComments,
   onDelete,
+  onEdit,
   likeCount,
   subCommentCount,
   myLikeExist,
@@ -77,7 +77,10 @@ export default function CommentItem({
                   </IconButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
-                  <DropdownMenu.Item className={css({ cursor: 'pointer' })}>
+                  <DropdownMenu.Item
+                    className={css({ cursor: 'pointer' })}
+                    onSelect={onEdit}
+                  >
                     Edit
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
@@ -114,7 +117,7 @@ export default function CommentItem({
                 cursor: 'pointer',
                 userSelect: 'none',
               })}
-              onClick={onClickReply}
+              onClick={onClickToggleShowSubComments}
             >
               Reply
             </Text>
@@ -149,5 +152,6 @@ const CommentBox = styled('div', {
     padding: '10px',
     bgColor: 'gray.100',
     borderRadius: '6px',
+    whiteSpace: 'pre-wrap',
   },
 });

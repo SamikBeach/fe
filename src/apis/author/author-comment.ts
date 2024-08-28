@@ -40,7 +40,25 @@ export function addAuthorComment({
   });
 }
 
-export function deleteAuthorComment({ commentId }: { commentId: number }) {
+interface UpdateAuthorCommentRequest {
+  commentId: number;
+  comment: string;
+}
+
+export function updateAuthorComment({
+  commentId,
+  comment,
+}: UpdateAuthorCommentRequest) {
+  return api.patch(`/author-comment/${commentId}`, {
+    comment,
+  });
+}
+
+interface DeleteAuthorCommentRequest {
+  commentId: number;
+}
+
+export function deleteAuthorComment({ commentId }: DeleteAuthorCommentRequest) {
   return api.delete(`/author-comment/${commentId}`);
 }
 

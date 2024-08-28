@@ -9,29 +9,34 @@ import {
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
+  updateAuthorComment,
 } from '@apis/author';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import AuthorSubCommentItem from './AuthorSubCommentItem';
 import CommentItem from '@components/common/Comment/CommentItem';
-import SubCommentEditor from '@components/common/Comment/SubCommentEditor';
+import CommentEditor from '@components/common/Comment/CommentEditor';
+import { css } from 'styled-system/css';
 
 interface Props {
   authorId: number;
   comment: CommentServerModel;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
 export default function AuthorCommentItem({
   authorId,
   comment: commentProps,
   onDelete,
+  onEdit,
 }: Props) {
   const { id, user } = commentProps;
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const [showSubComments, setShowSubComments] = useState(false);
-  const [showReplyEditor, setShowReplyEditor] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -128,38 +133,58 @@ export default function AuthorCommentItem({
     },
   });
 
+  const { mutate: updateComment } = useMutation({
+    mutationFn: (param: { comment: string }) => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return updateAuthorComment({
+        commentId: id,
+        comment: param.comment,
+      });
+    },
+    onSuccess: () => {
+      setIsEditing(false);
+      onEdit();
+    },
+  });
+
   return (
     <VStack width="100%">
-      <CommentItem
-        onClickLike={() =>
-          authorCommentLike?.isExist ? removeLike() : addLike()
-        }
-        onClickReply={() => setShowReplyEditor(prev => !prev)}
-        onClickToggleShowSubComments={() => {
-          setShowSubComments(prev => !prev);
-          setShowReplyEditor(prev => !prev);
-        }}
-        onDelete={deleteComment}
-        likeCount={authorCommentAllLikes}
-        subCommentCount={subComments.length}
-        myLikeExist={authorCommentLike?.isExist ?? false}
-        isShowSubComments={showSubComments}
-        user={user}
-        comment={commentProps}
-        width="678px"
-      />
+      {isEditing ? (
+        <CommentEditor
+          onSubmit={updateComment}
+          onClose={() => setIsEditing(false)}
+          comment={commentProps}
+        />
+      ) : (
+        <CommentItem
+          onClickLike={() =>
+            authorCommentLike?.isExist ? removeLike() : addLike()
+          }
+          onClickToggleShowSubComments={() => {
+            setShowSubComments(prev => !prev);
+          }}
+          onEdit={() => setIsEditing(true)}
+          onDelete={deleteComment}
+          likeCount={authorCommentAllLikes}
+          subCommentCount={subComments.length}
+          myLikeExist={authorCommentLike?.isExist ?? false}
+          isShowSubComments={showSubComments}
+          user={user}
+          comment={commentProps}
+          width="678px"
+        />
+      )}
       {showSubComments &&
         subComments.map(subComment => (
           <AuthorSubCommentItem key={subComment.id} comment={subComment} />
         ))}
-      {showReplyEditor && (
-        <SubCommentEditor
-          onSubmit={({ comment: cmt }) => {
-            addComment({ comment: cmt });
-
-            setShowSubComments(true);
-          }}
-        />
+      {showSubComments && (
+        <div className={css({ width: '100%', pl: '48px' })}>
+          <CommentEditor onSubmit={addComment} />
+        </div>
       )}
     </VStack>
   );

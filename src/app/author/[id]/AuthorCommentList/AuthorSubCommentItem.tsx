@@ -75,7 +75,6 @@ export default function SubCommentItem({ comment: commentProps }: Props) {
       onClickLike={() =>
         authorCommentLike?.isExist ? removeLike() : addLike()
       }
-      onClickReply={() => {}}
       likeCount={authorCommentAllLikes}
       myLikeExist={authorCommentLike?.isExist ?? false}
       user={user}

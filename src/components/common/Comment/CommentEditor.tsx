@@ -1,61 +1,148 @@
-import { Button, TextArea } from '@radix-ui/themes';
-import { useRef, useState } from 'react';
+import { currentUserAtom } from '@atoms/user';
+import { CommentServerModel } from '@models/comment';
+import {
+  AlertDialog,
+  Avatar,
+  Button,
+  Dialog,
+  TextArea,
+} from '@radix-ui/themes';
+import classNames from 'classnames';
+import { useAtomValue } from 'jotai';
+import { useEffect, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
-import { VStack } from 'styled-system/jsx';
+import { HStack } from 'styled-system/jsx';
 
 interface Props {
-  onSubmit: ({ comment }: { comment: string }) => void;
+  onSubmit: ({
+    comment,
+    commentId,
+  }: {
+    comment: string;
+    commentId?: number;
+  }) => void;
+  onClose?: () => void;
+  comment?: CommentServerModel;
 }
 
-export default function CommentEditor({ onSubmit }: Props) {
+export default function CommentEditor({
+  onSubmit,
+  onClose,
+  comment: commentProps,
+}: Props) {
+  const currentUser = useAtomValue(currentUserAtom);
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState(commentProps?.comment ?? '');
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
+
+  const isEditMode = onClose !== undefined;
 
   return (
-    <VStack
-      alignItems="end"
-      width="800px"
-      position="absolute"
-      left="0px"
-      bottom="0px"
-      bgColor="white"
-      padding="20px"
-      borderTop="1px solid"
-      borderColor="gray.200"
-      zIndex={2}
-    >
-      <TextArea
-        ref={textAreaRef}
-        value={comment}
-        onChange={e => setComment(e.target.value)}
-        className={css({ width: '100%', height: '60px', pr: '80px' })}
-        onKeyDown={e => {
-          if (e.metaKey && e.key === 'Enter') {
-            onSubmit({ comment });
-            setComment('');
-          }
-        }}
-      />
-      <Button
-        onClick={() => {
-          onSubmit({ comment });
+    <>
+      <HStack alignItems="start" width="100%">
+        <Avatar
+          fallback={currentUser?.name[0] ?? ''}
+          radius="full"
+          size="2"
+          mt="4px"
+        />
+        <div className={css({ width: '100%', position: 'relative' })}>
+          <TextArea
+            ref={textAreaRef}
+            autoFocus
+            onFocus={e =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
+            onBlur={e => {
+              if (isEditMode) {
+                if (e.relatedTarget?.className.includes('submit-button')) {
+                  return;
+                }
+                setOpenAlertDialog(true);
+              }
+            }}
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+            className={css({ width: '100%', height: '60px', pr: '80px' })}
+            onKeyDown={e => {
+              if (e.metaKey && e.key === 'Enter') {
+                onSubmit({ comment });
+                setComment('');
+              }
 
-          setComment('');
-          textAreaRef.current?.focus();
-        }}
-        size="2"
-        variant="outline"
-        className={css({
-          cursor: 'pointer',
-          position: 'absolute',
-          right: '30px',
-          bottom: '30px',
-        })}
-        disabled={comment === ''}
+              if (e.key === 'Escape') {
+                setOpenAlertDialog(true);
+              }
+            }}
+          />
+          <Button
+            onClick={() => {
+              onSubmit({ comment });
+
+              setComment('');
+              textAreaRef.current?.focus();
+            }}
+            size="2"
+            variant="outline"
+            className={classNames(
+              css({
+                cursor: 'pointer',
+                position: 'absolute',
+                right: '10px',
+                bottom: '10px',
+              }),
+              'submit-button'
+            )}
+            disabled={comment === ''}
+          >
+            Submit
+          </Button>
+        </div>
+      </HStack>
+      <AlertDialog.Root
+        open={openAlertDialog}
+        onOpenChange={setOpenAlertDialog}
       >
-        Submit
-      </Button>
-    </VStack>
+        <AlertDialog.Content maxWidth="400px">
+          <AlertDialog.Title>Discard changes?</AlertDialog.Title>
+          <AlertDialog.Description>
+            Are you sure you want to discard your changes?
+          </AlertDialog.Description>
+          <HStack mt="30px" justify="end">
+            <AlertDialog.Action>
+              <Button
+                onClick={() => {
+                  setOpenAlertDialog(false);
+                  onClose?.();
+                }}
+                className={css({ cursor: 'pointer' })}
+              >
+                Discard
+              </Button>
+            </AlertDialog.Action>
+            <AlertDialog.Cancel>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setOpenAlertDialog(false);
+
+                  setTimeout(() => {
+                    textAreaRef.current?.focus();
+                  }, 100);
+                }}
+                className={css({ cursor: 'pointer' })}
+              >
+                Cancel
+              </Button>
+            </AlertDialog.Cancel>
+          </HStack>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addAuthorComment,
   addAuthorCommentLike,
+  deleteAuthorComment,
   getAllAuthorSubCommentsByCommentId,
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
@@ -19,11 +20,13 @@ import SubCommentEditor from '@components/common/Comment/SubCommentEditor';
 interface Props {
   authorId: number;
   comment: CommentServerModel;
+  onDelete: () => void;
 }
 
 export default function AuthorCommentItem({
   authorId,
   comment: commentProps,
+  onDelete,
 }: Props) {
   const { id, user } = commentProps;
 
@@ -110,6 +113,21 @@ export default function AuthorCommentItem({
     },
   });
 
+  const { mutate: deleteComment } = useMutation({
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return deleteAuthorComment({
+        commentId: id,
+      });
+    },
+    onSuccess: () => {
+      onDelete();
+    },
+  });
+
   return (
     <VStack width="100%">
       <CommentItem
@@ -121,6 +139,7 @@ export default function AuthorCommentItem({
           setShowSubComments(prev => !prev);
           setShowReplyEditor(prev => !prev);
         }}
+        onDelete={deleteComment}
         likeCount={authorCommentAllLikes}
         subCommentCount={subComments.length}
         myLikeExist={authorCommentLike?.isExist ?? false}

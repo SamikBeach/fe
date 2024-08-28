@@ -56,6 +56,7 @@ export default function AuthorCommentList({ authorId }: Props) {
             key={comment.id}
             authorId={authorId}
             comment={comment}
+            onDelete={refetchGetAllAuthorComments}
           />
         ))}
       </CommentListBox>

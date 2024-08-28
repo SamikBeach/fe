@@ -40,6 +40,10 @@ export function addAuthorComment({
   });
 }
 
+export function deleteAuthorComment({ commentId }: { commentId: number }) {
+  return api.delete(`/author-comment/${commentId}`);
+}
+
 interface GetAllAuthorSubCommentsByCommentIdRequest {
   commentId: number;
 }

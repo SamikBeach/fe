@@ -11,6 +11,7 @@ import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
+import { isNil } from 'lodash';
 
 export default function AuthorCommentList() {
   const params = useParams();
@@ -25,7 +26,8 @@ export default function AuthorCommentList() {
   } = useQuery({
     queryKey: ['author-comment', authorId],
     queryFn: () => getAllAuthorComments({ authorId }),
-    select: response => response.data,
+    select: response =>
+      response.data.filter(comment => isNil(comment.target_comment_id)),
   });
 
   const { mutate: addComment } = useMutation({

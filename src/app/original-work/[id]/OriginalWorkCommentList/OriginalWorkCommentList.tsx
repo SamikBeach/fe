@@ -14,6 +14,7 @@ import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import OriginalWorkCommentItemSkeleton from './OriginalWorkCommentItemSkeleton';
+import { isNil } from 'lodash';
 
 export default function OriginalWorkCommentList() {
   const params = useParams();
@@ -28,7 +29,8 @@ export default function OriginalWorkCommentList() {
   } = useQuery({
     queryKey: ['originalWork-comment', originalWorkId],
     queryFn: () => getAllOriginalWorkComments({ originalWorkId }),
-    select: response => response.data,
+    select: response =>
+      response.data.filter(comment => isNil(comment.target_comment_id)),
   });
 
   const { mutate: addComment } = useMutation({

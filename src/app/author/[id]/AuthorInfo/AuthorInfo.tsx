@@ -1,3 +1,5 @@
+'use client';
+
 import { HstackProps, VStack } from 'styled-system/jsx';
 import AuthorBasicInfo from './AuthorBasicInfo';
 import { ScrollArea, SegmentedControl } from '@radix-ui/themes';

@@ -1,6 +1,8 @@
+'use client';
+
 import AuthorCommentItem from './AuthorCommentItem';
 import { css } from 'styled-system/css';
-import { Text } from '@radix-ui/themes';
+import { Skeleton, Text } from '@radix-ui/themes';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
@@ -8,6 +10,7 @@ import { addAuthorComment, getAllAuthorComments } from '@apis/author';
 import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
+import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
 
 export default function AuthorCommentList() {
   const params = useParams();
@@ -15,12 +18,15 @@ export default function AuthorCommentList() {
 
   const currentUser = useAtomValue(currentUserAtom);
 
-  const { data: comments = [], refetch: refetchGetAllAuthorComments } =
-    useQuery({
-      queryKey: ['author-comment', authorId],
-      queryFn: () => getAllAuthorComments({ authorId }),
-      select: response => response.data,
-    });
+  const {
+    data: comments = [],
+    isLoading,
+    refetch: refetchGetAllAuthorComments,
+  } = useQuery({
+    queryKey: ['author-comment', authorId],
+    queryFn: () => getAllAuthorComments({ authorId }),
+    select: response => response.data,
+  });
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
@@ -48,18 +54,33 @@ export default function AuthorCommentList() {
       })}
     >
       <CommentListBox>
-        <Text size="3" weight="medium">
-          {`Comment(${comments.length})`}
-        </Text>
-        {comments.map(comment => (
-          <AuthorCommentItem
-            key={comment.id}
-            authorId={authorId}
-            comment={comment}
-            onDelete={refetchGetAllAuthorComments}
-            onEdit={refetchGetAllAuthorComments}
-          />
-        ))}
+        {isLoading ? (
+          <Skeleton height="24px" width="100px" />
+        ) : (
+          <Text size="3" weight="medium">
+            {`Comment(${comments.length})`}
+          </Text>
+        )}
+        {isLoading ? (
+          <>
+            <AuthorCommentItemSkeleton height="140px" />
+            <AuthorCommentItemSkeleton height="100px" />
+            <AuthorCommentItemSkeleton height="140px" />
+            <AuthorCommentItemSkeleton height="100px" />
+            <AuthorCommentItemSkeleton height="62px" />
+            <AuthorCommentItemSkeleton height="62px" />
+          </>
+        ) : (
+          comments.map(comment => (
+            <AuthorCommentItem
+              key={comment.id}
+              authorId={authorId}
+              comment={comment}
+              onDelete={refetchGetAllAuthorComments}
+              onEdit={refetchGetAllAuthorComments}
+            />
+          ))
+        )}
       </CommentListBox>
       <div
         className={css({

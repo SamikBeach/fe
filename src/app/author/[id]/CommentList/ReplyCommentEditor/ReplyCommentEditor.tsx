@@ -1,5 +1,5 @@
 import { Button, TextArea } from '@radix-ui/themes';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 
@@ -8,6 +8,8 @@ interface Props {
 }
 
 export default function ReplyCommentEditor({ onSubmit }: Props) {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const [comment, setComment] = useState('');
 
   return (
@@ -21,6 +23,7 @@ export default function ReplyCommentEditor({ onSubmit }: Props) {
       pl="100px"
     >
       <TextArea
+        ref={textAreaRef}
         value={comment}
         onChange={e => setComment(e.target.value)}
         className={css({
@@ -39,7 +42,9 @@ export default function ReplyCommentEditor({ onSubmit }: Props) {
       <Button
         onClick={() => {
           onSubmit({ comment });
+
           setComment('');
+          textAreaRef.current?.focus();
         }}
         size="1"
         variant="outline"

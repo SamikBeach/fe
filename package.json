@@ -41,7 +41,6 @@
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "jotai": "^2.8.3",
-    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "next": "^14.2.3",
     "nextjs-toploader": "^1.6.12",

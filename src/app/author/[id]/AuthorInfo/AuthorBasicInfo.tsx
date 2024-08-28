@@ -1,4 +1,3 @@
-import { AuthorServerModel } from '@models/author';
 import { HStack, VStack } from 'styled-system/jsx';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
@@ -7,18 +6,26 @@ import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addAuthorLike,
+  getAuthorById,
   getAuthorLikeCount,
   getMyAuthorLikeExist,
   removeAuthorLike,
 } from '@apis/author';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
+import { useParams } from 'next/navigation';
+import AuthorBasicInfoSkeleton from './AuthorBasicInfoSkeleton';
 
-interface Props {
-  author: AuthorServerModel;
-}
+export default function AuthorInfo() {
+  const params = useParams();
+  const authorId = Number(params.id);
 
-export default function AuthorInfo({ author }: Props) {
+  const { data: author, isLoading: isLoadingAuthor } = useQuery({
+    queryKey: ['author', params.id],
+    queryFn: () => getAuthorById({ id: authorId }),
+    select: response => response.data,
+  });
+
   const {
     id,
     name,
@@ -27,7 +34,15 @@ export default function AuthorInfo({ author }: Props) {
     died_date,
     born_date_is_bc,
     died_date_is_bc,
-  } = author;
+  } = author ?? {
+    id: 0,
+    name: '',
+    image_url: '',
+    born_date: '',
+    died_date: '',
+    born_date_is_bc: 0,
+    died_date_is_bc: 0,
+  };
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -59,7 +74,11 @@ export default function AuthorInfo({ author }: Props) {
     },
   });
 
-  const { data: authorLike, refetch: refetchAuthorLike } = useQuery({
+  const {
+    data: authorLike,
+    isLoading: isLoadingAuthorLike,
+    refetch: refetchAuthorLike,
+  } = useQuery({
     queryKey: ['author-like', id],
     queryFn: () => {
       if (currentUser === null) {
@@ -71,11 +90,22 @@ export default function AuthorInfo({ author }: Props) {
     select: response => response.data,
   });
 
-  const { data: authorAllLikes, refetch: refetchAuthorAllLikes } = useQuery({
+  const {
+    data: authorAllLikes,
+    isLoading: isLoadingAuthorAllLikes,
+    refetch: refetchAuthorAllLikes,
+  } = useQuery({
     queryKey: ['author-like/count', id],
     queryFn: () => getAuthorLikeCount({ authorId: id }),
     select: response => response.data.count,
   });
+
+  const isLoading =
+    isLoadingAuthor || isLoadingAuthorLike || isLoadingAuthorAllLikes;
+
+  if (isLoading) {
+    return <AuthorBasicInfoSkeleton />;
+  }
 
   return (
     <VStack alignItems="start" gap="20px" width="100%">

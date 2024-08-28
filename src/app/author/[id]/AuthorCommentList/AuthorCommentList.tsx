@@ -7,12 +7,12 @@ import { currentUserAtom } from '@atoms/user';
 import { addAuthorComment, getAllAuthorComments } from '@apis/author';
 import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
+import { useParams } from 'next/navigation';
 
-interface Props {
-  authorId: number;
-}
+export default function AuthorCommentList() {
+  const params = useParams();
+  const authorId = Number(params.id);
 
-export default function AuthorCommentList({ authorId }: Props) {
   const currentUser = useAtomValue(currentUserAtom);
 
   const { data: comments = [], refetch: refetchGetAllAuthorComments } =

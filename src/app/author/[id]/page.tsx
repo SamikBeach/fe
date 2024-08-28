@@ -9,32 +9,14 @@ import { AuthorInfo } from './AuthorInfo';
 import { AuthorCommentList } from './AuthorCommentList';
 
 export default function AuthorPage({ params }: { params: { id: number } }) {
-  const { data: author, isLoading } = useQuery({
-    queryKey: ['author', params.id],
-    queryFn: () => getAuthorById({ id: params.id }),
-    select: response => response.data,
-  });
-
-  if (isLoading) {
-    return (
-      <VStack height="calc(100vh - 64px)" justify="center">
-        <Spinner size="3" />
-      </VStack>
-    );
-  }
-
-  if (author === undefined) {
-    return null;
-  }
-
   return (
     <HStack
       alignItems="start"
       justify="center"
       className={css({ width: '100%' })}
     >
-      <AuthorInfo author={author} height="100%" />
-      <AuthorCommentList authorId={author.id} />
+      <AuthorInfo height="100%" />
+      <AuthorCommentList />
     </HStack>
   );
 }

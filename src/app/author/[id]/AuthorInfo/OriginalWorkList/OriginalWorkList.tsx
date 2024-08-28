@@ -5,12 +5,12 @@ import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
 } from '@components/original_work/OriginalWorkItem';
+import { useParams } from 'next/navigation';
 
-interface Props {
-  authorId: number;
-}
+export default function OriginalWorkList() {
+  const params = useParams();
+  const authorId = Number(params.id);
 
-export default function OriginalWorkList({ authorId }: Props) {
   const { data: originalWorks = [], isLoading } = useQuery({
     queryKey: ['original-work', authorId],
     queryFn: () => searchOriginalWorks({ authorId }),

@@ -1,15 +1,23 @@
 import { HStack, VStack, styled } from 'styled-system/jsx';
 import { Avatar, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
+import { CommentServerModel } from '@models/comment';
+import { format } from 'date-fns';
 
-export default function SubCommentItem() {
+interface Props {
+  comment: CommentServerModel;
+}
+
+export default function SubCommentItem({ comment: commentProps }: Props) {
+  const { id, comment, user, created_at } = commentProps;
+
   return (
-    <HStack alignItems="start" ml="60px">
+    <HStack alignItems="start" ml="60px" width="664px">
       <Avatar fallback="B" radius="full" size="2" mt="4px" />
-      <VStack gap="4px" alignItems="start">
+      <VStack gap="4px" alignItems="start" width="100%">
         <CommentBox>
           <Text weight="medium" className={css({ display: 'block' })}>
-            Bonggeun Jeong{' '}
+            {user.name}{' '}
             <span
               className={css({
                 fontSize: '12px',
@@ -17,12 +25,10 @@ export default function SubCommentItem() {
                 color: 'gray',
               })}
             >
-              2 months ago
+              {format(created_at, 'd MMMM y HH:mm')}
             </span>
           </Text>
-          Ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
-          vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo
-          lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend
+          {comment}
         </CommentBox>
         <HStack justify="space-between" width="100%">
           <HStack ml="8px">
@@ -30,7 +36,7 @@ export default function SubCommentItem() {
               weight="medium"
               color="gray"
               size="1"
-              className={css({ cursor: 'pointer' })}
+              className={css({ cursor: 'pointer', userSelect: 'none' })}
             >
               Like
             </Text>
@@ -38,9 +44,9 @@ export default function SubCommentItem() {
               weight="medium"
               color="gray"
               size="1"
-              className={css({ cursor: 'pointer' })}
+              className={css({ cursor: 'pointer', userSelect: 'none' })}
             >
-              Comment
+              Reply
             </Text>
           </HStack>
           <Text
@@ -60,6 +66,7 @@ export default function SubCommentItem() {
 
 const CommentBox = styled('div', {
   base: {
+    width: '100%',
     padding: '10px',
     bgColor: 'gray.100',
     borderRadius: '6px',

@@ -63,7 +63,11 @@ export default function CommentList({ authorId }: Props) {
             {`Comment(${comments.length})`}
           </Text>
           {comments.map(comment => (
-            <CommentItem key={comment.id} comment={comment} />
+            <CommentItem
+              key={comment.id}
+              authorId={authorId}
+              comment={comment}
+            />
           ))}
         </VStack>
       </ScrollArea>

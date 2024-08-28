@@ -18,7 +18,7 @@ export default function ReplyCommentEditor({ onSubmit }: Props) {
       zIndex={2}
       position="relative"
       width="100%"
-      pl="40px"
+      pl="100px"
     >
       <TextArea
         value={comment}

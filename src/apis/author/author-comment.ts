@@ -39,3 +39,17 @@ export function addAuthorComment({
     targetUserId,
   });
 }
+
+interface GetAllAuthorSubCommentsByCommentIdRequest {
+  commentId: number;
+}
+
+type GetAllAuthorSubCommentsByCommentIdResponse = CommentServerModel[];
+
+export function getAllAuthorSubCommentsByCommentId({
+  commentId,
+}: GetAllAuthorSubCommentsByCommentIdRequest) {
+  return api.get<GetAllAuthorSubCommentsByCommentIdResponse>(
+    `/author-comment/commentId/${commentId}`
+  );
+}

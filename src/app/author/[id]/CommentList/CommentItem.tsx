@@ -4,8 +4,10 @@ import { css } from 'styled-system/css';
 import { CommentServerModel } from '@models/comment';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  addAuthorComment,
   addAuthorCommentLike,
   getAllAuthorComments,
+  getAllAuthorSubCommentsByCommentId,
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
@@ -15,14 +17,20 @@ import { useAtomValue } from 'jotai';
 import { format } from 'date-fns';
 import { ReplyCommentEditor } from './ReplyCommentEditor';
 import { useState } from 'react';
+import SubCommentItem from './SubCommentItem';
 
 interface Props {
+  authorId: number;
   comment: CommentServerModel;
 }
 
-export default function CommentItem({ comment: commentProps }: Props) {
+export default function CommentItem({
+  authorId,
+  comment: commentProps,
+}: Props) {
   const { id, comment, user, created_at } = commentProps;
 
+  const [showSubComments, setShowSubComments] = useState(false);
   const [showReplyEditor, setShowReplyEditor] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
@@ -78,6 +86,33 @@ export default function CommentItem({ comment: commentProps }: Props) {
     select: response => response.data.count,
   });
 
+  const {
+    data: subComments = [],
+    refetch: refetchGetAllAuthorSubCommentsByCommentId,
+  } = useQuery({
+    queryKey: ['author-comment', id],
+    queryFn: () => getAllAuthorSubCommentsByCommentId({ commentId: id }),
+    select: response => response.data,
+  });
+
+  const { mutate: addComment } = useMutation({
+    mutationFn: (param: { comment: string }) => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return addAuthorComment({
+        authorId,
+        userId: currentUser.id,
+        targetCommentId: id,
+        comment: param.comment,
+      });
+    },
+    onSuccess: () => {
+      refetchGetAllAuthorSubCommentsByCommentId();
+    },
+  });
+
   return (
     <VStack width="100%">
       <HStack alignItems="start" width="100%">
@@ -121,8 +156,6 @@ export default function CommentItem({ comment: commentProps }: Props) {
                 className={css({
                   cursor: 'pointer',
                   userSelect: 'none',
-                  fontWeight: showReplyEditor ? 'bold' : 'medium',
-                  color: showReplyEditor ? 'black' : 'gray',
                 })}
                 onClick={() => setShowReplyEditor(prev => !prev)}
               >
@@ -133,19 +166,31 @@ export default function CommentItem({ comment: commentProps }: Props) {
               <Text weight="medium" color="gray" size="1">
                 {authorCommentAllLikes} likes
               </Text>
-              <Text
-                weight="medium"
-                color="gray"
-                size="1"
-                className={css({ cursor: 'pointer' })}
-              >
-                View replies (3)
-              </Text>
+              {subComments.length > 0 && (
+                <Text
+                  weight="medium"
+                  color="gray"
+                  size="1"
+                  className={css({ cursor: 'pointer', userSelect: 'none' })}
+                  onClick={() => {
+                    setShowSubComments(prev => !prev);
+                    setShowReplyEditor(prev => !prev);
+                  }}
+                >
+                  {showSubComments
+                    ? 'Hide replies'
+                    : `View replies (${subComments.length})`}
+                </Text>
+              )}
             </HStack>
           </HStack>
         </VStack>
       </HStack>
-      {showReplyEditor && <ReplyCommentEditor onSubmit={() => {}} />}
+      {showSubComments &&
+        subComments.map(subComment => (
+          <SubCommentItem key={subComment.id} comment={subComment} />
+        ))}
+      {showReplyEditor && <ReplyCommentEditor onSubmit={addComment} />}
     </VStack>
   );
 }

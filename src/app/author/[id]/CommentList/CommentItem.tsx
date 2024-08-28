@@ -190,7 +190,15 @@ export default function CommentItem({
         subComments.map(subComment => (
           <SubCommentItem key={subComment.id} comment={subComment} />
         ))}
-      {showReplyEditor && <ReplyCommentEditor onSubmit={addComment} />}
+      {showReplyEditor && (
+        <ReplyCommentEditor
+          onSubmit={({ comment: cmt }) => {
+            addComment({ comment: cmt });
+
+            setShowSubComments(true);
+          }}
+        />
+      )}
     </VStack>
   );
 }

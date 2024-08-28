@@ -47,6 +47,7 @@ export default function CommentEditor({ onSubmit }: Props) {
           right: '30px',
           bottom: '30px',
         })}
+        disabled={comment === ''}
       >
         Submit
       </Button>

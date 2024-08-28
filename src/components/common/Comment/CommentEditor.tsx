@@ -71,7 +71,7 @@ export default function CommentEditor({
                 setComment('');
               }
 
-              if (e.key === 'Escape') {
+              if (isEditMode && e.key === 'Escape') {
                 setOpenAlertDialog(true);
               }
             }}

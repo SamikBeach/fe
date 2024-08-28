@@ -44,20 +44,20 @@ export function removeAuthorCommentLike({
   );
 }
 
-interface FindAuthorCommentLikeRequest {
+interface GetMyAuthorCommentLikeExistRequest {
   authorCommentId: number;
   userId: number;
 }
 
-interface FindAuthorCommentLikeResponse {
+interface GetMyAuthorCommentLikeExistResponse {
   isExist: boolean;
 }
 
 export function getMyAuthorCommentLikeExist({
   authorCommentId,
   userId,
-}: FindAuthorCommentLikeRequest) {
-  return api.get<FindAuthorCommentLikeResponse>(
+}: GetMyAuthorCommentLikeExistRequest) {
+  return api.get<GetMyAuthorCommentLikeExistResponse>(
     `/author-comment-like/${authorCommentId}`,
     {
       params: { userId },
@@ -65,18 +65,18 @@ export function getMyAuthorCommentLikeExist({
   );
 }
 
-interface FindAuthorAllLikesRequest {
+interface GetAuthorCommentLikeCountRequest {
   authorCommentId: number;
 }
 
-interface FindAuthorAllLikesResponse {
+interface GetAuthorCommentLikeCountResponse {
   count: number;
 }
 
 export function getAuthorCommentLikeCount({
   authorCommentId,
-}: FindAuthorAllLikesRequest) {
-  return api.get<FindAuthorAllLikesResponse>(
+}: GetAuthorCommentLikeCountRequest) {
+  return api.get<GetAuthorCommentLikeCountResponse>(
     `/author-comment-like/${authorCommentId}/count`
   );
 }

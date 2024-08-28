@@ -35,32 +35,32 @@ export function removeAuthorLike({
   });
 }
 
-interface FindAuthorLikeRequest {
+interface GetMyAuthorLikeExistRequest {
   authorId: number;
   userId: number;
 }
 
-interface FindAuthorLikeResponse {
+interface GetMyAuthorLikeExistResponse {
   isExist: boolean;
 }
 
 export function getMyAuthorLikeExist({
   authorId,
   userId,
-}: FindAuthorLikeRequest) {
-  return api.get<FindAuthorLikeResponse>(`/author-like/${authorId}`, {
+}: GetMyAuthorLikeExistRequest) {
+  return api.get<GetMyAuthorLikeExistResponse>(`/author-like/${authorId}`, {
     params: { userId },
   });
 }
 
-interface FindAuthorAllLikesRequest {
+interface GetAuthorLikeCountRequest {
   authorId: number;
 }
 
-interface FindAuthorAllLikesResponse {
+interface GetAuthorLikeCountResponse {
   count: number;
 }
 
-export function getAuthorLikeCount({ authorId }: FindAuthorAllLikesRequest) {
-  return api.get<FindAuthorAllLikesResponse>(`/author-like/${authorId}/count`);
+export function getAuthorLikeCount({ authorId }: GetAuthorLikeCountRequest) {
+  return api.get<GetAuthorLikeCountResponse>(`/author-like/${authorId}/count`);
 }

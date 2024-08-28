@@ -1,15 +1,14 @@
-import { OriginalWorkServerModel } from '@models/original-work';
+'use client';
+
 import { HstackProps, VStack } from 'styled-system/jsx';
-import OriginalWorkBasicInfo from './OriginalWorkBasicInfo';
+import AuthorBasicInfo from './OriginalWorkBasicInfo';
 import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
 
-interface Props extends HstackProps {
-  originalWork: OriginalWorkServerModel;
-}
+interface Props extends HstackProps {}
 
-export default function OriginalWorkInfo({ originalWork, ...props }: Props) {
+export default function AuthorInfo({ ...props }: Props) {
   return (
     <ScrollArea
       scrollbars="vertical"
@@ -27,7 +26,7 @@ export default function OriginalWorkInfo({ originalWork, ...props }: Props) {
         ml="auto"
         {...props}
       >
-        <OriginalWorkBasicInfo originalWork={originalWork} />
+        <AuthorBasicInfo />
 
         <SegmentedControl.Root defaultValue="editions" size="1">
           <SegmentedControl.Item

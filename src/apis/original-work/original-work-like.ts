@@ -44,20 +44,20 @@ export function removeOriginalWorkLike({
   );
 }
 
-interface FindOriginalWorkLikeRequest {
+interface GetMyOriginalWorkLikeExistRequest {
   originalWorkId: number;
   userId: number;
 }
 
-interface FindOriginalWorkLikeResponse {
+interface GetMyOriginalWorkLikeExistResponse {
   isExist: boolean;
 }
 
-export function findOriginalWorkLike({
+export function getMyOriginalWorkLikeExist({
   originalWorkId,
   userId,
-}: FindOriginalWorkLikeRequest) {
-  return api.get<FindOriginalWorkLikeResponse>(
+}: GetMyOriginalWorkLikeExistRequest) {
+  return api.get<GetMyOriginalWorkLikeExistResponse>(
     `/original-work-like/${originalWorkId}`,
     {
       params: { userId },
@@ -65,18 +65,18 @@ export function findOriginalWorkLike({
   );
 }
 
-interface FindOriginalWorkAllLikesRequest {
+interface GetOriginalWorkLikeCountRequest {
   originalWorkId: number;
 }
 
-interface FindOriginalWorkAllLikesResponse {
+interface GetOriginalWorkLikeCountResponse {
   count: number;
 }
 
-export function findOriginalWorkAllLikes({
+export function getOriginalWorkLikeCount({
   originalWorkId,
-}: FindOriginalWorkAllLikesRequest) {
-  return api.get<FindOriginalWorkAllLikesResponse>(
+}: GetOriginalWorkLikeCountRequest) {
+  return api.get<GetOriginalWorkLikeCountResponse>(
     `/original-work-like/${originalWorkId}/count`
   );
 }

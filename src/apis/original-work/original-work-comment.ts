@@ -1,1 +1,86 @@
-export const a = 1;
+import api from '@apis/config';
+import { CommentServerModel } from '@models/comment';
+
+interface GetAllCommentsRequest {
+  originalWorkId: number;
+}
+
+type GetAllCommentsResponse = CommentServerModel[];
+
+export function getAllOriginalWorkComments({
+  originalWorkId,
+}: GetAllCommentsRequest) {
+  return api.get<GetAllCommentsResponse>(
+    `/original-work-comment/${originalWorkId}`
+  );
+}
+
+interface AddOriginalWorkCommentRequest {
+  originalWorkId: number;
+  userId: number;
+  comment: string;
+  targetCommentId?: number;
+  targetUserId?: number;
+}
+
+interface AddOriginalWorkCommentResponse {
+  id: number;
+  original_work_id: number;
+  user_id: number;
+}
+
+export function addOriginalWorkComment({
+  originalWorkId,
+  userId,
+  comment,
+  targetCommentId,
+  targetUserId,
+}: AddOriginalWorkCommentRequest) {
+  return api.post<AddOriginalWorkCommentResponse>(
+    `/original-work-comment/${originalWorkId}`,
+    {
+      userId,
+      comment,
+      targetCommentId,
+      targetUserId,
+    }
+  );
+}
+
+interface UpdateOriginalWorkCommentRequest {
+  commentId: number;
+  comment: string;
+}
+
+export function updateOriginalWorkComment({
+  commentId,
+  comment,
+}: UpdateOriginalWorkCommentRequest) {
+  return api.patch(`/original-work-comment/${commentId}`, {
+    comment,
+  });
+}
+
+interface DeleteOriginalWorkCommentRequest {
+  commentId: number;
+}
+
+export function deleteOriginalWorkComment({
+  commentId,
+}: DeleteOriginalWorkCommentRequest) {
+  return api.delete(`/original-work-comment/${commentId}`);
+}
+
+interface GetAllOriginalWorkSubCommentsByCommentIdRequest {
+  commentId: number;
+}
+
+type GetAllOriginalWorkSubCommentsByCommentIdResponse = CommentServerModel[];
+
+export function getAllOriginalWorkSubCommentsByCommentId({
+  commentId,
+}: GetAllOriginalWorkSubCommentsByCommentIdRequest) {
+  return api.get<GetAllOriginalWorkSubCommentsByCommentIdResponse>(
+    `/original-work-comment/commentId/${commentId}`
+  );
+}

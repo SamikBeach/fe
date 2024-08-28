@@ -5,19 +5,25 @@ import { CommentServerModel } from '@models/comment';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addAuthorCommentLike,
+  getAllAuthorComments,
   getAuthorCommentLikeCount,
   getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
 } from '@apis/author';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
+import { format } from 'date-fns';
+import { ReplyCommentEditor } from './ReplyCommentEditor';
+import { useState } from 'react';
 
 interface Props {
   comment: CommentServerModel;
 }
 
 export default function CommentItem({ comment: commentProps }: Props) {
-  const { id, comment, user } = commentProps;
+  const { id, comment, user, created_at } = commentProps;
+
+  const [showReplyEditor, setShowReplyEditor] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -73,71 +79,80 @@ export default function CommentItem({ comment: commentProps }: Props) {
   });
 
   return (
-    <HStack alignItems="start" width="100%">
-      <Avatar fallback="B" radius="full" size="2" mt="4px" />
-      <VStack gap="4px" alignItems="start" width="100%">
-        <CommentBox>
-          <Text weight="medium" className={css({ display: 'block' })}>
-            {user.name}{' '}
-            <span
-              className={css({
-                fontSize: '12px',
-                fontWeight: 'normal',
-                color: 'gray',
-              })}
-            >
-              2 months ago
-            </span>
-          </Text>
-          {comment}
-        </CommentBox>
-        <HStack justify="space-between" width="100%">
-          <HStack ml="8px">
-            <Text
-              size="1"
-              className={css({
-                cursor: 'pointer',
-                fontWeight: authorCommentLike?.isExist ? 'bold' : 'medium',
-                color: authorCommentLike?.isExist ? 'black' : 'gray',
-                userSelect: 'none',
-              })}
-              onClick={() =>
-                authorCommentLike?.isExist ? removeLike() : addLike()
-              }
-            >
-              Like
+    <VStack width="100%">
+      <HStack alignItems="start" width="100%">
+        <Avatar fallback="B" radius="full" size="2" mt="4px" />
+        <VStack gap="4px" alignItems="start" width="100%">
+          <CommentBox>
+            <Text weight="medium" className={css({ display: 'block' })}>
+              {user.name}{' '}
+              <span
+                className={css({
+                  fontSize: '12px',
+                  fontWeight: 'normal',
+                  color: 'gray',
+                })}
+              >
+                {format(created_at, 'd MMMM y HH:mm')}
+              </span>
             </Text>
-            <Text
-              weight="medium"
-              color="gray"
-              size="1"
-              className={css({ cursor: 'pointer', userSelect: 'none' })}
-            >
-              Reply
-            </Text>
+            {comment}
+          </CommentBox>
+          <HStack justify="space-between" width="100%">
+            <HStack ml="8px">
+              <Text
+                size="1"
+                className={css({
+                  cursor: 'pointer',
+                  fontWeight: authorCommentLike?.isExist ? 'bold' : 'medium',
+                  color: authorCommentLike?.isExist ? 'black' : 'gray',
+                  userSelect: 'none',
+                })}
+                onClick={() =>
+                  authorCommentLike?.isExist ? removeLike() : addLike()
+                }
+              >
+                Like
+              </Text>
+              <Text
+                weight="medium"
+                color="gray"
+                size="1"
+                className={css({
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  fontWeight: showReplyEditor ? 'bold' : 'medium',
+                  color: showReplyEditor ? 'black' : 'gray',
+                })}
+                onClick={() => setShowReplyEditor(prev => !prev)}
+              >
+                Reply
+              </Text>
+            </HStack>
+            <HStack mr="8px">
+              <Text weight="medium" color="gray" size="1">
+                {authorCommentAllLikes} likes
+              </Text>
+              <Text
+                weight="medium"
+                color="gray"
+                size="1"
+                className={css({ cursor: 'pointer' })}
+              >
+                View replies (3)
+              </Text>
+            </HStack>
           </HStack>
-          <HStack mr="8px">
-            <Text weight="medium" color="gray" size="1">
-              {authorCommentAllLikes} likes
-            </Text>
-            <Text
-              weight="medium"
-              color="gray"
-              size="1"
-              className={css({ cursor: 'pointer' })}
-            >
-              View replies (3)
-            </Text>
-          </HStack>
-        </HStack>
-      </VStack>
-    </HStack>
+        </VStack>
+      </HStack>
+      {showReplyEditor && <ReplyCommentEditor onSubmit={() => {}} />}
+    </VStack>
   );
 }
 
 const CommentBox = styled('div', {
   base: {
-    width: '100%',
+    width: '678px',
     padding: '10px',
     bgColor: 'gray.100',
     borderRadius: '6px',

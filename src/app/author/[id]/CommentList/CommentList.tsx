@@ -54,10 +54,10 @@ export default function CommentList({ authorId }: Props) {
       >
         <VStack
           alignItems="start"
-          padding="40px"
           fontSize="14px"
           gap="20px"
           width="800px"
+          padding="40px"
         >
           <Text size="3" weight="medium">
             {`Comment(${comments.length})`}

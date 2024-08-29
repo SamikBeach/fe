@@ -5,6 +5,7 @@ import { LogServerModel } from '@models/log';
 import { Avatar } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import { isNil } from 'lodash';
+import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
@@ -61,16 +62,18 @@ export default function LogItem({ log }: Props) {
             <OriginalWorkHoverCard.Root>
               <OriginalWorkHoverCard.Trigger>
                 <span>
-                  <GiSecretBook
-                    className={css({
-                      display: 'inline',
-                      marginBottom: '2px',
-                      cursor: 'pointer',
-                      color: 'gray.600',
-                    })}
-                    size="24px"
-                  />{' '}
-                  <BoldText>{target_original_work?.title}</BoldText>
+                  <Link href={`/original-work/${target_original_work.id}`}>
+                    <GiSecretBook
+                      className={css({
+                        display: 'inline',
+                        marginBottom: '2px',
+                        cursor: 'pointer',
+                        color: 'gray.600',
+                      })}
+                      size="24px"
+                    />{' '}
+                    <BoldText>{target_original_work?.title}</BoldText>
+                  </Link>
                 </span>
               </OriginalWorkHoverCard.Trigger>
               <OriginalWorkHoverCard.Content

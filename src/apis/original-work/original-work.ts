@@ -51,3 +51,9 @@ export function searchOriginalWorks({
     },
   });
 }
+
+type GetTrendingOriginalWorksResponse = OriginalWorkServerModel[];
+
+export function getTrendingOriginalWorks() {
+  return api.get<GetTrendingOriginalWorksResponse>('/original-work/trending');
+}

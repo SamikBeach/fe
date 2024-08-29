@@ -1,6 +1,7 @@
 import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
+import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -19,11 +20,13 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
 
   return (
     <HStack gap="20px">
-      <Avatar
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-        fallback="폴백"
-        size="7"
-      />
+      <Link href={`/original-work/${originalWork.id}`}>
+        <Avatar
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
+          fallback="폴백"
+          size="7"
+        />
+      </Link>
       <VStack alignItems="start" gap="4px">
         <VStack alignItems="start" gap="0">
           <Tooltip content={title}>

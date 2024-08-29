@@ -54,3 +54,9 @@ export function searchAuthors({
     },
   });
 }
+
+type GetTrendingAuthorsResponse = AuthorServerModel[];
+
+export function getTrendingAuthors() {
+  return api.get<GetTrendingAuthorsResponse>('/author/trending');
+}

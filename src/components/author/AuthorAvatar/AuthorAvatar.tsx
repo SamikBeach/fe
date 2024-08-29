@@ -1,6 +1,7 @@
 import { AuthorHoverCard } from '@components/author/AuthorHoverCard';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, AvatarProps, Text } from '@radix-ui/themes';
+import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 
@@ -14,25 +15,29 @@ function AuthorAvatar({ author, withName = false, ...props }: Props) {
     <AuthorHoverCard.Root>
       <AuthorHoverCard.Trigger>
         <HStack display="inline">
-          <Avatar
-            size="2"
-            radius="full"
-            src={author.image_url ?? undefined}
-            fallback={author.name[0]}
-            {...props}
-          />{' '}
+          <Link href={`/author/${author.id}`}>
+            <Avatar
+              size="2"
+              radius="full"
+              src={author.image_url ?? undefined}
+              fallback={author.name[0]}
+              {...props}
+            />
+          </Link>{' '}
           {withName && (
-            <Text
-              weight="medium"
-              className={css({
-                cursor: 'pointer',
-                _hover: {
-                  textDecoration: 'underline',
-                },
-              })}
-            >
-              {author.name}
-            </Text>
+            <Link href={`/author/${author.id}`}>
+              <Text
+                weight="medium"
+                className={css({
+                  cursor: 'pointer',
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {author.name}
+              </Text>
+            </Link>
           )}
         </HStack>
       </AuthorHoverCard.Trigger>

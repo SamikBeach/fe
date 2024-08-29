@@ -32,7 +32,7 @@ function OriginalWorkHoverCardContent({
         e.preventDefault();
         e.stopPropagation();
 
-        router.push(`/original_work/${originalWork.id}`);
+        router.push(`/original-work/${originalWork.id}`);
       }}
       {...props}
     >

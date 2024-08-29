@@ -1,86 +1,80 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
-import {
-  MOCK_AUTHOR,
-  MOCK_AUTHOR2,
-  MOCK_AUTHOR3,
-  MOCK_AUTHOR4,
-  MOCK_AUTHOR5,
-  MOCK_ORIGINAL_WORK1,
-  MOCK_ORIGINAL_WORK2,
-  MOCK_ORIGINAL_WORK3,
-  MOCK_ORIGINAL_WORK4,
-  MOCK_ORIGINAL_WORK5,
-} from '@constants/mocks';
+
 import { css } from 'styled-system/css';
-import { HStack, VStack, styled } from 'styled-system/jsx';
+import { VStack, styled } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
 import { OriginalWorkShort } from '@components/original_work/OriginalWorkShort';
-import { GiBlackBook } from 'react-icons/gi';
+import { useQuery } from '@tanstack/react-query';
+import { getTrendingAuthors } from '@apis/author';
+import { getTrendingOriginalWorks } from '@apis/original-work';
+import RightSideSkeleton from './RightSideSkeleton';
 
 export default function RightSide() {
+  const { data: trendingAuthors = [], isLoading: isLoadingTrendingAuthors } =
+    useQuery({
+      queryKey: ['author/trending'],
+      queryFn: getTrendingAuthors,
+      select: response => response.data,
+      refetchOnMount: 'always',
+    });
+
+  const {
+    data: trendingOriginalWorks = [],
+    isLoading: isLoadingTrendingOriginalWorks,
+  } = useQuery({
+    queryKey: ['original-work/trending'],
+    queryFn: getTrendingOriginalWorks,
+    select: response => response.data,
+    refetchOnMount: 'always',
+  });
+
   return (
     <VStack minWidth="300px" position="sticky" top="0" pt="84px">
       <VStack gap="8px" width="100%" alignItems="start">
         <Text className={css({ fontWeight: 'medium' })}>Trending Now</Text>
-        <Section>
-          <Text>Authors</Text>
-          {[
-            MOCK_AUTHOR,
-            MOCK_AUTHOR2,
-            MOCK_AUTHOR3,
-            MOCK_AUTHOR4,
-            MOCK_AUTHOR5,
-          ].map(author => (
-            <AuthorAvatar key={author.id} author={author} withName />
-          ))}
-        </Section>
-        <Section className={css({ gap: '2px' })}>
-          <Text>Original works</Text>
-          {[
-            MOCK_ORIGINAL_WORK1,
-            MOCK_ORIGINAL_WORK2,
-            MOCK_ORIGINAL_WORK3,
-            MOCK_ORIGINAL_WORK4,
-            MOCK_ORIGINAL_WORK5,
-          ].map(originalWork => (
-            <OriginalWorkShort
-              key={originalWork.id}
-              originalWork={originalWork}
-            />
-          ))}
-        </Section>
-        <Section className={css({ gap: '12px' })}>
-          <Text>Editions</Text>
-          {[
-            'Also sprach Zarathustra',
-            'History of the Peoples',
-            'Passover Sermon',
-            'The Gresham Lectures',
-            'Womans Rights',
-          ].map(title => (
-            <EditionItem key={title} title={title} />
-          ))}
-        </Section>
+        {isLoadingTrendingAuthors ? (
+          <RightSideSkeleton />
+        ) : (
+          <Section>
+            <Text>Authors</Text>
+            {trendingAuthors.map(author => (
+              <AuthorAvatar key={author.id} author={author} withName />
+            ))}
+          </Section>
+        )}
+        {isLoadingTrendingOriginalWorks ? (
+          <RightSideSkeleton />
+        ) : (
+          <Section className={css({ gap: '2px' })}>
+            <Text>Original works</Text>
+            {trendingOriginalWorks.map(originalWork => (
+              <OriginalWorkShort
+                key={originalWork.id}
+                originalWork={originalWork}
+              />
+            ))}
+          </Section>
+        )}
       </VStack>
     </VStack>
   );
 }
 
-function EditionItem({ title }: { title: string }) {
-  return (
-    <HStack gap="6px">
-      <GiBlackBook
-        className={css({
-          display: 'inline',
-          cursor: 'pointer',
-          color: 'gray.600',
-        })}
-        size="24px"
-      />
-      <BoldText>{title}</BoldText>
-    </HStack>
-  );
-}
+// function EditionItem({ title }: { title: string }) {
+//   return (
+//     <HStack gap="6px">
+//       <GiBlackBook
+//         className={css({
+//           display: 'inline',
+//           cursor: 'pointer',
+//           color: 'gray.600',
+//         })}
+//         size="24px"
+//       />
+//       <BoldText>{title}</BoldText>
+//     </HStack>
+//   );
+// }
 
 const Section = styled(VStack, {
   base: {
@@ -96,13 +90,13 @@ const Section = styled(VStack, {
   },
 });
 
-const BoldText = styled('span', {
-  base: {
-    fontWeight: 'medium',
-    cursor: 'pointer',
+// const BoldText = styled('span', {
+//   base: {
+//     fontWeight: 'medium',
+//     cursor: 'pointer',
 
-    _hover: {
-      textDecoration: 'underline',
-    },
-  },
-});
+//     _hover: {
+//       textDecoration: 'underline',
+//     },
+//   },
+// });

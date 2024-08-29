@@ -35,7 +35,7 @@ function LogList() {
   if (isLoading) {
     return (
       <VStack gap="10px" pt="84px" py="30px" width="700px">
-        {Array(20)
+        {Array(10)
           .fill(0)
           .map((_, index) => (
             <LogItemSkeleton key={index} />

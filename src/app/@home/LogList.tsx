@@ -25,6 +25,7 @@ function LogList() {
       return param.data.cursor.after;
     },
     placeholderData: keepPreviousData,
+    refetchOnMount: 'always',
   });
 
   const logs = useMemo(

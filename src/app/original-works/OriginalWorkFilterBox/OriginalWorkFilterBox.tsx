@@ -5,7 +5,7 @@ import { AuthorFilter, FieldFilter } from './filters';
 import { SortDropdown } from './sort';
 import SearchTextField from './SearchTextField';
 
-export default function OriginalWorkFilter() {
+export default function OriginalWorkFilterBox() {
   return (
     <HStack
       position="fixed"
@@ -13,6 +13,7 @@ export default function OriginalWorkFilter() {
       bgColor="white"
       width="100%"
       justify="center"
+      zIndex={2}
     >
       <HStack
         justify="space-between"

@@ -1,3 +1,4 @@
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
@@ -27,12 +28,11 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           size="7"
         />
       </Link>
-      <VStack alignItems="start" gap="4px">
+      <VStack alignItems="start" gap="0">
         <VStack alignItems="start" gap="0">
           <Tooltip content={title}>
-            <Text
-              size="3"
-              weight="bold"
+            <Link
+              href={`/original-work/${originalWork.id}`}
               className={css({
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -40,24 +40,46 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 maxWidth: '240px',
               })}
             >
-              {title}
-            </Text>
+              <Text
+                size="3"
+                weight="bold"
+                className={css({
+                  cursor: 'pointer',
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {title}
+              </Text>
+            </Link>
           </Tooltip>
 
           <Tooltip content={title_in_eng}>
-            <Text
-              size="2"
-              weight="medium"
+            <Link
+              href={`/original-work/${originalWork.id}`}
               className={css({
-                color: 'gray.700',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 maxWidth: '240px',
               })}
             >
-              {title_in_eng}
-            </Text>
+              <Text
+                size="2"
+                weight="medium"
+                className={css({
+                  color: 'gray.700',
+
+                  cursor: 'pointer',
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {title_in_eng}
+              </Text>
+            </Link>
           </Tooltip>
           <Text size="2" color="gray">
             {publication_date_is_bc === 1 ? 'BC' : ''}
@@ -65,17 +87,14 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           </Text>
         </VStack>
 
-        <HStack gap="4px">
-          <Avatar
-            src={author.image_url ?? undefined}
-            fallback={author.name[0]}
+        <Link href={`/author/${author.id}`}>
+          <AuthorAvatar
+            author={author}
+            withName
             size="1"
-            radius="full"
+            textProps={{ size: '1', color: 'gray' }}
           />
-          <Text size="2" color="gray">
-            {author.name}
-          </Text>
-        </HStack>
+        </Link>
 
         <HStack gap="8px">
           <Text size="2" color="gray">

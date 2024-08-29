@@ -16,7 +16,7 @@ export default function OriginalWorkItemSkeleton() {
       _hover={{ scale: 1.02, bgColor: 'gray.50' }}
       transition="scale 0.1s ease-in-out"
     >
-      <Avatar fallback="" radius="full" size="7" />
+      <Avatar fallback="" radius="large" size="7" />
       <VStack alignItems="start" gap="4px">
         <Skeleton width="140px" height="16px" />
         <Skeleton width="160px" height="16px" />

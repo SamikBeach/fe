@@ -2,6 +2,8 @@ import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
+import Link from 'next/link';
+import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
 interface Props {
@@ -20,17 +22,38 @@ export default function AuthorItemInner({ author }: Props) {
 
   return (
     <HStack gap="20px">
-      <Avatar
-        src={image_url ?? undefined}
-        fallback="K"
-        radius="full"
-        size="7"
-      />
+      <Link href={`/author/${author.id}`}>
+        <Avatar
+          src={image_url ?? undefined}
+          fallback="K"
+          radius="full"
+          size="7"
+        />
+      </Link>
       <VStack alignItems="start" justify="space-between">
         <VStack alignItems="start" gap="0">
-          <Text size="3" weight="bold">
-            {name}
-          </Text>
+          <Link
+            href={`/author/${author.id}`}
+            className={css({
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              maxWidth: '240px',
+            })}
+          >
+            <Text
+              size="3"
+              weight="bold"
+              className={css({
+                cursor: 'pointer',
+                _hover: {
+                  textDecoration: 'underline',
+                },
+              })}
+            >
+              {name}
+            </Text>
+          </Link>
           <HStack>
             <Text size="2" color="gray">
               {getBornAndDiedDateText({
@@ -46,7 +69,7 @@ export default function AuthorItemInner({ author }: Props) {
               25 original works
             </Text>
             <Text size="2" color="gray">
-              330 books
+              330 editions
             </Text>
           </HStack>
         </VStack>

@@ -1,6 +1,7 @@
 import { AuthorHoverCard } from '@components/author/AuthorHoverCard';
 import { AuthorServerModel } from '@models/author';
-import { Avatar, AvatarProps, Text } from '@radix-ui/themes';
+import { Avatar, AvatarProps, Text, TextProps } from '@radix-ui/themes';
+import classNames from 'classnames';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
@@ -8,9 +9,15 @@ import { HStack } from 'styled-system/jsx';
 interface Props extends Omit<AvatarProps, 'fallback'> {
   author: AuthorServerModel;
   withName?: boolean;
+  textProps?: TextProps;
 }
 
-function AuthorAvatar({ author, withName = false, ...props }: Props) {
+function AuthorAvatar({
+  author,
+  withName = false,
+  textProps,
+  ...props
+}: Props) {
   return (
     <AuthorHoverCard.Root>
       <AuthorHoverCard.Trigger>
@@ -28,12 +35,16 @@ function AuthorAvatar({ author, withName = false, ...props }: Props) {
             <Link href={`/author/${author.id}`}>
               <Text
                 weight="medium"
-                className={css({
-                  cursor: 'pointer',
-                  _hover: {
-                    textDecoration: 'underline',
-                  },
-                })}
+                className={classNames(
+                  css({
+                    cursor: 'pointer',
+                    _hover: {
+                      textDecoration: 'underline',
+                    },
+                  }),
+                  textProps?.className
+                )}
+                {...textProps}
               >
                 {author.name}
               </Text>

@@ -1,7 +1,6 @@
 import { OriginalWorkServerModel } from '@models/original-work';
 import { HoverCard } from '@radix-ui/themes';
 import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import OringinalWorkItemInner from '../OriginalWorkItem/OriginalWorkItemInner';
@@ -16,14 +15,11 @@ function OriginalWorkHoverCardContent({
   className,
   ...props
 }: OriginalWorkHoverCardContentProps) {
-  const router = useRouter();
-
   return (
     <HoverCard.Content
       className={classNames(
         css({
           padding: '20px',
-          cursor: 'pointer',
           width: '400px',
         }),
         className
@@ -31,8 +27,6 @@ function OriginalWorkHoverCardContent({
       onClick={e => {
         e.preventDefault();
         e.stopPropagation();
-
-        router.push(`/original-work/${originalWork.id}`);
       }}
       {...props}
     >

@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios';
 import { useMemo } from 'react';
 import { LogItem } from './LogItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LogItemSkeleton from './LogItem/LogItemSkeleton';
 
 function LogList() {
   const { data, fetchNextPage, isLoading } = useInfiniteQuery<
@@ -30,6 +31,18 @@ function LogList() {
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
+
+  if (isLoading) {
+    return (
+      <VStack gap="10px" pt="84px" py="30px" width="700px">
+        {Array(20)
+          .fill(0)
+          .map((_, index) => (
+            <LogItemSkeleton key={index} />
+          ))}
+      </VStack>
+    );
+  }
 
   return (
     <InfiniteScroll

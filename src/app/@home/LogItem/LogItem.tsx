@@ -96,7 +96,6 @@ export default function LogItem({ log }: Props) {
           className={css({
             backgroundColor: ' gray.100',
             padding: '20px',
-            mx: '10px',
             mt: '10px',
             borderRadius: '8px',
           })}

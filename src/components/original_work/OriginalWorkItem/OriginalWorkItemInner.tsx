@@ -87,14 +87,12 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           </Text>
         </VStack>
 
-        <Link href={`/author/${author.id}`}>
-          <AuthorAvatar
-            author={author}
-            withName
-            size="1"
-            textProps={{ size: '1', color: 'gray' }}
-          />
-        </Link>
+        <AuthorAvatar
+          author={author}
+          withName
+          size="1"
+          textProps={{ size: '1', color: 'gray' }}
+        />
 
         <HStack gap="8px">
           <Text size="2" color="gray">

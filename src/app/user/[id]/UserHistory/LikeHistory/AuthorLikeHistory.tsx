@@ -16,6 +16,7 @@ export default function AuthorLikeHistory() {
     queryKey: ['user/like', userId],
     queryFn: () => getUserLikes({ userId }),
     select: response => response.data,
+    refetchOnMount: 'always',
   });
 
   const authors = data?.authors ?? [];

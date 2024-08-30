@@ -18,6 +18,7 @@ export default function OriginalWorkLikeHistory() {
     queryKey: ['user/like', userId],
     queryFn: () => getUserLikes({ userId }),
     select: response => response.data,
+    refetchOnMount: 'always',
   });
 
   const originalWorks = data?.original_works ?? [];

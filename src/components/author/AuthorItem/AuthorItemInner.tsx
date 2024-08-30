@@ -18,6 +18,9 @@ export default function AuthorItemInner({ author }: Props) {
     born_date_is_bc,
     died_date,
     died_date_is_bc,
+    liked_users,
+    comments,
+    original_works,
   } = author;
 
   return (
@@ -66,7 +69,7 @@ export default function AuthorItemInner({ author }: Props) {
           </HStack>
           <HStack>
             <Text size="2" color="gray">
-              25 original works
+              {original_works?.length} original works
             </Text>
             <Text size="2" color="gray">
               330 editions
@@ -76,13 +79,13 @@ export default function AuthorItemInner({ author }: Props) {
         <HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              351
+              {liked_users?.length}
             </Text>
             <HeartFilledIcon color="gray" />
           </HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              12
+              {comments?.length}
             </Text>
             <ChatBubbleIcon color="gray" />
           </HStack>

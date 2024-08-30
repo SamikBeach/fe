@@ -74,11 +74,7 @@ export default function AuthorInfo() {
     },
   });
 
-  const {
-    data: authorLike,
-    isLoading: isLoadingAuthorLike,
-    refetch: refetchAuthorLike,
-  } = useQuery({
+  const { data: authorLike, refetch: refetchAuthorLike } = useQuery({
     queryKey: ['author-like', id],
     queryFn: () => {
       if (currentUser === null) {
@@ -90,20 +86,13 @@ export default function AuthorInfo() {
     select: response => response.data,
   });
 
-  const {
-    data: authorAllLikes,
-    isLoading: isLoadingAuthorAllLikes,
-    refetch: refetchAuthorAllLikes,
-  } = useQuery({
+  const { data: authorAllLikes, refetch: refetchAuthorAllLikes } = useQuery({
     queryKey: ['author-like/count', id],
     queryFn: () => getAuthorLikeCount({ authorId: id }),
     select: response => response.data.count,
   });
 
-  const isLoading =
-    isLoadingAuthor || isLoadingAuthorLike || isLoadingAuthorAllLikes;
-
-  if (isLoading) {
+  if (isLoadingAuthor) {
     return <AuthorBasicInfoSkeleton />;
   }
 

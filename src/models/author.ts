@@ -1,5 +1,7 @@
+import { CommentServerModel } from './comment';
 import { EraServerModel } from './era';
 import { OriginalWorkServerModel } from './original-work';
+import { UserServerModel } from './user';
 
 export interface AuthorServerModel {
   id: number;
@@ -12,4 +14,6 @@ export interface AuthorServerModel {
   died_date_is_bc?: 0 | 1 | null;
   era?: EraServerModel;
   original_works?: OriginalWorkServerModel[];
+  liked_users?: UserServerModel[];
+  comments?: CommentServerModel[];
 }

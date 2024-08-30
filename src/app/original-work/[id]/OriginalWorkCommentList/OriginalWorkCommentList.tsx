@@ -15,8 +15,11 @@ import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import OriginalWorkCommentItemSkeleton from './OriginalWorkCommentItemSkeleton';
 import { isNil } from 'lodash';
+import { useRef } from 'react';
 
 export default function OriginalWorkCommentList() {
+  const commentListBoxRef = useRef<HTMLDivElement>(null);
+
   const params = useParams();
   const originalWorkId = Number(params.id);
 
@@ -58,7 +61,7 @@ export default function OriginalWorkCommentList() {
         height: 'calc(100vh - 64px)',
       })}
     >
-      <CommentListBox>
+      <CommentListBox ref={commentListBoxRef}>
         {isLoading ? (
           <Skeleton height="24px" width="100px" />
         ) : (
@@ -90,9 +93,6 @@ export default function OriginalWorkCommentList() {
       <div
         className={css({
           width: '800px',
-          position: 'absolute',
-          left: '0px',
-          bottom: '0px',
           bgColor: 'white',
           padding: '20px',
           borderTop: '1px solid',
@@ -100,7 +100,13 @@ export default function OriginalWorkCommentList() {
           zIndex: 2,
         })}
       >
-        <CommentEditor onSubmit={addComment} />
+        <CommentEditor
+          onSubmit={({ comment }) => {
+            addComment({ comment });
+
+            commentListBoxRef.current?.scroll({ top: 99999 });
+          }}
+        />
       </div>
     </div>
   );

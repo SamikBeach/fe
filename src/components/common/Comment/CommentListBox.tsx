@@ -1,17 +1,21 @@
 import { VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { ScrollArea } from '@radix-ui/themes';
-import { ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 
 interface Props {
   children: ReactNode;
 }
 
-export default function CommentListBox({ children }: Props) {
+const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
+  { children },
+  ref
+) {
   return (
     <ScrollArea
+      ref={ref}
       scrollbars="vertical"
-      className={css({ height: 'calc(100vh - 168px)' })}
+      className={css({ height: 'calc(100vh - 170px)' })}
     >
       <VStack
         alignItems="start"
@@ -19,9 +23,13 @@ export default function CommentListBox({ children }: Props) {
         gap="20px"
         width="800px"
         padding="40px"
+        // NOTE: scroll margin
+        pb="120px"
       >
         {children}
       </VStack>
     </ScrollArea>
   );
-}
+});
+
+export default CommentListBox;

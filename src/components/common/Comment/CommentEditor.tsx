@@ -59,6 +59,7 @@ export default function CommentEditor({
                 if (e.relatedTarget?.className.includes('submit-button')) {
                   return;
                 }
+
                 setOpenAlertDialog(true);
               }
             }}
@@ -69,6 +70,7 @@ export default function CommentEditor({
               if (e.metaKey && e.key === 'Enter') {
                 onSubmit({ comment });
                 setComment('');
+                textAreaRef.current?.focus();
               }
 
               if (isEditMode && e.key === 'Escape') {

@@ -12,8 +12,11 @@ import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
 import { isNil } from 'lodash';
+import { useRef } from 'react';
 
 export default function AuthorCommentList() {
+  const commentListBoxRef = useRef<HTMLDivElement>(null);
+
   const params = useParams();
   const authorId = Number(params.id);
 
@@ -55,7 +58,7 @@ export default function AuthorCommentList() {
         height: 'calc(100vh - 64px)',
       })}
     >
-      <CommentListBox>
+      <CommentListBox ref={commentListBoxRef}>
         {isLoading ? (
           <Skeleton height="24px" width="100px" />
         ) : (
@@ -87,9 +90,7 @@ export default function AuthorCommentList() {
       <div
         className={css({
           width: '800px',
-          position: 'absolute',
-          left: '0px',
-          bottom: '0px',
+
           bgColor: 'white',
           padding: '20px',
           borderTop: '1px solid',
@@ -97,7 +98,13 @@ export default function AuthorCommentList() {
           zIndex: 2,
         })}
       >
-        <CommentEditor onSubmit={addComment} />
+        <CommentEditor
+          onSubmit={({ comment }) => {
+            addComment({ comment });
+
+            commentListBoxRef.current?.scroll({ top: 99999 });
+          }}
+        />
       </div>
     </div>
   );

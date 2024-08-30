@@ -13,7 +13,7 @@ import {
 } from '@apis/original-work';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import OriginalWorkSubCommentItem from './OriginalWorkSubCommentItem';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
@@ -32,6 +32,8 @@ export default function OriginalWorkCommentItem({
   onDelete,
   onEdit,
 }: Props) {
+  const commentEditorWrapperRef = useRef<HTMLDivElement>(null);
+
   const { id, user } = commentProps;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -193,8 +195,18 @@ export default function OriginalWorkCommentItem({
           />
         ))}
       {showSubComments && (
-        <div className={css({ width: '100%', pl: '48px' })}>
-          <CommentEditor onSubmit={addComment} />
+        <div
+          ref={commentEditorWrapperRef}
+          className={css({ width: '100%', pl: '48px' })}
+        >
+          <CommentEditor
+            onSubmit={({ comment }) => {
+              addComment({ comment });
+              commentEditorWrapperRef.current?.scrollIntoView({
+                block: 'center',
+              });
+            }}
+          />
         </div>
       )}
     </VStack>

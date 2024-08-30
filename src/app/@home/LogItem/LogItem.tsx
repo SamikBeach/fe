@@ -34,7 +34,7 @@ export default function LogItem({ log }: Props) {
   const comment = author_comment || original_work_comment;
 
   const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
-    comment !== undefined && comment.comment.length > MAX_COMMENT_LENGTH
+    !isNil(comment) && comment.comment.length > MAX_COMMENT_LENGTH
   );
 
   const isAuthor = !isNil(target_author);

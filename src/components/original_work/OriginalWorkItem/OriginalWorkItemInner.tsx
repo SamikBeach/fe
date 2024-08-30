@@ -17,6 +17,8 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
     author,
     publication_date,
     publication_date_is_bc,
+    liked_users,
+    comments,
   } = originalWork;
 
   return (
@@ -100,13 +102,13 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              351
+              {liked_users.length}
             </Text>
             <HeartFilledIcon color="gray" />
           </HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              12
+              {comments.length}
             </Text>
             <ChatBubbleIcon color="gray" />
           </HStack>

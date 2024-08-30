@@ -2237,6 +2237,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nprogress@npm:^0":
+  version: 0.2.3
+  resolution: "@types/nprogress@npm:0.2.3"
+  checksum: 10c0/cac0fe73aca79bc1472a1556f56303df72026f2fcd8dbe311fe84b1f46e454b9040c1e69223d94e3bf156a5986382170c52ebda19aa70f555f1b6855d8f744a6
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.12
   resolution: "@types/prop-types@npm:15.7.12"
@@ -3708,6 +3715,7 @@ __metadata:
     "@types/js-cookie": "npm:^3"
     "@types/lodash": "npm:^4"
     "@types/node": "npm:^20.14.2"
+    "@types/nprogress": "npm:^0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/react-highlight-words": "npm:^0"
@@ -3726,6 +3734,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     next: "npm:^14.2.3"
     nextjs-toploader: "npm:^1.6.12"
+    nprogress: "npm:^0.2.0"
     postcss-import: "npm:^16.1.0"
     prettier: "npm:^3.3.1"
     react: "npm:^18.3.1"

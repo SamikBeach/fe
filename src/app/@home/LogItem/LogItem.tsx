@@ -101,6 +101,7 @@ export default function LogItem({ log }: Props) {
             padding: '14px',
             mt: '10px',
             borderRadius: '8px',
+            whiteSpace: 'pre-wrap',
           })}
         >
           {comment?.comment}

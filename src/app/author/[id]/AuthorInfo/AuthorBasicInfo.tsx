@@ -35,7 +35,7 @@ export default function AuthorInfo() {
     born_date_is_bc,
     died_date_is_bc,
   } = author ?? {
-    id: 0,
+    id: authorId,
     name: '',
     image_url: '',
     born_date: '',

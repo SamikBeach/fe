@@ -6,7 +6,7 @@ import { css } from 'styled-system/css';
 import { UserInfo } from './UserInfo';
 import { LikeHistory } from './UserHistory/LikeHistory';
 
-export default function MyPage() {
+export default function UserPage() {
   return (
     <HStack alignItems="start" className={css({ width: '1180px' })} gap="50px">
       <UserInfo />

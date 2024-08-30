@@ -5,7 +5,13 @@ import {
   VstackProps,
   styled,
 } from 'styled-system/jsx';
-import { Avatar, DropdownMenu, IconButton, Text } from '@radix-ui/themes';
+import {
+  Avatar,
+  Button,
+  DropdownMenu,
+  IconButton,
+  Text,
+} from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 
 import { format } from 'date-fns';
@@ -14,6 +20,9 @@ import { CommentServerModel } from '@models/comment';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
+import { useState } from 'react';
+
+const MAX_COMMENT_LENGTH = 120;
 
 interface Props extends HstackProps {
   onClickLike: () => void;
@@ -44,6 +53,9 @@ export default function CommentItem({
   ...props
 }: Props) {
   const currentUser = useAtomValue(currentUserAtom);
+  const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
+    comment.comment.length > MAX_COMMENT_LENGTH
+  );
 
   const isMyComment = currentUser?.id === user.id;
 
@@ -93,7 +105,32 @@ export default function CommentItem({
               </DropdownMenu.Root>
             )}
           </HStack>
-          {comment.comment}
+          <Text>
+            {isSeeMoreButtonShown
+              ? `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
+              : comment.comment}
+          </Text>
+          {isSeeMoreButtonShown && (
+            <Button
+              variant="ghost"
+              size="1"
+              onClick={() => setIsSeeMoreButtonShown(false)}
+              className={css({
+                color: 'black',
+                fontWeight: 'medium',
+                pt: '6px',
+                pl: '16px',
+
+                _hover: {
+                  bgColor: 'transparent',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                },
+              })}
+            >
+              See more
+            </Button>
+          )}
         </CommentBox>
         <HStack justify="space-between" width="100%">
           <HStack ml="8px">

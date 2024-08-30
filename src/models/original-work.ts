@@ -11,6 +11,6 @@ export interface OriginalWorkServerModel {
   publication_date?: string | null;
   publication_date_is_bc?: 0 | 1 | null;
   author: AuthorServerModel;
-  liked_users: UserServerModel[];
-  comments: CommentServerModel[];
+  liked_users?: UserServerModel[];
+  comments?: CommentServerModel[];
 }

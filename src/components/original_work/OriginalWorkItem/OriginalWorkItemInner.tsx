@@ -102,13 +102,13 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              {liked_users.length}
+              {liked_users?.length}
             </Text>
             <HeartFilledIcon color="gray" />
           </HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              {comments.length}
+              {comments?.length}
             </Text>
             <ChatBubbleIcon color="gray" />
           </HStack>

@@ -2,13 +2,16 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
-import { Avatar } from '@radix-ui/themes';
+import { Avatar, Button } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import { isNil } from 'lodash';
 import Link from 'next/link';
+import { useState } from 'react';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
+
+const MAX_COMMENT_LENGTH = 120;
 
 interface Props {
   log: LogServerModel;
@@ -29,6 +32,10 @@ export default function LogItem({ log }: Props) {
   const isComment = isAuthorComment || isOriginalWorkComment;
 
   const comment = author_comment || original_work_comment;
+
+  const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
+    comment !== undefined && comment.comment.length > MAX_COMMENT_LENGTH
+  );
 
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
@@ -94,7 +101,7 @@ export default function LogItem({ log }: Props) {
       <span className={css({ fontSize: '13px', color: 'gray.500' })}>
         {format(created_at, 'd MMMM y HH:mm')}
       </span>
-      {isComment && (
+      {isComment && comment !== undefined && (
         <p
           className={css({
             backgroundColor: ' gray.100',
@@ -104,7 +111,32 @@ export default function LogItem({ log }: Props) {
             whiteSpace: 'pre-wrap',
           })}
         >
-          {comment?.comment}
+          {isSeeMoreButtonShown ? (
+            <>
+              {`${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`}
+              <Button
+                variant="ghost"
+                size="1"
+                onClick={() => setIsSeeMoreButtonShown(false)}
+                className={css({
+                  color: 'black',
+                  fontWeight: 'medium',
+                  pt: '6px',
+                  pl: '16px',
+
+                  _hover: {
+                    bgColor: 'transparent',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  },
+                })}
+              >
+                See more
+              </Button>
+            </>
+          ) : (
+            comment.comment
+          )}
         </p>
       )}
     </VStack>

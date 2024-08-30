@@ -1,14 +1,16 @@
 'use client';
 import { isLoggedInAtom } from '@atoms/auth';
 import { DropdownMenu, IconButton } from '@radix-ui/themes';
-import { useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { googleLogout } from '@react-oauth/google';
 import { useMutation } from '@tanstack/react-query';
 import { logout } from '@apis/auth';
+import { currentUserAtom } from '@atoms/user';
 
 export default function UserProfileIconButton() {
+  const currentUser = useAtomValue(currentUserAtom);
   const router = useRouter();
 
   const setIsLoggedIn = useSetAtom(isLoggedInAtom);
@@ -34,7 +36,7 @@ export default function UserProfileIconButton() {
       <DropdownMenu.Content>
         <DropdownMenu.Item
           onSelect={() => {
-            router.push('/my-page');
+            router.push(`/user/${currentUser?.id}`);
           }}
           className={css({ cursor: 'pointer' })}
         >

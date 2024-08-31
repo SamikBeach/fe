@@ -16,6 +16,8 @@ import { useParams } from 'next/navigation';
 import OriginalWorkCommentItemSkeleton from './OriginalWorkCommentItemSkeleton';
 import { isNil } from 'lodash';
 import { useRef } from 'react';
+import { HStack } from 'styled-system/jsx';
+import OriginalWorkCommentSortDropdown from './AuthorCommentSortDropdown';
 
 export default function OriginalWorkCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -62,13 +64,16 @@ export default function OriginalWorkCommentList() {
       })}
     >
       <CommentListBox ref={commentListBoxRef}>
-        {isLoading ? (
-          <Skeleton height="24px" width="100px" />
-        ) : (
-          <Text size="3" weight="medium">
-            {`Comment(${comments.length})`}
-          </Text>
-        )}
+        <HStack justify="space-between" width="100%">
+          {isLoading ? (
+            <Skeleton height="24px" width="100px" />
+          ) : (
+            <Text size="3" weight="medium">
+              {`Comment(${comments.length})`}
+            </Text>
+          )}
+          <OriginalWorkCommentSortDropdown />
+        </HStack>
         {isLoading ? (
           <>
             <OriginalWorkCommentItemSkeleton height="140px" />

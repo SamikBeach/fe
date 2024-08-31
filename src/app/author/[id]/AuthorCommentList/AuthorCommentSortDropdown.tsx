@@ -1,21 +1,17 @@
-import { authorSortAtom } from '@atoms/sort';
-import { AuthorSort } from '@models/author';
+import { CommentSort } from '@models/comment';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
-import { useAtom } from 'jotai';
 import { capitalize } from 'lodash';
+import { useState } from 'react';
 import { css } from 'styled-system/css';
 
-const SORT_OPTIONS: { label: string; value: AuthorSort }[] = [
-  { label: 'Trending', value: 'trending' },
+const SORT_OPTIONS: { label: string; value: CommentSort }[] = [
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Birth date', value: 'birth_date' },
-  { label: 'Death date', value: 'death_date' },
-  { label: 'Alphabetical', value: 'alphabetical' },
+  { label: 'Latest', value: 'latest' },
 ];
 
-export default function SortDropdown() {
-  const [authorSort, setAuthorSort] = useAtom(authorSortAtom);
+export default function AuthorCommentSortDropdown() {
+  const [authorCommentSort, setAuthorCommentSort] = useState('top_likes');
 
   return (
     <DropdownMenu.Root>
@@ -28,7 +24,8 @@ export default function SortDropdown() {
           })}
         >
           {capitalize(
-            SORT_OPTIONS.find(option => option.value === authorSort)?.label
+            SORT_OPTIONS.find(option => option.value === authorCommentSort)
+              ?.label
           )}
           <ChevronDownIcon />
         </Button>
@@ -40,7 +37,7 @@ export default function SortDropdown() {
             <DropdownMenu.Item
               key={option.value}
               className={css({ cursor: 'pointer' })}
-              onSelect={() => setAuthorSort(option.value)}
+              onSelect={() => setAuthorCommentSort(option.value)}
             >
               {capitalize(option.label)}
             </DropdownMenu.Item>

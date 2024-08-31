@@ -1,4 +1,5 @@
-import { OriginalWorkSort, originalWorkSortAtom } from '@atoms/sort';
+import { originalWorkSortAtom } from '@atoms/sort';
+import { OriginalWorkSort } from '@models/original-work';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { capitalize } from 'lodash';
@@ -32,7 +33,7 @@ export default function SortDropdown() {
           <ChevronDownIcon />
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
+      <DropdownMenu.Content align="end">
         <DropdownMenu.Group title="Sort by">
           <DropdownMenu.Label>Sort by</DropdownMenu.Label>
           {SORT_OPTIONS.map(option => (

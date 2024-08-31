@@ -13,6 +13,8 @@ import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
 import { isNil } from 'lodash';
 import { useRef } from 'react';
+import { HStack } from 'styled-system/jsx';
+import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 
 export default function AuthorCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -59,13 +61,16 @@ export default function AuthorCommentList() {
       })}
     >
       <CommentListBox ref={commentListBoxRef}>
-        {isLoading ? (
-          <Skeleton height="24px" width="100px" />
-        ) : (
-          <Text size="3" weight="medium">
-            {`Comment(${comments.length})`}
-          </Text>
-        )}
+        <HStack justify="space-between" width="100%">
+          {isLoading ? (
+            <Skeleton height="24px" width="100px" />
+          ) : (
+            <Text size="3" weight="medium">
+              {`Comment(${comments.length})`}
+            </Text>
+          )}
+          <AuthorCommentSortDropdown />
+        </HStack>
         {isLoading ? (
           <>
             <AuthorCommentItemSkeleton height="140px" />

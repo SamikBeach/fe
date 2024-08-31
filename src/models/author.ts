@@ -17,3 +17,11 @@ export interface AuthorServerModel {
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];
 }
+
+export type AuthorSort =
+  | 'trending'
+  | 'top_likes'
+  | 'top_comments'
+  | 'birth_date'
+  | 'death_date'
+  | 'alphabetical';

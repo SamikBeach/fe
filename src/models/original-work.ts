@@ -14,3 +14,10 @@ export interface OriginalWorkServerModel {
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];
 }
+
+export type OriginalWorkSort =
+  | 'trending'
+  | 'top_likes'
+  | 'top_comments'
+  | 'publication_date'
+  | 'alphabetical';

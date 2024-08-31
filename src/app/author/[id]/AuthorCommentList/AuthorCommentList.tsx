@@ -22,7 +22,7 @@ import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
 import { isNil } from 'lodash';
-import { useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { HStack } from 'styled-system/jsx';
 import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 import { AxiosResponse } from 'axios';
@@ -40,6 +40,7 @@ export default function AuthorCommentList() {
     data,
     fetchNextPage,
     isLoading,
+    isFetching,
     refetch: refetchSearchAuthorComments,
   } = useInfiniteQuery<AxiosResponse<SearchAuthorCommentsResponse>>({
     queryKey: ['author/search', authorId],
@@ -83,6 +84,23 @@ export default function AuthorCommentList() {
     },
   });
 
+  const fetchMoreOnBottomReached = useCallback(
+    (containerRefElement?: HTMLDivElement | null) => {
+      if (containerRefElement) {
+        const { scrollHeight, scrollTop, clientHeight } = containerRefElement;
+        //once the user has scrolled within 500px of the bottom of the table, fetch more data if we can
+        if (scrollHeight - scrollTop - clientHeight < 300 && !isFetching) {
+          fetchNextPage();
+        }
+      }
+    },
+    [fetchNextPage, isFetching]
+  );
+
+  useEffect(() => {
+    fetchMoreOnBottomReached(commentListBoxRef.current);
+  }, [fetchMoreOnBottomReached]);
+
   return (
     <div
       className={css({
@@ -91,7 +109,10 @@ export default function AuthorCommentList() {
         height: 'calc(100vh - 64px)',
       })}
     >
-      <CommentListBox ref={commentListBoxRef}>
+      <CommentListBox
+        ref={commentListBoxRef}
+        onScroll={e => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
+      >
         <HStack justify="space-between" width="100%">
           {isLoading ? (
             <Skeleton height="24px" width="100px" />

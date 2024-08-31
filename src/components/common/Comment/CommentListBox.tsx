@@ -1,14 +1,14 @@
 import { VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
-import { ScrollArea } from '@radix-ui/themes';
+import { ScrollArea, ScrollAreaProps } from '@radix-ui/themes';
 import { ReactNode, forwardRef } from 'react';
 
-interface Props {
+interface Props extends ScrollAreaProps {
   children: ReactNode;
 }
 
 const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
-  { children },
+  { children, ...props },
   ref
 ) {
   return (
@@ -16,6 +16,7 @@ const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
       ref={ref}
       scrollbars="vertical"
       className={css({ height: 'calc(100vh - 170px)' })}
+      {...props}
     >
       <VStack
         alignItems="start"

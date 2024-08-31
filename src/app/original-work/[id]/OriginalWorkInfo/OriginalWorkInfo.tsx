@@ -1,10 +1,11 @@
 'use client';
 
-import { HstackProps, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 import AuthorBasicInfo from './OriginalWorkBasicInfo';
 import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
+import SortDropdown from './SortDropdown';
 
 interface Props extends HstackProps {}
 
@@ -28,14 +29,17 @@ export default function AuthorInfo({ ...props }: Props) {
       >
         <AuthorBasicInfo />
 
-        <SegmentedControl.Root defaultValue="editions" size="1">
-          <SegmentedControl.Item
-            value="editions"
-            className={css({ cursor: 'pointer' })}
-          >
-            Editions
-          </SegmentedControl.Item>
-        </SegmentedControl.Root>
+        <HStack width="100%" justify="space-between" pr="16px">
+          <SegmentedControl.Root defaultValue="editions" size="1">
+            <SegmentedControl.Item
+              value="editions"
+              className={css({ cursor: 'pointer' })}
+            >
+              Editions
+            </SegmentedControl.Item>
+          </SegmentedControl.Root>
+          <SortDropdown />
+        </HStack>
 
         <EditionList />
       </VStack>

@@ -37,7 +37,7 @@ export default function RightSide() {
         ) : (
           <Section>
             <Text>Authors</Text>
-            {trendingAuthors.map(author => (
+            {trendingAuthors.slice(0, 5).map(author => (
               <AuthorAvatar key={author.id} author={author} withName />
             ))}
           </Section>
@@ -47,7 +47,7 @@ export default function RightSide() {
         ) : (
           <Section className={css({ gap: '2px' })}>
             <Text>Original works</Text>
-            {trendingOriginalWorks.map(originalWork => (
+            {trendingOriginalWorks.slice(0, 5).map(originalWork => (
               <OriginalWorkShort
                 key={originalWork.id}
                 originalWork={originalWork}

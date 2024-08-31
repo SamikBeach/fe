@@ -1,6 +1,5 @@
 import api from '@apis/config';
-import { AuthorSort } from '@atoms/sort';
-import { AuthorServerModel } from '@models/author';
+import { AuthorServerModel, AuthorSort } from '@models/author';
 
 type GetAllAuthorsResponse = AuthorServerModel[];
 

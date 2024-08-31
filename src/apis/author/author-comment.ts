@@ -1,5 +1,5 @@
 import api from '@apis/config';
-import { CommentServerModel } from '@models/comment';
+import { CommentServerModel, CommentSort } from '@models/comment';
 
 interface GetAllCommentsRequest {
   authorId: number;
@@ -9,6 +9,40 @@ type GetAllCommentsResponse = CommentServerModel[];
 
 export function getAllAuthorComments({ authorId }: GetAllCommentsRequest) {
   return api.get<GetAllCommentsResponse>(`/author-comment/${authorId}`);
+}
+
+export interface SearchAuthorsCommentsRequest {
+  where__id__more_than?: number;
+  authorId: number;
+  take?: number;
+  sort?: CommentSort;
+}
+
+export interface SearchAuthorCommentsResponse {
+  cursor: {
+    after: number | null;
+  };
+  count: number;
+  next: string | null;
+  data: CommentServerModel[];
+}
+
+export function searchAuthorComments({
+  authorId,
+  where__id__more_than,
+  sort,
+  take,
+}: SearchAuthorsCommentsRequest) {
+  return api.get<SearchAuthorCommentsResponse>(
+    `/author-comment/${authorId}/search`,
+    {
+      params: {
+        where__id__more_than,
+        sort,
+        take,
+      },
+    }
+  );
 }
 
 interface AddAuthorCommentRequest {

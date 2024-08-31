@@ -3,18 +3,30 @@
 import AuthorCommentItem from './AuthorCommentItem';
 import { css } from 'styled-system/css';
 import { Skeleton, Text } from '@radix-ui/themes';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
-import { addAuthorComment, getAllAuthorComments } from '@apis/author';
+import {
+  SearchAuthorCommentsResponse,
+  addAuthorComment,
+  getAllAuthorComments,
+  searchAuthorComments,
+} from '@apis/author';
 import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
 import { isNil } from 'lodash';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { HStack } from 'styled-system/jsx';
 import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
+import { AxiosResponse } from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function AuthorCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -25,15 +37,34 @@ export default function AuthorCommentList() {
   const currentUser = useAtomValue(currentUserAtom);
 
   const {
-    data: comments = [],
+    data,
+    fetchNextPage,
     isLoading,
-    refetch: refetchGetAllAuthorComments,
-  } = useQuery({
-    queryKey: ['author-comment', authorId],
-    queryFn: () => getAllAuthorComments({ authorId }),
-    select: response =>
-      response.data.filter(comment => isNil(comment.target_comment_id)),
+    refetch: refetchSearchAuthorComments,
+  } = useInfiniteQuery<AxiosResponse<SearchAuthorCommentsResponse>>({
+    queryKey: ['author/search', authorId],
+    queryFn: async ({ pageParam = 0 }) => {
+      return await searchAuthorComments({
+        where__id__more_than: pageParam as number,
+        // order__id: 'DESC',
+        take: 10,
+        authorId,
+      });
+    },
+    initialPageParam: 0,
+    getNextPageParam: param => {
+      return param.data.cursor.after;
+    },
+    placeholderData: keepPreviousData,
+    refetchOnMount: 'always',
   });
+
+  const comments = useMemo(
+    () => data?.pages?.flatMap(page => page.data.data) ?? [],
+    [data]
+  );
+
+  console.log({ comments });
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
@@ -48,7 +79,7 @@ export default function AuthorCommentList() {
       });
     },
     onSuccess: () => {
-      refetchGetAllAuthorComments();
+      refetchSearchAuthorComments();
     },
   });
 
@@ -86,8 +117,8 @@ export default function AuthorCommentList() {
               key={comment.id}
               authorId={authorId}
               comment={comment}
-              onDelete={refetchGetAllAuthorComments}
-              onEdit={refetchGetAllAuthorComments}
+              onDelete={refetchSearchAuthorComments}
+              onEdit={refetchSearchAuthorComments}
             />
           ))
         )}

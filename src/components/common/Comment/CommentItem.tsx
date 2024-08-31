@@ -21,6 +21,7 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useState } from 'react';
+import { DeleteConfirmDialog } from '../DeleteConfirmDialog';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -53,6 +54,10 @@ export default function CommentItem({
   ...props
 }: Props) {
   const currentUser = useAtomValue(currentUserAtom);
+
+  const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] =
+    useState(false);
+
   const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
     comment.comment.length > MAX_COMMENT_LENGTH
   );
@@ -82,31 +87,38 @@ export default function CommentItem({
               </span>
             </Text>
             {isMyComment && (
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <IconButton
-                    size="1"
-                    variant="ghost"
-                    className={css({ cursor: 'pointer' })}
-                  >
-                    <DotsHorizontalIcon color="gray" />
-                  </IconButton>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  <DropdownMenu.Item
-                    className={css({ cursor: 'pointer' })}
-                    onSelect={onEdit}
-                  >
-                    Edit
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item
-                    className={css({ cursor: 'pointer' })}
-                    onSelect={onDelete}
-                  >
-                    Delete
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Root>
+              <>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger>
+                    <IconButton
+                      size="1"
+                      variant="ghost"
+                      className={css({ cursor: 'pointer' })}
+                    >
+                      <DotsHorizontalIcon color="gray" />
+                    </IconButton>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item
+                      className={css({ cursor: 'pointer' })}
+                      onSelect={onEdit}
+                    >
+                      Edit
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      className={css({ cursor: 'pointer' })}
+                      onSelect={() => setIsOpenDeleteConfirmDialog(true)}
+                    >
+                      Delete
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu.Root>
+                <DeleteConfirmDialog
+                  onDelete={onDelete}
+                  open={isOpenDeleteConfirmDialog}
+                  onOpenChange={setIsOpenDeleteConfirmDialog}
+                />
+              </>
             )}
           </HStack>
           <Text>

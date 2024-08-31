@@ -1,5 +1,5 @@
 import api from '@apis/config';
-import { CommentServerModel } from '@models/comment';
+import { CommentServerModel, CommentSort } from '@models/comment';
 
 interface GetAllCommentsRequest {
   originalWorkId: number;
@@ -12,6 +12,40 @@ export function getAllOriginalWorkComments({
 }: GetAllCommentsRequest) {
   return api.get<GetAllCommentsResponse>(
     `/original-work-comment/${originalWorkId}`
+  );
+}
+
+export interface SearchOriginalWorkCommentsRequest {
+  where__id__more_than?: number;
+  originalWorkId: number;
+  take?: number;
+  sort?: CommentSort;
+}
+
+export interface SearchOriginalWorkCommentsResponse {
+  cursor: {
+    after: number | null;
+  };
+  count: number;
+  next: string | null;
+  data: CommentServerModel[];
+}
+
+export function searchOriginalWorkComments({
+  originalWorkId,
+  where__id__more_than,
+  sort,
+  take,
+}: SearchOriginalWorkCommentsRequest) {
+  return api.get<SearchOriginalWorkCommentsResponse>(
+    `/original-work-comment/${originalWorkId}/search`,
+    {
+      params: {
+        where__id__more_than,
+        sort,
+        take,
+      },
+    }
   );
 }
 

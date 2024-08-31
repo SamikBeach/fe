@@ -7,26 +7,22 @@ import {
   keepPreviousData,
   useInfiniteQuery,
   useMutation,
-  useQuery,
 } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import {
   SearchAuthorCommentsResponse,
   addAuthorComment,
-  getAllAuthorComments,
   searchAuthorComments,
 } from '@apis/author';
 import CommentListBox from '@components/common/Comment/CommentListBox';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useParams } from 'next/navigation';
 import AuthorCommentItemSkeleton from './AuthorCommentItemSkkeleton';
-import { isNil } from 'lodash';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { HStack } from 'styled-system/jsx';
 import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 import { AxiosResponse } from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function AuthorCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -64,8 +60,6 @@ export default function AuthorCommentList() {
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
-
-  console.log({ comments });
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {

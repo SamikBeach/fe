@@ -79,13 +79,13 @@ export default function AuthorItemInner({ author }: Props) {
         <HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              {liked_users?.length}
+              {liked_users?.length ?? 0}
             </Text>
             <HeartFilledIcon color="gray" />
           </HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
-              {comments?.length}
+              {comments?.length ?? 0}
             </Text>
             <ChatBubbleIcon color="gray" />
           </HStack>

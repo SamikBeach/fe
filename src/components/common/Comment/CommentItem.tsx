@@ -14,7 +14,7 @@ import {
 } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 
-import { format } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { UserServerModel } from '@models/user';
 import { CommentServerModel } from '@models/comment';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
@@ -59,6 +59,10 @@ export default function CommentItem({
 
   const isMyComment = currentUser?.id === user.id;
 
+  const createdAt = formatDistanceToNow(comment.created_at, {
+    addSuffix: true,
+  }).replace('about ', '');
+
   return (
     <HStack alignItems="start" width="100%" justify="end" {...props}>
       <Avatar fallback="B" radius="full" size="2" mt="4px" />
@@ -74,7 +78,7 @@ export default function CommentItem({
                   color: 'gray',
                 })}
               >
-                {format(comment.created_at, 'd MMMM y HH:mm')}
+                {createdAt}
               </span>
             </Text>
             {isMyComment && (

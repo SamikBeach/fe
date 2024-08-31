@@ -3,7 +3,7 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
 import { Avatar, Button } from '@radix-ui/themes';
-import { format } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { isNil } from 'lodash';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -39,6 +39,10 @@ export default function LogItem({ log }: Props) {
 
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
+
+  const createdAt = formatDistanceToNow(created_at, {
+    addSuffix: true,
+  }).replace('about ', '');
 
   return (
     <VStack
@@ -99,7 +103,7 @@ export default function LogItem({ log }: Props) {
         </>
       )}{' '}
       <span className={css({ fontSize: '13px', color: 'gray.500' })}>
-        {format(created_at, 'd MMMM y HH:mm')}
+        {createdAt}
       </span>
       {isComment && comment !== undefined && (
         <p

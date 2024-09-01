@@ -16,9 +16,10 @@ export function getAuthorById({ id }: { id: number }) {
 
 interface SearchAuthorsRequest {
   keyword?: string;
-  eraId: number | null;
+  eraId?: number;
   sort?: AuthorSort;
   page?: number;
+  limit?: number;
 }
 
 export interface SearchAuthorsResponse
@@ -46,6 +47,7 @@ export function searchAuthors({
   keyword,
   eraId,
   sort,
+  limit,
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
@@ -53,6 +55,7 @@ export function searchAuthors({
       ['filter.era_id']: eraId,
       sortBy: getSortBy(sort),
       page,
+      limit,
     },
   });
 }

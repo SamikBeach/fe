@@ -25,7 +25,7 @@ function SearchPopover({
 
   const { data: authors = [], isLoading: isLoadingAuthors } = useQuery({
     queryKey: ['author', searchValue],
-    queryFn: () => searchAuthors({ where__name__i_like: searchValue, take: 5 }),
+    queryFn: () => searchAuthors({ keyword: searchValue, limit: 5 }),
     enabled: searchValue !== '',
     select: response => response.data.data,
   });
@@ -33,8 +33,7 @@ function SearchPopover({
   const { data: originalWorks = [], isLoading: isLoadingOriginalWorks } =
     useQuery({
       queryKey: ['originalWork', searchValue],
-      queryFn: () =>
-        searchOriginalWorks({ where__title__i_like: searchValue, take: 5 }),
+      queryFn: () => searchOriginalWorks({ keyword: searchValue, limit: 5 }),
       enabled: searchValue !== '',
       select: response => response.data.data,
     });

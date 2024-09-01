@@ -19,9 +19,10 @@ export function getOriginalWorkById({ id }: { id: number }) {
 
 interface SearchOriginalWorksRequest {
   keyword?: string;
-  authorId: number | null;
+  authorId?: number | null;
   sort?: OriginalWorkSort;
   page?: number;
+  limit?: number;
 }
 
 export interface SearchOriginalWorksResponse
@@ -49,6 +50,7 @@ export function searchOriginalWorks({
   keyword,
   authorId,
   sort,
+  limit,
 }: SearchOriginalWorksRequest) {
   return api.get<SearchOriginalWorksResponse>('/original-work/search', {
     params: {
@@ -56,6 +58,7 @@ export function searchOriginalWorks({
       ['filter.author_id']: authorId,
       sortBy: getSortBy(sort),
       page,
+      limit,
     },
   });
 }

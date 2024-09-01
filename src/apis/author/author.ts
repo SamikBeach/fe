@@ -16,7 +16,7 @@ export function getAuthorById({ id }: { id: number }) {
 
 interface SearchAuthorsRequest {
   keyword?: string;
-  eraId?: number;
+  eraId?: number | null;
   sort?: AuthorSort;
   page?: number;
   limit?: number;

@@ -2,6 +2,7 @@ import { VStack } from 'styled-system/jsx';
 import { css } from 'styled-system/css';
 import { ScrollArea, ScrollAreaProps } from '@radix-ui/themes';
 import { ReactNode, forwardRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface Props extends ScrollAreaProps {
   children: ReactNode;

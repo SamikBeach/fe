@@ -32,19 +32,26 @@ export default function OriginalWorkList() {
       originalWorkSort,
       searchKeyword,
     ],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryFn: async ({ pageParam = 1 }) => {
       return await searchOriginalWorks({
-        where__id__more_than: pageParam as number,
-        take: 30,
         authorId: originalWorkFilter.authorId,
         sort: originalWorkSort,
         keyword: searchKeyword,
+        page: pageParam as number,
       });
     },
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: param => {
-      return param.data.cursor.after;
+      const nextParam = param.data.links.next;
+      const query = nextParam?.split('?')[1];
+      const pageParam = query
+        ?.split('&')
+        .find(q => q.startsWith('page'))
+        ?.split('=')[1];
+
+      return pageParam;
     },
+    refetchOnMount: 'always',
     placeholderData: keepPreviousData,
   });
 

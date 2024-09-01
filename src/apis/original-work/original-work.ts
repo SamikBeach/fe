@@ -1,6 +1,9 @@
+import { SearchResponse } from '@apis/common';
 import api from '@apis/config';
-import { OriginalWorkSort } from '@atoms/sort';
-import { OriginalWorkServerModel } from '@models/original-work';
+import {
+  OriginalWorkServerModel,
+  OriginalWorkSort,
+} from '@models/original-work';
 
 type GetAllOriginalWorksResponse = OriginalWorkServerModel[];
 
@@ -15,43 +18,47 @@ export function getOriginalWorkById({ id }: { id: number }) {
 }
 
 interface SearchOriginalWorksRequest {
-  where__title__i_like?: string;
-  where__id__more_than?: number;
-  authorId?: number | null;
-  take?: number;
-  sort?: OriginalWorkSort;
   keyword?: string;
+  authorId: number | null;
+  sort?: OriginalWorkSort;
+  page?: number;
 }
 
-export interface SearchOriginalWorksResponse {
-  cursor: {
-    after: number | null;
-  };
-  count: number;
-  next: string | null;
-  data: OriginalWorkServerModel[];
+export interface SearchOriginalWorksResponse
+  extends SearchResponse<OriginalWorkServerModel> {}
+
+function getSortBy(sort?: OriginalWorkSort) {
+  switch (sort) {
+    case 'top_likes':
+      return 'like_count:DESC';
+    case 'top_comments':
+      return 'comment_count:DESC';
+    case 'publication_date_newest_first':
+      return 'publication_date:DESC';
+    case 'publication_date_oldest_first':
+      return 'publication_date:ASC';
+    case 'alphabetical':
+      return 'title:ASC';
+    default:
+      return 'like_count:DESC';
+  }
 }
 
 export function searchOriginalWorks({
-  where__title__i_like,
-  where__id__more_than,
-  take,
-  sort,
-  authorId,
+  page,
   keyword,
+  authorId,
+  sort,
 }: SearchOriginalWorksRequest) {
   return api.get<SearchOriginalWorksResponse>('/original-work/search', {
     params: {
-      where__title__i_like,
-      where__id__more_than,
-      take,
-      sort,
-      authorId,
-      keyword: keyword === '' || keyword === undefined ? undefined : keyword,
+      search: keyword === '' ? undefined : keyword,
+      ['filter.author_id']: authorId,
+      sortBy: getSortBy(sort),
+      page,
     },
   });
 }
-
 type GetTrendingOriginalWorksResponse = OriginalWorkServerModel[];
 
 export function getTrendingOriginalWorks() {

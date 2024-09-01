@@ -13,11 +13,13 @@ export interface OriginalWorkServerModel {
   author: AuthorServerModel;
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];
+  like_count: number;
+  comment_count: number;
 }
 
 export type OriginalWorkSort =
-  | 'trending'
   | 'top_likes'
   | 'top_comments'
-  | 'publication_date'
+  | 'publication_date_newest_first'
+  | 'publication_date_oldest_first'
   | 'alphabetical';

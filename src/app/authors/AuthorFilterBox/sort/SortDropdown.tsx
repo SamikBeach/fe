@@ -6,11 +6,10 @@ import { capitalize } from 'lodash';
 import { css } from 'styled-system/css';
 
 const SORT_OPTIONS: { label: string; value: AuthorSort }[] = [
-  { label: 'Trending', value: 'trending' },
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Birth date', value: 'birth_date' },
-  { label: 'Death date', value: 'death_date' },
+  { label: 'Birth date(Youngest first)', value: 'birth_date_youngest_first' },
+  { label: 'Birth date(Oldest first)', value: 'birth_date_oldest_first' },
   { label: 'Alphabetical', value: 'alphabetical' },
 ];
 

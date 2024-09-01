@@ -16,12 +16,13 @@ export interface AuthorServerModel {
   original_works?: OriginalWorkServerModel[];
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];
+  like_count: number;
+  comment_count: number;
 }
 
 export type AuthorSort =
-  | 'trending'
   | 'top_likes'
   | 'top_comments'
-  | 'birth_date'
-  | 'death_date'
+  | 'birth_date_youngest_first'
+  | 'birth_date_oldest_first'
   | 'alphabetical';

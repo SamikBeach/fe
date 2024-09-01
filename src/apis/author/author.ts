@@ -1,3 +1,4 @@
+import { SearchResponse } from '@apis/common';
 import api from '@apis/config';
 import { AuthorServerModel, AuthorSort } from '@models/author';
 
@@ -14,42 +15,44 @@ export function getAuthorById({ id }: { id: number }) {
 }
 
 interface SearchAuthorsRequest {
-  where__name__i_like?: string;
-  where__id__more_than?: number;
-  order__name?: 'ASC' | 'DESC';
-  take?: number;
   keyword?: string;
-  eraId?: number | null;
+  eraId: number | null;
   sort?: AuthorSort;
+  page?: number;
 }
 
-export interface SearchAuthorsResponse {
-  cursor: {
-    after: number | null;
-  };
-  count: number;
-  next: string | null;
-  data: AuthorServerModel[];
+export interface SearchAuthorsResponse
+  extends SearchResponse<AuthorServerModel> {}
+
+function getSortBy(sort?: AuthorSort) {
+  switch (sort) {
+    case 'top_likes':
+      return 'like_count:DESC';
+    case 'top_comments':
+      return 'comment_count:DESC';
+    case 'birth_date_youngest_first':
+      return 'born_date:ASC';
+    case 'birth_date_oldest_first':
+      return 'born_date:DESC';
+    case 'alphabetical':
+      return 'name:ASC';
+    default:
+      return 'like_count:DESC';
+  }
 }
 
 export function searchAuthors({
-  take,
-  where__name__i_like,
-  where__id__more_than,
-  order__name = 'ASC',
+  page,
   keyword,
   eraId,
   sort,
 }: SearchAuthorsRequest) {
   return api.get<SearchAuthorsResponse>('/author/search', {
     params: {
-      where__name__i_like,
-      where__id__more_than,
-      order__name,
-      take,
-      keyword: keyword === '' ? undefined : keyword,
-      eraId,
-      sort,
+      search: keyword === '' ? undefined : keyword,
+      ['filter.era_id']: eraId,
+      sortBy: getSortBy(sort),
+      page,
     },
   });
 }

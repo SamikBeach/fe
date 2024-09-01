@@ -6,10 +6,16 @@ import { capitalize } from 'lodash';
 import { css } from 'styled-system/css';
 
 const SORT_OPTIONS: { label: string; value: OriginalWorkSort }[] = [
-  { label: 'Trending', value: 'trending' },
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Publication date', value: 'publication_date' },
+  {
+    label: 'Publication date(Newest first)',
+    value: 'publication_date_newest_first',
+  },
+  {
+    label: 'Publication date(Oldest first)',
+    value: 'publication_date_oldest_first',
+  },
   { label: 'Alphabetical', value: 'alphabetical' },
 ];
 

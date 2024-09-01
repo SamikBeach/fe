@@ -24,7 +24,7 @@ export default function SearchTextField() {
 
   return (
     <TextField.Root
-      placeholder={'Search original work...'}
+      placeholder={'Search original work, author...'}
       className={css({
         width: '300px',
       })}

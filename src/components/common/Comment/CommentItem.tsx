@@ -79,6 +79,7 @@ export default function CommentItem({
       animate={{
         // 애니메이션이 끝났을 때의 상태
         opacity: 1,
+        width: '100%',
       }}
       transition={{
         // animate state까지 어떻게 변할지 정하는 옵션

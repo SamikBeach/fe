@@ -1,31 +1,17 @@
 import { LogServerModel } from '@models/log';
 import api from './config';
+import { SearchResponse } from './common';
 
 interface SearchLogsRequest {
-  where__id__less_than?: number;
-  order__id?: 'ASC' | 'DESC';
-  take?: number;
+  page?: number;
 }
 
-export interface SearchLogsResponse {
-  cursor: {
-    after: number | null;
-  };
-  count: number;
-  next: string | null;
-  data: LogServerModel[];
-}
+export interface SearchLogsResponse extends SearchResponse<LogServerModel> {}
 
-export function searchLogs({
-  take,
-  where__id__less_than,
-  order__id,
-}: SearchLogsRequest) {
+export function searchLogs({ page }: SearchLogsRequest) {
   return api.get<SearchLogsResponse>('/log/search', {
     params: {
-      where__id__less_than,
-      order__id,
-      take,
+      page,
     },
   });
 }

@@ -11,21 +11,25 @@ function LogList() {
   const { data, fetchNextPage, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchLogsResponse>
   >({
-    queryKey: ['log/search'],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryKey: ['author/search'],
+    queryFn: async ({ pageParam = 1 }) => {
       return await searchLogs({
-        where__id__less_than: pageParam as number,
-        order__id: 'DESC',
-        take: 20,
+        page: pageParam as number,
       });
     },
-    // TODO: fix this
-    initialPageParam: 999999999,
+    initialPageParam: 1,
     getNextPageParam: param => {
-      return param.data.cursor.after;
+      const nextParam = param.data.links.next;
+      const query = nextParam?.split('?')[1];
+      const pageParam = query
+        ?.split('&')
+        .find(q => q.startsWith('page'))
+        ?.split('=')[1];
+
+      return pageParam;
     },
-    placeholderData: keepPreviousData,
     refetchOnMount: 'always',
+    placeholderData: keepPreviousData,
   });
 
   const logs = useMemo(

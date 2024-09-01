@@ -35,8 +35,6 @@ export default function AuthorCommentList() {
 
   const authorCommentSort = useAtomValue(authorCommentSortAtom);
 
-  console.log({ authorCommentSort });
-
   const {
     data,
     fetchNextPage,

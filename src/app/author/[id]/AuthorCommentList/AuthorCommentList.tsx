@@ -35,6 +35,8 @@ export default function AuthorCommentList() {
 
   const authorCommentSort = useAtomValue(authorCommentSortAtom);
 
+  console.log({ authorCommentSort });
+
   const {
     data,
     fetchNextPage,
@@ -42,7 +44,7 @@ export default function AuthorCommentList() {
     isFetching,
     refetch: refetchSearchAuthorComments,
   } = useInfiniteQuery<AxiosResponse<SearchAuthorCommentsResponse>>({
-    queryKey: ['author-comment/search'],
+    queryKey: ['author-comment/search', authorCommentSort],
     queryFn: async ({ pageParam = 1 }) => {
       return await searchAuthorComments({
         authorId,

@@ -42,7 +42,7 @@ export default function OriginalWorkCommentList() {
     isFetching,
     refetch: refetchSearchOriginalWorkComments,
   } = useInfiniteQuery<AxiosResponse<SearchOriginalWorkCommentsResponse>>({
-    queryKey: ['original-work-comment/search'],
+    queryKey: ['original-work-comment/search', authorCommentSort],
     queryFn: async ({ pageParam = 1 }) => {
       return await searchOriginalWorkComments({
         originalWorkId,

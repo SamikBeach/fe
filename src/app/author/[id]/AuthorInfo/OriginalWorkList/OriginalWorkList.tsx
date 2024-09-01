@@ -6,14 +6,23 @@ import {
   OriginalWorkItemSkeleton,
 } from '@components/original_work/OriginalWorkItem';
 import { useParams } from 'next/navigation';
+import { useAtomValue } from 'jotai';
+import { authorOriginalWorkSortAtom } from '@atoms/sort';
 
 export default function OriginalWorkList() {
+  const authorOriginalWorkSort = useAtomValue(authorOriginalWorkSortAtom);
+
   const params = useParams();
   const authorId = Number(params.id);
 
   const { data: originalWorks = [], isLoading } = useQuery({
-    queryKey: ['original-work', authorId],
-    queryFn: () => searchOriginalWorks({ authorId }),
+    queryKey: ['original-work', authorId, authorOriginalWorkSort],
+    queryFn: () =>
+      searchOriginalWorks({
+        authorId,
+        limit: 300,
+        sort: authorOriginalWorkSort,
+      }),
     select: data => data.data.data,
   });
 

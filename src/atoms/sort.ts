@@ -10,3 +10,5 @@ export const originalWorkSortAtom = atom<OriginalWorkSort>('top_likes');
 export const authorCommentSortAtom = atom<CommentSort>('top_likes');
 
 export const originalWorkCommentSortAtom = atom<CommentSort>('top_likes');
+
+export const authorOriginalWorkSortAtom = atom<OriginalWorkSort>('top_likes');

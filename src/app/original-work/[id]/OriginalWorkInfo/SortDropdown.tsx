@@ -7,7 +7,7 @@ import { css } from 'styled-system/css';
 const SORT_OPTIONS: { label: string; value: CommentSort }[] = [
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Latest', value: 'latest' },
+  { label: 'Newest', value: 'newest' },
 ];
 
 export default function SortDropdown() {

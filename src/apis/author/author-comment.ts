@@ -1,3 +1,4 @@
+import { SearchResponse } from '@apis/common';
 import api from '@apis/config';
 import { CommentServerModel, CommentSort } from '@models/comment';
 
@@ -11,35 +12,39 @@ export function getAllAuthorComments({ authorId }: GetAllCommentsRequest) {
   return api.get<GetAllCommentsResponse>(`/author-comment/${authorId}`);
 }
 
-export interface SearchAuthorsCommentsRequest {
-  where__id__more_than?: number;
+interface SearchAuthorCommentsRequest {
   authorId: number;
-  take?: number;
-  sort?: CommentSort;
+  page?: number;
+  sort: CommentSort;
 }
 
-export interface SearchAuthorCommentsResponse {
-  cursor: {
-    after: number | null;
-  };
-  count: number;
-  next: string | null;
-  data: CommentServerModel[];
+export interface SearchAuthorCommentsResponse
+  extends SearchResponse<CommentServerModel> {}
+
+function getSortBy(sort?: CommentSort) {
+  switch (sort) {
+    case 'top_likes':
+      return 'like_count:DESC';
+    case 'top_comments':
+      return 'comment_count:DESC';
+    case 'newest':
+      return 'id:DESC';
+    default:
+      return 'like_count:DESC';
+  }
 }
 
 export function searchAuthorComments({
   authorId,
-  where__id__more_than,
+  page,
   sort,
-  take,
-}: SearchAuthorsCommentsRequest) {
+}: SearchAuthorCommentsRequest) {
   return api.get<SearchAuthorCommentsResponse>(
     `/author-comment/${authorId}/search`,
     {
       params: {
-        where__id__more_than,
-        sort,
-        take,
+        sortBy: getSortBy(sort),
+        page,
       },
     }
   );

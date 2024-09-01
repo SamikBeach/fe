@@ -21,8 +21,9 @@ import { useParams } from 'next/navigation';
 import OriginalWorkCommentItemSkeleton from './OriginalWorkCommentItemSkeleton';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { HStack } from 'styled-system/jsx';
-import OriginalWorkCommentSortDropdown from './AuthorCommentSortDropdown';
+import OriginalWorkCommentSortDropdown from './OriginalWorkCommentSortDropdown';
 import { AxiosResponse } from 'axios';
+import { originalWorkCommentSortAtom } from '@atoms/sort';
 
 export default function OriginalWorkCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -32,6 +33,8 @@ export default function OriginalWorkCommentList() {
 
   const currentUser = useAtomValue(currentUserAtom);
 
+  const authorCommentSort = useAtomValue(originalWorkCommentSortAtom);
+
   const {
     data,
     fetchNextPage,
@@ -39,21 +42,27 @@ export default function OriginalWorkCommentList() {
     isFetching,
     refetch: refetchSearchOriginalWorkComments,
   } = useInfiniteQuery<AxiosResponse<SearchOriginalWorkCommentsResponse>>({
-    queryKey: ['original-work/search', originalWorkId],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryKey: ['original-work-comment/search'],
+    queryFn: async ({ pageParam = 1 }) => {
       return await searchOriginalWorkComments({
-        where__id__more_than: pageParam as number,
-        // order__id: 'DESC',
-        take: 10,
         originalWorkId,
+        sort: authorCommentSort,
+        page: pageParam as number,
       });
     },
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: param => {
-      return param.data.cursor.after;
+      const nextParam = param.data.links.next;
+      const query = nextParam?.split('?')[1];
+      const pageParam = query
+        ?.split('&')
+        .find(q => q.startsWith('page'))
+        ?.split('=')[1];
+
+      return pageParam;
     },
-    placeholderData: keepPreviousData,
     refetchOnMount: 'always',
+    placeholderData: keepPreviousData,
   });
 
   const comments = useMemo(

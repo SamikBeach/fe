@@ -1,3 +1,4 @@
+import { SearchResponse } from '@apis/common';
 import api from '@apis/config';
 import { CommentServerModel, CommentSort } from '@models/comment';
 
@@ -15,35 +16,39 @@ export function getAllOriginalWorkComments({
   );
 }
 
-export interface SearchOriginalWorkCommentsRequest {
-  where__id__more_than?: number;
+interface SearchOriginalWorkCommentsRequest {
   originalWorkId: number;
-  take?: number;
-  sort?: CommentSort;
+  page?: number;
+  sort: CommentSort;
 }
 
-export interface SearchOriginalWorkCommentsResponse {
-  cursor: {
-    after: number | null;
-  };
-  count: number;
-  next: string | null;
-  data: CommentServerModel[];
+export interface SearchOriginalWorkCommentsResponse
+  extends SearchResponse<CommentServerModel> {}
+
+function getSortBy(sort?: CommentSort) {
+  switch (sort) {
+    case 'top_likes':
+      return 'like_count:DESC';
+    case 'top_comments':
+      return 'comment_count:DESC';
+    case 'newest':
+      return 'id:DESC';
+    default:
+      return 'like_count:DESC';
+  }
 }
 
 export function searchOriginalWorkComments({
   originalWorkId,
-  where__id__more_than,
+  page,
   sort,
-  take,
 }: SearchOriginalWorkCommentsRequest) {
   return api.get<SearchOriginalWorkCommentsResponse>(
     `/original-work-comment/${originalWorkId}/search`,
     {
       params: {
-        where__id__more_than,
-        sort,
-        take,
+        sortBy: getSortBy(sort),
+        page,
       },
     }
   );

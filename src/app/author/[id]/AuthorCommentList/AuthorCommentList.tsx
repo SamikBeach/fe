@@ -23,6 +23,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { HStack } from 'styled-system/jsx';
 import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 import { AxiosResponse } from 'axios';
+import { authorCommentSortAtom } from '@atoms/sort';
 
 export default function AuthorCommentList() {
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -32,6 +33,8 @@ export default function AuthorCommentList() {
 
   const currentUser = useAtomValue(currentUserAtom);
 
+  const authorCommentSort = useAtomValue(authorCommentSortAtom);
+
   const {
     data,
     fetchNextPage,
@@ -39,21 +42,27 @@ export default function AuthorCommentList() {
     isFetching,
     refetch: refetchSearchAuthorComments,
   } = useInfiniteQuery<AxiosResponse<SearchAuthorCommentsResponse>>({
-    queryKey: ['author/search', authorId],
-    queryFn: async ({ pageParam = 0 }) => {
+    queryKey: ['author-comment/search'],
+    queryFn: async ({ pageParam = 1 }) => {
       return await searchAuthorComments({
-        where__id__more_than: pageParam as number,
-        // order__id: 'DESC',
-        take: 10,
         authorId,
+        sort: authorCommentSort,
+        page: pageParam as number,
       });
     },
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: param => {
-      return param.data.cursor.after;
+      const nextParam = param.data.links.next;
+      const query = nextParam?.split('?')[1];
+      const pageParam = query
+        ?.split('&')
+        .find(q => q.startsWith('page'))
+        ?.split('=')[1];
+
+      return pageParam;
     },
-    placeholderData: keepPreviousData,
     refetchOnMount: 'always',
+    placeholderData: keepPreviousData,
   });
 
   const comments = useMemo(

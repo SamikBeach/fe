@@ -1,18 +1,20 @@
+import { originalWorkCommentSortAtom } from '@atoms/sort';
 import { CommentSort } from '@models/comment';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
+import { useAtom } from 'jotai';
 import { capitalize } from 'lodash';
-import { useState } from 'react';
 import { css } from 'styled-system/css';
 
 const SORT_OPTIONS: { label: string; value: CommentSort }[] = [
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Latest', value: 'latest' },
+  { label: 'Newest', value: 'newest' },
 ];
 
 export default function OriginalWorkCommentSortDropdown() {
-  const [originalWorkCommentSort, setOriginalWorkCommentSort] =
-    useState('top_likes');
+  const [originalWorkCommentSort, setOriginalWorkCommentSort] = useAtom(
+    originalWorkCommentSortAtom
+  );
 
   return (
     <DropdownMenu.Root>

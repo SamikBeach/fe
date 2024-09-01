@@ -11,7 +11,7 @@ function LogList() {
   const { data, fetchNextPage, isLoading } = useInfiniteQuery<
     AxiosResponse<SearchLogsResponse>
   >({
-    queryKey: ['author/search'],
+    queryKey: ['log/search'],
     queryFn: async ({ pageParam = 1 }) => {
       return await searchLogs({
         page: pageParam as number,

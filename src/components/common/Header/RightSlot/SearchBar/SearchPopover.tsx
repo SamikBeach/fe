@@ -1,7 +1,7 @@
 import { searchAuthors } from '@apis/author';
 import { searchOriginalWorks } from '@apis/original-work';
 import { Avatar, Popover, Spinner, Text } from '@radix-ui/themes';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -28,6 +28,7 @@ function SearchPopover({
     queryFn: () => searchAuthors({ keyword: searchValue, limit: 5 }),
     enabled: searchValue !== '',
     select: response => response.data.data,
+    placeholderData: keepPreviousData,
   });
 
   const { data: originalWorks = [], isLoading: isLoadingOriginalWorks } =
@@ -36,6 +37,7 @@ function SearchPopover({
       queryFn: () => searchOriginalWorks({ keyword: searchValue, limit: 5 }),
       enabled: searchValue !== '',
       select: response => response.data.data,
+      placeholderData: keepPreviousData,
     });
 
   const isLoading = isLoadingAuthors || isLoadingOriginalWorks;

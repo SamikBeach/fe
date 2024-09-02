@@ -54,7 +54,6 @@ export function searchAuthors({
       search: keyword === '' ? undefined : keyword,
       ['filter.era_id']: eraId,
       sortBy: getSortBy(sort),
-      searchBy: ['title', 'title_in_eng', 'title_in_kor', 'author.name'],
       page,
       limit,
     },

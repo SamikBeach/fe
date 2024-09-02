@@ -24,11 +24,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
   return (
     <HStack gap="20px">
       <Link href={`/original-work/${originalWork.id}`}>
-        <Avatar
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-          fallback="폴백"
-          size="7"
-        />
+        <Avatar fallback={title[0]} size="7" />
       </Link>
       <VStack alignItems="start" gap="0">
         <VStack alignItems="start" gap="0">

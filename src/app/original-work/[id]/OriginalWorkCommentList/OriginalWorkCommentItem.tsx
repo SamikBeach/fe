@@ -34,7 +34,7 @@ export default function OriginalWorkCommentItem({
 }: Props) {
   const commentEditorWrapperRef = useRef<HTMLDivElement>(null);
 
-  const { id, user } = commentProps;
+  const { id, user, comment_count } = commentProps;
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -105,6 +105,7 @@ export default function OriginalWorkCommentItem({
   } = useQuery({
     queryKey: ['originalWork-comment', id],
     queryFn: () => getAllOriginalWorkSubCommentsByCommentId({ commentId: id }),
+    enabled: showSubComments,
     select: response => response.data,
   });
 
@@ -177,7 +178,7 @@ export default function OriginalWorkCommentItem({
           onEdit={() => setIsEditing(true)}
           onDelete={deleteComment}
           likeCount={originalWorkCommentAllLikes}
-          subCommentCount={subComments.length}
+          subCommentCount={comment_count}
           myLikeExist={originalWorkCommentLike?.isExist ?? false}
           isShowSubComments={showSubComments}
           user={user}

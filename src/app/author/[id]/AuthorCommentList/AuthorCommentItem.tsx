@@ -34,7 +34,7 @@ export default function AuthorCommentItem({
 }: Props) {
   const commentEditorWrapperRef = useRef<HTMLDivElement>(null);
 
-  const { id, user } = commentProps;
+  const { id, user, comment_count } = commentProps;
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -99,6 +99,7 @@ export default function AuthorCommentItem({
   } = useQuery({
     queryKey: ['author-comment', id],
     queryFn: () => getAllAuthorSubCommentsByCommentId({ commentId: id }),
+    enabled: showSubComments,
     select: response => response.data,
   });
 
@@ -171,7 +172,7 @@ export default function AuthorCommentItem({
           onEdit={() => setIsEditing(true)}
           onDelete={deleteComment}
           likeCount={authorCommentAllLikes}
-          subCommentCount={subComments.length}
+          subCommentCount={comment_count}
           myLikeExist={authorCommentLike?.isExist ?? false}
           isShowSubComments={showSubComments}
           user={user}

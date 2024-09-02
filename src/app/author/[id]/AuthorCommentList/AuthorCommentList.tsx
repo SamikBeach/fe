@@ -141,8 +141,7 @@ export default function AuthorCommentList() {
               key={comment.id}
               authorId={authorId}
               comment={comment}
-              onDelete={refetchSearchAuthorComments}
-              onEdit={refetchSearchAuthorComments}
+              onUpdate={refetchSearchAuthorComments}
             />
           ))
         )}

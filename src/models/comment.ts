@@ -10,6 +10,7 @@ export interface CommentServerModel {
   like_count: number;
   comment_count: number;
   sub_comments?: CommentServerModel[];
+  liked_users?: UserServerModel[];
   created_at: Date;
   updated_at: Date;
 }

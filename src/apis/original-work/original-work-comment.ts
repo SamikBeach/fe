@@ -31,7 +31,7 @@ function getSortBy(sort?: CommentSort) {
       return 'like_count:DESC';
     case 'top_comments':
       return 'comment_count:DESC';
-    case 'newest':
+    case 'newest_first':
       return 'id:DESC';
     default:
       return 'like_count:DESC';

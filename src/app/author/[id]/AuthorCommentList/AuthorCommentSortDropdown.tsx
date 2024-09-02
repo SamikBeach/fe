@@ -8,7 +8,7 @@ import { css } from 'styled-system/css';
 const SORT_OPTIONS: { label: string; value: CommentSort }[] = [
   { label: 'Top likes', value: 'top_likes' },
   { label: 'Top comments', value: 'top_comments' },
-  { label: 'Newest', value: 'newest' },
+  { label: 'Newest first', value: 'newest_first' },
 ];
 
 export default function AuthorCommentSortDropdown() {

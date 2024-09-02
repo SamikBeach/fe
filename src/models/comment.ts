@@ -13,4 +13,4 @@ export interface CommentServerModel {
   updated_at: Date;
 }
 
-export type CommentSort = 'top_likes' | 'top_comments' | 'newest';
+export type CommentSort = 'top_likes' | 'top_comments' | 'newest_first';

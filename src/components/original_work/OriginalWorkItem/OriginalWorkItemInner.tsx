@@ -2,6 +2,7 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
+import { getPublicationDateText } from '@utils/original-work';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -11,15 +12,8 @@ interface Props {
 }
 
 export default function OringinalWorkItemInner({ originalWork }: Props) {
-  const {
-    title,
-    title_in_eng,
-    author,
-    publication_date,
-    publication_date_is_bc,
-    like_count,
-    comment_count,
-  } = originalWork;
+  const { title, title_in_eng, author, like_count, comment_count } =
+    originalWork;
 
   return (
     <HStack gap="20px">
@@ -80,8 +74,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
             </Link>
           </Tooltip>
           <Text size="2" color="gray">
-            {publication_date_is_bc === 1 ? 'BC' : ''}
-            {publication_date}
+            {getPublicationDateText({ originalWork })}
           </Text>
         </VStack>
 

@@ -10,6 +10,10 @@ export interface OriginalWorkServerModel {
   title_in_eng?: string | null;
   publication_date?: string | null;
   publication_date_is_bc?: 0 | 1 | null;
+  posthumous?: 0 | 1 | null;
+  circa?: 0 | 1 | null;
+  century?: number | null;
+  s?: 0 | 1 | null;
   author: AuthorServerModel;
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];

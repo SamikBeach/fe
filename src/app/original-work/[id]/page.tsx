@@ -8,7 +8,7 @@ export default function OriginalWorkPage() {
     <HStack
       alignItems="start"
       justify="center"
-      className={css({ width: '100%' })}
+      className={css({ width: '100%', minWidth: '1240px' })}
     >
       <OriginalWorkInfo height="100%" />
       <OriginalWorkCommentList />

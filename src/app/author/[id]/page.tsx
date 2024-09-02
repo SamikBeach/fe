@@ -8,7 +8,7 @@ export default function AuthorPage() {
     <HStack
       alignItems="start"
       justify="center"
-      className={css({ width: '100%' })}
+      className={css({ width: '100%', minWidth: '1240px' })}
     >
       <AuthorInfo height="100%" />
       <AuthorCommentList />

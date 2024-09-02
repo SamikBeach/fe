@@ -141,8 +141,7 @@ export default function OriginalWorkCommentList() {
               key={comment.id}
               originalWorkId={originalWorkId}
               comment={comment}
-              onDelete={refetchSearchOriginalWorkComments}
-              onEdit={refetchSearchOriginalWorkComments}
+              onUpdate={refetchSearchOriginalWorkComments}
             />
           ))
         )}

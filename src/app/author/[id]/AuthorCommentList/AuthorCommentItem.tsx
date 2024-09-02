@@ -6,8 +6,6 @@ import {
   addAuthorCommentLike,
   deleteAuthorComment,
   getAllAuthorSubCommentsByCommentId,
-  getAuthorCommentLikeCount,
-  getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
   updateAuthorComment,
 } from '@apis/author';
@@ -81,22 +79,6 @@ export default function AuthorCommentItem({
       onUpdate();
     },
   });
-
-  // const { refetch: refetchAuthorCommentLike } = useQuery({
-  //   queryKey: ['author-comment-like', id],
-  //   queryFn: () =>
-  //     getMyAuthorCommentLikeExist({ authorCommentId: id, userId: 1 }),
-  //   select: response => response.data,
-  // });
-
-  // const {
-  //   data: authorCommentAllLikes = 0,
-  //   refetch: refetchAuthorCommentAllLikes,
-  // } = useQuery({
-  //   queryKey: ['author-comment-like/count', id],
-  //   queryFn: () => getAuthorCommentLikeCount({ authorCommentId: id }),
-  //   select: response => response.data.count,
-  // });
 
   const {
     data: subComments = [],

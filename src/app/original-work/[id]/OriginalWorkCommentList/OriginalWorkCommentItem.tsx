@@ -6,8 +6,6 @@ import {
   addOriginalWorkCommentLike,
   deleteOriginalWorkComment,
   getAllOriginalWorkSubCommentsByCommentId,
-  getOriginalWorkCommentLikeCount,
-  getMyOriginalWorkCommentLikeExist,
   removeOriginalWorkCommentLike,
   updateOriginalWorkComment,
 } from '@apis/original-work';
@@ -22,25 +20,33 @@ import { css } from 'styled-system/css';
 interface Props {
   originalWorkId: number;
   comment: CommentServerModel;
-  onDelete: () => void;
-  onEdit: () => void;
+  onUpdate: () => void;
 }
 
 export default function OriginalWorkCommentItem({
   originalWorkId,
   comment: commentProps,
-  onDelete,
-  onEdit,
+  onUpdate,
 }: Props) {
   const commentEditorWrapperRef = useRef<HTMLDivElement>(null);
 
-  const { id, user, comment_count } = commentProps;
+  const {
+    id,
+    user,
+    like_count,
+    comment_count,
+    liked_users = [],
+  } = commentProps;
 
   const [isEditing, setIsEditing] = useState(false);
 
   const [showSubComments, setShowSubComments] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
+
+  const myLikeExist = liked_users.some(
+    likedUser => likedUser.id === currentUser?.id
+  );
 
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
@@ -54,8 +60,7 @@ export default function OriginalWorkCommentItem({
       });
     },
     onSuccess: () => {
-      refetchOriginalWorkCommentLike();
-      refetchOriginalWorkCommentAllLikes();
+      onUpdate();
     },
   });
 
@@ -71,32 +76,8 @@ export default function OriginalWorkCommentItem({
       });
     },
     onSuccess: () => {
-      refetchOriginalWorkCommentLike();
-      refetchOriginalWorkCommentAllLikes();
+      onUpdate();
     },
-  });
-
-  const {
-    data: originalWorkCommentLike,
-    refetch: refetchOriginalWorkCommentLike,
-  } = useQuery({
-    queryKey: ['originalWork-comment-like', id],
-    queryFn: () =>
-      getMyOriginalWorkCommentLikeExist({
-        originalWorkCommentId: id,
-        userId: 1,
-      }),
-    select: response => response.data,
-  });
-
-  const {
-    data: originalWorkCommentAllLikes = 0,
-    refetch: refetchOriginalWorkCommentAllLikes,
-  } = useQuery({
-    queryKey: ['originalWork-comment-like/count', id],
-    queryFn: () =>
-      getOriginalWorkCommentLikeCount({ originalWorkCommentId: id }),
-    select: response => response.data.count,
   });
 
   const {
@@ -138,7 +119,7 @@ export default function OriginalWorkCommentItem({
       });
     },
     onSuccess: () => {
-      onDelete();
+      onUpdate();
     },
   });
 
@@ -155,7 +136,7 @@ export default function OriginalWorkCommentItem({
     },
     onSuccess: () => {
       setIsEditing(false);
-      onEdit();
+      onUpdate();
     },
   });
 
@@ -169,17 +150,15 @@ export default function OriginalWorkCommentItem({
         />
       ) : (
         <CommentItem
-          onClickLike={() =>
-            originalWorkCommentLike?.isExist ? removeLike() : addLike()
-          }
+          onClickLike={() => (myLikeExist ? removeLike() : addLike())}
           onClickToggleShowSubComments={() => {
             setShowSubComments(prev => !prev);
           }}
           onEdit={() => setIsEditing(true)}
           onDelete={deleteComment}
-          likeCount={originalWorkCommentAllLikes}
+          likeCount={like_count}
           subCommentCount={comment_count}
-          myLikeExist={originalWorkCommentLike?.isExist ?? false}
+          myLikeExist={myLikeExist}
           isShowSubComments={showSubComments}
           user={user}
           comment={commentProps}

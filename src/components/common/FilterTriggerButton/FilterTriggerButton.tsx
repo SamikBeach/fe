@@ -1,6 +1,6 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Button, ChevronDownIcon } from '@radix-ui/themes';
-import { capitalize, isNil } from 'lodash';
+import { isNil } from 'lodash';
 import { forwardRef } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
@@ -25,7 +25,7 @@ const FilterTriggerButton = forwardRef<HTMLButtonElement, Props>(function (
         gap: '4px',
       })}
     >
-      {isNil(value) ? label : capitalize(value)}
+      {isNil(value) ? label : value}
       {isNil(value) ? (
         <ChevronDownIcon />
       ) : (

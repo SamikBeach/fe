@@ -25,7 +25,9 @@ export default function EraFilter() {
       <DropdownMenu.Trigger>
         <div>
           <FilterTriggerButton
-            value={eras.find(era => era.id === authorFilter.eraId)?.value}
+            value={capitalize(
+              eras.find(era => era.id === authorFilter.eraId)?.value
+            )}
             label="Era"
             onClear={() => setAuthorFilter(prev => ({ ...prev, eraId: null }))}
           />

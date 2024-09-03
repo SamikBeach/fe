@@ -21,6 +21,7 @@ export default function AuthorItemInner({ author }: Props) {
     original_works,
     like_count,
     comment_count,
+    edition_count,
   } = author;
 
   return (
@@ -72,7 +73,7 @@ export default function AuthorItemInner({ author }: Props) {
               {original_works?.length} original works
             </Text>
             <Text size="2" color="gray">
-              330 editions
+              {edition_count} editions
             </Text>
           </HStack>
         </VStack>

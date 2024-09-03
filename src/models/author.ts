@@ -18,6 +18,7 @@ export interface AuthorServerModel {
   comments?: CommentServerModel[];
   like_count: number;
   comment_count: number;
+  edition_count?: number;
 }
 
 export type AuthorSort =

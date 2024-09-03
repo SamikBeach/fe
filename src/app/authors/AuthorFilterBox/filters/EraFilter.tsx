@@ -4,7 +4,7 @@ import { FilterTriggerButton } from '@components/common/FilterTriggerButton';
 import { DropdownMenu } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { capitalize } from 'lodash';
+import { capitalize, isNil } from 'lodash';
 import { css } from 'styled-system/css';
 
 export default function EraFilter() {
@@ -20,14 +20,14 @@ export default function EraFilter() {
       })),
   });
 
+  const value = eras.find(era => era.id === authorFilter.eraId)?.value;
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <div>
           <FilterTriggerButton
-            value={capitalize(
-              eras.find(era => era.id === authorFilter.eraId)?.value
-            )}
+            value={isNil(value) ? null : capitalize(value)}
             label="Era"
             onClear={() => setAuthorFilter(prev => ({ ...prev, eraId: null }))}
           />

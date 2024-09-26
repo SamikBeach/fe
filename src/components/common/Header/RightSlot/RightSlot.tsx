@@ -1,35 +1,22 @@
 import { isLoggedInAtom } from '@atoms/auth';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
 import { SearchBar } from './SearchBar';
-import { useGoogleLogin } from '@react-oauth/google';
-import { useMutation } from '@tanstack/react-query';
-import { loginWithGoogle } from '@apis/auth';
-import api from '@apis/config';
 import { Button } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import Google from '@svg/google';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+const BUTTONS = [
+  { href: '/login', label: 'Log in' },
+  { href: '/sign-up', label: 'Sign up' },
+];
 
 export default function RightSlot() {
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const pathname = usePathname();
 
-  const { mutate } = useMutation({
-    mutationFn: loginWithGoogle,
-    onSuccess: ({ data }) => {
-      api.defaults.headers.common['Authorization'] =
-        `Bearer ${data.accessToken}`;
-
-      setIsLoggedIn(true);
-    },
-  });
-
-  const login = useGoogleLogin({
-    onSuccess: codeResponse => {
-      mutate({ code: codeResponse.code });
-    },
-    flow: 'auth-code',
-  });
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
 
   return (
     <HStack gap="20px">
@@ -37,17 +24,22 @@ export default function RightSlot() {
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (
-        <Button
-          variant="outline"
-          className={css({
-            cursor: 'pointer',
-            color: 'black',
-            fontWeight: 'medium',
-          })}
-          onClick={login}
-        >
-          Sign in with <Google width={14} height={14} />
-        </Button>
+        BUTTONS.map(({ href, label }) => (
+          <Button
+            key={href}
+            asChild
+            variant="ghost"
+            className={css({
+              color: 'black',
+              fontWeight: 'medium',
+              backgroundColor: pathname.startsWith(href)
+                ? 'gray.100'
+                : undefined,
+            })}
+          >
+            <Link href={href}>{label}</Link>
+          </Button>
+        ))
       )}
     </HStack>
   );

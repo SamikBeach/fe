@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
-import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
+import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
 import { Avatar, Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';

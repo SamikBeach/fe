@@ -16,7 +16,7 @@ import { useMemo } from 'react';
 import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
-} from '@components/original_work/OriginalWorkItem';
+} from '@components/original-work/OriginalWorkItem';
 
 export default function OriginalWorkList() {
   const originalWorkFilter = useAtomValue(originalWorkFilterAtom);

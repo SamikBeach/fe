@@ -1,4 +1,4 @@
-import { OriginalWorkHoverCard } from '@components/original_work/OriginalWorkHoverCard';
+import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { Text } from '@radix-ui/themes';
 import Link from 'next/link';

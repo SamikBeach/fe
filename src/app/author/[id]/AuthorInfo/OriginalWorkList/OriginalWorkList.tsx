@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
-} from '@components/original_work/OriginalWorkItem';
+} from '@components/original-work/OriginalWorkItem';
 import { useParams } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { authorOriginalWorkSortAtom } from '@atoms/sort';

@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
-} from '@components/original_work/OriginalWorkItem';
+} from '@components/original-work/OriginalWorkItem';
 
 export default function OriginalWorkLikeHistory() {
   const params = useParams();

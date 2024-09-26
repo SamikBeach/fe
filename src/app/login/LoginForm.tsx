@@ -1,12 +1,13 @@
 'use client';
 
-import { loginEmail } from '@apis/auth';
+import { loginEmail, loginWithGoogle } from '@apis/auth';
 import api from '@apis/config';
 import { isLoggedInAtom } from '@atoms/auth';
 import { Logo } from '@components/common/Logo';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@radix-ui/react-icons';
 import { Card, Link, TextField, Text } from '@radix-ui/themes';
+import { useGoogleLogin } from '@react-oauth/google';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -39,6 +40,23 @@ export default function LoginForm() {
         error.message + '\n' + '\n' + (error.response?.data as any).message
       );
     },
+  });
+
+  const { mutate: mutateLoginWithGoogle } = useMutation({
+    mutationFn: loginWithGoogle,
+    onSuccess: ({ data }) => {
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      setIsLoggedIn(true);
+    },
+  });
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: codeResponse => {
+      mutateLoginWithGoogle({ code: codeResponse.code });
+    },
+    flow: 'auth-code',
   });
 
   if (isLoggedIn) {
@@ -110,7 +128,7 @@ export default function LoginForm() {
 
             <Button
               variant="outline"
-              onClick={() => mutate({ email, password })}
+              onClick={googleLogin}
               className={css({ width: '100%', color: 'black' })}
               size="2"
             >

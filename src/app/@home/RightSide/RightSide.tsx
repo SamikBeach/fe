@@ -3,7 +3,7 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
-import { OriginalWorkShort } from '@components/original_work/OriginalWorkShort';
+import { OriginalWorkShort } from '@components/original-work/OriginalWorkShort';
 import { useQuery } from '@tanstack/react-query';
 import { getTrendingAuthors } from '@apis/author';
 import { getTrendingOriginalWorks } from '@apis/original-work';

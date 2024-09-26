@@ -26,7 +26,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <NextTopLoader
           color="black"

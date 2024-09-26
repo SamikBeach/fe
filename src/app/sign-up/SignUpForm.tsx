@@ -95,7 +95,7 @@ export default function SignUpForm() {
                 size="3"
                 loading={isPending}
               >
-                <Text size="2">{t('title')}</Text>
+                <Text size="2">{t('sign-up')}</Text>
               </Button>
             </VStack>
 

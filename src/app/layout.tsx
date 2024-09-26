@@ -5,12 +5,12 @@ import { ReactNode } from 'react';
 import { css } from 'styled-system/css';
 import NextTopLoader from 'nextjs-toploader';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { cookies } from 'next/headers';
 
 import '@styles/globals.css';
 import SilentRefresh from './SilentRefresh';
-import { getLocale, getMessages } from 'next-intl/server';
+import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'samik beach',
@@ -22,11 +22,10 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const locale = await getLocale();
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html>
       <body>
         <NextTopLoader
           color="black"

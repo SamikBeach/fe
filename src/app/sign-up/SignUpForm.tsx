@@ -15,11 +15,13 @@ import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 import { Logo } from '@components/common/Logo';
+import { useTranslations } from 'next-intl';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
 
   const router = useRouter();
+  const t = useTranslations();
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
@@ -93,7 +95,7 @@ export default function SignUpForm() {
                 size="3"
                 loading={isPending}
               >
-                <Text size="2">Sign Up</Text>
+                <Text size="2">{t('HomePage.title')}</Text>
               </Button>
             </VStack>
 

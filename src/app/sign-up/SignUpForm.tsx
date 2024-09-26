@@ -21,7 +21,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState('');
 
   const router = useRouter();
-  const t = useTranslations();
+  const t = useTranslations('SignUp');
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
@@ -95,7 +95,7 @@ export default function SignUpForm() {
                 size="3"
                 loading={isPending}
               >
-                <Text size="2">{t('HomePage.title')}</Text>
+                <Text size="2">{t('title')}</Text>
               </Button>
             </VStack>
 

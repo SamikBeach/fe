@@ -7,14 +7,16 @@ import { Button } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const BUTTONS = [
-  { href: '/login', label: 'Log in' },
-  { href: '/sign-up', label: 'Sign up' },
+  { href: '/login', tKey: 'login' },
+  { href: '/sign-up', tKey: 'sign_up' },
 ];
 
 export default function RightSlot() {
   const pathname = usePathname();
+  const t = useTranslations('Common');
 
   const isLoggedIn = useAtomValue(isLoggedInAtom);
 
@@ -24,7 +26,7 @@ export default function RightSlot() {
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (
-        BUTTONS.map(({ href, label }) => (
+        BUTTONS.map(({ href, tKey }) => (
           <Button
             key={href}
             asChild
@@ -37,7 +39,7 @@ export default function RightSlot() {
                 : undefined,
             })}
           >
-            <Link href={href}>{label}</Link>
+            <Link href={href}>{t(tKey)}</Link>
           </Button>
         ))
       )}

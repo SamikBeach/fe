@@ -4,14 +4,17 @@ import { Logo } from '../../Logo';
 import { HStack } from 'styled-system/jsx';
 import Link from 'next/link';
 import MenuButton from './MenuButton';
+import { useTranslations } from 'next-intl';
 
 const MENU_ITEMS = [
-  { href: '/authors', label: 'Authors' },
-  { href: '/original-works', label: 'Original works' },
-  { href: '/editions', label: 'Editions' },
+  { href: '/authors', tKey: 'authors' },
+  { href: '/original-works', tKey: 'original_works' },
+  { href: '/editions', tKey: 'editions' },
 ];
 
 export default function LeftSlot() {
+  const t = useTranslations('Common');
+
   const pathname = usePathname();
 
   return (
@@ -21,7 +24,7 @@ export default function LeftSlot() {
       </Link>
 
       <HStack gap="30px">
-        {MENU_ITEMS.map(({ href, label }) => (
+        {MENU_ITEMS.map(({ href, tKey }) => (
           <MenuButton
             key={href}
             className={css({
@@ -30,7 +33,7 @@ export default function LeftSlot() {
                 : undefined,
             })}
           >
-            <Link href={href}>{label}</Link>
+            <Link href={href}>{t(tKey)}</Link>
           </MenuButton>
         ))}
       </HStack>

@@ -1,4 +1,12 @@
 {
+  "Common": {
+    "sign_up": "Sign up",
+    "login": "Log in"
+  },
+  "Home": {
+    "trending_now": "Trending Now",
+    "log_item_liked": "{{user}}님이 {{author}}을 좋아합니다."
+  },
   "SignUp": {
     "sign_up": "Sign up",
     "enter_email": "Please enter your email",
@@ -15,5 +23,6 @@
     "forgot_password": "Forgot your password?",
     "no_account": "No account?",
     "sign_up": "Sign up"
-  }
+  },
+  "see_more": "See more"
 }

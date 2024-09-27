@@ -5,6 +5,7 @@ import { LogServerModel } from '@models/log';
 import { Avatar, Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';
 import { isNil } from 'lodash';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { GiSecretBook } from 'react-icons/gi';
@@ -18,6 +19,8 @@ interface Props {
 }
 
 export default function LogItem({ log }: Props) {
+  const t = useTranslations();
+
   const {
     user,
     author_comment,
@@ -56,9 +59,9 @@ export default function LogItem({ log }: Props) {
       fontSize="14px"
       display="inline"
     >
-      <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '}
-      <BoldText>{user.name}</BoldText>{' '}
-      {isComment ? 'left a comment on' : 'likes'}{' '}
+      {/* <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '} */}
+      {/* <BoldText>{user.name}</BoldText>{' '} */}
+      {/* {isComment ? 'left a comment on' : 'likes'}{' '}
       {isAuthor && (
         <AuthorAvatar
           author={target_author}
@@ -66,7 +69,19 @@ export default function LogItem({ log }: Props) {
           className={css({ cursor: 'pointer' })}
           withName
         />
-      )}
+      )} */}
+      {t.rich('Home.log_item_liked', {
+        user: () => <BoldText>{user.name}</BoldText>,
+        author: () =>
+          isAuthor && (
+            <AuthorAvatar
+              author={target_author}
+              mb="4px"
+              className={css({ cursor: 'pointer' })}
+              withName
+            />
+          ),
+      })}
       {isOriginalWork && (
         <>
           {
@@ -135,7 +150,7 @@ export default function LogItem({ log }: Props) {
                   },
                 })}
               >
-                See more
+                {t('see_more')}
               </Button>
             </>
           ) : (

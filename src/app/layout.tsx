@@ -45,19 +45,19 @@ export default async function RootLayout({
             clientId={process.env.GOOGLE_OAUTH_CLIENT_ID ?? ''}
           >
             <ReactQueryProvider>
-              <main
-                className={css({
-                  bgColor: 'white',
-                })}
-              >
-                <SilentRefresh
-                  refreshToken={cookies().get('refreshToken')?.value}
-                />
-                <Header />
-                <NextIntlClientProvider messages={messages}>
+              <NextIntlClientProvider messages={messages}>
+                <main
+                  className={css({
+                    bgColor: 'white',
+                  })}
+                >
+                  <SilentRefresh
+                    refreshToken={cookies().get('refreshToken')?.value}
+                  />
+                  <Header />
                   {children}
-                </NextIntlClientProvider>
-              </main>
+                </main>
+              </NextIntlClientProvider>
             </ReactQueryProvider>
           </GoogleOAuthProvider>
           {/* <ThemePanel /> */}

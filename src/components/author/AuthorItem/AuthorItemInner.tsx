@@ -2,7 +2,9 @@ import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -23,6 +25,8 @@ export default function AuthorItemInner({ author }: Props) {
     comment_count,
     edition_count,
   } = author;
+
+  const t = useTranslations();
 
   return (
     <HStack gap="20px">
@@ -70,10 +74,10 @@ export default function AuthorItemInner({ author }: Props) {
           </HStack>
           <HStack>
             <Text size="2" color="gray">
-              {original_works?.length} original works
+              {original_works?.length} {t('Common.original_works')}
             </Text>
             <Text size="2" color="gray">
-              {edition_count} editions
+              {edition_count} {t('Common.editions')}
             </Text>
           </HStack>
         </VStack>

@@ -8,8 +8,11 @@ import { useQuery } from '@tanstack/react-query';
 import { getTrendingAuthors } from '@apis/author';
 import { getTrendingOriginalWorks } from '@apis/original-work';
 import RightSideSkeleton from './RightSideSkeleton';
+import { useTranslations } from 'next-intl';
 
 export default function RightSide() {
+  const t = useTranslations();
+
   const { data: trendingAuthors = [], isLoading: isLoadingTrendingAuthors } =
     useQuery({
       queryKey: ['author/trending'],
@@ -31,12 +34,14 @@ export default function RightSide() {
   return (
     <VStack minWidth="300px" position="sticky" top="0" pt="84px">
       <VStack gap="8px" width="100%" alignItems="start">
-        <Text className={css({ fontWeight: 'medium' })}>Trending Now</Text>
+        <Text className={css({ fontWeight: 'medium' })}>
+          {t('Home.trending_now')}
+        </Text>
         {isLoadingTrendingAuthors ? (
           <RightSideSkeleton />
         ) : (
           <Section>
-            <Text>Authors</Text>
+            <Text>{t('Common.authors')}</Text>
             {trendingAuthors.slice(0, 5).map(author => (
               <AuthorAvatar key={author.id} author={author} withName />
             ))}
@@ -46,7 +51,7 @@ export default function RightSide() {
           <RightSideSkeleton />
         ) : (
           <Section className={css({ gap: '2px' })}>
-            <Text>Original works</Text>
+            <Text>{t('Common.original_works')}</Text>
             {trendingOriginalWorks.slice(0, 5).map(originalWork => (
               <OriginalWorkShort
                 key={originalWork.id}

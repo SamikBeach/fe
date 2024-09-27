@@ -1,10 +1,19 @@
 {
   "SignUp": {
-    "sign-up": "Sign up",
-    "enter_email": "Enter email",
+    "sign_up": "Sign up",
+    "enter_email": "Please enter your email",
     "continue_with_google": "Continue with Google",
     "forgot_password": "Forgot your password?",
     "login": "Log in",
     "already_have_account": "Already have an account?"
+  },
+  "Login": {
+    "enter_email": "Please enter your email.",
+    "enter_password": "Please enter your password.",
+    "login": "Log in",
+    "continue_with_google": "Continue with Google",
+    "forgot_password": "Forgot your password?",
+    "no_account": "No account?",
+    "sign_up": "Sign up"
   }
 }

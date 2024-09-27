@@ -12,12 +12,15 @@ import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
 export default function LoginForm() {
+  const t = useTranslations('Login');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -87,7 +90,7 @@ export default function LoginForm() {
               <VStack width="100%">
                 <TextField.Root
                   type="text"
-                  placeholder="Enter email"
+                  placeholder={t('enter_email')}
                   onChange={e => setEmail(e.target.value)}
                   size="3"
                   className={css({
@@ -102,7 +105,7 @@ export default function LoginForm() {
 
                 <TextField.Root
                   type="password"
-                  placeholder="Enter password"
+                  placeholder={t('enter_password')}
                   onChange={e => setPassword(e.target.value)}
                   size="3"
                   className={css({
@@ -122,7 +125,7 @@ export default function LoginForm() {
                 size="3"
                 loading={isPending}
               >
-                <Text size="2">Log in</Text>
+                <Text size="2">{t('login')}</Text>
               </Button>
             </VStack>
 
@@ -133,20 +136,20 @@ export default function LoginForm() {
               size="2"
             >
               <Google width={16} height={16} />
-              Continue with Google
+              {t('continue_with_google')}
             </Button>
           </VStack>
 
           <VStack>
             <Link href="/login">
               <Text size="2" color="gray">
-                Forgot your password?
+                {t('forgot_password')}
               </Text>
             </Link>
 
             <HStack gap="4px">
               <Text size="2" color="gray">
-                No Account?
+                {t('no_account')}
               </Text>
               <Link href="/sign-up">
                 <Text
@@ -154,7 +157,7 @@ export default function LoginForm() {
                   weight="medium"
                   className={css({ color: 'black' })}
                 >
-                  Sign Up
+                  {t('sign_up')}
                 </Text>
               </Link>
             </HStack>

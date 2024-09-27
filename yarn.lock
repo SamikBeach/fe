@@ -2256,6 +2256,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/josa@npm:^3":
+  version: 3.0.5
+  resolution: "@types/josa@npm:3.0.5"
+  checksum: 10c0/08f5dc77686674cda8fc395cf9d98a32a42777d875478214762a469a30f306d4df9b7bd7b2cc341056b7d10d2eb095002827056d43f39bec569026e34b798777
+  languageName: node
+  linkType: hard
+
 "@types/js-cookie@npm:^3":
   version: 3.0.6
   resolution: "@types/js-cookie@npm:3.0.6"
@@ -3761,6 +3768,7 @@ __metadata:
     "@react-oauth/google": "npm:^0.12.1"
     "@tanstack/react-query": "npm:^5.44.0"
     "@types/base-64": "npm:^1"
+    "@types/josa": "npm:^3"
     "@types/js-cookie": "npm:^3"
     "@types/lodash": "npm:^4"
     "@types/node": "npm:^20.14.2"
@@ -3780,6 +3788,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.34.3"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     framer-motion: "npm:^11.3.31"
+    josa: "npm:^3.0.1"
     jotai: "npm:^2.8.3"
     lodash: "npm:^4.17.21"
     next: "npm:^14.2.3"
@@ -4658,6 +4667,22 @@ __metadata:
   version: 2.1.0
   resolution: "javascript-stringify@npm:2.1.0"
   checksum: 10c0/374e74ebff29b94de78da39daa6e530999c58a145aeb293dc21180c4584459b14d9e5721d9bc6ed4eba319c437ef0145c157c946b70ecddcff6668682a002bcc
+  languageName: node
+  linkType: hard
+
+"jongseong@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "jongseong@npm:0.4.2"
+  checksum: 10c0/2a0b909d01c5909ba8ccfcb2a122250794f9038500c26964005168047d76155c0ce3334eb26075929562ab0bad55d9344c20a4d656563d14f51b7a3f31ab74f8
+  languageName: node
+  linkType: hard
+
+"josa@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "josa@npm:3.0.1"
+  dependencies:
+    jongseong: "npm:^0.4.2"
+  checksum: 10c0/1c79d73f0d33e53373b6b646ede145085c8944ca5a6e78946a7101a545a4825f22eada3bd65c760ea0f15179c2b55e2960a05081d98e1c18fb46e909c731677f
   languageName: node
   linkType: hard
 

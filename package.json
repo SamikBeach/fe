@@ -11,6 +11,7 @@
   "devDependencies": {
     "@pandacss/dev": "^0.40.1",
     "@types/base-64": "^1",
+    "@types/josa": "^3",
     "@types/js-cookie": "^3",
     "@types/lodash": "^4",
     "@types/node": "^20.14.2",
@@ -42,6 +43,7 @@
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.31",
+    "josa": "^3.0.1",
     "jotai": "^2.8.3",
     "lodash": "^4.17.21",
     "next": "^14.2.3",

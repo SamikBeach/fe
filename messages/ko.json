@@ -1,5 +1,10 @@
 {
   "SignUp": {
-    "sign-up": "회원가입"
+    "sign-up": "회원가입",
+    "enter_email": "이메일을 입력해 주세요.",
+    "continue_with_google": "구글 계정으로 회원가입",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "login": "로그인",
+    "already_have_account": "이미 회원이신가요?"
   }
 }

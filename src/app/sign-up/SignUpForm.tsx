@@ -75,7 +75,7 @@ export default function SignUpForm() {
               <VStack width="100%">
                 <TextField.Root
                   type="text"
-                  placeholder="Enter email"
+                  placeholder={t('enter_email')}
                   onChange={e => setEmail(e.target.value)}
                   size="3"
                   className={css({
@@ -106,20 +106,20 @@ export default function SignUpForm() {
               size="2"
             >
               <Google width={16} height={16} />
-              Continue with Google
+              {t('continue_with_google')}
             </Button>
           </VStack>
 
           <VStack>
             <Link href="/login">
               <Text size="2" color="gray">
-                Forgot your password?
+                {t('forgot_password')}
               </Text>
             </Link>
 
             <HStack gap="4px">
               <Text size="2" color="gray">
-                Already have an account
+                {t('already_have_account')}
               </Text>
               <Link href="/login">
                 <Text
@@ -127,7 +127,7 @@ export default function SignUpForm() {
                   weight="medium"
                   className={css({ color: 'black' })}
                 >
-                  Log in
+                  {t('login')}
                 </Text>
               </Link>
             </HStack>

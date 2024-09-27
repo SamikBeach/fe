@@ -6,6 +6,13 @@
     "sign_up": "회원가입",
     "login": "로그인"
   },
+  "Home": {
+    "trending_now": "실시간 인기",
+    "log_item_author_like": "<User></User>님이 <Author></Author>을 좋아합니다.",
+    "log_item_author_comment": "<User></User>님이 <Author></Author>에 글을 남겼습니다.",
+    "log_item_original_work_like": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>를 좋아합니다.",
+    "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다."
+  },
   "SignUp": {
     "sign_up": "회원가입",
     "enter_email": "이메일을 입력해 주세요.",
@@ -22,10 +29,6 @@
     "forgot_password": "비밀번호를 잊으셨나요?",
     "no_account": "아직 계정이 없으신가요?",
     "sign_up": "회원가입"
-  },
-  "Home": {
-    "trending_now": "실시간 인기",
-    "log_item_liked": "<user></user>님이 <author></author>을 좋아합니다."
   },
   "see_more": "더 보기"
 }

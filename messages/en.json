@@ -5,7 +5,10 @@
   },
   "Home": {
     "trending_now": "Trending Now",
-    "log_item_liked": "{{user}}님이 {{author}}을 좋아합니다."
+    "log_item_author_like": "<User></User> likes <Author></Author>.",
+    "log_item_author_comment": "<User></User> left a comment on <Author></Author>.",
+    "log_item_original_work_like": "<User></User> likes <Author></Author>'s <OriginalWork></OriginalWork>.",
+    "log_item_original_work_comment": "<User></User> left a comment on <Author></Author>'s <OriginalWork></OriginalWork>."
   },
   "SignUp": {
     "sign_up": "Sign up",

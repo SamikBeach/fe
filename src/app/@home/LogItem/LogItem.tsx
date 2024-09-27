@@ -2,7 +2,7 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
-import { Avatar, Button } from '@radix-ui/themes';
+import { Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';
 import { isNil } from 'lodash';
 import { useTranslations } from 'next-intl';
@@ -47,42 +47,36 @@ export default function LogItem({ log }: Props) {
     addSuffix: true,
   }).replace('about ', '');
 
-  return (
-    <VStack
-      bgColor="white"
-      alignItems="start"
-      width="100%"
-      padding="16px"
-      borderRadius="8px"
-      border="1px solid"
-      borderColor="gray.200"
-      fontSize="14px"
-      display="inline"
-    >
-      {/* <Avatar size="2" fallback="B" radius="full" mb="4px" />{' '} */}
-      {/* <BoldText>{user.name}</BoldText>{' '} */}
-      {/* {isComment ? 'left a comment on' : 'likes'}{' '}
-      {isAuthor && (
+  const authorLikeText = t.rich('Home.log_item_author_like', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    Author: () =>
+      isAuthor && (
         <AuthorAvatar
           author={target_author}
           mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
-      )} */}
-      {t.rich('Home.log_item_liked', {
-        user: () => <BoldText>{user.name}</BoldText>,
-        author: () =>
-          isAuthor && (
-            <AuthorAvatar
-              author={target_author}
-              mb="4px"
-              className={css({ cursor: 'pointer' })}
-              withName
-            />
-          ),
-      })}
-      {isOriginalWork && (
+      ),
+  });
+
+  const authorCommentText = t.rich('Home.log_item_author_comment', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    Author: () =>
+      isAuthor && (
+        <AuthorAvatar
+          author={target_author}
+          mb="4px"
+          className={css({ cursor: 'pointer' })}
+          withName
+        />
+      ),
+  });
+
+  const originalWorkLikeText = t.rich('Home.log_item_original_work_like', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    OriginalWork: () =>
+      isOriginalWork && (
         <>
           {
             <OriginalWorkHoverCard.Root>
@@ -108,15 +102,79 @@ export default function LogItem({ log }: Props) {
               />
             </OriginalWorkHoverCard.Root>
           }
-          , an original work by{' '}
+        </>
+      ),
+    Author: () =>
+      isOriginalWork && (
+        <AuthorAvatar
+          author={target_original_work.author}
+          mb="4px"
+          className={css({ cursor: 'pointer' })}
+          withName
+        />
+      ),
+  });
+
+  const originalWorkCommentText = t.rich(
+    'Home.log_item_original_work_comment',
+    {
+      User: () => <BoldText>{user.name}</BoldText>,
+      OriginalWork: () =>
+        isOriginalWork && (
+          <>
+            {
+              <OriginalWorkHoverCard.Root>
+                <OriginalWorkHoverCard.Trigger>
+                  <span>
+                    <Link href={`/original-work/${target_original_work.id}`}>
+                      <GiSecretBook
+                        className={css({
+                          display: 'inline',
+                          marginBottom: '2px',
+                          cursor: 'pointer',
+                          color: 'gray.600',
+                        })}
+                        size="24px"
+                      />{' '}
+                      <BoldText>{target_original_work?.title}</BoldText>
+                    </Link>
+                  </span>
+                </OriginalWorkHoverCard.Trigger>
+                <OriginalWorkHoverCard.Content
+                  originalWork={target_original_work}
+                  side="top"
+                />
+              </OriginalWorkHoverCard.Root>
+            }
+          </>
+        ),
+      Author: () =>
+        isOriginalWork && (
           <AuthorAvatar
             author={target_original_work.author}
             mb="4px"
             className={css({ cursor: 'pointer' })}
             withName
           />
-        </>
-      )}{' '}
+        ),
+    }
+  );
+
+  return (
+    <VStack
+      bgColor="white"
+      alignItems="start"
+      width="100%"
+      padding="16px"
+      borderRadius="8px"
+      border="1px solid"
+      borderColor="gray.200"
+      fontSize="14px"
+      display="inline"
+    >
+      {isAuthor && (isComment ? authorCommentText : authorLikeText)}
+      {isOriginalWork &&
+        (isComment ? originalWorkCommentText : originalWorkLikeText)}{' '}
       <span className={css({ fontSize: '13px', color: 'gray.500' })}>
         {createdAt}
       </span>

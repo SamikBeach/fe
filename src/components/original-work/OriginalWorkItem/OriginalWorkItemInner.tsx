@@ -130,7 +130,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
           author={author}
           withName
           size="1"
-          textProps={{ size: '1', color: 'gray' }}
+          textPropss={{ size: '1', color: 'gray' }}
         />
 
         <HStack gap="8px">

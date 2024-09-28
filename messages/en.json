@@ -28,6 +28,19 @@
     "birth_date_oldest_first": "Birth Date (Oldest First)",
     "alphabetical": "Alphabetical"
   },
+  "OriginalWork": {
+    "field": "Field",
+    "philosophy": "Philosophy",
+    "author": "Author",
+    "editions": "Editions",
+    "search_original_works_placeholder": "Search original works and authors...",
+    "top_likes": "Top likes",
+    "top_comments": "Top comments",
+    "publication_date_newest_first": "Newest first",
+    "publication_date_oldest_first": "Oldest first",
+    "alphabetical": "Alphabetical",
+    "sort_by": "Sort by"
+  },
   "SignUp": {
     "sign_up": "Sign up",
     "enter_email": "Please enter your email",
@@ -44,12 +57,5 @@
     "forgot_password": "Forgot your password?",
     "no_account": "No account?",
     "sign_up": "Sign up"
-  },
-  "OriginalWork": {
-    "field": "Field",
-    "philosophy": "Philosophy",
-    "author": "Author",
-    "editions": "Editions",
-    "search_original_works_placeholder": "Search original works and authors..."
   }
 }

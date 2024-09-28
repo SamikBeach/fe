@@ -3,7 +3,7 @@ import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
 import { getPublicationDateText } from '@utils/original-work';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -13,6 +13,8 @@ interface Props {
 }
 
 export default function OringinalWorkItemInner({ originalWork }: Props) {
+  const t = useTranslations('OriginalWork');
+
   const locale = useLocale();
 
   const {
@@ -40,12 +42,14 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 maxWidth: '240px',
+                lineHeight: '19px',
               })}
             >
               <Text
                 size="3"
                 weight="bold"
                 className={css({
+                  lineHeight: '19px',
                   cursor: 'pointer',
                   _hover: {
                     textDecoration: 'underline',
@@ -65,6 +69,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 maxWidth: '240px',
+                lineHeight: '17px',
               })}
             >
               <Text
@@ -72,6 +77,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 weight="medium"
                 className={css({
                   color: 'gray.700',
+                  lineHeight: '17px',
 
                   cursor: 'pointer',
                   _hover: {
@@ -84,7 +90,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
             </Link>
           </Tooltip>
 
-          {/* {locale === 'ko' && (
+          {locale === 'ko' && (
             <Tooltip content={title}>
               <Link
                 href={`/original-work/${originalWork.id}`}
@@ -93,6 +99,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   maxWidth: '240px',
+                  lineHeight: '17px',
                 })}
               >
                 <Text
@@ -100,6 +107,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                   weight="medium"
                   className={css({
                     color: 'gray.700',
+                    lineHeight: '17px',
 
                     cursor: 'pointer',
                     _hover: {
@@ -111,10 +119,10 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 </Text>
               </Link>
             </Tooltip>
-          )} */}
+          )}
 
           <Text size="2" color="gray">
-            {getPublicationDateText({ originalWork })}
+            {getPublicationDateText({ originalWork, locale })}
           </Text>
         </VStack>
 
@@ -127,7 +135,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
 
         <HStack gap="8px">
           <Text size="2" color="gray">
-            25 editions
+            {t('editions')} 25
           </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">

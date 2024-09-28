@@ -2,28 +2,41 @@ import { OriginalWorkServerModel } from '@models/original-work';
 
 interface GetPublicationDateTextParams {
   originalWork: OriginalWorkServerModel;
+  locale?: string;
 }
 
 export function getPublicationDateText({
   originalWork,
+  locale = 'en',
 }: GetPublicationDateTextParams) {
   const { publication_date, publication_date_is_bc, century, circa, s } =
     originalWork;
 
-  const hasFromTo = publication_date?.includes('-');
+  // const hasFromTo = publication_date?.includes('-');
 
-  const prefixCirca = circa == 1 ? 'about ' : '';
-  const suffix =
-    publication_date_is_bc == 1 ? ' BCE' : century == 1 ? ' C' : '';
-  const suffixS = s == 1 ? 's' : '';
+  // const prefixCirca = circa == 1 ? (locale === 'ko' ? '약' : 'about ') : '';
+  // const prefix =
+  //   publication_date_is_bc == 1 && locale === 'ko' ? '기원전 ' : '';
 
-  if (hasFromTo) {
-    const splitPublicationDate = publication_date?.split('-');
-    const from = splitPublicationDate?.[0];
-    const to = splitPublicationDate?.[1];
+  // const suffix =
+  //   publication_date_is_bc == 1 && locale === 'en'
+  //     ? ' BCE'
+  //     : century == 1
+  //       ? ' C'
+  //       : '';
+  // const suffixS =
+  //   locale === 'ko' ? (s === 1 ? '년대' : '년') : s === 1 ? 's' : '';
 
-    return `${prefixCirca}${from}${suffix} - ${prefixCirca}${to}${suffix}`;
+  // if (hasFromTo) {
+  //   const splitPublicationDate = publication_date?.split('-');
+  //   const from = splitPublicationDate?.[0];
+  //   const to = splitPublicationDate?.[1];
+
+  //   return `${prefix}${prefixCirca}${from}${suffix}${suffixS} - ${prefix}${prefixCirca}${to}${suffix}${suffixS}`;
+  // }
+
+  // return `${prefix}${prefixCirca}${publication_date}${suffix}${suffixS}`;
+
+  if (locale === 'ko') {
   }
-
-  return `${prefixCirca}${publication_date}${suffix}${suffixS}`;
 }

@@ -8,7 +8,8 @@ export default function useRouter() {
 
   router.push = async (...args: Parameters<typeof push>) => {
     NProgress.start();
-    return push(...args);
+    push(...args);
+    NProgress.done();
   };
 
   return router;

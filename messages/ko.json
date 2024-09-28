@@ -51,6 +51,8 @@
   "OriginalWork": {
     "field": "분야",
     "philosophy": "철학",
-    "author": "저자"
+    "author": "저자",
+    "editions": "원전",
+    "search_original_works_placeholder": "원전, 저자 검색..."
   }
 }

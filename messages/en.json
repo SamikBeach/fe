@@ -48,6 +48,8 @@
   "OriginalWork": {
     "field": "Field",
     "philosophy": "Philosophy",
-    "author": "Author"
+    "author": "Author",
+    "editions": "Editions",
+    "search_original_works_placeholder": "Search original works and authors..."
   }
 }

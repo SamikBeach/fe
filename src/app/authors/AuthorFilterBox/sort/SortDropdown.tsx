@@ -2,7 +2,6 @@ import { authorSortAtom } from '@atoms/sort';
 import { AuthorSort } from '@models/author';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
-import { capitalize } from 'lodash';
 import { useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 

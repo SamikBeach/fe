@@ -25,8 +25,10 @@ export default function AuthorFilter() {
           id: author.id,
           value: locale === 'ko' ? author.name_in_kor : author.name,
         }))
-        .sort((a, b) => a.value.localeCompare(b.value)),
+        .sort((a, b) => a.value?.localeCompare(b.value)),
   });
+
+  console.log({ authors });
 
   return (
     <DropdownMenu.Root>

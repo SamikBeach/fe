@@ -9,8 +9,11 @@ import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
 } from '@components/original-work/OriginalWorkItem';
+import { useTranslations } from 'next-intl';
 
 export default function OriginalWorkLikeHistory() {
+  const t = useTranslations('Common');
+
   const params = useParams();
   const userId = Number(params.id);
 
@@ -26,7 +29,7 @@ export default function OriginalWorkLikeHistory() {
   return (
     <CategoryWrapper>
       <Text size="2" weight="medium">
-        Original works
+        {t('original_works')}
       </Text>
       <HStack gap="6px" flexWrap="wrap">
         {isLoading

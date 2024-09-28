@@ -7,8 +7,10 @@ import { css } from 'styled-system/css';
 import { getUserLikes } from '@apis/user';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 
 export default function AuthorLikeHistory() {
+  const t = useTranslations('Common');
   const params = useParams();
   const userId = Number(params.id);
 
@@ -24,7 +26,7 @@ export default function AuthorLikeHistory() {
   return (
     <CategoryWrapper>
       <Text size="2" weight="medium">
-        Authors
+        {t('authors')}
       </Text>
       <HStack gap="6px">
         {isLoading

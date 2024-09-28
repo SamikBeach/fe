@@ -3,12 +3,15 @@ import { HStack, styled } from 'styled-system/jsx';
 import { GiBlackBook } from 'react-icons/gi';
 import { Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
+import { useTranslations } from 'next-intl';
 
 export default function EditionLikeHistory() {
+  const t = useTranslations('Common');
+
   return (
     <CategoryWrapper>
       <Text size="2" weight="medium">
-        Editions
+        {t('editions')}
       </Text>
       <HStack gap="6px" flexWrap="wrap">
         {[

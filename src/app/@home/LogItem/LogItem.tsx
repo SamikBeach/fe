@@ -2,7 +2,7 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
-import { Button } from '@radix-ui/themes';
+import { Avatar, Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';
 import { getJosaPicker } from 'josa';
 import { isNil } from 'lodash';
@@ -13,6 +13,7 @@ import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
 import { ko, enUS } from 'date-fns/locale';
+import { EditionHoverCard } from '@components/edition/EditionHoverCard';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -28,16 +29,20 @@ export default function LogItem({ log }: Props) {
     user,
     author_comment,
     original_work_comment,
+    edition_comment,
     target_author,
     target_original_work,
+    target_edition,
     created_at,
   } = log;
 
   const isAuthorComment = !isNil(author_comment);
   const isOriginalWorkComment = !isNil(original_work_comment);
-  const isComment = isAuthorComment || isOriginalWorkComment;
+  const isEditionComment = !isNil(edition_comment);
+  const isComment =
+    isAuthorComment || isOriginalWorkComment || isEditionComment;
 
-  const comment = author_comment || original_work_comment;
+  const comment = author_comment || original_work_comment || edition_comment;
 
   const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
     !isNil(comment) && comment.comment.length > MAX_COMMENT_LENGTH
@@ -45,6 +50,7 @@ export default function LogItem({ log }: Props) {
 
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
+  const isEdition = !isNil(target_edition);
 
   const createdAt = formatDistanceToNow(new Date(created_at), {
     locale: locale === 'ko' ? ko : enUS,
@@ -178,6 +184,80 @@ export default function LogItem({ log }: Props) {
       ),
   });
 
+  const editionLikeText = t.rich('log_item_edition_like', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    Edition: () =>
+      isEdition && (
+        <>
+          {
+            <EditionHoverCard.Root>
+              <EditionHoverCard.Trigger>
+                <span>
+                  <Link href={`/edition/${target_edition.id}`}>
+                    <Avatar
+                      size="2"
+                      src={target_edition?.image_url ?? undefined}
+                      fallback={target_edition?.title[0]}
+                    />{' '}
+                    <BoldText>{target_edition.title}</BoldText>
+                  </Link>
+                </span>
+              </EditionHoverCard.Trigger>
+              <EditionHoverCard.Content edition={target_edition} side="top" />
+            </EditionHoverCard.Root>
+          }
+        </>
+      ),
+    Author: () =>
+      isEdition && (
+        <AuthorAvatar
+          author={target_edition.author}
+          mb="4px"
+          className={css({ cursor: 'pointer' })}
+          withName
+        />
+      ),
+    Josa: () =>
+      locale === 'ko' &&
+      target_edition?.title != null &&
+      getJosaPicker('을')(target_edition.title),
+  });
+
+  const editionCommentText = t.rich('log_item_edition_comment', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    Edition: () =>
+      isEdition && (
+        <>
+          {
+            <EditionHoverCard.Root>
+              <EditionHoverCard.Trigger>
+                <span>
+                  <Link href={`/edition/${target_edition.id}`}>
+                    <Avatar
+                      size="2"
+                      src={target_edition?.image_url ?? undefined}
+                      fallback={target_edition?.title[0]}
+                    />{' '}
+                    <BoldText>{target_edition.title}</BoldText>
+                  </Link>
+                </span>
+              </EditionHoverCard.Trigger>
+              <EditionHoverCard.Content edition={target_edition} side="top" />
+            </EditionHoverCard.Root>
+          }
+        </>
+      ),
+    Author: () =>
+      isEdition && (
+        <AuthorAvatar
+          author={target_edition.author}
+          mb="4px"
+          className={css({ cursor: 'pointer' })}
+          withName
+        />
+      ),
+  });
+
   return (
     <VStack
       bgColor="white"
@@ -193,6 +273,7 @@ export default function LogItem({ log }: Props) {
       {isAuthor && (isComment ? authorCommentText : authorLikeText)}
       {isOriginalWork &&
         (isComment ? originalWorkCommentText : originalWorkLikeText)}{' '}
+      {isEdition && (isComment ? editionCommentText : editionLikeText)}
       <span className={css({ fontSize: '13px', color: 'gray.500' })}>
         {createdAt}
       </span>

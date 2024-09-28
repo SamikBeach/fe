@@ -17,6 +17,8 @@
     "log_item_author_comment": "<User></User>님이 <Author></Author>에 글을 남겼습니다.",
     "log_item_original_work_like": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork><Josa></Josa> 좋아합니다.",
     "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다.",
+    "log_item_edition_like": "<User></User>님이 <Author></Author>의 <Edition></Edition><Josa></Josa> 좋아합니다.",
+    "log_item_edition_comment": "<User></User>님이 <Author></Author>의 <Edition></Edition>에 글을 남겼습니다.",
     "see_more": "더 보기"
   },
   "Author": {
@@ -32,6 +34,19 @@
     "alphabetical": "가나다순"
   },
   "OriginalWork": {
+    "field": "분야",
+    "philosophy": "철학",
+    "author": "저자",
+    "editions": "원전",
+    "search_original_works_placeholder": "원전, 저자 검색...",
+    "top_likes": "좋아요 순",
+    "top_comments": "댓글 많은 순",
+    "publication_date_newest_first": "최신순",
+    "publication_date_oldest_first": "오래된 순",
+    "alphabetical": "가나다순",
+    "sort_by": "정렬"
+  },
+  "Edition": {
     "field": "분야",
     "philosophy": "철학",
     "author": "저자",

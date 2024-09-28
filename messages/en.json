@@ -14,6 +14,8 @@
     "log_item_author_comment": "<User></User> left a comment on <Author></Author>.",
     "log_item_original_work_like": "<User></User> likes <Author></Author>'s <OriginalWork></OriginalWork>.",
     "log_item_original_work_comment": "<User></User> left a comment on <Author></Author>'s <OriginalWork></OriginalWork>.",
+    "log_item_edition_like": "<User></User> likes <Author></Author>'s <Edition></Edition>.",
+    "log_item_edition_comment": "<User></User> left a comment on <Author></Author>'s <Edition></Edition>.",
     "see_more": "See more"
   },
   "Author": {
@@ -29,6 +31,19 @@
     "alphabetical": "Alphabetical"
   },
   "OriginalWork": {
+    "field": "Field",
+    "philosophy": "Philosophy",
+    "author": "Author",
+    "editions": "Editions",
+    "search_original_works_placeholder": "Search original works and authors...",
+    "top_likes": "Top likes",
+    "top_comments": "Top comments",
+    "publication_date_newest_first": "Newest first",
+    "publication_date_oldest_first": "Oldest first",
+    "alphabetical": "Alphabetical",
+    "sort_by": "Sort by"
+  },
+  "Edition": {
     "field": "Field",
     "philosophy": "Philosophy",
     "author": "Author",

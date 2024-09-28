@@ -9,3 +9,7 @@ export const authorFilterAtom = atom<{
 export const originalWorkFilterAtom = atom<{ authorId: number | null }>({
   authorId: null,
 });
+
+export const editionFilterAtom = atom<{ authorId: number | null }>({
+  authorId: null,
+});

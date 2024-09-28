@@ -3,14 +3,16 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
 import { Button } from '@radix-ui/themes';
+import { formatDistanceToNow } from 'date-fns';
 import { getJosaPicker } from 'josa';
 import { isNil } from 'lodash';
-import { useFormatter, useLocale, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
+import { ko, enUS } from 'date-fns/locale';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -20,7 +22,6 @@ interface Props {
 
 export default function LogItem({ log }: Props) {
   const t = useTranslations('Home');
-  const formatter = useFormatter();
   const locale = useLocale();
 
   const {
@@ -45,7 +46,11 @@ export default function LogItem({ log }: Props) {
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
 
-  const createdAt = formatter.relativeTime(created_at);
+  const createdAt = formatDistanceToNow(new Date(created_at), {
+    locale: locale === 'ko' ? ko : enUS,
+    addSuffix: true,
+    includeSeconds: true,
+  });
 
   const authorLikeText = t.rich('log_item_author_like', {
     User: () => <BoldText>{user.name}</BoldText>,

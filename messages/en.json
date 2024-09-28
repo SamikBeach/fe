@@ -20,7 +20,13 @@
     "era": "Era",
     "field": "Field",
     "philosophy": "Philosophy",
-    "search_authors": "Search authors..."
+    "search_authors": "Search authors...",
+    "sort_by": "Sort by",
+    "top_likes": "Top Likes",
+    "top_comments": "Top Comments",
+    "birth_date_youngest_first": "Birth Date (Youngest First)",
+    "birth_date_oldest_first": "Birth Date (Oldest First)",
+    "alphabetical": "Alphabetical"
   },
   "SignUp": {
     "sign_up": "Sign up",

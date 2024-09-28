@@ -2,6 +2,7 @@ import { searchAuthors } from '@apis/author';
 import { searchOriginalWorks } from '@apis/original-work';
 import { Avatar, Popover, Spinner, Text } from '@radix-ui/themes';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -20,6 +21,8 @@ function SearchPopover({
   ...props
 }: Props) {
   const router = useRouter();
+
+  const t = useTranslations('Common');
 
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
@@ -97,7 +100,7 @@ function SearchPopover({
     if (!hasResults) {
       return (
         <VStack width="400px" height="388px" justify="center">
-          <Text>No Results</Text>
+          <Text>{t('no_result')}</Text>
         </VStack>
       );
     }
@@ -111,7 +114,7 @@ function SearchPopover({
               size="2"
               className={css({ px: '10px', py: '14px' })}
             >
-              Author
+              {t('authors')}
             </Text>
             {authors.map((author, index) => (
               <HStack
@@ -142,14 +145,25 @@ function SearchPopover({
                   radius="full"
                   size="1"
                 />
-                <Highlighter
-                  searchWords={[searchValue]}
-                  textToHighlight={author.name}
-                  highlightClassName={css({
-                    fontWeight: 'bold',
-                    backgroundColor: 'transparent',
-                  })}
-                />
+                <HStack gap="4px">
+                  <Highlighter
+                    searchWords={[searchValue]}
+                    textToHighlight={author.name_in_kor}
+                    highlightClassName={css({
+                      fontWeight: 'bold',
+                      backgroundColor: 'transparent',
+                    })}
+                  />
+                  <Highlighter
+                    className={css({ color: 'gray.400' })}
+                    searchWords={[searchValue]}
+                    textToHighlight={author.name}
+                    highlightClassName={css({
+                      fontWeight: 'bold',
+                      backgroundColor: 'transparent',
+                    })}
+                  />
+                </HStack>
               </HStack>
             ))}
           </>
@@ -161,7 +175,7 @@ function SearchPopover({
               size="2"
               className={css({ px: '10px', py: '14px' })}
             >
-              Original work
+              {t('original_works')}
             </Text>
             {originalWorks.map((originalWork, index) => (
               <HStack

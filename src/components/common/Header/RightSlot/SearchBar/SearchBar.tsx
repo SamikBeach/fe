@@ -4,6 +4,7 @@ import { css } from 'styled-system/css';
 import { useEffect, useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import SearchPopover from './SearchPopover';
+import { useTranslations } from 'next-intl';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -11,6 +12,8 @@ function SearchBar() {
   const debouncedSearchValue = useDebounce(searchValue, 200);
 
   const textFieldRef = useRef<HTMLInputElement>(null);
+
+  const t = useTranslations('Common');
 
   useEffect(() => {
     window.addEventListener('keydown', e => {
@@ -29,7 +32,7 @@ function SearchBar() {
     >
       <TextField.Root
         ref={textFieldRef}
-        placeholder="Search authors, original works, and editions..."
+        placeholder={t('search_bar_placeholder')}
         className={css({
           width: '400px',
         })}

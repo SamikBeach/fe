@@ -1,7 +1,9 @@
 {
   "Common": {
     "sign_up": "Sign up",
-    "login": "Log in"
+    "login": "Log in",
+    "search_bar_placeholder": "Search authors, original works, and editions...",
+    "no_result": "No Results"
   },
   "Home": {
     "trending_now": "Trending Now",

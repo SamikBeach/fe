@@ -4,7 +4,9 @@
     "original_works": "원전",
     "editions": "에디션",
     "sign_up": "회원가입",
-    "login": "로그인"
+    "login": "로그인",
+    "search_bar_placeholder": "저자, 원전, 에디션 검색...",
+    "no_result": "검색 결과가 없어요."
   },
   "Home": {
     "trending_now": "실시간 인기",

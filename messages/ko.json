@@ -8,9 +8,9 @@
   },
   "Home": {
     "trending_now": "실시간 인기",
-    "log_item_author_like": "<User></User>님이 <Author></Author>을 좋아합니다.",
+    "log_item_author_like": "<User></User>님이 <Author></Author><Josa></Josa> 좋아합니다.",
     "log_item_author_comment": "<User></User>님이 <Author></Author>에 글을 남겼습니다.",
-    "log_item_original_work_like": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>를 좋아합니다.",
+    "log_item_original_work_like": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork><Josa></Josa> 좋아합니다.",
     "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다."
   },
   "SignUp": {

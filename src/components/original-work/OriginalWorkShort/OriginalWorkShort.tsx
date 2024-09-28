@@ -1,6 +1,7 @@
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { Text } from '@radix-ui/themes';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
@@ -11,6 +12,8 @@ interface Props extends HstackProps {
 }
 
 export default function OriginalWorkShort({ originalWork, ...props }: Props) {
+  const locale = useLocale();
+
   return (
     <OriginalWorkHoverCard.Root>
       <OriginalWorkHoverCard.Trigger>
@@ -47,7 +50,9 @@ export default function OriginalWorkShort({ originalWork, ...props }: Props) {
                   },
                 })}
               >
-                {originalWork.title}
+                {locale === 'ko'
+                  ? originalWork.title_in_kor
+                  : originalWork.title_in_eng}
               </Text>
             </Link>
             <Link
@@ -70,7 +75,7 @@ export default function OriginalWorkShort({ originalWork, ...props }: Props) {
                 })}
                 color="gray"
               >
-                {originalWork.title_in_eng}
+                {originalWork.title}
               </Text>
             </Link>
           </VStack>

@@ -2,6 +2,7 @@ import { AuthorHoverCard } from '@components/author/AuthorHoverCard';
 import { AuthorServerModel } from '@models/author';
 import { Avatar, AvatarProps, Text, TextProps } from '@radix-ui/themes';
 import classNames from 'classnames';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
@@ -18,6 +19,8 @@ function AuthorAvatar({
   textProps,
   ...props
 }: Props) {
+  const locale = useLocale();
+
   return (
     <AuthorHoverCard.Root>
       <AuthorHoverCard.Trigger>
@@ -46,7 +49,7 @@ function AuthorAvatar({
                 )}
                 {...textProps}
               >
-                {author.name}
+                {locale === 'ko' ? author.name_in_kor : author.name}
               </Text>
             </Link>
           )}

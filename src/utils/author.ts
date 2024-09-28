@@ -14,17 +14,19 @@ export function getIsValidDateString(bornDate: string) {
 export function getBornDateText({
   bornDate,
   bornDateIsBc,
+  locale = 'en',
 }: {
   bornDate?: string | null;
   bornDateIsBc: boolean;
+  locale?: string;
 }) {
   const splitBornDate = bornDate?.split('-');
 
-  return `${bornDateIsBc ? 'BC ' : ''}${
+  return `${bornDateIsBc ? (locale === 'ko' ? '기원전 ' : 'BC ') : ''}${
     !isNil(bornDate) && getIsValidDateString(bornDate)
-      ? format(new Date(bornDate), 'd MMMM y')
+      ? format(new Date(bornDate), locale === 'ko' ? 'y년 M월 d일' : 'd MMMM y')
       : splitBornDate?.[1] === '00'
-        ? splitBornDate[0]
+        ? `${splitBornDate[0]}${locale === 'ko' ? '년' : ''}`
         : '???'
   }`;
 }
@@ -32,17 +34,19 @@ export function getBornDateText({
 export function getDiedDateText({
   diedDate,
   diedDateIsBc,
+  locale,
 }: {
   diedDate?: string | null;
   diedDateIsBc: boolean;
+  locale?: string;
 }) {
   const splitDiedDate = diedDate?.split('-');
 
-  return `${diedDateIsBc ? 'BC ' : ''}${
+  return `${diedDateIsBc ? (locale === 'ko' ? '기원전 ' : 'BC ') : ''}${
     !isNil(diedDate) && getIsValidDateString(diedDate)
-      ? format(new Date(diedDate), 'd MMMM y')
+      ? format(new Date(diedDate), locale === 'ko' ? 'y년 M월 d일' : 'd MMMM y')
       : splitDiedDate?.[1] === '00'
-        ? splitDiedDate[0]
+        ? `${splitDiedDate[0]}${locale === 'ko' ? '년' : ''}`
         : '???'
   }`;
 }
@@ -52,18 +56,22 @@ export function getBornAndDiedDateText({
   diedDate,
   bornDateIsBc,
   diedDateIsBc,
+  locale = 'en',
 }: {
   bornDate?: string | null;
   diedDate?: string | null;
   bornDateIsBc: boolean;
   diedDateIsBc: boolean;
+  locale?: string;
 }) {
   return `${getBornDateText({
     bornDate,
     bornDateIsBc,
+    locale,
   })} - ${getDiedDateText({
     diedDate,
     diedDateIsBc,
+    locale,
   })}`;
 }
 

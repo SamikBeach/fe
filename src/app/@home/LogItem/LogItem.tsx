@@ -3,9 +3,9 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
 import { Button } from '@radix-ui/themes';
-import { formatDistanceToNow } from 'date-fns';
+import { getJosaPicker } from 'josa';
 import { isNil } from 'lodash';
-import { useTranslations } from 'next-intl';
+import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { GiSecretBook } from 'react-icons/gi';
@@ -20,6 +20,8 @@ interface Props {
 
 export default function LogItem({ log }: Props) {
   const t = useTranslations();
+  const formatter = useFormatter();
+  const locale = useLocale();
 
   const {
     user,
@@ -43,9 +45,7 @@ export default function LogItem({ log }: Props) {
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
 
-  const createdAt = formatDistanceToNow(created_at, {
-    addSuffix: true,
-  }).replace('about ', '');
+  const createdAt = formatter.relativeTime(created_at);
 
   const authorLikeText = t.rich('Home.log_item_author_like', {
     User: () => <BoldText>{user.name}</BoldText>,
@@ -58,6 +58,10 @@ export default function LogItem({ log }: Props) {
           withName
         />
       ),
+    Josa: () =>
+      locale === 'ko' &&
+      target_author != null &&
+      getJosaPicker('을')(target_author.name_in_kor),
   });
 
   const authorCommentText = t.rich('Home.log_item_author_comment', {
@@ -92,7 +96,11 @@ export default function LogItem({ log }: Props) {
                       })}
                       size="24px"
                     />{' '}
-                    <BoldText>{target_original_work?.title}</BoldText>
+                    <BoldText>
+                      {locale === 'ko'
+                        ? target_original_work?.title_in_kor
+                        : target_original_work?.title}
+                    </BoldText>
                   </Link>
                 </span>
               </OriginalWorkHoverCard.Trigger>
@@ -113,6 +121,10 @@ export default function LogItem({ log }: Props) {
           withName
         />
       ),
+    Josa: () =>
+      locale === 'ko' &&
+      target_original_work?.title_in_kor != null &&
+      getJosaPicker('을')(target_original_work.title_in_kor),
   });
 
   const originalWorkCommentText = t.rich(
@@ -136,7 +148,11 @@ export default function LogItem({ log }: Props) {
                         })}
                         size="24px"
                       />{' '}
-                      <BoldText>{target_original_work?.title}</BoldText>
+                      <BoldText>
+                        {locale === 'ko'
+                          ? target_original_work?.title_in_kor
+                          : target_original_work?.title}
+                      </BoldText>
                     </Link>
                   </span>
                 </OriginalWorkHoverCard.Trigger>

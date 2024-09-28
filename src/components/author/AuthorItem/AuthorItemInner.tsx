@@ -1,8 +1,9 @@
+import { useProgressRouter } from '@hooks/index';
 import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 import { css } from 'styled-system/css';
@@ -15,6 +16,7 @@ interface Props {
 export default function AuthorItemInner({ author }: Props) {
   const {
     name,
+    name_in_kor,
     image_url,
     born_date,
     born_date_is_bc,
@@ -26,7 +28,11 @@ export default function AuthorItemInner({ author }: Props) {
     edition_count,
   } = author;
 
+  const locale = useLocale();
+
   const t = useTranslations();
+
+  const router = useProgressRouter();
 
   return (
     <HStack gap="20px">
@@ -38,7 +44,7 @@ export default function AuthorItemInner({ author }: Props) {
           size="7"
         />
       </Link>
-      <VStack alignItems="start" justify="space-between">
+      <VStack alignItems="start" justify="space-between" gap="4px">
         <VStack alignItems="start" gap="0">
           <Link
             href={`/author/${author.id}`}
@@ -47,54 +53,103 @@ export default function AuthorItemInner({ author }: Props) {
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               maxWidth: '240px',
+              lineHeight: '19px',
             })}
           >
             <Text
               size="3"
               weight="bold"
+              onClick={() => router.push(`/author/${author.id}`)}
               className={css({
                 cursor: 'pointer',
+                lineHeight: '19px',
+
                 _hover: {
                   textDecoration: 'underline',
                 },
               })}
             >
-              {name}
+              {locale === 'ko' ? name_in_kor : name}
             </Text>
           </Link>
+          {locale === 'ko' && (
+            <Link
+              href={`/author/${author.id}`}
+              className={css({ lineHeight: 1.2 })}
+            >
+              <Text
+                size="2"
+                color="gray"
+                weight="medium"
+                className={css({
+                  cursor: 'pointer',
+                  lineHeight: 1.2,
+
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {name}
+              </Text>
+            </Link>
+          )}
           <HStack>
-            <Text size="2" color="gray">
+            <Text size="2" color="gray" mt="2px">
               {getBornAndDiedDateText({
                 bornDate: born_date,
                 diedDate: died_date,
                 bornDateIsBc: born_date_is_bc === 1,
                 diedDateIsBc: died_date_is_bc === 1,
+                locale,
               })}
             </Text>
           </HStack>
-          <HStack>
+        </VStack>
+        <VStack alignItems="start" gap="0">
+          <HStack gap="10px">
             <Text size="2" color="gray">
-              {original_works?.length} {t('Common.original_works')}
+              {t('Common.original_works')}
+              <Text
+                size="2"
+                weight="medium"
+                className={css({
+                  color: 'black',
+                })}
+              >
+                {' '}
+                {original_works?.length}
+              </Text>
             </Text>
             <Text size="2" color="gray">
-              {edition_count} {t('Common.editions')}
+              {t('Common.editions')}
+              <Text
+                size="2"
+                weight="medium"
+                className={css({
+                  color: 'black',
+                })}
+              >
+                {' '}
+                {edition_count}
+              </Text>
             </Text>
+          </HStack>
+          <HStack gap="10px">
+            <HStack gap="3px">
+              <HeartFilledIcon color="gray" />
+              <Text size="2" color="gray">
+                {like_count}
+              </Text>
+            </HStack>
+            <HStack gap="3px">
+              <ChatBubbleIcon color="gray" />
+              <Text size="2" color="gray">
+                {comment_count}
+              </Text>
+            </HStack>
           </HStack>
         </VStack>
-        <HStack>
-          <HStack gap="3px">
-            <Text size="2" color="gray">
-              {like_count}
-            </Text>
-            <HeartFilledIcon color="gray" />
-          </HStack>
-          <HStack gap="3px">
-            <Text size="2" color="gray">
-              {comment_count}
-            </Text>
-            <ChatBubbleIcon color="gray" />
-          </HStack>
-        </HStack>
       </VStack>
     </HStack>
   );

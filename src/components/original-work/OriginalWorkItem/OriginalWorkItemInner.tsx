@@ -3,6 +3,7 @@ import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
 import { getPublicationDateText } from '@utils/original-work';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -12,17 +13,26 @@ interface Props {
 }
 
 export default function OringinalWorkItemInner({ originalWork }: Props) {
-  const { title, title_in_eng, author, like_count, comment_count } =
-    originalWork;
+  const locale = useLocale();
+
+  const {
+    title,
+    title_in_eng,
+    title_in_kor,
+    author,
+    like_count,
+    comment_count,
+  } = originalWork;
 
   return (
     <HStack gap="20px">
       <Link href={`/original-work/${originalWork.id}`}>
         <Avatar fallback={title[0]} size="7" />
       </Link>
+
       <VStack alignItems="start" gap="0">
         <VStack alignItems="start" gap="0">
-          <Tooltip content={title}>
+          <Tooltip content={title_in_kor}>
             <Link
               href={`/original-work/${originalWork.id}`}
               className={css({
@@ -42,7 +52,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                   },
                 })}
               >
-                {title}
+                {locale === 'ko' ? title_in_kor : title}
               </Text>
             </Link>
           </Tooltip>
@@ -73,6 +83,36 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
               </Text>
             </Link>
           </Tooltip>
+
+          {/* {locale === 'ko' && (
+            <Tooltip content={title}>
+              <Link
+                href={`/original-work/${originalWork.id}`}
+                className={css({
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  maxWidth: '240px',
+                })}
+              >
+                <Text
+                  size="2"
+                  weight="medium"
+                  className={css({
+                    color: 'gray.700',
+
+                    cursor: 'pointer',
+                    _hover: {
+                      textDecoration: 'underline',
+                    },
+                  })}
+                >
+                  {title}
+                </Text>
+              </Link>
+            </Tooltip>
+          )} */}
+
           <Text size="2" color="gray">
             {getPublicationDateText({ originalWork })}
           </Text>

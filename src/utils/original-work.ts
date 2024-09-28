@@ -12,31 +12,41 @@ export function getPublicationDateText({
   const { publication_date, publication_date_is_bc, century, circa, s } =
     originalWork;
 
-  // const hasFromTo = publication_date?.includes('-');
-
-  // const prefixCirca = circa == 1 ? (locale === 'ko' ? '약' : 'about ') : '';
-  // const prefix =
-  //   publication_date_is_bc == 1 && locale === 'ko' ? '기원전 ' : '';
-
-  // const suffix =
-  //   publication_date_is_bc == 1 && locale === 'en'
-  //     ? ' BCE'
-  //     : century == 1
-  //       ? ' C'
-  //       : '';
-  // const suffixS =
-  //   locale === 'ko' ? (s === 1 ? '년대' : '년') : s === 1 ? 's' : '';
-
-  // if (hasFromTo) {
-  //   const splitPublicationDate = publication_date?.split('-');
-  //   const from = splitPublicationDate?.[0];
-  //   const to = splitPublicationDate?.[1];
-
-  //   return `${prefix}${prefixCirca}${from}${suffix}${suffixS} - ${prefix}${prefixCirca}${to}${suffix}${suffixS}`;
-  // }
-
-  // return `${prefix}${prefixCirca}${publication_date}${suffix}${suffixS}`;
-
   if (locale === 'ko') {
+    const hasFromTo = publication_date?.includes('-');
+
+    const prefix = publication_date_is_bc == 1 ? '기원전 ' : '';
+    const prefixCirca = circa == 1 ? '약 ' : '';
+
+    const suffix = century == 1 ? '세기' : s === 1 ? '년대' : '년';
+
+    if (hasFromTo) {
+      const splitPublicationDate = publication_date?.split('-');
+      const from = splitPublicationDate?.[0];
+      const to = splitPublicationDate?.[1];
+
+      return `${prefix}${prefixCirca}${from}${suffix} - ${prefix}${prefixCirca}${to}${suffix}`;
+    }
+
+    return `${prefix}${prefixCirca}${publication_date}${suffix}`;
+  }
+
+  if (locale === 'en') {
+    const hasFromTo = publication_date?.includes('-');
+
+    const prefixCirca = circa == 1 ? 'about ' : '';
+    const prefix = publication_date_is_bc == 1 ? 'BC ' : '';
+
+    const suffix = century == 1 ? 'C' : s === 1 ? 's' : '';
+
+    if (hasFromTo) {
+      const splitPublicationDate = publication_date?.split('-');
+      const from = splitPublicationDate?.[0];
+      const to = splitPublicationDate?.[1];
+
+      return `${prefixCirca}${prefix}${from}${suffix} - ${prefixCirca}${prefix}${to}${suffix}`;
+    }
+
+    return `${prefixCirca}${prefix}${publication_date}${suffix}`;
   }
 }

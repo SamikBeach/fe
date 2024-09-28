@@ -6,14 +6,24 @@
     "sign_up": "회원가입",
     "login": "로그인",
     "search_bar_placeholder": "저자, 원전, 에디션 검색...",
-    "no_result": "검색 결과가 없어요."
+    "no_result": "검색 결과가 없어요.",
+    "likes": "좋아요",
+    "my_page": "내 정보",
+    "log_out": "로그아웃"
   },
   "Home": {
     "trending_now": "실시간 인기",
     "log_item_author_like": "<User></User>님이 <Author></Author><Josa></Josa> 좋아합니다.",
     "log_item_author_comment": "<User></User>님이 <Author></Author>에 글을 남겼습니다.",
     "log_item_original_work_like": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork><Josa></Josa> 좋아합니다.",
-    "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다."
+    "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다.",
+    "see_more": "더 보기"
+  },
+  "Author": {
+    "era": "시대",
+    "field": "분야",
+    "philosophy": "철학",
+    "search_authors": "저자 검색..."
   },
   "SignUp": {
     "sign_up": "회원가입",
@@ -32,5 +42,9 @@
     "no_account": "아직 계정이 없으신가요?",
     "sign_up": "회원가입"
   },
-  "see_more": "더 보기"
+  "OriginalWork": {
+    "field": "분야",
+    "philosophy": "철학",
+    "author": "저자"
+  }
 }

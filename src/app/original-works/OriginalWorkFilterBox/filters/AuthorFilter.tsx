@@ -4,9 +4,14 @@ import { FilterTriggerButton } from '@components/common/FilterTriggerButton';
 import { DropdownMenu } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
+import { useLocale, useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 
 export default function AuthorFilter() {
+  const t = useTranslations('OriginalWork');
+
+  const locale = useLocale();
+
   const [originalWorkFilter, setOriginalWorkFilter] = useAtom(
     originalWorkFilterAtom
   );
@@ -18,7 +23,7 @@ export default function AuthorFilter() {
       response.data
         .map(author => ({
           id: author.id,
-          value: author.name,
+          value: locale === 'ko' ? author.name_in_kor : author.name,
         }))
         .sort((a, b) => a.value.localeCompare(b.value)),
   });
@@ -32,7 +37,7 @@ export default function AuthorFilter() {
               authors.find(author => author.id === originalWorkFilter.authorId)
                 ?.value
             }
-            label="Author"
+            label={t('author')}
             onClear={() =>
               setOriginalWorkFilter(prev => ({ ...prev, authorId: null }))
             }
@@ -40,8 +45,8 @@ export default function AuthorFilter() {
         </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={css({ maxHeight: '500px' })}>
-        <DropdownMenu.Group title="Author">
-          <DropdownMenu.Label>Author</DropdownMenu.Label>
+        <DropdownMenu.Group title={t('author')}>
+          <DropdownMenu.Label>{t('author')}</DropdownMenu.Label>
           {authors.map(author => (
             <DropdownMenu.Item
               key={author.id}

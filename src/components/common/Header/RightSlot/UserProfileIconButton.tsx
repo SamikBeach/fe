@@ -8,8 +8,11 @@ import { googleLogout } from '@react-oauth/google';
 import { useMutation } from '@tanstack/react-query';
 import { logout } from '@apis/auth';
 import { currentUserAtom } from '@atoms/user';
+import { useTranslations } from 'next-intl';
 
 export default function UserProfileIconButton() {
+  const t = useTranslations('Common');
+
   const currentUser = useAtomValue(currentUserAtom);
   const router = useRouter();
 
@@ -40,7 +43,7 @@ export default function UserProfileIconButton() {
           }}
           className={css({ cursor: 'pointer' })}
         >
-          My page
+          {t('my_page')}
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onSelect={() => {
@@ -48,7 +51,7 @@ export default function UserProfileIconButton() {
           }}
           className={css({ cursor: 'pointer' })}
         >
-          Log out
+          {t('log_out')}
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

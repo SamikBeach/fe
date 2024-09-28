@@ -3,10 +3,13 @@ import useDebounce from '@hooks/useDebounce';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 export default function SearchTextField() {
+  const t = useTranslations('Author');
+
   const [searchKeyword, setSearchKeyword] = useAtom(authorSearchKeywordAtom);
   const [searchValue, setSearchValue] = useState(searchKeyword);
 
@@ -22,7 +25,7 @@ export default function SearchTextField() {
 
   return (
     <TextField.Root
-      placeholder={'Search author...'}
+      placeholder={t('search_authors')}
       className={css({
         width: '300px',
       })}

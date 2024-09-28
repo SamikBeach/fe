@@ -109,30 +109,10 @@ export default function AuthorItemInner({ author }: Props) {
         <VStack alignItems="start" gap="0">
           <HStack gap="10px">
             <Text size="2" color="gray">
-              {t('Common.original_works')}
-              <Text
-                size="2"
-                weight="medium"
-                className={css({
-                  color: 'black',
-                })}
-              >
-                {' '}
-                {original_works?.length}
-              </Text>
+              {t('Common.original_works')} {original_works?.length}
             </Text>
             <Text size="2" color="gray">
-              {t('Common.editions')}
-              <Text
-                size="2"
-                weight="medium"
-                className={css({
-                  color: 'black',
-                })}
-              >
-                {' '}
-                {edition_count}
-              </Text>
+              {t('Common.editions')} {edition_count}
             </Text>
           </HStack>
           <HStack gap="10px">

@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function LogItem({ log }: Props) {
-  const t = useTranslations();
+  const t = useTranslations('Home');
   const formatter = useFormatter();
   const locale = useLocale();
 
@@ -47,7 +47,7 @@ export default function LogItem({ log }: Props) {
 
   const createdAt = formatter.relativeTime(created_at);
 
-  const authorLikeText = t.rich('Home.log_item_author_like', {
+  const authorLikeText = t.rich('log_item_author_like', {
     User: () => <BoldText>{user.name}</BoldText>,
     Author: () =>
       isAuthor && (
@@ -64,7 +64,7 @@ export default function LogItem({ log }: Props) {
       getJosaPicker('을')(target_author.name_in_kor),
   });
 
-  const authorCommentText = t.rich('Home.log_item_author_comment', {
+  const authorCommentText = t.rich('log_item_author_comment', {
     User: () => <BoldText>{user.name}</BoldText>,
     Author: () =>
       isAuthor && (
@@ -77,7 +77,7 @@ export default function LogItem({ log }: Props) {
       ),
   });
 
-  const originalWorkLikeText = t.rich('Home.log_item_original_work_like', {
+  const originalWorkLikeText = t.rich('log_item_original_work_like', {
     User: () => <BoldText>{user.name}</BoldText>,
     OriginalWork: () =>
       isOriginalWork && (
@@ -127,54 +127,51 @@ export default function LogItem({ log }: Props) {
       getJosaPicker('을')(target_original_work.title_in_kor),
   });
 
-  const originalWorkCommentText = t.rich(
-    'Home.log_item_original_work_comment',
-    {
-      User: () => <BoldText>{user.name}</BoldText>,
-      OriginalWork: () =>
-        isOriginalWork && (
-          <>
-            {
-              <OriginalWorkHoverCard.Root>
-                <OriginalWorkHoverCard.Trigger>
-                  <span>
-                    <Link href={`/original-work/${target_original_work.id}`}>
-                      <GiSecretBook
-                        className={css({
-                          display: 'inline',
-                          marginBottom: '2px',
-                          cursor: 'pointer',
-                          color: 'gray.600',
-                        })}
-                        size="24px"
-                      />{' '}
-                      <BoldText>
-                        {locale === 'ko'
-                          ? target_original_work?.title_in_kor
-                          : target_original_work?.title}
-                      </BoldText>
-                    </Link>
-                  </span>
-                </OriginalWorkHoverCard.Trigger>
-                <OriginalWorkHoverCard.Content
-                  originalWork={target_original_work}
-                  side="top"
-                />
-              </OriginalWorkHoverCard.Root>
-            }
-          </>
-        ),
-      Author: () =>
-        isOriginalWork && (
-          <AuthorAvatar
-            author={target_original_work.author}
-            mb="4px"
-            className={css({ cursor: 'pointer' })}
-            withName
-          />
-        ),
-    }
-  );
+  const originalWorkCommentText = t.rich('log_item_original_work_comment', {
+    User: () => <BoldText>{user.name}</BoldText>,
+    OriginalWork: () =>
+      isOriginalWork && (
+        <>
+          {
+            <OriginalWorkHoverCard.Root>
+              <OriginalWorkHoverCard.Trigger>
+                <span>
+                  <Link href={`/original-work/${target_original_work.id}`}>
+                    <GiSecretBook
+                      className={css({
+                        display: 'inline',
+                        marginBottom: '2px',
+                        cursor: 'pointer',
+                        color: 'gray.600',
+                      })}
+                      size="24px"
+                    />{' '}
+                    <BoldText>
+                      {locale === 'ko'
+                        ? target_original_work?.title_in_kor
+                        : target_original_work?.title}
+                    </BoldText>
+                  </Link>
+                </span>
+              </OriginalWorkHoverCard.Trigger>
+              <OriginalWorkHoverCard.Content
+                originalWork={target_original_work}
+                side="top"
+              />
+            </OriginalWorkHoverCard.Root>
+          }
+        </>
+      ),
+    Author: () =>
+      isOriginalWork && (
+        <AuthorAvatar
+          author={target_original_work.author}
+          mb="4px"
+          className={css({ cursor: 'pointer' })}
+          withName
+        />
+      ),
+  });
 
   return (
     <VStack

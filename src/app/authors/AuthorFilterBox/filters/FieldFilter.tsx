@@ -1,10 +1,13 @@
 import { FilterTriggerButton } from '@components/common/FilterTriggerButton';
 import { DropdownMenu } from '@radix-ui/themes';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { css } from 'styled-system/css';
 
 export default function FieldFilter() {
-  const [value, setValue] = useState<string | null>('Philosophy');
+  const t = useTranslations('Author');
+
+  const [value, setValue] = useState<string | null>(t('philosophy'));
 
   return (
     <DropdownMenu.Root>
@@ -12,19 +15,19 @@ export default function FieldFilter() {
         <div>
           <FilterTriggerButton
             value={value}
-            label="Field"
+            label={t('field')}
             onClear={() => setValue(null)}
           />
         </div>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Group title="Field">
-          <DropdownMenu.Label>Field</DropdownMenu.Label>
+        <DropdownMenu.Group title={t('field')}>
+          <DropdownMenu.Label>{t('field')}</DropdownMenu.Label>
           <DropdownMenu.Item
             className={css({ cursor: 'pointer' })}
-            onSelect={() => setValue('Philosophy')}
+            onSelect={() => setValue(t('philosophy'))}
           >
-            Philosophy
+            {t('philosophy')}
           </DropdownMenu.Item>
         </DropdownMenu.Group>
       </DropdownMenu.Content>

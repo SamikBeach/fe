@@ -3,14 +3,24 @@
     "sign_up": "Sign up",
     "login": "Log in",
     "search_bar_placeholder": "Search authors, original works, and editions...",
-    "no_result": "No Results"
+    "no_result": "No Results",
+    "likes": "Like",
+    "my_page": "My page",
+    "log_out": "Log out"
   },
   "Home": {
     "trending_now": "Trending Now",
     "log_item_author_like": "<User></User> likes <Author></Author>.",
     "log_item_author_comment": "<User></User> left a comment on <Author></Author>.",
     "log_item_original_work_like": "<User></User> likes <Author></Author>'s <OriginalWork></OriginalWork>.",
-    "log_item_original_work_comment": "<User></User> left a comment on <Author></Author>'s <OriginalWork></OriginalWork>."
+    "log_item_original_work_comment": "<User></User> left a comment on <Author></Author>'s <OriginalWork></OriginalWork>.",
+    "see_more": "See more"
+  },
+  "Author": {
+    "era": "Era",
+    "field": "Field",
+    "philosophy": "Philosophy",
+    "search_authors": "Search authors..."
   },
   "SignUp": {
     "sign_up": "Sign up",
@@ -29,5 +39,9 @@
     "no_account": "No account?",
     "sign_up": "Sign up"
   },
-  "see_more": "See more"
+  "OriginalWork": {
+    "field": "Field",
+    "philosophy": "Philosophy",
+    "author": "Author"
+  }
 }

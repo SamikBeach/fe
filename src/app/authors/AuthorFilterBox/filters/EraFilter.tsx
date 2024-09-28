@@ -5,9 +5,14 @@ import { DropdownMenu } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { capitalize, isNil } from 'lodash';
+import { useLocale, useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 
 export default function EraFilter() {
+  const t = useTranslations('Author');
+
+  const locale = useLocale();
+
   const [authorFilter, setAuthorFilter] = useAtom(authorFilterAtom);
 
   const { data: eras = [] } = useQuery({
@@ -16,7 +21,7 @@ export default function EraFilter() {
     select: response =>
       response.data.map(era => ({
         id: era.id,
-        value: era.era,
+        value: locale === 'ko' ? era.era_in_kor : era.era,
       })),
   });
 
@@ -28,14 +33,14 @@ export default function EraFilter() {
         <div>
           <FilterTriggerButton
             value={isNil(value) ? null : capitalize(value)}
-            label="Era"
+            label={t('era')}
             onClear={() => setAuthorFilter(prev => ({ ...prev, eraId: null }))}
           />
         </div>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
-        <DropdownMenu.Group title="Era">
-          <DropdownMenu.Label>Era</DropdownMenu.Label>
+      <DropdownMenu.Content className={css({ minWidth: '140px' })}>
+        <DropdownMenu.Group title={t('era')}>
+          <DropdownMenu.Label>{t('era')}</DropdownMenu.Label>
           {eras.map(era => (
             <DropdownMenu.Item
               key={era.id}

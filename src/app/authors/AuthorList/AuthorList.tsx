@@ -14,8 +14,11 @@ import {
   AuthorItemSkeleton,
   AuthorItem,
 } from '../../../components/author/AuthorItem';
+import { useLocale } from 'next-intl';
 
 export default function AuthorList() {
+  const locale = useLocale();
+
   const authorFilter = useAtomValue(authorFilterAtom);
   const authorSort = useAtomValue(authorSortAtom);
   const searchKeyword = useAtomValue(authorSearchKeywordAtom);
@@ -30,6 +33,7 @@ export default function AuthorList() {
         sort: authorSort,
         keyword: searchKeyword,
         page: pageParam as number,
+        locale,
       });
     },
     initialPageParam: 1,

@@ -3,7 +3,7 @@ import { searchEditions } from '@apis/edition';
 import { searchOriginalWorks } from '@apis/original-work';
 import { Avatar, Popover, Spinner, Text } from '@radix-ui/themes';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -24,13 +24,15 @@ function SearchPopover({
 }: Props) {
   const router = useRouter();
 
+  const locale = useLocale();
+
   const t = useTranslations('Common');
 
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
   const { data: authors = [], isLoading: isLoadingAuthors } = useQuery({
     queryKey: ['author', searchValue],
-    queryFn: () => searchAuthors({ keyword: searchValue, limit: 5 }),
+    queryFn: () => searchAuthors({ keyword: searchValue, limit: 5, locale }),
     enabled: searchValue !== '',
     select: response => response.data.data,
     placeholderData: keepPreviousData,

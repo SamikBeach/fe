@@ -17,6 +17,12 @@ interface Props {
 }
 
 export default function AuthorItemInner({ author }: Props) {
+  const locale = useLocale();
+
+  const t = useTranslations();
+
+  const router = useRouter();
+
   const {
     name,
     name_in_kor,
@@ -40,16 +46,11 @@ export default function AuthorItemInner({ author }: Props) {
 
   const { data: originalWorksFromQuery } = useQuery({
     queryKey: ['original-work/search', author.id],
-    queryFn: () => searchOriginalWorks({ authorId: author.id, limit: 500 }),
+    queryFn: () =>
+      searchOriginalWorks({ authorId: author.id, limit: 500, locale }),
     enabled: original_works === undefined,
     select: data => data.data.data,
   });
-
-  const locale = useLocale();
-
-  const t = useTranslations();
-
-  const router = useRouter();
 
   const editionCount = editions?.length ?? editionsFromQuery?.length ?? 0;
   const originalWorkCount =

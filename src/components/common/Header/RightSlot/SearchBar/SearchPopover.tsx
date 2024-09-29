@@ -41,7 +41,8 @@ function SearchPopover({
   const { data: originalWorks = [], isLoading: isLoadingOriginalWorks } =
     useQuery({
       queryKey: ['original-work', searchValue],
-      queryFn: () => searchOriginalWorks({ keyword: searchValue, limit: 5 }),
+      queryFn: () =>
+        searchOriginalWorks({ keyword: searchValue, limit: 5, locale }),
       enabled: searchValue !== '',
       select: response => response.data.data,
       placeholderData: keepPreviousData,

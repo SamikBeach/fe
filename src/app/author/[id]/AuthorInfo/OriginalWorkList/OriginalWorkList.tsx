@@ -8,8 +8,11 @@ import {
 import { useParams } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { authorOriginalWorkSortAtom } from '@atoms/sort';
+import { useLocale } from 'next-intl';
 
 export default function OriginalWorkList() {
+  const locale = useLocale();
+
   const authorOriginalWorkSort = useAtomValue(authorOriginalWorkSortAtom);
 
   const params = useParams();
@@ -22,6 +25,7 @@ export default function OriginalWorkList() {
         authorId,
         limit: 300,
         sort: authorOriginalWorkSort,
+        locale,
       }),
     select: data => data.data.data,
   });

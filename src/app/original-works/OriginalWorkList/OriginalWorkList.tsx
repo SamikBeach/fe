@@ -17,8 +17,11 @@ import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
 } from '@components/original-work/OriginalWorkItem';
+import { useLocale } from 'next-intl';
 
 export default function OriginalWorkList() {
+  const locale = useLocale();
+
   const originalWorkFilter = useAtomValue(originalWorkFilterAtom);
   const originalWorkSort = useAtomValue(originalWorkSortAtom);
   const searchKeyword = useAtomValue(originalWorkSearchKeywordAtom);
@@ -38,6 +41,7 @@ export default function OriginalWorkList() {
         sort: originalWorkSort,
         keyword: searchKeyword,
         page: pageParam as number,
+        locale,
       });
     },
     initialPageParam: 1,

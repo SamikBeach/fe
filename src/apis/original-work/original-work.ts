@@ -24,12 +24,13 @@ interface SearchOriginalWorksRequest {
   sort?: OriginalWorkSort;
   page?: number;
   limit?: number;
+  locale?: string;
 }
 
 export interface SearchOriginalWorksResponse
   extends SearchResponse<OriginalWorkServerModel> {}
 
-function getSortBy(sort?: OriginalWorkSort) {
+function getSortBy(sort: OriginalWorkSort | undefined, locale: string) {
   switch (sort) {
     case 'top_likes':
       return 'like_count:DESC';
@@ -40,7 +41,11 @@ function getSortBy(sort?: OriginalWorkSort) {
     case 'publication_date_oldest_first':
       return 'publication_date:ASC';
     case 'alphabetical':
-      return 'title:ASC';
+      if (locale === 'ko') {
+        return 'title_in_kor:ASC';
+      }
+
+      return 'title_in_eng:ASC';
     default:
       return 'like_count:DESC';
   }
@@ -53,13 +58,14 @@ export function searchOriginalWorks({
   editionId,
   sort,
   limit,
+  locale = 'en',
 }: SearchOriginalWorksRequest) {
   return api.get<SearchOriginalWorksResponse>('/original-work/search', {
     params: {
       search: keyword === '' ? undefined : keyword,
       ['filter.author_id']: authorId,
       ['filter.edition_id']: editionId,
-      sortBy: getSortBy(sort),
+      sortBy: getSortBy(sort, locale),
       page,
       limit,
     },

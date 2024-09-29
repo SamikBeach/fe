@@ -4,6 +4,7 @@ import { EditionServerModel } from '@models/edition';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export default function EditionItemInner({ edition }: Props) {
+  const locale = useLocale();
+
   const {
     title,
     author,
@@ -26,7 +29,8 @@ export default function EditionItemInner({ edition }: Props) {
 
   const { data: originalWorksFromQuery } = useQuery({
     queryKey: ['edition/search', edition.id],
-    queryFn: () => searchOriginalWorks({ editionId: edition.id, limit: 500 }),
+    queryFn: () =>
+      searchOriginalWorks({ editionId: edition.id, limit: 500, locale }),
     enabled: original_works === undefined,
     select: data => data.data.data,
   });

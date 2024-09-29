@@ -17,6 +17,7 @@ export function getEditionById({ id }: { id: number }) {
 interface SearchEditionsRequest {
   keyword?: string;
   authorId?: number | null;
+  originalWorkId?: number | null;
   sort?: EditionSort;
   page?: number;
   limit?: number;
@@ -46,6 +47,7 @@ export function searchEditions({
   page,
   keyword,
   authorId,
+  originalWorkId,
   sort,
   limit,
 }: SearchEditionsRequest) {
@@ -53,6 +55,7 @@ export function searchEditions({
     params: {
       search: keyword === '' ? undefined : keyword,
       ['filter.author_id']: authorId,
+      ['filter.original_work_id']: originalWorkId,
       sortBy: getSortBy(sort),
       page,
       limit,

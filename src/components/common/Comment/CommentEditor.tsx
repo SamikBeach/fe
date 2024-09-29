@@ -3,6 +3,7 @@ import { CommentServerModel } from '@models/comment';
 import { AlertDialog, Avatar, Button, TextArea } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
@@ -26,6 +27,8 @@ export default function CommentEditor({
   comment: commentProps,
   width = '100%',
 }: Props) {
+  const t = useTranslations('Common');
+
   const currentUser = useAtomValue(currentUserAtom);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -98,7 +101,7 @@ export default function CommentEditor({
             )}
             disabled={comment === ''}
           >
-            Submit
+            {t('submit')}
           </Button>
         </div>
       </HStack>
@@ -107,9 +110,9 @@ export default function CommentEditor({
         onOpenChange={setOpenAlertDialog}
       >
         <AlertDialog.Content maxWidth="400px">
-          <AlertDialog.Title>Discard changes?</AlertDialog.Title>
+          <AlertDialog.Title>{t('discard_changes')}</AlertDialog.Title>
           <AlertDialog.Description>
-            Are you sure you want to discard your changes?
+            {t('discard_changes_description')}
           </AlertDialog.Description>
           <HStack mt="30px" justify="end">
             <AlertDialog.Action>
@@ -120,7 +123,7 @@ export default function CommentEditor({
                 }}
                 className={css({ cursor: 'pointer' })}
               >
-                Discard
+                {t('discard')}
               </Button>
             </AlertDialog.Action>
             <AlertDialog.Cancel>
@@ -135,7 +138,7 @@ export default function CommentEditor({
                 }}
                 className={css({ cursor: 'pointer' })}
               >
-                Cancel
+                {t('cancel')}
               </Button>
             </AlertDialog.Cancel>
           </HStack>

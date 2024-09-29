@@ -9,7 +9,20 @@
     "no_result": "검색 결과가 없어요.",
     "likes": "좋아요",
     "my_page": "내 정보",
-    "log_out": "로그아웃"
+    "log_out": "로그아웃",
+    "comment": "댓글({count})",
+    "edit": "수정하기",
+    "delete": "삭제하기",
+    "see_more": "더 보기",
+    "like": "좋아요",
+    "reply": "댓글 달기",
+    "hide_replies": "댓글 숨기기",
+    "view_replies": "댓글 보기({count})",
+    "submit": "제출하기",
+    "discard_changes": "변경 사항이 저장되지 않았어요.",
+    "cancel": "계속 수정하기",
+    "discard_changes_description": "변경 사항을 저장하지 않고 나갈까요?",
+    "discard": "나가기"
   },
   "Home": {
     "trending_now": "실시간 인기",
@@ -31,7 +44,10 @@
     "top_comments": "댓글 많은 순",
     "birth_date_youngest_first": "출생일 최신순",
     "birth_date_oldest_first": "출생일 오래된순",
-    "alphabetical": "가나다순"
+    "alphabetical": "가나다순",
+    "newest_first": "최신순",
+    "original_works": "원전",
+    "editions": "에디션"
   },
   "OriginalWork": {
     "field": "분야",

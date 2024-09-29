@@ -24,8 +24,11 @@ import { HStack } from 'styled-system/jsx';
 import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 import { AxiosResponse } from 'axios';
 import { authorCommentSortAtom } from '@atoms/sort';
+import { useTranslations } from 'next-intl';
 
 export default function AuthorCommentList() {
+  const t = useTranslations('Common');
+
   const commentListBoxRef = useRef<HTMLDivElement>(null);
 
   const params = useParams();
@@ -121,7 +124,7 @@ export default function AuthorCommentList() {
             <Skeleton height="24px" width="100px" />
           ) : (
             <Text size="3" weight="medium">
-              {`Comment(${comments.length})`}
+              {t('comment', { count: comments.length })}
             </Text>
           )}
           <AuthorCommentSortDropdown />

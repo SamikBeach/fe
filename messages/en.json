@@ -4,9 +4,22 @@
     "login": "Log in",
     "search_bar_placeholder": "Search authors, original works, and editions...",
     "no_result": "No Results",
-    "likes": "Like",
+    "likes": "Likes",
     "my_page": "My page",
-    "log_out": "Log out"
+    "log_out": "Log out",
+    "comment": "Comment({count})",
+    "edit": "Edit",
+    "delete": "Delete",
+    "see_more": "See more",
+    "like": "Like",
+    "reply": "Reply",
+    "hide_replies": "Hide replies",
+    "view_replies": "View replies({count})",
+    "submit": "Submit",
+    "discard_changes": "Discard changes?",
+    "cancel": "\bCancel",
+    "discard_changes_description": "Are you sure you want to discard your changes?",
+    "discard": "Discard"
   },
   "Home": {
     "trending_now": "Trending Now",
@@ -28,7 +41,10 @@
     "top_comments": "Top Comments",
     "birth_date_youngest_first": "Birth Date (Youngest First)",
     "birth_date_oldest_first": "Birth Date (Oldest First)",
-    "alphabetical": "Alphabetical"
+    "newest_first": "Newest first",
+    "alphabetical": "Alphabetical",
+    "original_works": "Original works",
+    "editions": "Editions"
   },
   "OriginalWork": {
     "field": "Field",

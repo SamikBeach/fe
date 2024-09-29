@@ -15,8 +15,11 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useParams } from 'next/navigation';
 import AuthorBasicInfoSkeleton from './AuthorBasicInfoSkeleton';
+import { useLocale } from 'next-intl';
 
 export default function AuthorInfo() {
+  const locale = useLocale();
+
   const params = useParams();
   const authorId = Number(params.id);
 
@@ -150,6 +153,7 @@ export default function AuthorInfo() {
             diedDate: died_date,
             bornDateIsBc: born_date_is_bc === 1,
             diedDateIsBc: died_date_is_bc === 1,
+            locale,
           })}
         </Text>
         <HStack gap="2px">

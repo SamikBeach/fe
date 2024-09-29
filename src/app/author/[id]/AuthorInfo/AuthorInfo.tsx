@@ -8,10 +8,13 @@ import { OriginalWorkList } from './OriginalWorkList';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
 import SortDropdown from './SortDropdown';
+import { useTranslations } from 'next-intl';
 
 interface Props extends HstackProps {}
 
 export default function AuthorInfo({ ...props }: Props) {
+  const t = useTranslations('Author');
+
   const [selected, setSelected] = useState<'original-works' | 'editions'>(
     'original-works'
   );
@@ -47,13 +50,13 @@ export default function AuthorInfo({ ...props }: Props) {
               value="original-works"
               className={css({ cursor: 'pointer' })}
             >
-              Original works
+              {t('original_works')}
             </SegmentedControl.Item>
             <SegmentedControl.Item
               value="editions"
               className={css({ cursor: 'pointer' })}
             >
-              Editions
+              {t('editions')}
             </SegmentedControl.Item>
           </SegmentedControl.Root>
           <SortDropdown />

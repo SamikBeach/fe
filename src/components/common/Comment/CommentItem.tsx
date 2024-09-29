@@ -23,6 +23,8 @@ import { currentUserAtom } from '@atoms/user';
 import { useState } from 'react';
 import { DeleteConfirmDialog } from '../DeleteConfirmDialog';
 import { motion } from 'framer-motion';
+import { ko, enUS } from 'date-fns/locale';
+import { useLocale, useTranslations } from 'next-intl';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -54,6 +56,10 @@ export default function CommentItem({
   width,
   ...props
 }: Props) {
+  const locale = useLocale();
+
+  const t = useTranslations('Common');
+
   const currentUser = useAtomValue(currentUserAtom);
 
   const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] =
@@ -65,9 +71,11 @@ export default function CommentItem({
 
   const isMyComment = currentUser?.id === user.id;
 
-  const createdAt = formatDistanceToNow(comment.created_at, {
+  const createdAt = formatDistanceToNow(new Date(comment.created_at), {
+    locale: locale === 'ko' ? ko : enUS,
     addSuffix: true,
-  }).replace('about ', '');
+    includeSeconds: true,
+  });
 
   return (
     <motion.div
@@ -122,13 +130,13 @@ export default function CommentItem({
                         className={css({ cursor: 'pointer' })}
                         onSelect={onEdit}
                       >
-                        Edit
+                        {t('edit')}
                       </DropdownMenu.Item>
                       <DropdownMenu.Item
                         className={css({ cursor: 'pointer' })}
                         onSelect={() => setIsOpenDeleteConfirmDialog(true)}
                       >
-                        Delete
+                        {t('delete')}
                       </DropdownMenu.Item>
                     </DropdownMenu.Content>
                   </DropdownMenu.Root>
@@ -163,7 +171,7 @@ export default function CommentItem({
                   },
                 })}
               >
-                See more
+                {t('see_more')}
               </Button>
             )}
           </CommentBox>
@@ -179,7 +187,7 @@ export default function CommentItem({
                 })}
                 onClick={onClickLike}
               >
-                Like
+                {t('like')}
               </Text>
               <Text
                 weight="medium"
@@ -191,12 +199,12 @@ export default function CommentItem({
                 })}
                 onClick={onClickToggleShowSubComments}
               >
-                Reply
+                {t('reply')}
               </Text>
             </HStack>
             <HStack mr="8px">
               <Text weight="medium" color="gray" size="1">
-                {likeCount} likes
+                {likeCount} {t('likes')}
               </Text>
               {subCommentCount !== undefined && subCommentCount > 0 && (
                 <Text
@@ -207,8 +215,10 @@ export default function CommentItem({
                   onClick={onClickToggleShowSubComments}
                 >
                   {isShowSubComments
-                    ? 'Hide replies'
-                    : `View replies (${subCommentCount})`}
+                    ? t('hide_replies')
+                    : t('view_replies', {
+                        count: subCommentCount,
+                      })}
                 </Text>
               )}
             </HStack>

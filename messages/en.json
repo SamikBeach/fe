@@ -19,7 +19,10 @@
     "discard_changes": "Discard changes?",
     "cancel": "\bCancel",
     "discard_changes_description": "Are you sure you want to discard your changes?",
-    "discard": "Discard"
+    "discard": "Discard",
+    "delete_confirm": "Are you sure you want to delete?",
+    "delete_confirm_description": "Deleted comments cannot be restored.",
+    "cancel_and_continue_editing": "Cancel"
   },
   "Home": {
     "trending_now": "Trending Now",
@@ -56,6 +59,7 @@
     "top_comments": "Top comments",
     "publication_date_newest_first": "Newest first",
     "publication_date_oldest_first": "Oldest first",
+    "newest_first": "Newest first",
     "alphabetical": "Alphabetical",
     "sort_by": "Sort by"
   },
@@ -69,6 +73,7 @@
     "top_comments": "Top comments",
     "publication_date_newest_first": "Newest first",
     "publication_date_oldest_first": "Oldest first",
+    "newest_first": "Newest first",
     "alphabetical": "Alphabetical",
     "sort_by": "Sort by"
   },

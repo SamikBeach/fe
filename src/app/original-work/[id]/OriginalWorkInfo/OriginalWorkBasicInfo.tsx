@@ -14,25 +14,28 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useParams } from 'next/navigation';
 import OriginalWorkBasicInfoSkeleton from './OriginalWorkBasicInfoSkeleton';
+import { getPublicationDateText } from '@utils/original-work';
+import { useLocale } from 'next-intl';
 
 export default function OriginalWorkInfo() {
+  const locale = useLocale();
+
   const params = useParams();
   const originalWorkId = Number(params.id);
 
   const { data: originalWork, isLoading: isLoadingOriginalWork } = useQuery({
-    queryKey: ['originalWork', params.id],
+    queryKey: ['original-work', params.id],
     queryFn: () => getOriginalWorkById({ id: originalWorkId }),
     select: response => response.data,
   });
 
-  const { id, title, title_in_eng, publication_date, publication_date_is_bc } =
-    originalWork ?? {
-      id: 0,
-      title: '',
-      title_in_eng: '',
-      publication_date: '',
-      publication_date_is_bc: 0,
-    };
+  const { id, title, title_in_kor, title_in_eng } = originalWork ?? {
+    id: 0,
+    title: '',
+    title_in_eng: '',
+    publication_date: '',
+    publication_date_is_bc: 0,
+  };
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -75,7 +78,7 @@ export default function OriginalWorkInfo() {
     isLoading: isLoadingOriginalWorkLike,
     refetch: refetchOriginalWorkLike,
   } = useQuery({
-    queryKey: ['originalWork-like', id],
+    queryKey: ['original-work-like', id],
     queryFn: () => {
       if (currentUser === null) {
         throw new Error('User is not logged in');
@@ -94,7 +97,7 @@ export default function OriginalWorkInfo() {
     isLoading: isLoadingOriginalWorkAllLikes,
     refetch: refetchOriginalWorkAllLikes,
   } = useQuery({
-    queryKey: ['originalWork-like/count', id],
+    queryKey: ['original-work-like/count', id],
     queryFn: () => getOriginalWorkLikeCount({ originalWorkId: id }),
     select: response => response.data.count,
   });
@@ -154,15 +157,19 @@ export default function OriginalWorkInfo() {
       </VStack>
       <VStack alignItems="start" gap="2px">
         <Text size="6" weight="bold">
+          {title_in_kor}
+        </Text>
+        <Text size="5" color="gray">
           {title}
         </Text>
         <Text size="5" color="gray">
           {title_in_eng}
         </Text>
-        <Text size="3">
-          {publication_date_is_bc === 1 ? 'BC' : ''}
-          {publication_date}
-        </Text>
+        {originalWork !== undefined && (
+          <Text size="3">
+            {getPublicationDateText({ originalWork, locale })}
+          </Text>
+        )}
         <HStack gap="2px">
           <Text>{originalWorkAllLikes}</Text>
           <HeartFilledIcon color="pink" />

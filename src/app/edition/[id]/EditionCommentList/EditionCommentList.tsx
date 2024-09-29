@@ -24,8 +24,11 @@ import { HStack } from 'styled-system/jsx';
 import EditionCommentSortDropdown from './EditionCommentSortDropdown';
 import { AxiosResponse } from 'axios';
 import { editionCommentSortAtom } from '@atoms/sort';
+import { useTranslations } from 'next-intl';
 
 export default function EditionCommentList() {
+  const t = useTranslations('Common');
+
   const commentListBoxRef = useRef<HTMLDivElement>(null);
 
   const params = useParams();
@@ -121,7 +124,7 @@ export default function EditionCommentList() {
             <Skeleton height="24px" width="100px" />
           ) : (
             <Text size="3" weight="medium">
-              {`Comment(${comments.length})`}
+              {t('comment', { count: comments.length })}
             </Text>
           )}
           <EditionCommentSortDropdown />

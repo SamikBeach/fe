@@ -1,4 +1,5 @@
 import { AlertDialog, Button } from '@radix-ui/themes';
+import { useTranslations } from 'next-intl';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
@@ -8,12 +9,14 @@ interface Props extends ComponentProps<typeof AlertDialog.Root> {
 }
 
 export default function DeleteConfirmDialog({ onDelete, ...props }: Props) {
+  const t = useTranslations('Common');
+
   return (
     <AlertDialog.Root {...props}>
       <AlertDialog.Content maxWidth="400px">
-        <AlertDialog.Title>Are you sure you want to delete?</AlertDialog.Title>
+        <AlertDialog.Title>{t('delete_confirm')}</AlertDialog.Title>
         <AlertDialog.Description>
-          Deleted comments cannot be restored.
+          {t('delete_confirm_description')}
         </AlertDialog.Description>
         <HStack mt="30px" justify="end">
           <AlertDialog.Action>
@@ -24,7 +27,7 @@ export default function DeleteConfirmDialog({ onDelete, ...props }: Props) {
               }}
               className={css({ cursor: 'pointer' })}
             >
-              Delete
+              {t('delete')}
             </Button>
           </AlertDialog.Action>
           <AlertDialog.Cancel>
@@ -35,7 +38,7 @@ export default function DeleteConfirmDialog({ onDelete, ...props }: Props) {
               }}
               className={css({ cursor: 'pointer' })}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </AlertDialog.Cancel>
         </HStack>

@@ -138,7 +138,7 @@ export default function CommentEditor({
                 }}
                 className={css({ cursor: 'pointer' })}
               >
-                {t('cancel')}
+                {t('cancel_and_continue_editing')}
               </Button>
             </AlertDialog.Cancel>
           </HStack>

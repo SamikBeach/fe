@@ -20,9 +20,12 @@
     "view_replies": "댓글 보기({count})",
     "submit": "제출하기",
     "discard_changes": "변경 사항이 저장되지 않았어요.",
-    "cancel": "계속 수정하기",
+    "cancel": "취소하기",
     "discard_changes_description": "변경 사항을 저장하지 않고 나갈까요?",
-    "discard": "나가기"
+    "discard": "나가기",
+    "delete_confirm": "정말 삭제할까요?",
+    "delete_confirm_description": "삭제한 글은 되살릴 수 없어요.",
+    "cancel_and_continue_editing": "계속 수정하기"
   },
   "Home": {
     "trending_now": "실시간 인기",
@@ -60,6 +63,7 @@
     "publication_date_newest_first": "최신순",
     "publication_date_oldest_first": "오래된 순",
     "alphabetical": "가나다순",
+    "newest_first": "최신순",
     "sort_by": "정렬"
   },
   "Edition": {
@@ -73,6 +77,7 @@
     "publication_date_newest_first": "최신순",
     "publication_date_oldest_first": "오래된 순",
     "alphabetical": "가나다순",
+    "newest_first": "최신순",
     "sort_by": "정렬"
   },
   "SignUp": {

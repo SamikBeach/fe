@@ -6,10 +6,13 @@ import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
 import SortDropdown from './SortDropdown';
+import { useTranslations } from 'next-intl';
 
 interface Props extends HstackProps {}
 
 export default function AuthorInfo({ ...props }: Props) {
+  const t = useTranslations('OriginalWork');
+
   return (
     <ScrollArea
       scrollbars="vertical"
@@ -35,7 +38,7 @@ export default function AuthorInfo({ ...props }: Props) {
               value="editions"
               className={css({ cursor: 'pointer' })}
             >
-              Editions
+              {t('editions')}
             </SegmentedControl.Item>
           </SegmentedControl.Root>
           <SortDropdown />

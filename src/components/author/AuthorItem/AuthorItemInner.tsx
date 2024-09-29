@@ -25,7 +25,7 @@ export default function AuthorItemInner({ author }: Props) {
     original_works,
     like_count,
     comment_count,
-    edition_count,
+    editions,
   } = author;
 
   const locale = useLocale();
@@ -112,7 +112,7 @@ export default function AuthorItemInner({ author }: Props) {
               {t('Common.original_works')} {original_works?.length}
             </Text>
             <Text size="2" color="gray">
-              {t('Common.editions')} {edition_count}
+              {t('Common.editions')} {editions?.length}
             </Text>
           </HStack>
           <HStack gap="10px">

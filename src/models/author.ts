@@ -1,4 +1,5 @@
 import { CommentServerModel } from './comment';
+import { EditionServerModel } from './edition';
 import { EraServerModel } from './era';
 import { OriginalWorkServerModel } from './original-work';
 import { UserServerModel } from './user';
@@ -18,7 +19,7 @@ export interface AuthorServerModel {
   comments?: CommentServerModel[];
   like_count: number;
   comment_count: number;
-  edition_count?: number;
+  editions?: EditionServerModel[];
 }
 
 export type AuthorSort =

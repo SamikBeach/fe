@@ -1,4 +1,5 @@
 import { searchAuthors } from '@apis/author';
+import { searchEditions } from '@apis/edition';
 import { searchOriginalWorks } from '@apis/original-work';
 import { Avatar, Popover, Spinner, Text } from '@radix-ui/themes';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -6,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
+import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -36,17 +38,27 @@ function SearchPopover({
 
   const { data: originalWorks = [], isLoading: isLoadingOriginalWorks } =
     useQuery({
-      queryKey: ['originalWork', searchValue],
+      queryKey: ['original-work', searchValue],
       queryFn: () => searchOriginalWorks({ keyword: searchValue, limit: 5 }),
       enabled: searchValue !== '',
       select: response => response.data.data,
       placeholderData: keepPreviousData,
     });
 
-  const isLoading = isLoadingAuthors || isLoadingOriginalWorks;
+  const { data: editions = [], isLoading: isLoadingEditions } = useQuery({
+    queryKey: ['edition', searchValue],
+    queryFn: () => searchEditions({ keyword: searchValue, limit: 5 }),
+    enabled: searchValue !== '',
+    select: response => response.data.data,
+    placeholderData: keepPreviousData,
+  });
+
+  const isLoading =
+    isLoadingAuthors || isLoadingOriginalWorks || isLoadingEditions;
 
   const hasAuthors = authors.length > 0;
   const hasOriginalWorks = originalWorks.length > 0;
+  const hasEditions = editions.length > 0;
   const hasResults = hasAuthors || hasOriginalWorks;
   const resultCount = authors.length + originalWorks.length;
 
@@ -202,14 +214,75 @@ function SearchPopover({
                   onOpenChange?.(false);
                 }}
               >
+                <GiSecretBook
+                  className={css({
+                    display: 'inline',
+                    marginBottom: '2px',
+                    cursor: 'pointer',
+                    color: 'gray.600',
+                  })}
+                  size="24px"
+                />{' '}
+                <Highlighter
+                  searchWords={[searchValue]}
+                  textToHighlight={originalWork.title ?? ''}
+                  className={css({
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  })}
+                  highlightClassName={css({
+                    fontWeight: 'bold',
+                    backgroundColor: 'transparent',
+                  })}
+                />
+              </HStack>
+            ))}
+          </>
+        )}
+
+        {hasEditions && (
+          <>
+            <Text
+              color="gray"
+              size="2"
+              className={css({ px: '10px', py: '14px' })}
+            >
+              {t('editions')}
+            </Text>
+            {editions.map((edition, index) => (
+              <HStack
+                key={index}
+                gap="10px"
+                className={css({
+                  width: '400px',
+                  py: '4px',
+                  px: '8px',
+                  background:
+                    focusedIndex === index + authors.length
+                      ? 'gray.100'
+                      : 'transparent',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+
+                  _hover: {
+                    background: 'gray.100',
+                  },
+                })}
+                onClick={() => {
+                  router.push(`/edition/${edition.id}`);
+                  onOpenChange?.(false);
+                }}
+              >
                 <Avatar
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-                  fallback={originalWork.title?.[0] ?? ''}
+                  src={edition.image_url ?? undefined}
+                  fallback={edition.title?.[0] ?? ''}
                   size="1"
                 />
                 <Highlighter
                   searchWords={[searchValue]}
-                  textToHighlight={originalWork.title ?? ''}
+                  textToHighlight={edition.title ?? ''}
                   className={css({
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',

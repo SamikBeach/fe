@@ -1,20 +1,30 @@
-import { CommentSort } from '@models/comment';
+import { originalWorkEditionSortAtom } from '@atoms/sort';
+import { EditionSort } from '@models/edition';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
+import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import { css } from 'styled-system/css';
 
-const SORT_OPTIONS: { tKey: string; value: CommentSort }[] = [
+const SORT_OPTIONS: { tKey: string; value: EditionSort }[] = [
   { tKey: 'top_likes', value: 'top_likes' },
   { tKey: 'top_comments', value: 'top_comments' },
-  { tKey: 'newest_first', value: 'newest_first' },
+  {
+    tKey: 'publication_date_newest_first',
+    value: 'publication_date_newest_first',
+  },
+  {
+    tKey: 'publication_date_oldest_first',
+    value: 'publication_date_oldest_first',
+  },
+  { tKey: 'alphabetical', value: 'alphabetical' },
 ];
 
 export default function SortDropdown() {
   const t = useTranslations('OriginalWork');
 
-  const [originalWorkCommentSort, setOriginalWorkCommentSort] =
-    useState('top_likes');
+  const [originalWorkEditionSort, setOriginalWorkEditionSort] = useAtom(
+    originalWorkEditionSortAtom
+  );
 
   return (
     <DropdownMenu.Root>
@@ -29,7 +39,7 @@ export default function SortDropdown() {
         >
           {t(
             SORT_OPTIONS.find(
-              option => option.value === originalWorkCommentSort
+              option => option.value === originalWorkEditionSort
             )?.tKey
           )}
           <ChevronDownIcon />
@@ -42,7 +52,7 @@ export default function SortDropdown() {
             <DropdownMenu.Item
               key={option.value}
               className={css({ cursor: 'pointer' })}
-              onSelect={() => setOriginalWorkCommentSort(option.value)}
+              onSelect={() => setOriginalWorkEditionSort(option.value)}
             >
               {t(option.tKey)}
             </DropdownMenu.Item>

@@ -21,3 +21,5 @@ export const authorOriginalWorkSortAtom = atom<OriginalWorkSort>('top_likes');
 export const authorEditionSortAtom = atom<EditionSort>('top_likes');
 
 export const originalWorkEditionSortAtom = atom<EditionSort>('top_likes');
+
+export const editionEditionSortAtom = atom<EditionSort>('top_likes');

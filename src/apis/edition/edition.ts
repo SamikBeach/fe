@@ -18,6 +18,7 @@ interface SearchEditionsRequest {
   keyword?: string;
   authorId?: number | null;
   originalWorkId?: number | null;
+  editionId?: number | null;
   sort?: EditionSort;
   page?: number;
   limit?: number;
@@ -48,6 +49,7 @@ export function searchEditions({
   keyword,
   authorId,
   originalWorkId,
+  editionId,
   sort,
   limit,
 }: SearchEditionsRequest) {
@@ -56,6 +58,7 @@ export function searchEditions({
       search: keyword === '' ? undefined : keyword,
       ['filter.author_id']: authorId,
       ['filter.original_work_id']: originalWorkId,
+      ['filter.edition_id']: editionId,
       sortBy: getSortBy(sort),
       page,
       limit,

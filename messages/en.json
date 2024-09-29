@@ -68,14 +68,14 @@
     "philosophy": "Philosophy",
     "author": "Author",
     "editions": "Editions",
-    "search_original_works_placeholder": "Search original works and authors...",
     "top_likes": "Top likes",
     "top_comments": "Top comments",
     "publication_date_newest_first": "Newest first",
     "publication_date_oldest_first": "Oldest first",
     "newest_first": "Newest first",
     "alphabetical": "Alphabetical",
-    "sort_by": "Sort by"
+    "sort_by": "Sort by",
+    "search_editions_placeholder": "Search editions and authors..."
   },
   "SignUp": {
     "sign_up": "Sign up",

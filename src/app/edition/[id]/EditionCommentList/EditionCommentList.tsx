@@ -36,7 +36,7 @@ export default function EditionCommentList() {
 
   const currentUser = useAtomValue(currentUserAtom);
 
-  const authorCommentSort = useAtomValue(editionCommentSortAtom);
+  const editionCommentSort = useAtomValue(editionCommentSortAtom);
 
   const {
     data,
@@ -45,11 +45,11 @@ export default function EditionCommentList() {
     isFetching,
     refetch: refetchSearchEditionComments,
   } = useInfiniteQuery<AxiosResponse<SearchEditionCommentsResponse>>({
-    queryKey: ['edition-comment/search', authorCommentSort],
+    queryKey: ['edition-comment/search', editionCommentSort],
     queryFn: async ({ pageParam = 1 }) => {
       return await searchEditionComments({
         editionId,
-        sort: authorCommentSort,
+        sort: editionCommentSort,
         page: pageParam as number,
       });
     },

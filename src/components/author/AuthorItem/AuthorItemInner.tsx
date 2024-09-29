@@ -1,7 +1,10 @@
+import { searchEditions } from '@apis/edition';
+import { searchOriginalWorks } from '@apis/original-work';
 import { useProgressRouter } from '@hooks/index';
 import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
 import { getBornAndDiedDateText } from '@utils/author';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -28,11 +31,29 @@ export default function AuthorItemInner({ author }: Props) {
     editions,
   } = author;
 
+  const { data: editionsFromQuery } = useQuery({
+    queryKey: ['edition/search', author.id],
+    queryFn: () => searchEditions({ authorId: author.id, limit: 500 }),
+    enabled: editions === undefined,
+    select: data => data.data.data,
+  });
+
+  const { data: originalWorksFromQuery } = useQuery({
+    queryKey: ['original-work/search', author.id],
+    queryFn: () => searchOriginalWorks({ authorId: author.id, limit: 500 }),
+    enabled: original_works === undefined,
+    select: data => data.data.data,
+  });
+
   const locale = useLocale();
 
   const t = useTranslations();
 
   const router = useProgressRouter();
+
+  const editionCount = editions?.length ?? editionsFromQuery?.length ?? 0;
+  const originalWorkCount =
+    original_works?.length ?? originalWorksFromQuery?.length ?? 0;
 
   return (
     <HStack gap="20px">
@@ -109,10 +130,10 @@ export default function AuthorItemInner({ author }: Props) {
         <VStack alignItems="start" gap="0">
           <HStack gap="10px">
             <Text size="2" color="gray">
-              {t('Common.original_works')} {original_works?.length}
+              {t('Common.original_works')} {originalWorkCount}
             </Text>
             <Text size="2" color="gray">
-              {t('Common.editions')} {editions?.length}
+              {t('Common.editions')} {editionCount}
             </Text>
           </HStack>
           <HStack gap="10px">

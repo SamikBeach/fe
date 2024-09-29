@@ -1,7 +1,9 @@
+import { searchOriginalWorks } from '@apis/original-work';
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { EditionServerModel } from '@models/edition';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
@@ -21,6 +23,15 @@ export default function EditionItemInner({ edition }: Props) {
     publication_date,
     original_works,
   } = edition;
+
+  const { data: originalWorksFromQuery } = useQuery({
+    queryKey: ['edition/search', edition.id],
+    queryFn: () => searchOriginalWorks({ editionId: edition.id, limit: 500 }),
+    enabled: original_works === undefined,
+    select: data => data.data.data,
+  });
+
+  const originalWorks = original_works ?? originalWorksFromQuery ?? [];
 
   return (
     <HStack gap="20px">
@@ -72,7 +83,7 @@ export default function EditionItemInner({ edition }: Props) {
         />
 
         <HStack>
-          {original_works.map(originalWork => (
+          {originalWorks.map(originalWork => (
             <Link
               key={originalWork.id}
               href={`/original-work/${originalWork.id}`}

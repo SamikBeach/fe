@@ -1,7 +1,9 @@
+import { searchEditions } from '@apis/edition';
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
 import { getPublicationDateText } from '@utils/original-work';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -26,6 +28,16 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
     comment_count,
     editions,
   } = originalWork;
+
+  const { data: editionsFromQuery } = useQuery({
+    queryKey: ['edition/search', originalWork.id],
+    queryFn: () =>
+      searchEditions({ originalWorkId: originalWork.id, limit: 500 }),
+    enabled: editions === undefined,
+    select: data => data.data.data,
+  });
+
+  const editionCount = editions?.length ?? editionsFromQuery?.length ?? 0;
 
   return (
     <HStack gap="20px">
@@ -136,7 +148,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
 
         <HStack gap="8px">
           <Text size="2" color="gray">
-            {t('editions')} {editions.length}
+            {t('editions')} {editionCount}
           </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">

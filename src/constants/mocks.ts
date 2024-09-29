@@ -12,6 +12,8 @@ export const MOCK_AUTHOR: AuthorServerModel = {
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nietzsche187a.jpg/472px-Nietzsche187a.jpg',
   original_works: [],
+  like_count: 0,
+  comment_count: 0,
 };
 export const MOCK_AUTHOR2: AuthorServerModel = {
   id: 2,
@@ -24,6 +26,8 @@ export const MOCK_AUTHOR2: AuthorServerModel = {
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Immanuel_Kant_-_Gemaelde_1.jpg/440px-Immanuel_Kant_-_Gemaelde_1.jpg',
   original_works: [],
+  like_count: 0,
+  comment_count: 0,
 };
 export const MOCK_AUTHOR3: AuthorServerModel = {
   id: 3,
@@ -36,6 +40,8 @@ export const MOCK_AUTHOR3: AuthorServerModel = {
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Ludwig_Wittgenstein_1929.jpg/220px-Ludwig_Wittgenstein_1929.jpg',
   original_works: [],
+  like_count: 0,
+  comment_count: 0,
 };
 export const MOCK_AUTHOR4: AuthorServerModel = {
   id: 4,
@@ -48,6 +54,8 @@ export const MOCK_AUTHOR4: AuthorServerModel = {
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Arthur_Schopenhauer_by_J_Sch%C3%A4fer%2C_1859b.jpg/220px-Arthur_Schopenhauer_by_J_Sch%C3%A4fer%2C_1859b.jpg',
   original_works: [],
+  like_count: 0,
+  comment_count: 0,
 };
 export const MOCK_AUTHOR5: AuthorServerModel = {
   id: 1,
@@ -60,6 +68,8 @@ export const MOCK_AUTHOR5: AuthorServerModel = {
   image_url:
     'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg/220px-Plato_Silanion_Musei_Capitolini_MC1377.jpg',
   original_works: [],
+  like_count: 0,
+  comment_count: 0,
 };
 
 export const MOCK_ORIGINAL_WORK1: OriginalWorkServerModel = {
@@ -71,6 +81,9 @@ export const MOCK_ORIGINAL_WORK1: OriginalWorkServerModel = {
   publication_date: '1999',
   publication_date_is_bc: null,
   author: MOCK_AUTHOR,
+  like_count: 0,
+  comment_count: 0,
+  editions: [],
 };
 export const MOCK_ORIGINAL_WORK2: OriginalWorkServerModel = {
   id: 2,
@@ -81,6 +94,9 @@ export const MOCK_ORIGINAL_WORK2: OriginalWorkServerModel = {
   publication_date: '1999',
   publication_date_is_bc: null,
   author: MOCK_AUTHOR,
+  like_count: 0,
+  comment_count: 0,
+  editions: [],
 };
 export const MOCK_ORIGINAL_WORK3: OriginalWorkServerModel = {
   id: 3,
@@ -91,6 +107,9 @@ export const MOCK_ORIGINAL_WORK3: OriginalWorkServerModel = {
   publication_date: '1999',
   publication_date_is_bc: null,
   author: MOCK_AUTHOR,
+  like_count: 0,
+  comment_count: 0,
+  editions: [],
 };
 export const MOCK_ORIGINAL_WORK4: OriginalWorkServerModel = {
   id: 4,
@@ -101,6 +120,9 @@ export const MOCK_ORIGINAL_WORK4: OriginalWorkServerModel = {
   publication_date: '1999',
   publication_date_is_bc: null,
   author: MOCK_AUTHOR,
+  like_count: 0,
+  comment_count: 0,
+  editions: [],
 };
 export const MOCK_ORIGINAL_WORK5: OriginalWorkServerModel = {
   id: 5,
@@ -111,6 +133,9 @@ export const MOCK_ORIGINAL_WORK5: OriginalWorkServerModel = {
   publication_date: '1999',
   publication_date_is_bc: null,
   author: MOCK_AUTHOR,
+  like_count: 0,
+  comment_count: 0,
+  editions: [],
 };
 
 export const MOCK_FEEDS = [

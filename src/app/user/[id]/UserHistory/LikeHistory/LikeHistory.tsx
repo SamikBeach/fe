@@ -5,6 +5,7 @@ import { VStack } from 'styled-system/jsx';
 import AuthorLikeHistory from './AuthorLikeHistory';
 import OriginalWorkLikeHistory from './OriginalWorkLikeHistory';
 import { useTranslations } from 'next-intl';
+import EditionLikeHistory from './EditionLikeHistory';
 
 export default function LikeHistory() {
   const t = useTranslations('Common');
@@ -16,7 +17,7 @@ export default function LikeHistory() {
       </Text>
       <AuthorLikeHistory />
       <OriginalWorkLikeHistory />
-      {/* <EditionLikeHistory /> */}
+      <EditionLikeHistory />
     </VStack>
   );
 }

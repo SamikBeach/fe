@@ -1,12 +1,29 @@
 import { CategoryWrapper } from './styled-components';
-import { HStack, styled } from 'styled-system/jsx';
-import { GiBlackBook } from 'react-icons/gi';
+import { HStack } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
 import { useTranslations } from 'next-intl';
+import { getUserLikes } from '@apis/user';
+import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import {
+  EditionItem,
+  EditionItemSkeleton,
+} from '@components/edition/EditionItem';
 
 export default function EditionLikeHistory() {
   const t = useTranslations('Common');
+
+  const params = useParams();
+  const userId = Number(params.id);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['user/like', userId],
+    queryFn: () => getUserLikes({ userId }),
+    select: response => response.data,
+    refetchOnMount: 'always',
+  });
+
+  const editions = data?.editions ?? [];
 
   return (
     <CategoryWrapper>
@@ -14,44 +31,14 @@ export default function EditionLikeHistory() {
         {t('editions')}
       </Text>
       <HStack gap="6px" flexWrap="wrap">
-        {[
-          'Also sprach Zarathustra',
-          'History of the Peoples',
-          'Passover Sermon',
-          'The Gresham Lectures',
-          'Womans Rights',
-        ].map(title => (
-          <EditionItem key={title} title={title} />
-        ))}
+        {isLoading
+          ? Array(10)
+              .fill(0)
+              .map((_, index) => <EditionItemSkeleton key={index} />)
+          : editions.map(edition => (
+              <EditionItem key={edition.id} edition={edition} />
+            ))}
       </HStack>
     </CategoryWrapper>
   );
 }
-
-function EditionItem({ title }: { title: string }) {
-  return (
-    <HStack gap="6px" bgColor="gray.100" px="14px" py="6px" borderRadius="8px">
-      <GiBlackBook
-        className={css({
-          display: 'inline',
-          cursor: 'pointer',
-          color: 'gray.600',
-        })}
-        size="24px"
-      />
-      <BoldText>{title}</BoldText>
-    </HStack>
-  );
-}
-
-const BoldText = styled('span', {
-  base: {
-    fontWeight: 'medium',
-    cursor: 'pointer',
-    fontSize: '14px',
-
-    _hover: {
-      textDecoration: 'underline',
-    },
-  },
-});

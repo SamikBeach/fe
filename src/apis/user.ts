@@ -1,5 +1,6 @@
 import api from '@apis/config';
 import { AuthorServerModel } from '@models/author';
+import { EditionServerModel } from '@models/edition';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { UserServerModel } from '@models/user';
 
@@ -32,6 +33,7 @@ interface GetUserLikesRequest {
 interface GetUserLikesResponse {
   authors: AuthorServerModel[];
   original_works: OriginalWorkServerModel[];
+  editions: EditionServerModel[];
 }
 
 export function getUserLikes({ userId }: GetUserLikesRequest) {

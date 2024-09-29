@@ -28,8 +28,6 @@ export default function AuthorFilter() {
         .sort((a, b) => a.value?.localeCompare(b.value)),
   });
 
-  console.log({ authors });
-
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>

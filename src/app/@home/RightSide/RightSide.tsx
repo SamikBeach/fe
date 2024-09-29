@@ -41,8 +41,6 @@ export default function RightSide() {
       refetchOnMount: 'always',
     });
 
-  console.log({ trendingEditions });
-
   return (
     <VStack minWidth="300px" position="sticky" top="0" pt="84px">
       <ScrollArea

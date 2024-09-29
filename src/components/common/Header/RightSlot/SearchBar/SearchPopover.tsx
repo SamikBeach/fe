@@ -68,7 +68,7 @@ function SearchPopover({
         router.push(
           focusedIndex < authors.length
             ? `/author/${authors[focusedIndex].id}`
-            : `/originalWork/${originalWorks[focusedIndex - authors.length].id}`
+            : `/original-work/${originalWorks[focusedIndex - authors.length].id}`
         );
 
         onOpenChange?.(false);
@@ -198,7 +198,7 @@ function SearchPopover({
                   },
                 })}
                 onClick={() => {
-                  router.push(`/originalWork/${originalWork.id}`);
+                  router.push(`/original-work/${originalWork.id}`);
                   onOpenChange?.(false);
                 }}
               >

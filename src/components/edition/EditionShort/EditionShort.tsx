@@ -1,8 +1,7 @@
 import { EditionHoverCard } from '@components/edition/EditionHoverCard';
 import { EditionServerModel } from '@models/edition';
-import { Text } from '@radix-ui/themes';
+import { Avatar, Text } from '@radix-ui/themes';
 import Link from 'next/link';
-import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
@@ -16,14 +15,10 @@ export default function EditionShort({ edition, ...props }: Props) {
       <EditionHoverCard.Trigger>
         <HStack gap="6px" {...props}>
           <Link href={`/edition/${edition.id}`}>
-            <GiSecretBook
-              className={css({
-                display: 'inline',
-                marginBottom: '2px',
-                cursor: 'pointer',
-                color: 'gray.600',
-              })}
-              size="24px"
+            <Avatar
+              src={edition.image_url ?? undefined}
+              fallback={edition.title[0]}
+              size="2"
             />
           </Link>{' '}
           <VStack gap="0" alignItems="start">

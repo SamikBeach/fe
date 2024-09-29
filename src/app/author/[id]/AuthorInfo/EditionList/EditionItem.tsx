@@ -1,51 +1,30 @@
-import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
-import { Avatar, Text } from '@radix-ui/themes';
+import EditionItemInner from '@components/edition/EditionItem/EditionItemInner';
+import useProgressRouter from '@hooks/useProgressRouter';
+import { EditionServerModel } from '@models/edition';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack } from 'styled-system/jsx';
 
-export default function EditionItem() {
+interface Props {
+  edition: EditionServerModel;
+}
+
+export default function EditionItem({ edition }: Props) {
+  const router = useProgressRouter();
+
   return (
     <HStack
-      gap="20px"
-      bgColor="gray.100"
+      border="1px solid"
+      borderColor="gray.200"
       padding="16px"
       borderRadius="8px"
       width="386px"
-      height="124px"
+      height="130px"
       className={css({ cursor: 'pointer' })}
+      _hover={{ scale: 1.02, bgColor: 'gray.50' }}
+      transition="scale 0.1s ease-in-out"
+      onClick={() => router.push(`/edition/${edition.id}`)}
     >
-      <Avatar
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg/440px-Also_sprach_Zarathustra._Ein_Buch_f%C3%BCr_Alle_und_Keinen._In_drei_Theilen.jpg"
-        fallback="폴백"
-        size="7"
-      />
-      <VStack alignItems="start" justify="space-between">
-        <VStack alignItems="start" gap="0">
-          <Text size="3" weight="bold">
-            De catechizandis rudibus
-          </Text>
-          <Text size="2" color="gray">
-            On Catechizing the Uninstructed
-          </Text>
-          <Text size="2" color="gray">
-            25 editions
-          </Text>
-        </VStack>
-        <HStack>
-          <HStack gap="3px">
-            <Text size="2" color="gray">
-              351
-            </Text>
-            <HeartFilledIcon color="gray" />
-          </HStack>
-          <HStack gap="3px">
-            <Text size="2" color="gray">
-              12
-            </Text>
-            <ChatBubbleIcon color="gray" />
-          </HStack>
-        </HStack>
-      </VStack>
+      <EditionItemInner edition={edition} />
     </HStack>
   );
 }

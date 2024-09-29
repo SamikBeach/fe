@@ -17,3 +17,5 @@ export const originalWorkCommentSortAtom = atom<CommentSort>('top_likes');
 export const editionCommentSortAtom = atom<CommentSort>('top_likes');
 
 export const authorOriginalWorkSortAtom = atom<OriginalWorkSort>('top_likes');
+
+export const authorEditionSortAtom = atom<EditionSort>('top_likes');

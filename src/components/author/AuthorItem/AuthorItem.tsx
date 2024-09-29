@@ -2,14 +2,14 @@ import { AuthorServerModel } from '@models/author';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import AuthorItemInner from './AuthorItemInner';
-import useProgressRouter from '@hooks/useProgressRouter';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   author: AuthorServerModel;
 }
 
 export default function AuthorItem({ author }: Props) {
-  const router = useProgressRouter();
+  const router = useRouter();
 
   return (
     <HStack

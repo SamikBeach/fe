@@ -1,6 +1,6 @@
 import EditionItemInner from '@components/edition/EditionItem/EditionItemInner';
-import useProgressRouter from '@hooks/useProgressRouter';
 import { EditionServerModel } from '@models/edition';
+import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function EditionItem({ edition }: Props) {
-  const router = useProgressRouter();
+  const router = useRouter();
 
   return (
     <HStack

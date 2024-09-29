@@ -1,6 +1,5 @@
 import { searchEditions } from '@apis/edition';
 import { searchOriginalWorks } from '@apis/original-work';
-import { useProgressRouter } from '@hooks/index';
 import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
@@ -8,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBornAndDiedDateText } from '@utils/author';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -49,7 +49,7 @@ export default function AuthorItemInner({ author }: Props) {
 
   const t = useTranslations();
 
-  const router = useProgressRouter();
+  const router = useRouter();
 
   const editionCount = editions?.length ?? editionsFromQuery?.length ?? 0;
   const originalWorkCount =

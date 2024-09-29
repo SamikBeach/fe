@@ -2,14 +2,14 @@ import { OriginalWorkServerModel } from '@models/original-work';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import OringinalWorkItemInner from './OriginalWorkItemInner';
-import useProgressRouter from '@hooks/useProgressRouter';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   originalWork: OriginalWorkServerModel;
 }
 
 export default function OriginalWorkItem({ originalWork }: Props) {
-  const router = useProgressRouter();
+  const router = useRouter();
 
   return (
     <HStack

@@ -24,6 +24,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
     author,
     like_count,
     comment_count,
+    editions,
   } = originalWork;
 
   return (
@@ -135,7 +136,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
 
         <HStack gap="8px">
           <Text size="2" color="gray">
-            {t('editions')} 25
+            {t('editions')} {editions.length}
           </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">

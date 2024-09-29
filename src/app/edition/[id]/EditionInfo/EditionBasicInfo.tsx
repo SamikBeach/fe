@@ -14,6 +14,9 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useParams } from 'next/navigation';
 import EditionBasicInfoSkeleton from './EditionBasicInfoSkeleton';
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
+import Link from 'next/link';
+import { GiSecretBook } from 'react-icons/gi';
 
 export default function EditionBasicInfo() {
   const params = useParams();
@@ -25,7 +28,15 @@ export default function EditionBasicInfo() {
     select: response => response.data,
   });
 
-  const { id, title, publication_date, publisher, image_url } = edition ?? {
+  const {
+    id,
+    title,
+    publication_date,
+    publisher,
+    image_url,
+    author,
+    original_works = [],
+  } = edition ?? {
     id: 0,
     title: '',
     image_url: '',
@@ -155,6 +166,42 @@ export default function EditionBasicInfo() {
         </Text>
         <Text size="3">{publication_date}</Text>
         <Text size="3">{publisher}</Text>
+        {author !== undefined && (
+          <AuthorAvatar author={author} withName size="2" />
+        )}
+
+        <HStack>
+          {original_works.map(originalWork => (
+            <Link
+              key={originalWork.id}
+              href={`/original-work/${originalWork.id}`}
+              onClick={e => e.stopPropagation()}
+              className={css({
+                cursor: 'pointer',
+                color: 'gray.600',
+              })}
+            >
+              <GiSecretBook
+                className={css({
+                  display: 'inline',
+                  cursor: 'pointer',
+                  color: 'gray.600',
+                })}
+                size="24px"
+              />
+              <Text
+                className={css({
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {originalWork.title}
+              </Text>
+            </Link>
+          ))}
+        </HStack>
+
         <HStack gap="2px">
           <Text>{editionAllLikes}</Text>
           <HeartFilledIcon color="pink" />

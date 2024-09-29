@@ -10,18 +10,18 @@ import {
 } from '@components/edition/EditionItem';
 
 export default function EditonList() {
-  const authorOriginalWorkSort = useAtomValue(originalWorkEditionSortAtom);
+  const originalWorkEditionSort = useAtomValue(originalWorkEditionSortAtom);
 
   const params = useParams();
-  const authorId = Number(params.id);
+  const originalWorkId = Number(params.id);
 
   const { data: editions = [], isLoading } = useQuery({
-    queryKey: ['edition', authorId, authorOriginalWorkSort],
+    queryKey: ['edition', originalWorkId, originalWorkEditionSort],
     queryFn: () =>
       searchEditions({
-        authorId,
+        originalWorkId,
         limit: 500,
-        sort: authorOriginalWorkSort,
+        sort: originalWorkEditionSort,
       }),
     select: data => data.data.data,
   });

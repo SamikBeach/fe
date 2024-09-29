@@ -2,8 +2,8 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { EditionServerModel } from '@models/edition';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Tooltip, Text } from '@radix-ui/themes';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -12,8 +12,6 @@ interface Props {
 }
 
 export default function EditionItemInner({ edition }: Props) {
-  const t = useTranslations('Edition');
-
   const {
     title,
     author,
@@ -21,6 +19,7 @@ export default function EditionItemInner({ edition }: Props) {
     like_count,
     comment_count,
     publication_date,
+    original_works,
   } = edition;
 
   return (
@@ -72,10 +71,39 @@ export default function EditionItemInner({ edition }: Props) {
           textProps={{ size: '1', color: 'gray' }}
         />
 
+        <HStack>
+          {original_works.map(originalWork => (
+            <Link
+              key={originalWork.id}
+              href={`/original-work/${originalWork.id}`}
+              onClick={e => e.stopPropagation()}
+              className={css({
+                cursor: 'pointer',
+                color: 'gray.600',
+              })}
+            >
+              <GiSecretBook
+                className={css({
+                  display: 'inline',
+                  cursor: 'pointer',
+                  color: 'gray.600',
+                })}
+                size="24px"
+              />
+              <Text
+                className={css({
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {originalWork.title}
+              </Text>
+            </Link>
+          ))}
+        </HStack>
+
         <HStack gap="8px">
-          <Text size="2" color="gray">
-            {t('editions')} 25
-          </Text>
           <HStack gap="3px">
             <Text size="2" color="gray">
               {like_count}

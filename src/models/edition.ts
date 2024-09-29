@@ -1,5 +1,6 @@
 import { AuthorServerModel } from './author';
 import { CommentServerModel } from './comment';
+import { OriginalWorkServerModel } from './original-work';
 import { UserServerModel } from './user';
 
 export interface EditionServerModel {
@@ -11,6 +12,7 @@ export interface EditionServerModel {
   publisher: string;
   isbn: string | null;
   isbn13: string | null;
+  original_works: OriginalWorkServerModel[];
 
   author: AuthorServerModel;
   liked_users?: UserServerModel[];

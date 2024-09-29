@@ -1,6 +1,5 @@
 import { CommentSort } from '@models/comment';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
-import { capitalize } from 'lodash';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { css } from 'styled-system/css';

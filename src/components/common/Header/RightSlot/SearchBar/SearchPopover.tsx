@@ -63,7 +63,7 @@ function SearchPopover({
   const hasOriginalWorks = originalWorks.length > 0;
   const hasEditions = editions.length > 0;
   const hasResults = hasAuthors || hasOriginalWorks;
-  const resultCount = authors.length + originalWorks.length;
+  const resultCount = authors.length + originalWorks.length + editions.length;
 
   useEffect(() => {
     if (!open) {
@@ -83,7 +83,11 @@ function SearchPopover({
         router.push(
           focusedIndex < authors.length
             ? `/author/${authors[focusedIndex].id}`
-            : `/original-work/${originalWorks[focusedIndex - authors.length].id}`
+            : focusedIndex < authors.length + originalWorks.length
+              ? `/original-work/${
+                  originalWorks[focusedIndex - authors.length].id
+                }`
+              : `/edition/${editions[focusedIndex - authors.length - originalWorks.length].id}`
         );
 
         onOpenChange?.(false);
@@ -101,6 +105,7 @@ function SearchPopover({
     router,
     originalWorks,
     onOpenChange,
+    editions,
   ]);
 
   const renderPopoverContentInner = () => {
@@ -331,7 +336,8 @@ function SearchPopover({
                   py: '4px',
                   px: '8px',
                   background:
-                    focusedIndex === index + authors.length
+                    focusedIndex ===
+                    index + authors.length + originalWorks.length
                       ? 'gray.100'
                       : 'transparent',
                   borderRadius: '6px',

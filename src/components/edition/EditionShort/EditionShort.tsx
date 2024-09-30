@@ -1,7 +1,7 @@
 import { EditionHoverCard } from '@components/edition/EditionHoverCard';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { EditionServerModel } from '@models/edition';
-import { Avatar, Text, Tooltip } from '@radix-ui/themes';
+import { Text } from '@radix-ui/themes';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';

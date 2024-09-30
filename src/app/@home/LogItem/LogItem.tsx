@@ -103,7 +103,7 @@ export default function LogItem({ log }: Props) {
                         display: 'inline',
                         marginBottom: '2px',
                         cursor: 'pointer',
-                        color: 'gray.600',
+                        color: 'gray.500',
                       })}
                       size="24px"
                     />{' '}
@@ -153,7 +153,7 @@ export default function LogItem({ log }: Props) {
                         display: 'inline',
                         marginBottom: '2px',
                         cursor: 'pointer',
-                        color: 'gray.600',
+                        color: 'gray.500',
                       })}
                       size="24px"
                     />{' '}

@@ -24,7 +24,7 @@ export default function OriginalWorkShort({ originalWork, ...props }: Props) {
                 display: 'inline',
                 marginBottom: '2px',
                 cursor: 'pointer',
-                color: 'gray.600',
+                color: 'gray.500',
               })}
               size="24px"
             />
@@ -37,12 +37,14 @@ export default function OriginalWorkShort({ originalWork, ...props }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 maxWidth: '240px',
+                lineHeight: '16.5px',
               })}
             >
               <Text
                 weight="medium"
                 className={css({
                   fontSize: '14px',
+                  lineHeight: '16.5px',
 
                   cursor: 'pointer',
                   _hover: {
@@ -62,11 +64,15 @@ export default function OriginalWorkShort({ originalWork, ...props }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 maxWidth: '240px',
+                lineHeight: '14px',
+                color: 'gray.500',
               })}
             >
               <Text
                 className={css({
-                  fontSize: '12px',
+                  fontSize: '11px',
+                  color: 'gray.500',
+                  lineHeight: '14px',
 
                   cursor: 'pointer',
                   _hover: {

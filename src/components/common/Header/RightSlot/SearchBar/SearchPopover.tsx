@@ -226,7 +226,7 @@ function SearchPopover({
                     display: 'inline',
                     marginBottom: '2px',
                     cursor: 'pointer',
-                    color: 'gray.600',
+                    color: 'gray.500',
                     minWidth: '24px',
                   })}
                   size="24px"
@@ -412,14 +412,14 @@ function SearchPopover({
                       {edition.original_works.map(originalWork => (
                         <span
                           key={originalWork.id}
-                          className={css({ ml: '4px' })}
+                          className={css({ mr: '4px' })}
                         >
                           <GiSecretBook
                             className={css({
                               display: 'inline',
                               marginBottom: '2px',
                               cursor: 'pointer',
-                              color: 'gray.600',
+                              color: 'gray.500',
                               width: '14px',
                             })}
                             size="14px"

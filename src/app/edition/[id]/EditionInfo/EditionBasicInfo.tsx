@@ -185,7 +185,7 @@ export default function EditionBasicInfo() {
                 className={css({
                   display: 'inline',
                   cursor: 'pointer',
-                  color: 'gray.600',
+                  color: 'gray.500',
                 })}
                 size="24px"
               />

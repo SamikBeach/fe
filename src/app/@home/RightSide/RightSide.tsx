@@ -42,7 +42,7 @@ export default function RightSide() {
     });
 
   return (
-    <VStack minWidth="300px" position="sticky" top="0" pt="84px">
+    <VStack width="320px" position="sticky" top="0" pt="84px">
       <ScrollArea
         scrollbars="vertical"
         className={css({
@@ -60,7 +60,12 @@ export default function RightSide() {
             <Section>
               <Text>{t('Common.authors')}</Text>
               {trendingAuthors.slice(0, 5).map(author => (
-                <AuthorAvatar key={author.id} author={author} withName />
+                <AuthorAvatar
+                  key={author.id}
+                  author={author}
+                  withName
+                  withSubName
+                />
               ))}
             </Section>
           )}
@@ -93,22 +98,6 @@ export default function RightSide() {
   );
 }
 
-// function EditionItem({ title }: { title: string }) {
-//   return (
-//     <HStack gap="6px">
-//       <GiBlackBook
-//         className={css({
-//           display: 'inline',
-//           cursor: 'pointer',
-//           color: 'gray.600',
-//         })}
-//         size="24px"
-//       />
-//       <BoldText>{title}</BoldText>
-//     </HStack>
-//   );
-// }
-
 const Section = styled(VStack, {
   base: {
     alignItems: 'start',
@@ -122,14 +111,3 @@ const Section = styled(VStack, {
     py: '10px',
   },
 });
-
-// const BoldText = styled('span', {
-//   base: {
-//     fontWeight: 'medium',
-//     cursor: 'pointer',
-
-//     _hover: {
-//       textDecoration: 'underline',
-//     },
-//   },
-// });

@@ -323,7 +323,7 @@ function SearchPopover({
             <Text
               color="gray"
               size="2"
-              className={css({ px: '10px', py: '14px' })}
+              className={css({ px: '11px', py: '14px' })}
             >
               {t('editions')}
             </Text>
@@ -390,7 +390,7 @@ function SearchPopover({
                         }
                         className={css({
                           color: 'gray.500',
-                          fontSize: '10px',
+                          fontSize: '11px',
                           ml: '4px',
                         })}
                         highlightClassName={css({

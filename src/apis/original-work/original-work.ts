@@ -36,6 +36,8 @@ function getSortBy(sort: OriginalWorkSort | undefined, locale: string) {
       return 'like_count:DESC';
     case 'top_comments':
       return 'comment_count:DESC';
+    case 'top_editions':
+      return 'edition_count:DESC';
     case 'publication_date_newest_first':
       return 'publication_date:DESC';
     case 'publication_date_oldest_first':

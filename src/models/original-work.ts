@@ -20,12 +20,14 @@ export interface OriginalWorkServerModel {
   comments?: CommentServerModel[];
   like_count: number;
   comment_count: number;
+  edition_count: number;
   editions: EditionServerModel[];
 }
 
 export type OriginalWorkSort =
   | 'top_likes'
   | 'top_comments'
+  | 'top_editions'
   | 'publication_date_newest_first'
   | 'publication_date_oldest_first'
   | 'alphabetical';

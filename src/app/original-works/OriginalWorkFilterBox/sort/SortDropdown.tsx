@@ -8,14 +8,15 @@ import { css } from 'styled-system/css';
 const SORT_OPTIONS: { tKey: string; value: OriginalWorkSort }[] = [
   { tKey: 'top_likes', value: 'top_likes' },
   { tKey: 'top_comments', value: 'top_comments' },
-  {
-    tKey: 'publication_date_newest_first',
-    value: 'publication_date_newest_first',
-  },
-  {
-    tKey: 'publication_date_oldest_first',
-    value: 'publication_date_oldest_first',
-  },
+  { tKey: 'top_editions', value: 'top_editions' },
+  // {
+  //   tKey: 'publication_date_newest_first',
+  //   value: 'publication_date_newest_first',
+  // },
+  // {
+  //   tKey: 'publication_date_oldest_first',
+  //   value: 'publication_date_oldest_first',
+  // },
   { tKey: 'alphabetical', value: 'alphabetical' },
 ];
 

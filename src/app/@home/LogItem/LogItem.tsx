@@ -2,7 +2,7 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
-import { Avatar, Button } from '@radix-ui/themes';
+import { Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';
 import { getJosaPicker } from 'josa';
 import { isNil } from 'lodash';
@@ -194,10 +194,13 @@ export default function LogItem({ log }: Props) {
               <EditionHoverCard.Trigger>
                 <span>
                   <Link href={`/edition/${target_edition.id}`}>
-                    <Avatar
-                      size="2"
-                      src={target_edition?.image_url ?? undefined}
-                      fallback={target_edition?.title[0]}
+                    <img
+                      src={target_edition.image_url ?? undefined}
+                      width="24px"
+                      className={css({
+                        borderRadius: '2px',
+                        display: 'inline',
+                      })}
                     />{' '}
                     <BoldText>{target_edition.title}</BoldText>
                   </Link>
@@ -233,10 +236,13 @@ export default function LogItem({ log }: Props) {
               <EditionHoverCard.Trigger>
                 <span>
                   <Link href={`/edition/${target_edition.id}`}>
-                    <Avatar
-                      size="2"
-                      src={target_edition?.image_url ?? undefined}
-                      fallback={target_edition?.title[0]}
+                    <img
+                      src={target_edition.image_url ?? undefined}
+                      width="24px"
+                      className={css({
+                        borderRadius: '2px',
+                        display: 'inline',
+                      })}
                     />{' '}
                     <BoldText>{target_edition.title}</BoldText>
                   </Link>

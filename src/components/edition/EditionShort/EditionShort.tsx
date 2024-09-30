@@ -18,7 +18,7 @@ export default function EditionShort({ edition, ...props }: Props) {
         <img
           src={edition.image_url ?? undefined}
           width="24px"
-          className={css({ borderRadius: '4px' })}
+          className={css({ borderRadius: '2px' })}
         />
       </Link>{' '}
       <VStack gap="0" alignItems="start">

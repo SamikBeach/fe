@@ -350,7 +350,7 @@ function SearchPopover({
                 <img
                   src={edition.image_url ?? undefined}
                   width="24px"
-                  className={css({ borderRadius: '4px' })}
+                  className={css({ borderRadius: '2px' })}
                 />
                 <VStack alignItems="start" gap="0">
                   <Tooltip

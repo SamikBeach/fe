@@ -273,7 +273,7 @@ export default function LogItem({ log }: Props) {
       {isAuthor && (isComment ? authorCommentText : authorLikeText)}
       {isOriginalWork &&
         (isComment ? originalWorkCommentText : originalWorkLikeText)}{' '}
-      {isEdition && (isComment ? editionCommentText : editionLikeText)}
+      {isEdition && (isComment ? editionCommentText : editionLikeText)}{' '}
       <span className={css({ fontSize: '13px', color: 'gray.500' })}>
         {createdAt}
       </span>

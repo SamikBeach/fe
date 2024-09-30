@@ -1,7 +1,5 @@
 import { CommentServerModel } from './comment';
-import { EditionServerModel } from './edition';
 import { EraServerModel } from './era';
-import { OriginalWorkServerModel } from './original-work';
 import { UserServerModel } from './user';
 
 export interface AuthorServerModel {
@@ -14,12 +12,12 @@ export interface AuthorServerModel {
   died_date?: string | null;
   died_date_is_bc?: 0 | 1 | null;
   era?: EraServerModel;
-  original_works?: OriginalWorkServerModel[];
   liked_users?: UserServerModel[];
   comments?: CommentServerModel[];
   like_count: number;
   comment_count: number;
-  editions?: EditionServerModel[];
+  original_work_count: number;
+  edition_count: number;
 }
 
 export type AuthorSort =

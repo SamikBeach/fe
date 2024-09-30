@@ -32,6 +32,10 @@ function getSortBy(sort: AuthorSort | undefined, locale: string) {
       return 'like_count:DESC';
     case 'top_comments':
       return 'comment_count:DESC';
+    case 'top_original_works':
+      return 'original_work_count:DESC';
+    case 'top_editions':
+      return 'edition_count:DESC';
     case 'birth_date_youngest_first':
       return 'born_date:ASC';
     case 'birth_date_oldest_first':

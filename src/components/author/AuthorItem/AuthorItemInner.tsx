@@ -1,9 +1,6 @@
-import { searchEditions } from '@apis/edition';
-import { searchOriginalWorks } from '@apis/original-work';
 import { AuthorServerModel } from '@models/author';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
-import { useQuery } from '@tanstack/react-query';
 import { getBornAndDiedDateText } from '@utils/author';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
@@ -30,30 +27,11 @@ export default function AuthorItemInner({ author }: Props) {
     born_date_is_bc,
     died_date,
     died_date_is_bc,
-    original_works,
     like_count,
     comment_count,
-    editions,
+    original_work_count,
+    edition_count,
   } = author;
-
-  const { data: editionsFromQuery } = useQuery({
-    queryKey: ['edition/search', author.id],
-    queryFn: () => searchEditions({ authorId: author.id, limit: 500 }),
-    enabled: editions === undefined,
-    select: data => data.data.data,
-  });
-
-  const { data: originalWorksFromQuery } = useQuery({
-    queryKey: ['original-work/search', author.id],
-    queryFn: () =>
-      searchOriginalWorks({ authorId: author.id, limit: 500, locale }),
-    enabled: original_works === undefined,
-    select: data => data.data.data,
-  });
-
-  const editionCount = editions?.length ?? editionsFromQuery?.length ?? 0;
-  const originalWorkCount =
-    original_works?.length ?? originalWorksFromQuery?.length ?? 0;
 
   return (
     <HStack gap="20px">
@@ -138,7 +116,7 @@ export default function AuthorItemInner({ author }: Props) {
               size="18px"
             />{' '}
             <Text size="2" color="gray">
-              {originalWorkCount}
+              {original_work_count}
             </Text>
           </HStack>
           <HStack gap="3px">
@@ -151,7 +129,7 @@ export default function AuthorItemInner({ author }: Props) {
               size="18px"
             />
             <Text size="2" color="gray">
-              {editionCount}
+              {edition_count}
             </Text>
           </HStack>
           <HStack gap="3px">

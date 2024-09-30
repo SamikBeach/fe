@@ -178,7 +178,7 @@ function SearchPopover({
                   />
                   {locale === 'ko' && (
                     <Highlighter
-                      className={css({ color: 'gray.400', fontSize: '13px' })}
+                      className={css({ color: 'gray.500', fontSize: '13px' })}
                       searchWords={[searchValue]}
                       textToHighlight={author.name}
                       highlightClassName={css({
@@ -279,7 +279,7 @@ function SearchPopover({
                             : originalWork.author.name ?? ''
                         }
                         className={css({
-                          color: 'gray.400',
+                          color: 'gray.500',
                           fontSize: '11px',
                           lineHeight: '16.5px',
                           ml: '4px',
@@ -294,7 +294,7 @@ function SearchPopover({
                   <Tooltip content={originalWork.title_in_eng}>
                     <span
                       className={css({
-                        color: 'gray.400',
+                        color: 'gray.500',
                         fontSize: '11px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -389,7 +389,7 @@ function SearchPopover({
                             : edition.author.name ?? ''
                         }
                         className={css({
-                          color: 'gray.400',
+                          color: 'gray.500',
                           fontSize: '10px',
                           ml: '4px',
                         })}
@@ -407,7 +407,7 @@ function SearchPopover({
                   >
                     <span
                       className={css({
-                        color: 'gray.400',
+                        color: 'gray.500',
                         fontSize: '11px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',

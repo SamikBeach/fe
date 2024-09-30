@@ -5,9 +5,10 @@ import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
 import { Avatar, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { getBornAndDiedDateText } from '@utils/author';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { GiBlackBook, GiSecretBook } from 'react-icons/gi';
 
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -18,8 +19,6 @@ interface Props {
 
 export default function AuthorItemInner({ author }: Props) {
   const locale = useLocale();
-
-  const t = useTranslations();
 
   const router = useRouter();
 
@@ -66,7 +65,7 @@ export default function AuthorItemInner({ author }: Props) {
           size="7"
         />
       </Link>
-      <VStack alignItems="start" justify="space-between" gap="4px">
+      <VStack alignItems="start" justify="space-between">
         <VStack alignItems="start" gap="0">
           <Link
             href={`/author/${author.id}`}
@@ -128,30 +127,58 @@ export default function AuthorItemInner({ author }: Props) {
             </Text>
           </HStack>
         </VStack>
-        <VStack alignItems="start" gap="0">
-          <HStack gap="10px">
+        <HStack gap="10px" width="100%" alignItems="start">
+          <HStack gap="3px">
+            <GiSecretBook
+              className={css({
+                display: 'inline',
+                cursor: 'pointer',
+                color: 'gray.500',
+              })}
+              size="18px"
+            />{' '}
             <Text size="2" color="gray">
-              {t('Common.original_works')} {originalWorkCount}
-            </Text>
-            <Text size="2" color="gray">
-              {t('Common.editions')} {editionCount}
+              {originalWorkCount}
             </Text>
           </HStack>
-          <HStack gap="10px">
-            <HStack gap="3px">
-              <HeartFilledIcon color="gray" />
-              <Text size="2" color="gray">
-                {like_count}
-              </Text>
-            </HStack>
-            <HStack gap="3px">
-              <ChatBubbleIcon color="gray" />
-              <Text size="2" color="gray">
-                {comment_count}
-              </Text>
-            </HStack>
+          <HStack gap="3px">
+            <GiBlackBook
+              className={css({
+                display: 'inline',
+                cursor: 'pointer',
+                color: 'gray.500',
+              })}
+              size="18px"
+            />
+            <Text size="2" color="gray">
+              {editionCount}
+            </Text>
           </HStack>
-        </VStack>
+          <HStack gap="3px">
+            <HeartFilledIcon
+              width="16px"
+              height="16px"
+              className={css({
+                color: 'gray.500',
+              })}
+            />
+            <Text size="2" color="gray">
+              {like_count}
+            </Text>
+          </HStack>
+          <HStack gap="3px">
+            <ChatBubbleIcon
+              width="16px"
+              height="16px"
+              className={css({
+                color: 'gray.500',
+              })}
+            />
+            <Text size="2" color="gray">
+              {comment_count}
+            </Text>
+          </HStack>
+        </HStack>
       </VStack>
     </HStack>
   );

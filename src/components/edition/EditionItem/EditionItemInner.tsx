@@ -123,13 +123,13 @@ export default function EditionItemInner({ edition }: Props) {
             <Text size="2" color="gray">
               {like_count}
             </Text>
-            <HeartFilledIcon color="gray" />
+            <HeartFilledIcon color="gray" width="24px" height="24px" />
           </HStack>
           <HStack gap="3px">
             <Text size="2" color="gray">
               {comment_count}
             </Text>
-            <ChatBubbleIcon color="gray" />
+            <ChatBubbleIcon color="gray" width="24px" height="24px" />
           </HStack>
         </HStack>
       </VStack>

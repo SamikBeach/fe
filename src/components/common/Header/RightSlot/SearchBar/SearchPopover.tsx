@@ -394,23 +394,26 @@ function SearchPopover({
                       />
                     </span>
                   </Tooltip>
-                  <HStack
-                    gap="4px"
-                    className={css({
-                      color: 'gray.400',
-                      fontSize: '11px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      maxWidth: '380px',
-                    })}
+                  <Tooltip
+                    content={edition.original_works
+                      .map(originalWork => originalWork.title_in_kor)
+                      .join(', ')}
                   >
-                    {edition.original_works.map(originalWork => (
-                      <Tooltip
-                        key={originalWork.id}
-                        content={originalWork.title_in_kor}
-                      >
-                        <span>
+                    <span
+                      className={css({
+                        color: 'gray.400',
+                        fontSize: '11px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '380px',
+                      })}
+                    >
+                      {edition.original_works.map(originalWork => (
+                        <span
+                          key={originalWork.id}
+                          className={css({ ml: '4px' })}
+                        >
                           <GiSecretBook
                             className={css({
                               display: 'inline',
@@ -430,9 +433,9 @@ function SearchPopover({
                             })}
                           />
                         </span>
-                      </Tooltip>
-                    ))}
-                  </HStack>
+                      ))}
+                    </span>
+                  </Tooltip>
                 </VStack>
               </HStack>
             ))}

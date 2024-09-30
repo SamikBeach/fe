@@ -47,6 +47,7 @@ export default function RightSide() {
         scrollbars="vertical"
         className={css({
           height: 'calc(100vh - 84px)',
+          pr: '20px',
         })}
       >
         <VStack gap="8px" width="100%" alignItems="start">

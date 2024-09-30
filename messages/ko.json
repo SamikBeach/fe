@@ -45,6 +45,8 @@
     "sort_by": "정렬",
     "top_likes": "좋아요 순",
     "top_comments": "댓글 많은 순",
+    "top_original_works": "원전 많은 순",
+    "top_editions": "에디션 많은 순",
     "birth_date_youngest_first": "출생일 최신순",
     "birth_date_oldest_first": "출생일 오래된순",
     "alphabetical": "가나다순",

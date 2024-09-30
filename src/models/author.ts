@@ -25,6 +25,8 @@ export interface AuthorServerModel {
 export type AuthorSort =
   | 'top_likes'
   | 'top_comments'
+  | 'top_original_works'
+  | 'top_editions'
   | 'birth_date_youngest_first'
   | 'birth_date_oldest_first'
   | 'alphabetical';

@@ -8,8 +8,10 @@ import { css } from 'styled-system/css';
 const SORT_OPTIONS: { tKey: string; value: AuthorSort }[] = [
   { tKey: 'top_likes', value: 'top_likes' },
   { tKey: 'top_comments', value: 'top_comments' },
-  { tKey: 'birth_date_youngest_first', value: 'birth_date_youngest_first' },
-  { tKey: 'birth_date_oldest_first', value: 'birth_date_oldest_first' },
+  { tKey: 'top_original_works', value: 'top_original_works' },
+  { tKey: 'top_editions', value: 'top_editions' },
+  // { tKey: 'birth_date_youngest_first', value: 'birth_date_youngest_first' },
+  // { tKey: 'birth_date_oldest_first', value: 'birth_date_oldest_first' },
   { tKey: 'alphabetical', value: 'alphabetical' },
 ];
 

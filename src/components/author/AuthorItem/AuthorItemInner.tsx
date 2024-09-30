@@ -60,7 +60,7 @@ export default function AuthorItemInner({ author }: Props) {
       <Link href={`/author/${author.id}`}>
         <Avatar
           src={image_url ?? undefined}
-          fallback="K"
+          fallback={locale === 'ko' ? name_in_kor[0] : name[0]}
           radius="full"
           size="7"
         />

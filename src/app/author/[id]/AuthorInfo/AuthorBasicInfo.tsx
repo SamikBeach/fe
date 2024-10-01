@@ -32,6 +32,7 @@ export default function AuthorInfo() {
   const {
     id,
     name,
+    name_in_kor,
     image_url,
     born_date,
     died_date,
@@ -40,6 +41,7 @@ export default function AuthorInfo() {
   } = author ?? {
     id: authorId,
     name: '',
+    name_in_kor: '',
     image_url: '',
     born_date: '',
     died_date: '',
@@ -113,41 +115,43 @@ export default function AuthorInfo() {
             margin: '0 auto',
           })}
         />
-        {authorLike?.isExist ? (
-          <HeartFilledIcon
-            color="pink"
-            width="40px"
-            height="40px"
-            className={css({
-              zIndex: 2,
-              position: 'absolute',
-              right: '70px',
-              bottom: '30px',
-            })}
-            cursor="pointer"
-            onClick={() => removeLike()}
-          />
-        ) : (
-          <HeartIcon
-            color="pink"
-            width="40px"
-            height="40px"
-            className={css({
-              zIndex: 2,
-              position: 'absolute',
-              right: '70px',
-              bottom: '30px',
-            })}
-            cursor="pointer"
-            onClick={() => addLike()}
-          />
-        )}
+        <HStack
+          className={css({
+            zIndex: 2,
+            position: 'absolute',
+            right: '20px',
+            bottom: '0px',
+          })}
+          gap="2px"
+        >
+          <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
+            {authorAllLikes}
+          </Text>
+          {authorLike?.isExist ? (
+            <HeartFilledIcon
+              color="gray"
+              width="22px"
+              height="22px"
+              cursor="pointer"
+              onClick={() => removeLike()}
+            />
+          ) : (
+            <HeartIcon
+              color="gray"
+              width="22px"
+              height="22px"
+              cursor="pointer"
+              onClick={() => addLike()}
+            />
+          )}
+        </HStack>
       </VStack>
       <VStack alignItems="start" gap="2px">
         <Text size="6" weight="bold">
-          {name}
+          {name_in_kor}
         </Text>
-        <Text size="3">
+        <Text size="3">{name}</Text>
+        <Text size="3" color="gray">
           {getBornAndDiedDateText({
             bornDate: born_date,
             diedDate: died_date,
@@ -156,10 +160,6 @@ export default function AuthorInfo() {
             locale,
           })}
         </Text>
-        <HStack gap="2px">
-          <Text>{authorAllLikes}</Text>
-          <HeartFilledIcon color="pink" />
-        </HStack>
       </VStack>
     </VStack>
   );

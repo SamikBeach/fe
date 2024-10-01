@@ -39,3 +39,17 @@ interface GetUserLikesResponse {
 export function getUserLikes({ userId }: GetUserLikesRequest) {
   return api.get<GetUserLikesResponse>(`/user/${userId}/like`);
 }
+
+interface GetUserCommentsRequest {
+  userId: number;
+}
+
+interface GetUserCommentsResponse {
+  authors: AuthorServerModel[];
+  original_works: OriginalWorkServerModel[];
+  editions: EditionServerModel[];
+}
+
+export function getUserComments({ userId }: GetUserCommentsRequest) {
+  return api.get<GetUserCommentsResponse>(`/user/${userId}/comment`);
+}

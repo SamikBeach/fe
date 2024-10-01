@@ -1,4 +1,4 @@
-import { CategoryWrapper } from './styled-components';
+import { CategoryWrapper } from '../styled-components';
 import { HStack } from 'styled-system/jsx';
 import { Text } from '@radix-ui/themes';
 import { useTranslations } from 'next-intl';

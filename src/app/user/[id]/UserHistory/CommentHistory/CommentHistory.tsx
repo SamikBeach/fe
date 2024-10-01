@@ -5,7 +5,7 @@ import AuthorLikeHistory from './AuthorLikeHistory';
 import OriginalWorkLikeHistory from './OriginalWorkLikeHistory';
 import EditionLikeHistory from './EditionLikeHistory';
 
-export default function LikeHistory() {
+export default function CommentHistory() {
   return (
     <VStack width="100%" alignItems="start">
       <AuthorLikeHistory />

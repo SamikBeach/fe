@@ -25,7 +25,8 @@
     "discard": "나가기",
     "delete_confirm": "정말 삭제할까요?",
     "delete_confirm_description": "삭제한 글은 되살릴 수 없어요.",
-    "cancel_and_continue_editing": "계속 수정하기"
+    "cancel_and_continue_editing": "계속 수정하기",
+    "comments": "댓글"
   },
   "Home": {
     "trending_now": "실시간 인기",

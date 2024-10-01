@@ -2,7 +2,7 @@ import { CategoryWrapper } from '../styled-components';
 import { HStack } from 'styled-system/jsx';
 
 import { Text } from '@radix-ui/themes';
-import { getUserLikes } from '@apis/user';
+import { getUserComments } from '@apis/user';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -18,8 +18,8 @@ export default function OriginalWorkLikeHistory() {
   const userId = Number(params.id);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['user/like', userId],
-    queryFn: () => getUserLikes({ userId }),
+    queryKey: ['user/comment', userId],
+    queryFn: () => getUserComments({ userId }),
     select: response => response.data,
     refetchOnMount: 'always',
   });

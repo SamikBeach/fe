@@ -22,7 +22,8 @@
     "discard": "Discard",
     "delete_confirm": "Are you sure you want to delete?",
     "delete_confirm_description": "Deleted comments cannot be restored.",
-    "cancel_and_continue_editing": "Cancel"
+    "cancel_and_continue_editing": "Cancel",
+    "comments": "Comments"
   },
   "Home": {
     "trending_now": "Trending Now",

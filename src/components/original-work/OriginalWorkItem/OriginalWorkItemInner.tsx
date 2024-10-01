@@ -54,6 +54,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
+
                 maxWidth: '270px',
                 lineHeight: '19px',
                 color: 'gray.500',

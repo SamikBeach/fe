@@ -2,13 +2,14 @@ import { searchOriginalWorks } from '@apis/original-work';
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { EditionServerModel } from '@models/edition';
 import { ChatBubbleIcon, HeartFilledIcon } from '@radix-ui/react-icons';
-import { Avatar, Tooltip, Text } from '@radix-ui/themes';
+import { Tooltip, Text } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 
 interface Props {
   edition: EditionServerModel;
@@ -23,7 +24,7 @@ export default function EditionItemInner({ edition }: Props) {
     image_url,
     like_count,
     comment_count,
-    publication_date,
+    publisher,
     original_works,
   } = edition;
 
@@ -38,98 +39,147 @@ export default function EditionItemInner({ edition }: Props) {
   const originalWorks = original_works ?? originalWorksFromQuery ?? [];
 
   return (
-    <HStack gap="20px">
-      <Link href={`/edition/${edition.id}`}>
-        <Avatar src={image_url ?? undefined} fallback={title[0]} size="7" />
-      </Link>
+    <HStack gap="20px" width="100%" height="100%">
+      <div className={css({ maxWidth: '80px', minWidth: '80px' })}>
+        <Link href={`/edition/${edition.id}`}>
+          <img
+            src={image_url ?? undefined}
+            className={css({
+              minHeight: '110px',
+              maxHeight: '110px',
+            })}
+          />
+        </Link>
+      </div>
 
-      <VStack alignItems="start" gap="0">
-        <VStack alignItems="start" gap="0">
-          <Tooltip content={title}>
+      <VStack alignItems="start" justify="space-between" height="100%">
+        <VStack alignItems="start" gap="0px">
+          <Tooltip content={`${title} - ${publisher}`}>
             <Link
               href={`/edition/${edition.id}`}
               className={css({
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
-                maxWidth: '240px',
-                lineHeight: '17px',
+
+                maxWidth: '260px',
+                lineHeight: '19px',
+                color: 'gray.500',
+
+                cursor: 'pointer',
+                _hover: {
+                  textDecoration: 'underline',
+                },
               })}
             >
               <Text
-                size="2"
-                weight="medium"
+                size="3"
+                weight="bold"
                 className={css({
-                  color: 'gray.700',
-                  lineHeight: '17px',
-
-                  cursor: 'pointer',
-                  _hover: {
-                    textDecoration: 'underline',
-                  },
+                  lineHeight: '19px',
+                  color: 'black',
                 })}
               >
                 {title}
+              </Text>{' '}
+              <Text
+                size="2"
+                className={css({
+                  fontSize: '13px',
+                })}
+              >
+                {publisher}
               </Text>
             </Link>
           </Tooltip>
 
-          <Text size="2" color="gray">
-            {publication_date}
-          </Text>
+          {/* <Text size="1" color="gray">
+            {format(
+              new Date(publication_date),
+              locale === 'ko' ? 'yyyy년 M월 d일' : 'yyyy-MM-dd'
+            )}
+          </Text> */}
+          <AuthorAvatar
+            author={author}
+            withName
+            size="1"
+            textProps={{ size: '1', color: 'gray' }}
+          />
+
+          <span
+            className={css({
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              maxWidth: '230px',
+              color: 'gray.600',
+            })}
+          >
+            {originalWorks.map(originalWork => (
+              <OriginalWorkHoverCard.Root key={originalWork.id}>
+                <OriginalWorkHoverCard.Trigger>
+                  <Link
+                    href={`/original-work/${originalWork.id}`}
+                    onClick={e => e.stopPropagation()}
+                    className={css({
+                      cursor: 'pointer',
+                      mr: '4px',
+                    })}
+                  >
+                    <GiSecretBook
+                      className={css({
+                        display: 'inline',
+                        cursor: 'pointer',
+                        color: 'gray.500',
+                        mr: '2px',
+                      })}
+                      size="16px"
+                    />
+                    <Text
+                      size="1"
+                      className={css({
+                        _hover: {
+                          textDecoration: 'underline',
+                        },
+                      })}
+                    >
+                      {originalWork.title_in_kor}
+                    </Text>
+                  </Link>
+                </OriginalWorkHoverCard.Trigger>
+                <OriginalWorkHoverCard.Content
+                  originalWork={originalWork}
+                  side="top"
+                />
+              </OriginalWorkHoverCard.Root>
+            ))}
+          </span>
         </VStack>
 
-        <AuthorAvatar
-          author={author}
-          withName
-          size="1"
-          textProps={{ size: '1', color: 'gray' }}
-        />
-
-        <HStack>
-          {originalWorks.map(originalWork => (
-            <Link
-              key={originalWork.id}
-              href={`/original-work/${originalWork.id}`}
-              onClick={e => e.stopPropagation()}
-              className={css({
-                cursor: 'pointer',
-                color: 'gray.600',
-              })}
-            >
-              <GiSecretBook
-                className={css({
-                  display: 'inline',
-                  cursor: 'pointer',
-                  color: 'gray.500',
-                })}
-                size="24px"
-              />
-              <Text
-                className={css({
-                  _hover: {
-                    textDecoration: 'underline',
-                  },
-                })}
-              >
-                {originalWork.title}
-              </Text>
-            </Link>
-          ))}
-        </HStack>
-
-        <HStack gap="8px">
+        <HStack gap="10px" width="100%" alignItems="start">
           <HStack gap="3px">
+            <HeartFilledIcon
+              width="16px"
+              height="16px"
+              className={css({
+                color: 'gray.500',
+              })}
+            />
             <Text size="2" color="gray">
               {like_count}
             </Text>
-            <HeartFilledIcon color="gray" width="24px" height="24px" />
           </HStack>
           <HStack gap="3px">
+            <ChatBubbleIcon
+              width="16px"
+              height="16px"
+              className={css({
+                color: 'gray.500',
+              })}
+            />
             <Text size="2" color="gray">
               {comment_count}
             </Text>
-            <ChatBubbleIcon color="gray" width="24px" height="24px" />
           </HStack>
         </HStack>
       </VStack>

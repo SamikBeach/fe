@@ -38,7 +38,7 @@ export default function EditionInfo({ ...props }: Props) {
               value="editions"
               className={css({ cursor: 'pointer' })}
             >
-              {t('editions')}
+              {t('other_editions')}
             </SegmentedControl.Item>
           </SegmentedControl.Root>
           <SortDropdown />

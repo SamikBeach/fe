@@ -1,4 +1,4 @@
-import { Avatar, Skeleton } from '@radix-ui/themes';
+import { Skeleton } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 
@@ -6,14 +6,10 @@ export default function EditionBasicInfoSkeleton() {
   return (
     <VStack alignItems="start" gap="20px" width="100%">
       <VStack position="relative" width="100%">
-        <Avatar
-          radius="large"
-          src=""
-          fallback=""
-          size="9"
+        <Skeleton
           className={css({
-            width: '260px',
-            height: '260px',
+            width: '140px',
+            height: '200px',
             margin: '0 auto',
           })}
         />

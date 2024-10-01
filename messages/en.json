@@ -79,7 +79,8 @@
     "newest_first": "Newest first",
     "alphabetical": "Alphabetical",
     "sort_by": "Sort by",
-    "search_editions_placeholder": "Search editions and authors..."
+    "search_editions_placeholder": "Search editions and authors...",
+    "other_editions": "Other editions"
   },
   "SignUp": {
     "sign_up": "Sign up",

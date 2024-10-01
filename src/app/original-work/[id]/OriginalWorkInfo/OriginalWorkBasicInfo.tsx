@@ -16,6 +16,8 @@ import { useParams } from 'next/navigation';
 import OriginalWorkBasicInfoSkeleton from './OriginalWorkBasicInfoSkeleton';
 import { getPublicationDateText } from '@utils/original-work';
 import { useLocale } from 'next-intl';
+import { GiSecretBook } from 'react-icons/gi';
+import { AuthorAvatar } from '@components/author/AuthorAvatar';
 
 export default function OriginalWorkInfo() {
   const locale = useLocale();
@@ -29,7 +31,7 @@ export default function OriginalWorkInfo() {
     select: response => response.data,
   });
 
-  const { id, title, title_in_kor, title_in_eng } = originalWork ?? {
+  const { id, title, title_in_kor, title_in_eng, author } = originalWork ?? {
     id: 0,
     title: '',
     title_in_eng: '',
@@ -115,65 +117,72 @@ export default function OriginalWorkInfo() {
     <VStack alignItems="start" gap="20px" width="100%">
       <VStack position="relative" width="100%">
         <Avatar
-          radius="large"
-          // src={image_url ?? undefined}
-          fallback={title[0]}
+          radius="full"
+          fallback={
+            <GiSecretBook
+              className={css({
+                color: 'gray.500',
+              })}
+              size="40px"
+            />
+          }
           size="9"
-          className={css({
-            width: '260px',
-            height: '260px',
-            margin: '0 auto',
-          })}
         />
-        {originalWorkLike?.isExist ? (
-          <HeartFilledIcon
-            color="pink"
-            width="40px"
-            height="40px"
-            className={css({
-              zIndex: 2,
-              position: 'absolute',
-              right: '70px',
-              bottom: '30px',
-            })}
-            cursor="pointer"
-            onClick={() => removeLike()}
-          />
-        ) : (
-          <HeartIcon
-            color="pink"
-            width="40px"
-            height="40px"
-            className={css({
-              zIndex: 2,
-              position: 'absolute',
-              right: '70px',
-              bottom: '30px',
-            })}
-            cursor="pointer"
-            onClick={() => addLike()}
-          />
-        )}
+        <HStack
+          className={css({
+            zIndex: 2,
+            position: 'absolute',
+            right: '20px',
+            bottom: '0px',
+          })}
+          gap="2px"
+        >
+          <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
+            {originalWorkAllLikes}
+          </Text>
+          {originalWorkLike?.isExist ? (
+            <HeartFilledIcon
+              color="gray"
+              width="22px"
+              height="22px"
+              cursor="pointer"
+              onClick={() => removeLike()}
+            />
+          ) : (
+            <HeartIcon
+              color="gray"
+              width="22px"
+              height="22px"
+              cursor="pointer"
+              onClick={() => addLike()}
+            />
+          )}
+        </HStack>
       </VStack>
       <VStack alignItems="start" gap="2px">
         <Text size="6" weight="bold">
           {title_in_kor}
         </Text>
-        <Text size="5" color="gray">
+        <Text size="3">{title_in_eng}</Text>
+        <Text size="2" color="gray">
           {title}
         </Text>
-        <Text size="5" color="gray">
-          {title_in_eng}
-        </Text>
         {originalWork !== undefined && (
-          <Text size="3">
+          <Text size="2" color="gray">
             {getPublicationDateText({ originalWork, locale })}
           </Text>
         )}
-        <HStack gap="2px">
-          <Text>{originalWorkAllLikes}</Text>
-          <HeartFilledIcon color="pink" />
-        </HStack>
+        {author !== undefined && (
+          <AuthorAvatar
+            author={author}
+            withName
+            size="2"
+            className={css({
+              mt: '4px',
+            })}
+            textProps={{ size: '2', color: 'gray', weight: 'regular' }}
+          />
+        )}
       </VStack>
     </VStack>
   );

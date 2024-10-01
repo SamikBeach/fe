@@ -152,7 +152,7 @@ export default function EditionBasicInfo() {
           })}
           gap="2px"
         >
-          <Text size="5" color="gray">
+          <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
             {editionAllLikes}
           </Text>
           {editionLike?.isExist ? (
@@ -174,7 +174,7 @@ export default function EditionBasicInfo() {
           )}
         </HStack>
       </VStack>
-      <VStack alignItems="start" gap="8px">
+      <VStack alignItems="start" gap="4px">
         <VStack alignItems="start" gap="0px">
           <Text size="6" weight="bold">
             {title}
@@ -218,8 +218,9 @@ export default function EditionBasicInfo() {
                       display: 'inline',
                       cursor: 'pointer',
                       color: 'gray.500',
+                      mr: '2px',
                     })}
-                    size="24px"
+                    size="20px"
                   />
                   <Text
                     size="2"

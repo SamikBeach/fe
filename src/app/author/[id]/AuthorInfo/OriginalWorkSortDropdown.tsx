@@ -1,29 +1,22 @@
-import { editionEditionSortAtom } from '@atoms/sort';
-import { EditionSort } from '@models/edition';
+import { authorOriginalWorkSortAtom } from '@atoms/sort';
+import { OriginalWorkSort } from '@models/original-work';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 
-const SORT_OPTIONS: { tKey: string; value: EditionSort }[] = [
+const SORT_OPTIONS: { tKey: string; value: OriginalWorkSort }[] = [
   { tKey: 'top_likes', value: 'top_likes' },
   { tKey: 'top_comments', value: 'top_comments' },
-  {
-    tKey: 'publication_date_newest_first',
-    value: 'publication_date_newest_first',
-  },
-  {
-    tKey: 'publication_date_oldest_first',
-    value: 'publication_date_oldest_first',
-  },
+  { tKey: 'top_editions', value: 'top_editions' },
   { tKey: 'alphabetical', value: 'alphabetical' },
 ];
 
-export default function SortDropdown() {
-  const t = useTranslations('Edition');
+export default function OriginalWorkSortDropdown() {
+  const t = useTranslations('OriginalWork');
 
-  const [editionEditionSort, setEditionEditionSort] = useAtom(
-    editionEditionSortAtom
+  const [authorOriginalWorkSort, setAuthorOriginalWorkSort] = useAtom(
+    authorOriginalWorkSortAtom
   );
 
   return (
@@ -38,7 +31,7 @@ export default function SortDropdown() {
           })}
         >
           {t(
-            SORT_OPTIONS.find(option => option.value === editionEditionSort)
+            SORT_OPTIONS.find(option => option.value === authorOriginalWorkSort)
               ?.tKey
           )}
           <ChevronDownIcon />
@@ -51,7 +44,7 @@ export default function SortDropdown() {
             <DropdownMenu.Item
               key={option.value}
               className={css({ cursor: 'pointer' })}
-              onSelect={() => setEditionEditionSort(option.value)}
+              onSelect={() => setAuthorOriginalWorkSort(option.value)}
             >
               {t(option.tKey)}
             </DropdownMenu.Item>

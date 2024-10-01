@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { OriginalWorkList } from './OriginalWorkList';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
-import SortDropdown from './SortDropdown';
 import { useTranslations } from 'next-intl';
+import OriginalWorkSortDropdown from './OriginalWorkSortDropdown';
+import EditionSortDropdown from './EditionSortDropdown';
 
 interface Props extends HstackProps {}
 
@@ -59,7 +60,11 @@ export default function AuthorInfo({ ...props }: Props) {
               {t('editions')}
             </SegmentedControl.Item>
           </SegmentedControl.Root>
-          <SortDropdown />
+          {selected === 'original-works' ? (
+            <OriginalWorkSortDropdown />
+          ) : (
+            <EditionSortDropdown />
+          )}
         </HStack>
 
         {selected === 'original-works' ? <OriginalWorkList /> : <EditionList />}

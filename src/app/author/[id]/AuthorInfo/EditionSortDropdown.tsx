@@ -1,11 +1,11 @@
-import { authorOriginalWorkSortAtom } from '@atoms/sort';
-import { OriginalWorkSort } from '@models/original-work';
+import { authorEditionSortAtom } from '@atoms/sort';
+import { EditionSort } from '@models/edition';
 import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 
-const SORT_OPTIONS: { tKey: string; value: OriginalWorkSort }[] = [
+const SORT_OPTIONS: { tKey: string; value: EditionSort }[] = [
   { tKey: 'top_likes', value: 'top_likes' },
   { tKey: 'top_comments', value: 'top_comments' },
   {
@@ -19,11 +19,11 @@ const SORT_OPTIONS: { tKey: string; value: OriginalWorkSort }[] = [
   { tKey: 'alphabetical', value: 'alphabetical' },
 ];
 
-export default function SortDropdown() {
-  const t = useTranslations('OriginalWork');
+export default function EditionSortDropdown() {
+  const t = useTranslations('Edition');
 
-  const [authorOriginalWorkSort, setAuthorOriginalWorkSort] = useAtom(
-    authorOriginalWorkSortAtom
+  const [authorEditionSort, setAuthorEditionSort] = useAtom(
+    authorEditionSortAtom
   );
 
   return (
@@ -38,7 +38,7 @@ export default function SortDropdown() {
           })}
         >
           {t(
-            SORT_OPTIONS.find(option => option.value === authorOriginalWorkSort)
+            SORT_OPTIONS.find(option => option.value === authorEditionSort)
               ?.tKey
           )}
           <ChevronDownIcon />
@@ -51,7 +51,7 @@ export default function SortDropdown() {
             <DropdownMenu.Item
               key={option.value}
               className={css({ cursor: 'pointer' })}
-              onSelect={() => setAuthorOriginalWorkSort(option.value)}
+              onSelect={() => setAuthorEditionSort(option.value)}
             >
               {t(option.tKey)}
             </DropdownMenu.Item>

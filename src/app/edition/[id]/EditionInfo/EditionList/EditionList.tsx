@@ -1,7 +1,6 @@
 import { VStack } from 'styled-system/jsx';
 import { useAtomValue } from 'jotai';
 import { editionEditionSortAtom } from '@atoms/sort';
-// import { useQuery } from '@tanstack/react-query';
 import { searchEditions } from '@apis/edition';
 import {
   EditionItem,
@@ -33,9 +32,9 @@ export default function EditonList() {
         ? Array(24)
             .fill(0)
             .map((_, index) => <EditionItemSkeleton key={index} />)
-        : editions.map(edition => (
-            <EditionItem key={edition.id} edition={edition} />
-          ))}
+        : editions
+            .filter(edition => edition.id !== editionId)
+            .map(edition => <EditionItem key={edition.id} edition={edition} />)}
     </VStack>
   );
 }

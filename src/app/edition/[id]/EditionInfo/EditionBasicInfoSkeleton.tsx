@@ -14,11 +14,12 @@ export default function EditionBasicInfoSkeleton() {
           })}
         />
       </VStack>
-      <VStack alignItems="start" gap="8px">
-        <Skeleton height="24px" width="200px" />
+      <VStack alignItems="start" gap="6px">
+        <Skeleton height="28px" width="200px" />
         <Skeleton height="22px" width="140px" />
-        <Skeleton height="21px" width="100px" />
-        <Skeleton height="21px" width="40px" />
+        <Skeleton height="22px" width="100px" />
+        <Skeleton height="28px" width="100px" />
+        <Skeleton height="24px" width="140px" />
       </VStack>
     </VStack>
   );

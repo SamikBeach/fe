@@ -1,5 +1,4 @@
 import { Avatar, Skeleton } from '@radix-ui/themes';
-import { css } from 'styled-system/css';
 import { VStack } from 'styled-system/jsx';
 
 export default function OriginalWorkBasicInfoSkeleton() {
@@ -8,11 +7,12 @@ export default function OriginalWorkBasicInfoSkeleton() {
       <VStack position="relative" width="100%">
         <Avatar radius="full" src="" fallback="" size="9" />
       </VStack>
-      <VStack alignItems="start" gap="8px">
-        <Skeleton height="24px" width="200px" />
+      <VStack alignItems="start" gap="6px">
+        <Skeleton height="28px" width="200px" />
         <Skeleton height="22px" width="140px" />
-        <Skeleton height="21px" width="100px" />
-        <Skeleton height="21px" width="40px" />
+        <Skeleton height="22px" width="140px" />
+        <Skeleton height="22px" width="60px" />
+        <Skeleton height="28px" width="100px" />
       </VStack>
     </VStack>
   );

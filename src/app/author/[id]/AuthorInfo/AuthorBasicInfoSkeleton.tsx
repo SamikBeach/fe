@@ -20,8 +20,8 @@ export default function AuthorBasicInfoSkeleton() {
       </VStack>
       <VStack alignItems="start" gap="8px">
         <Skeleton height="24px" width="200px" />
+        <Skeleton height="21px" width="160px" />
         <Skeleton height="21px" width="140px" />
-        <Skeleton height="21px" width="40px" />
       </VStack>
     </VStack>
   );

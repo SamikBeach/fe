@@ -164,11 +164,11 @@ export default function OriginalWorkInfo() {
           {title_in_kor}
         </Text>
         <Text size="3">{title_in_eng}</Text>
-        <Text size="2" color="gray">
+        <Text size="3" color="gray">
           {title}
         </Text>
         {originalWork !== undefined && (
-          <Text size="2" color="gray">
+          <Text size="3" color="gray">
             {getPublicationDateText({ originalWork, locale })}
           </Text>
         )}

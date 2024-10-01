@@ -87,7 +87,10 @@ function AuthorAvatar({
   return (
     <AuthorHoverCard.Root>
       <AuthorHoverCard.Trigger>
-        <HStack display={withSubName ? 'inline-flex' : 'inline'}>
+        <HStack
+          display={withSubName ? 'inline-flex' : 'inline'}
+          onClick={e => e.stopPropagation()}
+        >
           <Link href={`/author/${author.id}`}>
             <Avatar
               size="2"

@@ -1,3 +1,5 @@
+import { postReport } from '@apis/report';
+import { currentUserAtom } from '@atoms/user';
 import { AuthorServerModel } from '@models/author';
 import { EditionServerModel } from '@models/edition';
 import { OriginalWorkServerModel } from '@models/original-work';
@@ -8,7 +10,10 @@ import {
   RadioCards,
   TextArea,
 } from '@radix-ui/themes';
+import { useMutation } from '@tanstack/react-query';
+import { getTypeIdByType } from '@utils/common';
 import { getJosaPicker } from 'josa';
+import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { ComponentProps, useState } from 'react';
 import { css } from 'styled-system/css';
@@ -67,15 +72,26 @@ export default function ReportDialog({
 }: Props) {
   const t = useTranslations('Common');
 
-  const [selectedReport, setSelectedReport] = useState<
-    'author' | 'original-work' | 'edition'
-  >('author');
-
   const [reportText, setReportText] = useState('');
 
   const isAuthorReportDialog = author !== undefined;
   const isOriginalWorkReportDialog = originalWork !== undefined;
   const isEditionReportDialog = edition !== undefined;
+  const originType = isAuthorReportDialog
+    ? 'author'
+    : isOriginalWorkReportDialog
+      ? 'original-work'
+      : 'edition';
+
+  const [selectedReportType, setSelectedReportType] = useState<
+    'author' | 'original-work' | 'edition'
+  >(
+    isAuthorReportDialog
+      ? 'author'
+      : isOriginalWorkReportDialog
+        ? 'original-work'
+        : 'edition'
+  );
 
   const targetInKr = isAuthorReportDialog
     ? author?.name_in_kor
@@ -88,6 +104,27 @@ export default function ReportDialog({
     : isOriginalWorkReportDialog
       ? originalWork?.title
       : edition?.title;
+
+  const currentUser = useAtomValue(currentUserAtom);
+
+  const { mutate: mutatePostReport } = useMutation({
+    mutationFn: () => {
+      if (currentUser === null) {
+        throw new Error('User is not logged in');
+      }
+
+      return postReport({
+        user_id: currentUser.id,
+        origin_type_id: getTypeIdByType(originType),
+        type_id: getTypeIdByType(selectedReportType),
+        description: reportText === '' ? undefined : reportText,
+      });
+    },
+    onSuccess: () => {
+      props.onOpenChange?.(false);
+      setReportText('');
+    },
+  });
 
   return (
     <AlertDialog.Root {...props}>
@@ -102,9 +139,11 @@ export default function ReportDialog({
         <AlertDialog.Description />
         <VStack alignItems="start" width="100%" py="10px" gap="20px">
           <RadioCards.Root
-            defaultValue={selectedReport}
+            defaultValue={selectedReportType}
             onValueChange={value =>
-              setSelectedReport(value as 'author' | 'original-work' | 'edition')
+              setSelectedReportType(
+                value as 'author' | 'original-work' | 'edition'
+              )
             }
           >
             <VStack alignItems="start" gap="4px" width="100%">
@@ -150,10 +189,10 @@ export default function ReportDialog({
           </VStack>
         </VStack>
         <HStack mt="30px" justify="end">
-          <AlertDialog.Action>
+          <AlertDialog.Action onClick={e => e.preventDefault()}>
             <Button
               onClick={() => {
-                props.onOpenChange?.(false);
+                mutatePostReport();
                 onReport?.();
               }}
               className={css({ cursor: 'pointer' })}

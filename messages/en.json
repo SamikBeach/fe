@@ -23,7 +23,14 @@
     "delete_confirm": "Are you sure you want to delete?",
     "delete_confirm_description": "Deleted comments cannot be restored.",
     "cancel_and_continue_editing": "Cancel",
-    "comments": "Comments"
+    "comments": "Comments",
+    "report_incorrect_information": "Report Incorrect Information",
+    "report_dialog_title": "If there is any incorrect information about {target}, please let us know.",
+    "report": "Report",
+    "report_dialog_text_area_description": "Please tell us more about the incorrect information.",
+    "report_dialog_radio_cards_item_edition_description": "The edition information is incorrect.",
+    "report_dialog_radio_cards_item_original_work_description": "The original work information is incorrect.",
+    "report_dialog_radio_cards_item_author_info_description": "The author information is incorrect."
   },
   "Home": {
     "trending_now": "Trending Now",
@@ -98,5 +105,6 @@
     "forgot_password": "Forgot your password?",
     "no_account": "No account?",
     "sign_up": "Sign up"
-  }
+  },
+  "report_incorrect_information": "Report Incorrect Information"
 }

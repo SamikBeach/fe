@@ -1,5 +1,5 @@
 import { HStack, VStack } from 'styled-system/jsx';
-import { Avatar, Text } from '@radix-ui/themes';
+import { Avatar, Text, Tooltip } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import { css } from 'styled-system/css';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
@@ -15,10 +15,17 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useParams } from 'next/navigation';
 import AuthorBasicInfoSkeleton from './AuthorBasicInfoSkeleton';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { AiOutlineAlert } from 'react-icons/ai';
+import { ReportDialog } from '@components/common/ReportDialog';
+import { useState } from 'react';
 
 export default function AuthorInfo() {
   const locale = useLocale();
+
+  const t = useTranslations('Common');
+
+  const [openReportDialog, setOpenReportDialog] = useState(false);
 
   const params = useParams();
   const authorId = Number(params.id);
@@ -102,65 +109,88 @@ export default function AuthorInfo() {
   }
 
   return (
-    <VStack alignItems="start" gap="20px" width="100%">
-      <VStack position="relative" width="100%">
-        <Avatar
-          radius="full"
-          src={image_url ?? undefined}
-          fallback={name}
-          size="9"
-          className={css({
-            width: '260px',
-            height: '260px',
-            margin: '0 auto',
-          })}
-        />
-        <HStack
-          className={css({
-            zIndex: 2,
-            position: 'absolute',
-            right: '20px',
-            bottom: '0px',
-          })}
-          gap="2px"
-        >
-          <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
-            {authorAllLikes}
+    <>
+      <VStack alignItems="start" gap="20px" width="100%">
+        <VStack position="relative" width="100%">
+          <Avatar
+            radius="full"
+            src={image_url ?? undefined}
+            fallback={name}
+            size="9"
+            className={css({
+              width: '260px',
+              height: '260px',
+              margin: '0 auto',
+            })}
+          />
+          <HStack
+            className={css({
+              zIndex: 2,
+              position: 'absolute',
+              right: '20px',
+              bottom: '0px',
+            })}
+            gap="2px"
+          >
+            <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
+              {authorAllLikes}
+            </Text>
+            {authorLike?.isExist ? (
+              <HeartFilledIcon
+                color="gray"
+                width="22px"
+                height="22px"
+                cursor="pointer"
+                onClick={() => removeLike()}
+              />
+            ) : (
+              <HeartIcon
+                color="gray"
+                width="22px"
+                height="22px"
+                cursor="pointer"
+                onClick={() => addLike()}
+              />
+            )}
+          </HStack>
+        </VStack>
+        <VStack alignItems="start" gap="2px" width="100%">
+          <HStack>
+            <Text size="6" weight="bold">
+              {name_in_kor}
+            </Text>
+            <Tooltip content={t('report_incorrect_information')}>
+              <span>
+                <AiOutlineAlert
+                  size="20px"
+                  cursor="pointer"
+                  className={css({
+                    color: 'gray.500',
+                  })}
+                  onClick={() => setOpenReportDialog(true)}
+                />
+              </span>
+            </Tooltip>
+          </HStack>
+
+          <Text size="3">{name}</Text>
+
+          <Text size="3" color="gray">
+            {getBornAndDiedDateText({
+              bornDate: born_date,
+              diedDate: died_date,
+              bornDateIsBc: born_date_is_bc === 1,
+              diedDateIsBc: died_date_is_bc === 1,
+              locale,
+            })}
           </Text>
-          {authorLike?.isExist ? (
-            <HeartFilledIcon
-              color="gray"
-              width="22px"
-              height="22px"
-              cursor="pointer"
-              onClick={() => removeLike()}
-            />
-          ) : (
-            <HeartIcon
-              color="gray"
-              width="22px"
-              height="22px"
-              cursor="pointer"
-              onClick={() => addLike()}
-            />
-          )}
-        </HStack>
+        </VStack>
       </VStack>
-      <VStack alignItems="start" gap="2px">
-        <Text size="6" weight="bold">
-          {name_in_kor}
-        </Text>
-        <Text size="3">{name}</Text>
-        <Text size="3" color="gray">
-          {getBornAndDiedDateText({
-            bornDate: born_date,
-            diedDate: died_date,
-            bornDateIsBc: born_date_is_bc === 1,
-            diedDateIsBc: died_date_is_bc === 1,
-            locale,
-          })}
-        </Text>
-      </VStack>
-    </VStack>
+      <ReportDialog
+        open={openReportDialog}
+        onOpenChange={setOpenReportDialog}
+        author={author}
+      />
+    </>
   );
 }

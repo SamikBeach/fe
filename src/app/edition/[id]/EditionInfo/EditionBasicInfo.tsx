@@ -1,5 +1,5 @@
 import { HStack, VStack } from 'styled-system/jsx';
-import { Text } from '@radix-ui/themes';
+import { Text, Tooltip } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -18,14 +18,21 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { format } from 'date-fns';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
+import { useState } from 'react';
+import { AiOutlineAlert } from 'react-icons/ai';
+import { ReportDialog } from '@components/common/ReportDialog';
 
 export default function EditionBasicInfo() {
   const locale = useLocale();
 
+  const t = useTranslations('Common');
+
   const params = useParams();
   const editionId = Number(params.id);
+
+  const [openReportDialog, setOpenReportDialog] = useState(false);
 
   const { data: edition, isLoading: isLoadingEdition } = useQuery({
     queryKey: ['edition', params.id],
@@ -124,125 +131,147 @@ export default function EditionBasicInfo() {
   }
 
   return (
-    <VStack alignItems="start" gap="20px" width="100%">
-      <VStack position="relative" width="100%">
-        <Link
-          target="_blank"
-          href={`https://www.aladin.co.kr/shop/wproduct.aspx?isbn=${isbn13 ?? isbn}`}
-        >
-          <img
-            src={image_url ?? undefined}
-            className={css({
-              width: '140px',
-              margin: '0 auto',
-              cursor: 'pointer',
-              _hover: {
-                scale: 1.05,
-              },
-              transition: 'scale 0.2s ease-in-out',
-            })}
-          />
-        </Link>
-        <HStack
-          className={css({
-            zIndex: 2,
-            position: 'absolute',
-            right: '20px',
-            bottom: '0px',
-          })}
-          gap="2px"
-        >
-          <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
-            {editionAllLikes}
-          </Text>
-          {editionLike?.isExist ? (
-            <HeartFilledIcon
-              color="gray"
-              width="22px"
-              height="22px"
-              cursor="pointer"
-              onClick={() => removeLike()}
-            />
-          ) : (
-            <HeartIcon
-              color="gray"
-              width="22px"
-              height="22px"
-              cursor="pointer"
-              onClick={() => addLike()}
-            />
-          )}
-        </HStack>
-      </VStack>
-      <VStack alignItems="start" gap="4px">
-        <VStack alignItems="start" gap="0px">
-          <Text size="6" weight="bold">
-            {title}
-          </Text>
-          <Text size="3" color="gray">
-            {publisher}
-          </Text>
-          <Text size="3" color="gray">
-            {format(
-              new Date(publication_date),
-              locale === 'ko' ? 'yyyy년 M월 d일' : 'yyyy-MM-dd'
-            )}
-          </Text>
-          {author !== undefined && (
-            <AuthorAvatar
-              author={author}
-              withName
-              size="2"
+    <>
+      <VStack alignItems="start" gap="20px" width="100%">
+        <VStack position="relative" width="100%">
+          <Link
+            target="_blank"
+            href={`https://www.aladin.co.kr/shop/wproduct.aspx?isbn=${isbn13 ?? isbn}`}
+          >
+            <img
+              src={image_url ?? undefined}
               className={css({
-                mt: '4px',
+                width: '140px',
+                margin: '0 auto',
+                cursor: 'pointer',
+                _hover: {
+                  scale: 1.05,
+                },
+                transition: 'scale 0.2s ease-in-out',
               })}
-              textProps={{ size: '2', color: 'gray', weight: 'regular' }}
             />
-          )}
+          </Link>
+          <HStack
+            className={css({
+              zIndex: 2,
+              position: 'absolute',
+              right: '20px',
+              bottom: '0px',
+            })}
+            gap="2px"
+          >
+            <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
+              {editionAllLikes}
+            </Text>
+            {editionLike?.isExist ? (
+              <HeartFilledIcon
+                color="gray"
+                width="22px"
+                height="22px"
+                cursor="pointer"
+                onClick={() => removeLike()}
+              />
+            ) : (
+              <HeartIcon
+                color="gray"
+                width="22px"
+                height="22px"
+                cursor="pointer"
+                onClick={() => addLike()}
+              />
+            )}
+          </HStack>
         </VStack>
-
-        <HStack flexWrap="wrap" gap="4px">
-          {original_works.map(originalWork => (
-            <OriginalWorkHoverCard.Root key={originalWork.id}>
-              <OriginalWorkHoverCard.Trigger>
-                <Link
-                  href={`/original-work/${originalWork.id}`}
-                  onClick={e => e.stopPropagation()}
-                  className={css({
-                    cursor: 'pointer',
-                  })}
-                >
-                  <GiSecretBook
-                    color="gray"
-                    className={css({
-                      display: 'inline',
-                      cursor: 'pointer',
-                      color: 'gray.500',
-                      mr: '2px',
-                    })}
+        <VStack alignItems="start" gap="4px">
+          <VStack alignItems="start" gap="0px">
+            <HStack>
+              <Text size="6" weight="bold">
+                {title}
+              </Text>
+              <Tooltip content={t('report_incorrect_information')}>
+                <span>
+                  <AiOutlineAlert
                     size="20px"
-                  />
-                  <Text
-                    size="2"
-                    color="gray"
+                    cursor="pointer"
                     className={css({
-                      _hover: {
-                        textDecoration: 'underline',
-                      },
+                      color: 'gray.500',
+                    })}
+                    onClick={() => setOpenReportDialog(true)}
+                  />
+                </span>
+              </Tooltip>
+            </HStack>
+
+            <Text size="3" color="gray">
+              {publisher}
+            </Text>
+            <Text size="3" color="gray">
+              {format(
+                new Date(publication_date),
+                locale === 'ko' ? 'yyyy년 M월 d일' : 'yyyy-MM-dd'
+              )}
+            </Text>
+            {author !== undefined && (
+              <AuthorAvatar
+                author={author}
+                withName
+                size="2"
+                className={css({
+                  mt: '4px',
+                })}
+                textProps={{ size: '2', color: 'gray', weight: 'regular' }}
+              />
+            )}
+          </VStack>
+
+          <HStack flexWrap="wrap" gap="4px">
+            {original_works.map(originalWork => (
+              <OriginalWorkHoverCard.Root key={originalWork.id}>
+                <OriginalWorkHoverCard.Trigger>
+                  <Link
+                    href={`/original-work/${originalWork.id}`}
+                    onClick={e => e.stopPropagation()}
+                    className={css({
+                      cursor: 'pointer',
                     })}
                   >
-                    {originalWork.title_in_kor}
-                  </Text>
-                </Link>
-              </OriginalWorkHoverCard.Trigger>
-              <OriginalWorkHoverCard.Content
-                originalWork={originalWork}
-                side="top"
-              />
-            </OriginalWorkHoverCard.Root>
-          ))}
-        </HStack>
+                    <GiSecretBook
+                      color="gray"
+                      className={css({
+                        display: 'inline',
+                        cursor: 'pointer',
+                        color: 'gray.500',
+                        mr: '2px',
+                      })}
+                      size="20px"
+                    />
+                    <Text
+                      size="2"
+                      color="gray"
+                      className={css({
+                        _hover: {
+                          textDecoration: 'underline',
+                        },
+                      })}
+                    >
+                      {originalWork.title_in_kor}
+                    </Text>
+                  </Link>
+                </OriginalWorkHoverCard.Trigger>
+                <OriginalWorkHoverCard.Content
+                  originalWork={originalWork}
+                  side="top"
+                />
+              </OriginalWorkHoverCard.Root>
+            ))}
+          </HStack>
+        </VStack>
       </VStack>
-    </VStack>
+      <ReportDialog
+        open={openReportDialog}
+        onOpenChange={setOpenReportDialog}
+        edition={edition}
+      />
+    </>
   );
 }

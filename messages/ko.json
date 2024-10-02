@@ -26,7 +26,14 @@
     "delete_confirm": "정말 삭제할까요?",
     "delete_confirm_description": "삭제한 글은 되살릴 수 없어요.",
     "cancel_and_continue_editing": "계속 수정하기",
-    "comments": "댓글"
+    "comments": "댓글",
+    "report_incorrect_information": "오류 제보",
+    "report_dialog_title": "{targetInKr}<Josa></Josa> 관련해 잘못된 정보가 있다면 알려주세요.",
+    "report": "오류 제보하기",
+    "report_dialog_text_area_description": "잘못된 정보에 관해 자세히 알려주세요.",
+    "report_dialog_radio_cards_item_edition_description": "에디션 정보가 잘못되었어요.",
+    "report_dialog_radio_cards_item_original_work_description": "원전 정보가 잘못되었어요.",
+    "report_dialog_radio_cards_item_author_info_description": "저자 정보가 잘못되었어요."
   },
   "Home": {
     "trending_now": "실시간 인기",
@@ -101,5 +108,6 @@
     "forgot_password": "비밀번호를 잊으셨나요?",
     "no_account": "아직 계정이 없으신가요?",
     "sign_up": "회원가입"
-  }
+  },
+  "report_incorrect_information": "오류 제보"
 }

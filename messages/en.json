@@ -95,7 +95,8 @@
     "continue_with_google": "Continue with Google",
     "forgot_password": "Forgot your password?",
     "login": "Log in",
-    "already_have_account": "Already have an account?"
+    "already_have_account": "Already have an account?",
+    "email_already_exists": "This email is already registered."
   },
   "Login": {
     "enter_email": "Please enter your email.",

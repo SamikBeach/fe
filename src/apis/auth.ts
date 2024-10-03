@@ -64,3 +64,21 @@ interface GetNewRefreshTokenResponse {
 export function getNewRefreshToken() {
   return api.post<GetNewRefreshTokenResponse>('/auth/token/refresh');
 }
+
+interface CheckEmailDuplicationRequest {
+  email: string;
+}
+
+export function checkEmailDuplication({ email }: CheckEmailDuplicationRequest) {
+  return api.post('/auth/check-email-duplication', { email });
+}
+
+interface SendEmailVerificationCodeRequest {
+  email: string;
+}
+
+export function sendEmailVerificationCode({
+  email,
+}: SendEmailVerificationCodeRequest) {
+  return api.post('/auth/send-email-verification-code', { email });
+}

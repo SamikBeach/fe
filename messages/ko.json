@@ -98,7 +98,8 @@
     "continue_with_google": "구글 계정으로 회원가입",
     "forgot_password": "비밀번호를 잊으셨나요?",
     "login": "로그인",
-    "already_have_account": "이미 회원이신가요?"
+    "already_have_account": "이미 회원이신가요?",
+    "email_already_exists": "이미 가입된 이메일이에요."
   },
   "Login": {
     "enter_email": "이메일을 입력해 주세요.",

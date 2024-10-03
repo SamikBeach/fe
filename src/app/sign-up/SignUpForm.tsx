@@ -1,6 +1,6 @@
 'use client';
 
-import { registerEmail } from '@apis/auth';
+import { registerEmail, sendEmailVerificationCode } from '@apis/auth';
 import api from '@apis/config';
 import { isLoggedInAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
@@ -11,21 +11,25 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 import { Logo } from '@components/common/Logo';
 import { useTranslations } from 'next-intl';
+import {
+  FormProvider,
+  SubmitHandler,
+  useController,
+  useForm,
+} from 'react-hook-form';
+import { getIsValidEmail } from '@utils/common';
 
 export default function SignUpForm() {
-  const [email, setEmail] = useState('');
-
   const router = useRouter();
   const t = useTranslations('SignUp');
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: mutateRegisterEmail, isPending } = useMutation({
     mutationFn: registerEmail,
     onSuccess: ({ data }) => {
       router.push('/');
@@ -36,11 +40,42 @@ export default function SignUpForm() {
       setIsLoggedIn(true);
     },
     onError: (error: AxiosError) => {
-      alert(
-        error.message + '\n' + '\n' + (error.response?.data as any).message
-      );
+      // error 코드에 맞게 에러 메시지를 설정
+      methods.setError('email', {
+        message: '이메일 안맞아2',
+      });
     },
   });
+
+  const { mutate: mutateCheckEmailDuplication } = useMutation({
+    mutationFn: sendEmailVerificationCode,
+    onError: (error: AxiosError) => {
+      // error 코드에 맞게 에러 메시지를 설정
+      if (error.response?.status === 401) {
+        methods.setError('email', {
+          message: t('email_already_exists'),
+        });
+      }
+    },
+    onSuccess: () => {
+      router.push('/sign-up/authentication');
+    },
+  });
+
+  const methods = useForm<{ email: string }>();
+
+  const {
+    field: { value: email, onChange: onEmailChange },
+    fieldState: { error },
+  } = useController({
+    name: 'email',
+    control: methods.control,
+    defaultValue: '',
+  });
+
+  const onSubmit: SubmitHandler<{ email: string }> = data => {
+    mutateCheckEmailDuplication({ email: data.email });
+  };
 
   if (isLoggedIn) {
     router.push('/');
@@ -49,91 +84,102 @@ export default function SignUpForm() {
   }
 
   return (
-    <Card
-      className={css({ width: '400px', padding: '40px' })}
-      onKeyDown={e => {
-        if (e.key === 'Enter') {
-          mutate({ email, password: '1234' });
-        }
-      }}
-    >
-      <VStack
-        className={css({ pt: '20px' })}
-        rounded="xl"
-        gap="40px"
-        width="100%"
-      >
-        <Logo
-          width="80px"
-          onClick={() => router.push('/')}
-          className={css({ cursor: 'pointer' })}
-        />
+    <FormProvider {...methods}>
+      <Card className={css({ width: '400px', padding: '40px' })}>
+        <VStack
+          className={css({ pt: '20px' })}
+          rounded="xl"
+          gap="40px"
+          width="100%"
+        >
+          <Logo
+            width="80px"
+            onClick={() => router.push('/')}
+            className={css({ cursor: 'pointer' })}
+          />
 
-        <VStack gap="30px" width="100%">
-          <VStack gap="20px" width="100%">
-            <VStack width="100%">
-              <VStack width="100%">
-                <TextField.Root
-                  type="text"
-                  placeholder={t('enter_email')}
-                  onChange={e => setEmail(e.target.value)}
-                  size="3"
-                  className={css({
-                    width: '100%',
-                    fontSize: '14px',
-                  })}
-                >
-                  <TextField.Slot>
-                    <EnvelopeClosedIcon />
-                  </TextField.Slot>
-                </TextField.Root>
-              </VStack>
+          <VStack gap="30px" width="100%">
+            <VStack gap="20px" width="100%">
+              <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className={css({ width: '100%' })}
+              >
+                <VStack width="100%">
+                  <VStack alignItems="start" width="100%" gap="4px">
+                    <TextField.Root
+                      value={email}
+                      onChange={e => onEmailChange(e.target.value)}
+                      type="text"
+                      placeholder={t('enter_email')}
+                      size="3"
+                      className={css({
+                        width: '100%',
+                        fontSize: '14px',
+                      })}
+                    >
+                      <TextField.Slot>
+                        <EnvelopeClosedIcon />
+                      </TextField.Slot>
+                    </TextField.Root>
+                    {error && (
+                      <Text
+                        size="1"
+                        className={css({ color: 'red' })}
+                        role="alert"
+                      >
+                        {error.message}
+                      </Text>
+                    )}
+                  </VStack>
+
+                  <Button
+                    type="submit"
+                    className={css({ width: '100%' })}
+                    size="3"
+                    loading={isPending}
+                    disabled={!getIsValidEmail(email)}
+                  >
+                    <Text size="2">{t('sign_up')}</Text>
+                  </Button>
+                </VStack>
+              </form>
 
               <Button
-                onClick={() => mutate({ email, password: '1234' })}
-                className={css({ width: '100%' })}
-                size="3"
-                loading={isPending}
+                variant="outline"
+                // onClick={() => mutate({ email, password: '1234' })}
+                className={css({ width: '100%', color: 'black' })}
+                size="2"
               >
-                <Text size="2">{t('sign_up')}</Text>
+                <Google width={16} height={16} />
+                {t('continue_with_google')}
               </Button>
             </VStack>
 
-            <Button
-              variant="outline"
-              onClick={() => mutate({ email, password: '1234' })}
-              className={css({ width: '100%', color: 'black' })}
-              size="2"
-            >
-              <Google width={16} height={16} />
-              {t('continue_with_google')}
-            </Button>
-          </VStack>
-
-          <VStack>
-            <Link href="/login">
-              <Text size="2" color="gray">
-                {t('forgot_password')}
-              </Text>
-            </Link>
-
-            <HStack gap="4px">
-              <Text size="2" color="gray">
-                {t('already_have_account')}
-              </Text>
+            <VStack>
               <Link href="/login">
-                <Text
-                  size="2"
-                  weight="medium"
-                  className={css({ color: 'black' })}
-                >
-                  {t('login')}
+                <Text size="2" color="gray">
+                  {t('forgot_password')}
                 </Text>
               </Link>
-            </HStack>
+
+              <HStack gap="4px">
+                <Text size="2" color="gray">
+                  {t('already_have_account')}
+                </Text>
+                <Link href="/login">
+                  <Text
+                    size="2"
+                    weight="medium"
+                    className={css({ color: 'black' })}
+                  >
+                    {t('login')}
+                  </Text>
+                </Link>
+              </HStack>
+            </VStack>
           </VStack>
         </VStack>
-      </VStack>
-    </Card>
+      </Card>
+    </FormProvider>
   );
 }

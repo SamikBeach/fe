@@ -45,10 +45,10 @@ export default function LoginForm() {
 
       router.push('/');
     },
-    onError: (error: AxiosError) => {
-      alert(
-        error.message + '\n' + '\n' + (error.response?.data as any).message
-      );
+    onError: (error: AxiosError<{ message: string }>) => {
+      methods.setError('password', {
+        message: error.response?.data.message,
+      });
     },
   });
 
@@ -117,35 +117,58 @@ export default function LoginForm() {
               >
                 <VStack width="100%">
                   <VStack width="100%">
-                    <TextField.Root
-                      placeholder={t('enter_email')}
-                      value={email}
-                      onChange={e => onEmailChange(e.target.value)}
-                      size="3"
-                      className={css({
-                        width: '100%',
-                        fontSize: '14px',
-                      })}
-                    >
-                      <TextField.Slot>
-                        <EnvelopeClosedIcon />
-                      </TextField.Slot>
-                    </TextField.Root>
+                    <VStack alignItems="start" width="100%" gap="4px">
+                      <TextField.Root
+                        placeholder={t('enter_email')}
+                        value={email}
+                        onChange={e => onEmailChange(e.target.value)}
+                        size="3"
+                        className={css({
+                          width: '100%',
+                          fontSize: '14px',
+                        })}
+                      >
+                        <TextField.Slot>
+                          <EnvelopeClosedIcon />
+                        </TextField.Slot>
+                      </TextField.Root>
+                      {emailError && (
+                        <Text
+                          size="1"
+                          className={css({ color: 'red' })}
+                          role="alert"
+                        >
+                          {emailError.message}
+                        </Text>
+                      )}
+                    </VStack>
 
-                    <TextField.Root
-                      type="password"
-                      placeholder={t('enter_password')}
-                      onChange={e => onPasswordChange(e.target.value)}
-                      size="3"
-                      className={css({
-                        width: '100%',
-                        fontSize: '14px',
-                      })}
-                    >
-                      <TextField.Slot>
-                        <LockClosedIcon />
-                      </TextField.Slot>
-                    </TextField.Root>
+                    <VStack alignItems="start" width="100%" gap="4px">
+                      <TextField.Root
+                        type="password"
+                        value={password}
+                        placeholder={t('enter_password')}
+                        onChange={e => onPasswordChange(e.target.value)}
+                        size="3"
+                        className={css({
+                          width: '100%',
+                          fontSize: '14px',
+                        })}
+                      >
+                        <TextField.Slot>
+                          <LockClosedIcon />
+                        </TextField.Slot>
+                      </TextField.Root>
+                      {passwordError && (
+                        <Text
+                          size="1"
+                          className={css({ color: 'red' })}
+                          role="alert"
+                        >
+                          {passwordError.message}
+                        </Text>
+                      )}
+                    </VStack>
                   </VStack>
 
                   <Button

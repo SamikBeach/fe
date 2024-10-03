@@ -23,7 +23,7 @@ function AuthenticationPage() {
 
   const user = useAtomValue(userAtom);
 
-  const { mutate: mutateVerifyCode, isIdle } = useMutation({
+  const { mutate: mutateVerifyCode } = useMutation({
     mutationFn: verifyCode,
     onSuccess: () => {
       router.push('/');

@@ -1,10 +1,11 @@
 'use client';
 import { verifyCode } from '@apis/auth';
-import { userAtom } from '@atoms/auth';
+import api from '@apis/config';
+import { isLoggedInAtom, userAtom } from '@atoms/auth';
 import { TextField, Text, Button } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import {
@@ -23,9 +24,16 @@ function AuthenticationPage() {
 
   const user = useAtomValue(userAtom);
 
+  const [_, setIsLoggedIn] = useAtom(isLoggedInAtom);
+
   const { mutate: mutateVerifyCode } = useMutation({
     mutationFn: verifyCode,
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      setIsLoggedIn(true);
+
       router.push('/');
     },
     onError: (error: AxiosError) => {

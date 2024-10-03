@@ -64,8 +64,13 @@ interface VerifyCodeRequest {
   verificationCode: number;
 }
 
+interface VerifyCodeResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export function verifyCode({ email, verificationCode }: VerifyCodeRequest) {
-  return api.post('/auth/verify-code', {
+  return api.post<VerifyCodeResponse>('/auth/verify-code', {
     email,
     verification_code: verificationCode,
   });

@@ -1,7 +1,6 @@
 'use client';
-import { isLoggedInAtom } from '@atoms/auth';
 import { DropdownMenu, IconButton } from '@radix-ui/themes';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { googleLogout } from '@react-oauth/google';
@@ -13,15 +12,14 @@ import { useTranslations } from 'next-intl';
 export default function UserProfileIconButton() {
   const t = useTranslations('Common');
 
-  const currentUser = useAtomValue(currentUserAtom);
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
   const router = useRouter();
-
-  const setIsLoggedIn = useSetAtom(isLoggedInAtom);
 
   const { mutate } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      setIsLoggedIn(false);
+      setCurrentUser(null);
+
       googleLogout();
     },
   });

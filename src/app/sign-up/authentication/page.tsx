@@ -1,11 +1,12 @@
 'use client';
 import { verifyCode } from '@apis/auth';
 import api from '@apis/config';
-import { isLoggedInAtom, userAtom } from '@atoms/auth';
+import { userAtom } from '@atoms/auth';
+import { currentUserAtom } from '@atoms/user';
 import { TextField, Text, Button } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import {
@@ -24,7 +25,7 @@ function AuthenticationPage() {
 
   const user = useAtomValue(userAtom);
 
-  const [_, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const setCurrentUser = useSetAtom(currentUserAtom);
 
   const { mutate: mutateVerifyCode } = useMutation({
     mutationFn: verifyCode,
@@ -32,7 +33,7 @@ function AuthenticationPage() {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
-      setIsLoggedIn(true);
+      setCurrentUser(data.user);
 
       router.push('/');
     },

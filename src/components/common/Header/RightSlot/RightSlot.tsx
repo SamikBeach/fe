@@ -1,4 +1,3 @@
-import { isLoggedInAtom } from '@atoms/auth';
 import { useAtomValue } from 'jotai';
 import { HStack } from 'styled-system/jsx';
 import UserProfileIconButton from './UserProfileIconButton';
@@ -8,6 +7,7 @@ import { css } from 'styled-system/css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { isLoggedInAtom } from '@atoms/user';
 
 const BUTTONS = [
   { href: '/login', tKey: 'login' },

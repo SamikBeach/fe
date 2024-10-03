@@ -1,12 +1,25 @@
 import api from '@apis/config';
+import { UserServerModel } from '@models/user';
 import base64 from 'base-64';
 
+interface SignUpWithGoogleResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: UserServerModel;
+}
+
 export function signUpWithGoogle({ code }: { code: string }) {
-  return api.post('/auth/sign-up/google', { code });
+  return api.post<SignUpWithGoogleResponse>('/auth/sign-up/google', { code });
+}
+
+interface LoginWithGoogleResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: UserServerModel;
 }
 
 export function loginWithGoogle({ code }: { code: string }) {
-  return api.post('/auth/login/google', { code });
+  return api.post<LoginWithGoogleResponse>('/auth/login/google', { code });
 }
 
 export function logout() {
@@ -21,6 +34,7 @@ interface LoginEmailRequest {
 interface LoginEmailResponse {
   accessToken: string;
   refreshToken: string;
+  user: UserServerModel;
 }
 
 export function loginEmail({ email, password }: LoginEmailRequest) {
@@ -67,6 +81,7 @@ interface VerifyCodeRequest {
 interface VerifyCodeResponse {
   accessToken: string;
   refreshToken: string;
+  user: UserServerModel;
 }
 
 export function verifyCode({ email, verificationCode }: VerifyCodeRequest) {

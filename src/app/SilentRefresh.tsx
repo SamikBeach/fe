@@ -3,8 +3,7 @@
 import { getNewAccessToken } from '@apis/auth';
 import api from '@apis/config';
 import { getMyUserInfo } from '@apis/user';
-import { isLoggedInAtom } from '@atoms/auth';
-import { currentUserAtom } from '@atoms/user';
+import { currentUserAtom, isLoggedInAtom } from '@atoms/user';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';

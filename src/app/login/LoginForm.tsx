@@ -2,7 +2,7 @@
 
 import { loginEmail, loginWithGoogle } from '@apis/auth';
 import api from '@apis/config';
-import { isLoggedInAtom } from '@atoms/auth';
+import { currentUserAtom, isLoggedInAtom } from '@atoms/user';
 import { Logo } from '@components/common/Logo';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@radix-ui/react-icons';
@@ -11,7 +11,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import {
@@ -31,7 +31,8 @@ interface FormValues {
 export default function LoginForm() {
   const t = useTranslations('Login');
 
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const setCurrentUser = useSetAtom(currentUserAtom);
 
   const router = useRouter();
 
@@ -41,7 +42,7 @@ export default function LoginForm() {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
-      setIsLoggedIn(true);
+      setCurrentUser(data.user);
 
       router.push('/');
     },
@@ -58,7 +59,7 @@ export default function LoginForm() {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
-      setIsLoggedIn(true);
+      setCurrentUser(data.user);
     },
   });
 

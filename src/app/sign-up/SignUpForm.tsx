@@ -1,14 +1,14 @@
 'use client';
 
 import { checkEmailDuplication, signUpWithGoogle } from '@apis/auth';
-import { userAtom, isLoggedInAtom } from '@atoms/auth';
+import { userAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
 import { Card, Link, TextField, Text } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -24,12 +24,14 @@ import { getIsValidEmail } from '@utils/common';
 import { useGoogleLogin } from '@react-oauth/google';
 import api from '@apis/config';
 import { useState } from 'react';
+import { currentUserAtom, isLoggedInAtom } from '@atoms/user';
 
 export default function SignUpForm() {
   const router = useRouter();
   const t = useTranslations('SignUp');
 
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const setCurrentUser = useSetAtom(currentUserAtom);
 
   const setUser = useSetAtom(userAtom);
 
@@ -43,7 +45,7 @@ export default function SignUpForm() {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
-      setIsLoggedIn(true);
+      setCurrentUser(data.user);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       setOauthSignUpErrorMessage(error.response?.data.message);

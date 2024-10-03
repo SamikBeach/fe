@@ -75,6 +75,7 @@ export default function AuthorCommentList() {
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
+      console.log({ currentUser });
       if (currentUser === null) {
         throw new Error('User is not logged in');
       }

@@ -42,7 +42,7 @@ export default function CommentEditor({
     <>
       <HStack alignItems="start" width="100%" justify="end">
         <Avatar
-          fallback={currentUser?.name[0] ?? ''}
+          fallback={currentUser?.name?.[0] ?? currentUser?.nickname?.[0] ?? ''}
           radius="full"
           size="2"
           mt="4px"

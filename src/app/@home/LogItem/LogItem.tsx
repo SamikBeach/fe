@@ -76,7 +76,7 @@ export default function LogItem({ log }: Props) {
   });
 
   const authorCommentText = t.rich('log_item_author_comment', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <BoldText>{user.name ?? user.nickname}</BoldText>,
     Author: () =>
       isAuthor && (
         <AuthorAvatar

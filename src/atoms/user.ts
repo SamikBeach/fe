@@ -2,6 +2,7 @@ import { atom } from 'jotai';
 
 export const currentUserAtom = atom<{
   id: number;
-  name: string;
+  name?: string;
+  nickname?: string;
   email: string;
 } | null>(null);

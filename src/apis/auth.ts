@@ -22,31 +22,13 @@ interface LoginEmailResponse {
 export function loginEmail({ email, password }: LoginEmailRequest) {
   return api.post<LoginEmailResponse>(
     '/auth/login/email',
-    { email, password },
+    { email },
     {
       headers: {
         Authorization: `Basic ${base64.encode(`${email}:${password}`)}`,
       },
     }
   );
-}
-
-interface RegisterEmailResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
-export function registerEmail({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
-  return api.post<RegisterEmailResponse>('/auth/register/email', {
-    email,
-    password,
-  });
 }
 
 interface GetNewAccessTokenResponse {
@@ -73,16 +55,6 @@ export function checkEmailDuplication({ email }: CheckEmailDuplicationRequest) {
   return api.post('/auth/check-email-duplication', { email });
 }
 
-interface SendEmailVerificationCodeRequest {
-  email: string;
-}
-
-export function sendEmailVerificationCode({
-  email,
-}: SendEmailVerificationCodeRequest) {
-  return api.post('/auth/send-email-verification-code', { email });
-}
-
 interface VerifyCodeRequest {
   email: string;
   verificationCode: number;
@@ -106,5 +78,13 @@ export function registerUserInfo({
   nickname,
   password,
 }: RegisterUserInfoRequest) {
-  return api.post('/auth/register-user-info', { email, nickname, password });
+  return api.post(
+    '/auth/register-user-info',
+    { email, nickname },
+    {
+      headers: {
+        Authorization: `Basic ${base64.encode(`${email}:${password}`)}`,
+      },
+    }
+  );
 }

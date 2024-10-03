@@ -12,7 +12,7 @@ import { VStack } from 'styled-system/jsx';
 import { IoMdPerson } from 'react-icons/io';
 import { FaLock } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
-import { registerUserInfo, sendEmailVerificationCode } from '@apis/auth';
+import { registerUserInfo } from '@apis/auth';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@atoms/auth';
 import { useRouter } from 'next/navigation';
@@ -30,17 +30,10 @@ function UserInfoPage() {
 
   const user = useAtomValue(userAtom);
 
-  const { mutate: mutateSendEmailVerificationCode } = useMutation({
-    mutationFn: sendEmailVerificationCode,
-    onSuccess: () => {
-      router.push('/sign-up/authentication');
-    },
-  });
-
   const { mutate: mutateRegisterUserInfo } = useMutation({
     mutationFn: registerUserInfo,
     onSuccess: () => {
-      mutateSendEmailVerificationCode({ email: user.email });
+      router.push('/sign-up/authentication');
     },
   });
 

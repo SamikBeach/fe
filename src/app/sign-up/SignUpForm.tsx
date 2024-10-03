@@ -1,6 +1,6 @@
 'use client';
 
-import { checkEmailDuplication } from '@apis/auth';
+import { checkEmailDuplication, loginWithGoogle } from '@apis/auth';
 import { userAtom, isLoggedInAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
@@ -8,7 +8,7 @@ import { Card, Link, TextField, Text } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -21,13 +21,32 @@ import {
   useForm,
 } from 'react-hook-form';
 import { getIsValidEmail } from '@utils/common';
+import { useGoogleLogin } from '@react-oauth/google';
+import api from '@apis/config';
 
 export default function SignUpForm() {
   const router = useRouter();
   const t = useTranslations('SignUp');
 
-  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const setUser = useSetAtom(userAtom);
+
+  const { mutate: mutateLoginWithGoogle } = useMutation({
+    mutationFn: loginWithGoogle,
+    onSuccess: ({ data }) => {
+      api.defaults.headers.common['Authorization'] =
+        `Bearer ${data.accessToken}`;
+
+      setIsLoggedIn(true);
+    },
+  });
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: codeResponse => {
+      mutateLoginWithGoogle({ code: codeResponse.code });
+    },
+    flow: 'auth-code',
+  });
 
   const { mutate: mutateCheckEmailDuplication } = useMutation({
     mutationFn: checkEmailDuplication,
@@ -132,7 +151,7 @@ export default function SignUpForm() {
 
               <Button
                 variant="outline"
-                // onClick={() => mutate({ email, password: '1234' })}
+                // onClick={() => mutateCheckEmailDuplication({ email })}
                 className={css({ width: '100%', color: 'black' })}
                 size="2"
               >

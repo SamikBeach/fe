@@ -30,7 +30,19 @@
     "report_dialog_text_area_description": "Please tell us more about the incorrect information.",
     "report_dialog_radio_cards_item_edition_description": "The edition information is incorrect.",
     "report_dialog_radio_cards_item_original_work_description": "The original work information is incorrect.",
-    "report_dialog_radio_cards_item_author_info_description": "The author information is incorrect."
+    "report_dialog_radio_cards_item_author_info_description": "The author information is incorrect.",
+    "verification_code_description": "Please enter the 6-digit authentication code.",
+    "send": "Submit",
+    "nickname_label": "Please enter your nickname.",
+    "nickname_placeholder": "nickname",
+    "password_label": "Please enter your password.",
+    "password_placeholder": "password",
+    "password_confirm_label": "Please enter your password again.",
+    "password_length_error": "The password must be at least {length} characters.",
+    "password_required": "Please enter your password.",
+    "nickname_required": "Please enter your nickname.",
+    "nickname_length_error": "Nickname must be {length} characters or less.",
+    "verification_code_not_match": "The authentication number does not match."
   },
   "Home": {
     "trending_now": "Trending Now",

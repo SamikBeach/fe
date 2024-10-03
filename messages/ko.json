@@ -33,7 +33,20 @@
     "report_dialog_text_area_description": "잘못된 정보에 관해 자세히 알려주세요.",
     "report_dialog_radio_cards_item_edition_description": "에디션 정보가 잘못되었어요.",
     "report_dialog_radio_cards_item_original_work_description": "원전 정보가 잘못되었어요.",
-    "report_dialog_radio_cards_item_author_info_description": "저자 정보가 잘못되었어요."
+    "report_dialog_radio_cards_item_author_info_description": "저자 정보가 잘못되었어요.",
+    "verification_code_description": "인증번호 6자리를 입력해주세요.",
+    "send": "제출",
+    "nickname_label": "닉네임을 입력해 주세요.",
+    "nickname_placeholder": "닉네임",
+    "password_label": "비밀번호를 입력해 주세요.",
+    "password_placeholder": "비밀번호",
+    "password_confirm_label": "비밀번호를 한번 더 입력해 주세요.",
+    "password_length_error": "비밀번호는 {length}자 이상이어야 해요.",
+    "password_required": "비밀번호를 입력해 주세요.",
+    "nickname_required": "닉네임을 입력해 주세요.",
+    "nickname_length_error": "닉네임은 {length}자 이하여야 해요.",
+    "password_confirm_error": "비밀번호가 일치하지 않아요.",
+    "verification_code_not_match": "인증번호가 일치하지 않아요."
   },
   "Home": {
     "trending_now": "실시간 인기",

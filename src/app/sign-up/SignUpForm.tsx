@@ -1,15 +1,14 @@
 'use client';
 
-import { registerEmail, sendEmailVerificationCode } from '@apis/auth';
-import api from '@apis/config';
-import { isLoggedInAtom } from '@atoms/auth';
+import { checkEmailDuplication } from '@apis/auth';
+import { userAtom, isLoggedInAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
 import { Card, Link, TextField, Text } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -27,28 +26,11 @@ export default function SignUpForm() {
   const router = useRouter();
   const t = useTranslations('SignUp');
 
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
-
-  const { mutate: mutateRegisterEmail, isPending } = useMutation({
-    mutationFn: registerEmail,
-    onSuccess: ({ data }) => {
-      router.push('/');
-
-      api.defaults.headers.common['Authorization'] =
-        `Bearer ${data.accessToken}`;
-
-      setIsLoggedIn(true);
-    },
-    onError: (error: AxiosError) => {
-      // error 코드에 맞게 에러 메시지를 설정
-      methods.setError('email', {
-        message: '이메일 안맞아2',
-      });
-    },
-  });
+  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const setUser = useSetAtom(userAtom);
 
   const { mutate: mutateCheckEmailDuplication } = useMutation({
-    mutationFn: sendEmailVerificationCode,
+    mutationFn: checkEmailDuplication,
     onError: (error: AxiosError) => {
       // error 코드에 맞게 에러 메시지를 설정
       if (error.response?.status === 401) {
@@ -58,7 +40,12 @@ export default function SignUpForm() {
       }
     },
     onSuccess: () => {
-      router.push('/sign-up/authentication');
+      setUser(prev => ({
+        ...prev,
+        email,
+      }));
+
+      router.push('/sign-up/user-info');
     },
   });
 
@@ -136,7 +123,6 @@ export default function SignUpForm() {
                     type="submit"
                     className={css({ width: '100%' })}
                     size="3"
-                    loading={isPending}
                     disabled={!getIsValidEmail(email)}
                   >
                     <Text size="2">{t('sign_up')}</Text>

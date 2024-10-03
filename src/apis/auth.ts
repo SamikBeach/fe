@@ -82,3 +82,29 @@ export function sendEmailVerificationCode({
 }: SendEmailVerificationCodeRequest) {
   return api.post('/auth/send-email-verification-code', { email });
 }
+
+interface VerifyCodeRequest {
+  email: string;
+  verificationCode: number;
+}
+
+export function verifyCode({ email, verificationCode }: VerifyCodeRequest) {
+  return api.post('/auth/verify-code', {
+    email,
+    verification_code: verificationCode,
+  });
+}
+
+interface RegisterUserInfoRequest {
+  email: string;
+  nickname: string;
+  password: string;
+}
+
+export function registerUserInfo({
+  email,
+  nickname,
+  password,
+}: RegisterUserInfoRequest) {
+  return api.post('/auth/register-user-info', { email, nickname, password });
+}

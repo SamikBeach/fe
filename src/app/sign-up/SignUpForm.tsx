@@ -1,6 +1,6 @@
 'use client';
 
-import { checkEmailDuplication, loginWithGoogle } from '@apis/auth';
+import { checkEmailDuplication, signUpWithGoogle } from '@apis/auth';
 import { userAtom, isLoggedInAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
@@ -8,7 +8,7 @@ import { Card, Link, TextField, Text } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
@@ -23,27 +23,36 @@ import {
 import { getIsValidEmail } from '@utils/common';
 import { useGoogleLogin } from '@react-oauth/google';
 import api from '@apis/config';
+import { useState } from 'react';
 
 export default function SignUpForm() {
   const router = useRouter();
   const t = useTranslations('SignUp');
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+
   const setUser = useSetAtom(userAtom);
 
-  const { mutate: mutateLoginWithGoogle } = useMutation({
-    mutationFn: loginWithGoogle,
+  const [oauthSignUpErrorMessage, setOauthSignUpErrorMessage] = useState<
+    string | undefined
+  >(undefined);
+
+  const { mutate: mutateSignUpWithGoogle } = useMutation({
+    mutationFn: signUpWithGoogle,
     onSuccess: ({ data }) => {
       api.defaults.headers.common['Authorization'] =
         `Bearer ${data.accessToken}`;
 
       setIsLoggedIn(true);
     },
+    onError: (error: AxiosError<{ message: string }>) => {
+      setOauthSignUpErrorMessage(error.response?.data.message);
+    },
   });
 
   const googleLogin = useGoogleLogin({
-    onSuccess: codeResponse => {
-      mutateLoginWithGoogle({ code: codeResponse.code });
+    onSuccess: async codeResponse => {
+      mutateSignUpWithGoogle({ code: codeResponse.code });
     },
     flow: 'auth-code',
   });
@@ -57,14 +66,6 @@ export default function SignUpForm() {
           message: t('email_already_exists'),
         });
       }
-    },
-    onSuccess: () => {
-      setUser(prev => ({
-        ...prev,
-        email,
-      }));
-
-      router.push('/sign-up/user-info');
     },
   });
 
@@ -80,7 +81,19 @@ export default function SignUpForm() {
   });
 
   const onSubmit: SubmitHandler<{ email: string }> = data => {
-    mutateCheckEmailDuplication({ email: data.email });
+    mutateCheckEmailDuplication(
+      { email: data.email },
+      {
+        onSuccess: () => {
+          setUser(prev => ({
+            ...prev,
+            email,
+          }));
+
+          router.push('/sign-up/user-info');
+        },
+      }
+    );
   };
 
   if (isLoggedIn) {
@@ -149,15 +162,22 @@ export default function SignUpForm() {
                 </VStack>
               </form>
 
-              <Button
-                variant="outline"
-                // onClick={() => mutateCheckEmailDuplication({ email })}
-                className={css({ width: '100%', color: 'black' })}
-                size="2"
-              >
-                <Google width={16} height={16} />
-                {t('continue_with_google')}
-              </Button>
+              <VStack alignItems="start" gap="4px" width="100%">
+                <Button
+                  variant="outline"
+                  onClick={googleLogin}
+                  className={css({ width: '100%', color: 'black' })}
+                  size="2"
+                >
+                  <Google width={16} height={16} />
+                  {t('continue_with_google')}
+                </Button>
+                {oauthSignUpErrorMessage && (
+                  <Text size="1" className={css({ color: 'red' })} role="alert">
+                    {oauthSignUpErrorMessage}
+                  </Text>
+                )}
+              </VStack>
             </VStack>
 
             <VStack>

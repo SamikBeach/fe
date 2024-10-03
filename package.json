@@ -45,6 +45,7 @@
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.31",
+    "google-auth-library": "^9.14.1",
     "josa": "^3.0.1",
     "jotai": "^2.8.3",
     "lodash": "^4.17.21",

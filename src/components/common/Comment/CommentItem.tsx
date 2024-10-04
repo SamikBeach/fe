@@ -97,12 +97,17 @@ export default function CommentItem({
       }}
     >
       <HStack alignItems="start" width="100%" justify="end" {...props}>
-        <Avatar fallback="B" radius="full" size="2" mt="4px" />
+        <Avatar
+          fallback={user.nickname?.[0] ?? ''}
+          radius="full"
+          size="2"
+          mt="4px"
+        />
         <VStack gap="4px" alignItems="start" width={width}>
           <CommentBox>
             <HStack justify="space-between">
               <Text weight="medium" className={css({ display: 'block' })}>
-                {user.name}{' '}
+                {user.nickname}{' '}
                 <span
                   className={css({
                     fontSize: '12px',

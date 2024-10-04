@@ -57,7 +57,11 @@
     "delete_account": "계정 삭제",
     "delete_account_confirm": "정말 계정을 삭제하시겠어요?",
     "delete_account_confirm_description": "삭제한 계정은 되살릴 수 없어요.",
-    "close": "닫기"
+    "close": "닫기",
+    "login_alert": "로그인이 필요한 기능이에요.",
+    "login_alert_description": "로그인 페이지로 이동할까요?",
+    "go_to_login": "로그인 페이지로 이동",
+    "login_to_comment": "로그인이 필요해요."
   },
   "Home": {
     "trending_now": "실시간 인기",

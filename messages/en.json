@@ -20,7 +20,7 @@
     "cancel": "\bCancel",
     "discard_changes_description": "Are you sure you want to discard your changes?",
     "discard": "Discard",
-    "delete_confirm": "Are you sure you want to delete?",
+    "delete_confirm": "Do you really want to delete it?",
     "delete_confirm_description": "Deleted comments cannot be restored.",
     "cancel_and_continue_editing": "Cancel",
     "comments": "Comments",
@@ -53,7 +53,11 @@
     "delete_account": "Delete Account",
     "delete_account_confirm": "Are you sure you want to delete your account?",
     "delete_account_confirm_description": "Deleted accounts cannot be restored.",
-    "close": "Close"
+    "close": "Close",
+    "login_alert": "This function requires login.",
+    "login_alert_description": "Should I go to the login page?",
+    "go_to_login": "Go to login page",
+    "login_to_comment": "You need to log in."
   },
   "Home": {
     "trending_now": "Trending Now",

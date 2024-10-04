@@ -110,7 +110,7 @@ export default function UserInfo() {
       />
       {isLoading ? (
         <Skeleton height="24px" width="140px" />
-      ) : isNickNameEditMode ? (
+      ) : isNickNameEditMode && currentUser !== null ? (
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -160,14 +160,16 @@ export default function UserInfo() {
           <Text weight="bold" size="6">
             {user?.nickname ?? user?.name}
           </Text>
-          <IconButton
-            size="3"
-            variant="ghost"
-            className={css({ cursor: 'pointer' })}
-            onClick={() => setIsNickNameEditMode(true)}
-          >
-            <Pencil1Icon />
-          </IconButton>
+          {currentUser !== null && (
+            <IconButton
+              size="3"
+              variant="ghost"
+              className={css({ cursor: 'pointer' })}
+              onClick={() => setIsNickNameEditMode(true)}
+            >
+              <Pencil1Icon />
+            </IconButton>
+          )}
         </HStack>
       )}
     </VStack>

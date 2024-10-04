@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
+import { LoginAlertDialog } from '../LoginAlertDialog';
 
 interface Props {
   onSubmit: ({
@@ -35,6 +36,7 @@ export default function CommentEditor({
 
   const [comment, setComment] = useState(commentProps?.comment ?? '');
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
+  const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
   const isEditMode = onClose !== undefined;
 
@@ -51,6 +53,7 @@ export default function CommentEditor({
           <TextArea
             ref={textAreaRef}
             autoFocus
+            placeholder={currentUser === null ? t('login_to_comment') : ''}
             onFocus={e =>
               e.currentTarget.setSelectionRange(
                 e.currentTarget.value.length,
@@ -83,6 +86,12 @@ export default function CommentEditor({
           />
           <Button
             onClick={() => {
+              if (currentUser === null) {
+                setOpenLoginAlertDialog(true);
+
+                return;
+              }
+
               onSubmit({ comment });
 
               setComment('');
@@ -144,6 +153,10 @@ export default function CommentEditor({
           </HStack>
         </AlertDialog.Content>
       </AlertDialog.Root>
+      <LoginAlertDialog
+        open={openLoginAlertDialog}
+        onOpenChange={setOpenLoginAlertDialog}
+      />
     </>
   );
 }

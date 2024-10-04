@@ -15,7 +15,10 @@ import { changePassword } from '@apis/auth';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { DeleteAccountConfirmDialog } from '@components/common/DeleteAccountConfirmDialog';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { currentUserAtom } from '@atoms/user';
+import { useAtomValue } from 'jotai';
+import { useRouter } from 'next/navigation';
 
 interface FormValues {
   password: string;
@@ -24,6 +27,10 @@ interface FormValues {
 
 function SettingsPage() {
   const t = useTranslations('Common');
+
+  const router = useRouter();
+
+  const currentUser = useAtomValue(currentUserAtom);
 
   const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false);
 
@@ -93,6 +100,12 @@ function SettingsPage() {
       newPassword: data.newPassword,
     });
   };
+
+  useEffect(() => {
+    if (currentUser === null) {
+      router.push('/');
+    }
+  }, [router, currentUser]);
 
   return (
     <>

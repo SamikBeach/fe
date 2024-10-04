@@ -19,6 +19,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { AiOutlineAlert } from 'react-icons/ai';
 import { ReportDialog } from '@components/common/ReportDialog';
 import { useState } from 'react';
+import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
 export default function AuthorInfo() {
   const locale = useLocale();
@@ -26,6 +27,7 @@ export default function AuthorInfo() {
   const t = useTranslations('Common');
 
   const [openReportDialog, setOpenReportDialog] = useState(false);
+  const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
   const params = useParams();
   const authorId = Number(params.id);
@@ -150,7 +152,15 @@ export default function AuthorInfo() {
                 width="22px"
                 height="22px"
                 cursor="pointer"
-                onClick={() => addLike()}
+                onClick={() => {
+                  if (currentUser === null) {
+                    setOpenLoginAlertDialog(true);
+
+                    return;
+                  }
+
+                  addLike();
+                }}
               />
             )}
           </HStack>
@@ -191,6 +201,10 @@ export default function AuthorInfo() {
         open={openReportDialog}
         onOpenChange={setOpenReportDialog}
         author={author}
+      />
+      <LoginAlertDialog
+        open={openLoginAlertDialog}
+        onOpenChange={setOpenLoginAlertDialog}
       />
     </>
   );

@@ -21,6 +21,7 @@ import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { useState } from 'react';
 import { AiOutlineAlert } from 'react-icons/ai';
 import { ReportDialog } from '@components/common/ReportDialog';
+import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
 export default function OriginalWorkInfo() {
   const locale = useLocale();
@@ -31,6 +32,7 @@ export default function OriginalWorkInfo() {
   const originalWorkId = Number(params.id);
 
   const [openReportDialog, setOpenReportDialog] = useState(false);
+  const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
   const { data: originalWork, isLoading: isLoadingOriginalWork } = useQuery({
     queryKey: ['original-work', params.id],
@@ -171,7 +173,15 @@ export default function OriginalWorkInfo() {
                 width="22px"
                 height="22px"
                 cursor="pointer"
-                onClick={() => addLike()}
+                onClick={() => {
+                  if (currentUser === null) {
+                    setOpenLoginAlertDialog(true);
+
+                    return;
+                  }
+
+                  addLike();
+                }}
               />
             )}
           </HStack>
@@ -221,6 +231,10 @@ export default function OriginalWorkInfo() {
         open={openReportDialog}
         onOpenChange={setOpenReportDialog}
         originalWork={originalWork}
+      />
+      <LoginAlertDialog
+        open={openLoginAlertDialog}
+        onOpenChange={setOpenLoginAlertDialog}
       />
     </>
   );

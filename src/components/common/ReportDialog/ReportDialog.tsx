@@ -109,12 +109,8 @@ export default function ReportDialog({
 
   const { mutate: mutatePostReport } = useMutation({
     mutationFn: () => {
-      if (currentUser === null) {
-        throw new Error('User is not logged in');
-      }
-
       return postReport({
-        user_id: currentUser.id,
+        user_id: currentUser?.id ?? undefined,
         origin_type_id: getTypeIdByType(originType),
         type_id: getTypeIdByType(selectedReportType),
         description: reportText === '' ? undefined : reportText,
@@ -205,6 +201,7 @@ export default function ReportDialog({
               variant="outline"
               onClick={() => {
                 props.onOpenChange?.(false);
+                setReportText('');
               }}
               className={css({ cursor: 'pointer' })}
             >

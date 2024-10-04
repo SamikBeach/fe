@@ -23,6 +23,7 @@ import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHov
 import { useState } from 'react';
 import { AiOutlineAlert } from 'react-icons/ai';
 import { ReportDialog } from '@components/common/ReportDialog';
+import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
 export default function EditionBasicInfo() {
   const locale = useLocale();
@@ -33,6 +34,7 @@ export default function EditionBasicInfo() {
   const editionId = Number(params.id);
 
   const [openReportDialog, setOpenReportDialog] = useState(false);
+  const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
   const { data: edition, isLoading: isLoadingEdition } = useQuery({
     queryKey: ['edition', params.id],
@@ -178,7 +180,13 @@ export default function EditionBasicInfo() {
                 width="22px"
                 height="22px"
                 cursor="pointer"
-                onClick={() => addLike()}
+                onClick={() => {
+                  if (currentUser === null) {
+                    setOpenLoginAlertDialog(true);
+                  }
+
+                  addLike();
+                }}
               />
             )}
           </HStack>
@@ -272,6 +280,10 @@ export default function EditionBasicInfo() {
         open={openReportDialog}
         onOpenChange={setOpenReportDialog}
         edition={edition}
+      />
+      <LoginAlertDialog
+        open={openLoginAlertDialog}
+        onOpenChange={setOpenLoginAlertDialog}
       />
     </>
   );

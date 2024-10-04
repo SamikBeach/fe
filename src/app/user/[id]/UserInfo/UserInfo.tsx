@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@radix-ui/themes';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -122,12 +123,27 @@ export default function UserInfo() {
               className={css({
                 width: '300px',
               })}
+              onKeyDown={e => {
+                if (isNickNameEditMode && e.key === 'Escape') {
+                  setIsNickNameEditMode(false);
+                }
+              }}
+              onBlur={e => {
+                if (e.relatedTarget?.className.includes('submit-button')) {
+                  return;
+                }
+
+                setIsNickNameEditMode(false);
+              }}
               autoFocus
             >
               <Button
                 size="1"
                 disabled={nickname === ''}
-                className={css({ cursor: 'pointer', margin: '3px' })}
+                className={classNames(
+                  css({ cursor: 'pointer', margin: '3px' }),
+                  'submit-button'
+                )}
               >
                 {t('edit')}
               </Button>

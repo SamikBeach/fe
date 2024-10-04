@@ -130,13 +130,19 @@ interface UpdateUserInfoRequest {
   name?: string;
 }
 
+interface UpdateUserInfoResponse {
+  email: string;
+  name?: string;
+  nickname?: string;
+}
+
 export function updateUserInfo({
   email,
   name,
   nickname,
   password,
 }: UpdateUserInfoRequest) {
-  return api.put(
+  return api.patch<UpdateUserInfoResponse>(
     '/auth/update-user-info',
     { email, name, nickname, password },
     {

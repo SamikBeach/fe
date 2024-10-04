@@ -5,7 +5,7 @@ import { Avatar, Popover, Spinner, Text, Tooltip } from '@radix-ui/themes';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, Fragment, useEffect, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
@@ -242,11 +242,7 @@ function SearchPopover({
                       locale === 'ko'
                         ? originalWork.title_in_kor
                         : originalWork.title
-                    } - ${
-                      locale === 'ko'
-                        ? originalWork.author.name_in_kor
-                        : originalWork.author.name
-                    }`}
+                    } - ${originalWork.title_in_eng}`}
                   >
                     <span
                       className={css({
@@ -273,11 +269,7 @@ function SearchPopover({
                       />
                       <Highlighter
                         searchWords={[searchValue]}
-                        textToHighlight={
-                          locale === 'ko'
-                            ? originalWork.author.name_in_kor ?? ''
-                            : originalWork.author.name ?? ''
-                        }
+                        textToHighlight={originalWork.title_in_eng ?? ''}
                         className={css({
                           color: 'gray.500',
                           fontSize: '11px',
@@ -304,7 +296,11 @@ function SearchPopover({
                     >
                       <Highlighter
                         searchWords={[searchValue]}
-                        textToHighlight={originalWork.title_in_eng ?? ''}
+                        textToHighlight={
+                          locale === 'ko'
+                            ? originalWork.author.name_in_kor ?? ''
+                            : originalWork.author.name ?? ''
+                        }
                         highlightClassName={css({
                           fontWeight: 'bold',
                           backgroundColor: 'transparent',
@@ -360,7 +356,24 @@ function SearchPopover({
                 />
                 <VStack alignItems="start" gap="0">
                   <Tooltip
-                    content={`${edition.title} - ${edition.author.name_in_kor}`}
+                    content={
+                      <>
+                        <Text>{edition.title}</Text>{' '}
+                        {edition.original_works.map(originalWork => (
+                          <Fragment key={originalWork.id}>
+                            <GiSecretBook
+                              className={css({
+                                display: 'inline',
+                                marginBottom: '2px',
+                                width: '12px',
+                              })}
+                              size="12px"
+                            />
+                            <Text>{originalWork.title_in_kor}</Text>
+                          </Fragment>
+                        ))}
+                      </>
+                    }
                   >
                     <span
                       className={css({
@@ -380,41 +393,7 @@ function SearchPopover({
                         className={css({
                           lineHeight: '19px',
                         })}
-                      />
-                      <Highlighter
-                        searchWords={[searchValue]}
-                        textToHighlight={
-                          locale === 'ko'
-                            ? edition.author.name_in_kor ?? ''
-                            : edition.author.name ?? ''
-                        }
-                        className={css({
-                          color: 'gray.500',
-                          fontSize: '11px',
-                          ml: '4px',
-                        })}
-                        highlightClassName={css({
-                          fontWeight: 'bold',
-                          backgroundColor: 'transparent',
-                        })}
-                      />
-                    </span>
-                  </Tooltip>
-                  <Tooltip
-                    content={edition.original_works
-                      .map(originalWork => originalWork.title_in_kor)
-                      .join(', ')}
-                  >
-                    <span
-                      className={css({
-                        color: 'gray.500',
-                        fontSize: '11px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        maxWidth: '380px',
-                      })}
-                    >
+                      />{' '}
                       {edition.original_works.map(originalWork => (
                         <span
                           key={originalWork.id}
@@ -426,13 +405,17 @@ function SearchPopover({
                               marginBottom: '2px',
                               cursor: 'pointer',
                               color: 'gray.500',
-                              width: '14px',
+                              width: '12px',
                             })}
-                            size="14px"
-                          />{' '}
+                            size="12px"
+                          />
                           <Highlighter
                             searchWords={[searchValue]}
                             textToHighlight={originalWork.title_in_kor ?? ''}
+                            className={css({
+                              color: 'gray.500',
+                              fontSize: '11px',
+                            })}
                             highlightClassName={css({
                               fontWeight: 'bold',
                               backgroundColor: 'transparent',
@@ -442,6 +425,27 @@ function SearchPopover({
                       ))}
                     </span>
                   </Tooltip>
+
+                  <Highlighter
+                    searchWords={[searchValue]}
+                    textToHighlight={
+                      locale === 'ko'
+                        ? edition.author.name_in_kor ?? ''
+                        : edition.author.name ?? ''
+                    }
+                    className={css({
+                      color: 'gray.500',
+                      fontSize: '11px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      maxWidth: '380px',
+                    })}
+                    highlightClassName={css({
+                      fontWeight: 'bold',
+                      backgroundColor: 'transparent',
+                    })}
+                  />
                 </VStack>
               </HStack>
             ))}

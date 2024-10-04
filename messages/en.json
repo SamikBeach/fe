@@ -49,7 +49,11 @@
     "current_password_label": "Please enter your current password.",
     "change": "Change",
     "current_password_placeholder": "Current password",
-    "new_password_placeholder": "New password"
+    "new_password_placeholder": "New password",
+    "delete_account": "Delete Account",
+    "delete_account_confirm": "Are you sure you want to delete your account?",
+    "delete_account_confirm_description": "Deleted accounts cannot be restored.",
+    "close": "Close"
   },
   "Home": {
     "trending_now": "Trending Now",

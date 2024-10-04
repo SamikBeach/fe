@@ -173,3 +173,7 @@ export function changePassword({
     new_password: base64.encode(newPassword),
   });
 }
+
+export function deleteAccount() {
+  return api.delete('/auth/delete-account');
+}

@@ -14,6 +14,8 @@ import { FaLock } from 'react-icons/fa';
 import { changePassword } from '@apis/auth';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { DeleteAccountConfirmDialog } from '@components/common/DeleteAccountConfirmDialog';
+import { useState } from 'react';
 
 interface FormValues {
   password: string;
@@ -22,6 +24,8 @@ interface FormValues {
 
 function SettingsPage() {
   const t = useTranslations('Common');
+
+  const [openDeleteAccountDialog, setOpenDeleteAccountDialog] = useState(false);
 
   const { mutate: mutateChangePassword } = useMutation({
     mutationFn: changePassword,
@@ -91,81 +95,111 @@ function SettingsPage() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        className={css({ width: '100%' })}
-      >
-        <VStack>
-          <VStack alignItems="start" gap="10px">
+    <>
+      <VStack>
+        <VStack alignItems="start" gap="40px">
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className={css({ width: '100%' })}
+            >
+              <VStack alignItems="start" gap="10px">
+                <Text size="4" weight="medium">
+                  {t('change_password')}
+                </Text>
+                <VStack alignItems="start">
+                  <VStack alignItems="start" gap="4px">
+                    <Text weight="medium" size="2">
+                      {t('current_password_label')}
+                    </Text>
+                    <TextField.Root
+                      type="password"
+                      value={password}
+                      onChange={e => onPasswordChange(e.target.value)}
+                      placeholder={t('current_password_placeholder')}
+                      size="3"
+                      className={css({
+                        width: '300px',
+                      })}
+                    >
+                      <TextField.Slot>
+                        <FaLock color="gray" />
+                      </TextField.Slot>
+                    </TextField.Root>
+                    {passwordError && (
+                      <Text
+                        size="1"
+                        className={css({ color: 'red' })}
+                        role="alert"
+                      >
+                        {passwordError.message}
+                      </Text>
+                    )}
+                  </VStack>
+                  <VStack alignItems="start" gap="4px">
+                    <Text weight="medium" size="2">
+                      {t('new_password_label')}
+                    </Text>
+                    <TextField.Root
+                      type="password"
+                      value={newPassword}
+                      onChange={e => onNewPasswordChange(e.target.value)}
+                      placeholder={t('new_password_placeholder')}
+                      size="3"
+                      className={css({
+                        width: '300px',
+                      })}
+                    >
+                      <TextField.Slot>
+                        <FaLock color="gray" />
+                      </TextField.Slot>
+                    </TextField.Root>
+                    {newPasswordError && (
+                      <Text
+                        size="1"
+                        className={css({ color: 'red' })}
+                        role="alert"
+                      >
+                        {newPasswordError.message}
+                      </Text>
+                    )}
+                  </VStack>
+                  <Button
+                    size="3"
+                    className={css({
+                      width: '100%',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                    })}
+                    disabled={password.length === 0 || newPassword.length === 0}
+                  >
+                    {t('change')}
+                  </Button>
+                </VStack>
+              </VStack>
+            </form>
+          </FormProvider>
+
+          <VStack alignItems="start" gap="4px" width="100%">
             <Text size="4" weight="medium">
-              {t('change_password')}
+              {t('delete_account')}
             </Text>
-            <VStack alignItems="start">
-              <VStack alignItems="start" gap="4px">
-                <Text weight="medium" size="2">
-                  {t('current_password_label')}
-                </Text>
-                <TextField.Root
-                  type="password"
-                  value={password}
-                  onChange={e => onPasswordChange(e.target.value)}
-                  placeholder={t('current_password_placeholder')}
-                  size="3"
-                  className={css({
-                    width: '300px',
-                  })}
-                >
-                  <TextField.Slot>
-                    <FaLock color="gray" />
-                  </TextField.Slot>
-                </TextField.Root>
-                {passwordError && (
-                  <Text size="1" className={css({ color: 'red' })} role="alert">
-                    {passwordError.message}
-                  </Text>
-                )}
-              </VStack>
-              <VStack alignItems="start" gap="4px">
-                <Text weight="medium" size="2">
-                  {t('new_password_label')}
-                </Text>
-                <TextField.Root
-                  type="password"
-                  value={newPassword}
-                  onChange={e => onNewPasswordChange(e.target.value)}
-                  placeholder={t('new_password_placeholder')}
-                  size="3"
-                  className={css({
-                    width: '300px',
-                  })}
-                >
-                  <TextField.Slot>
-                    <FaLock color="gray" />
-                  </TextField.Slot>
-                </TextField.Root>
-                {newPasswordError && (
-                  <Text size="1" className={css({ color: 'red' })} role="alert">
-                    {newPasswordError.message}
-                  </Text>
-                )}
-              </VStack>
-              <Button
-                size="3"
-                className={css({
-                  width: '100%',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                })}
-                disabled={password.length === 0 || newPassword.length === 0}
-              >
-                {t('change')}
-              </Button>
-            </VStack>
+            <Button
+              size="3"
+              color="red"
+              className={css({ width: '100%', cursor: 'pointer' })}
+              onClick={() => setOpenDeleteAccountDialog(true)}
+            >
+              {t('delete_account')}
+            </Button>
           </VStack>
         </VStack>
-      </form>
-    </FormProvider>
+      </VStack>
+      <DeleteAccountConfirmDialog
+        open={openDeleteAccountDialog}
+        onOpenChange={setOpenDeleteAccountDialog}
+      />
+    </>
   );
 }
 

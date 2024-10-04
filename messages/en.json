@@ -42,7 +42,8 @@
     "password_required": "Please enter your password.",
     "nickname_required": "Please enter your nickname.",
     "nickname_length_error": "Nickname must be {length} characters or less.",
-    "verification_code_not_match": "The authentication number does not match."
+    "verification_code_not_match": "The authentication number does not match.",
+    "new_password_label": "Please enter a new password."
   },
   "Home": {
     "trending_now": "Trending Now",
@@ -117,7 +118,9 @@
     "continue_with_google": "Continue with Google",
     "forgot_password": "Forgot your password?",
     "no_account": "No account?",
-    "sign_up": "Sign up"
+    "sign_up": "Sign up",
+    "reset_password_description": "We will send you a 6-digit authentication number via email to reset your password.",
+    "submit": "Submit"
   },
   "report_incorrect_information": "Report Incorrect Information"
 }

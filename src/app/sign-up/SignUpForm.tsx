@@ -182,28 +182,20 @@ export default function SignUpForm() {
               </VStack>
             </VStack>
 
-            <VStack>
+            <HStack gap="4px">
+              <Text size="2" color="gray">
+                {t('already_have_account')}
+              </Text>
               <Link href="/login">
-                <Text size="2" color="gray">
-                  {t('forgot_password')}
+                <Text
+                  size="2"
+                  weight="medium"
+                  className={css({ color: 'black' })}
+                >
+                  {t('login')}
                 </Text>
               </Link>
-
-              <HStack gap="4px">
-                <Text size="2" color="gray">
-                  {t('already_have_account')}
-                </Text>
-                <Link href="/login">
-                  <Text
-                    size="2"
-                    weight="medium"
-                    className={css({ color: 'black' })}
-                  >
-                    {t('login')}
-                  </Text>
-                </Link>
-              </HStack>
-            </VStack>
+            </HStack>
           </VStack>
         </VStack>
       </Card>

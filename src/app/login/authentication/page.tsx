@@ -1,12 +1,10 @@
 'use client';
-import { verifyCodeAndLogin } from '@apis/auth';
-import api from '@apis/config';
+import { verifyCode } from '@apis/auth';
 import { userAtom } from '@atoms/auth';
-import { currentUserAtom } from '@atoms/user';
 import { TextField, Text, Button } from '@radix-ui/themes';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import {
@@ -25,24 +23,15 @@ function AuthenticationPage() {
 
   const user = useAtomValue(userAtom);
 
-  const setCurrentUser = useSetAtom(currentUserAtom);
-
-  const { mutate: mutateVerifyCodeAndLogin } = useMutation({
-    mutationFn: verifyCodeAndLogin,
-    onSuccess: ({ data }) => {
-      api.defaults.headers.common['Authorization'] =
-        `Bearer ${data.accessToken}`;
-
-      setCurrentUser(data.user);
-
-      router.push('/');
+  const { mutate: mutateVerifyCode } = useMutation({
+    mutationFn: verifyCode,
+    onSuccess: () => {
+      router.push('/login/update-password');
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        methods.setError('verificationCode', {
-          message: t('verification_code_not_match'),
-        });
-      }
+    onError: (error: AxiosError<{ message: string }>) => {
+      methods.setError('verificationCode', {
+        message: error.response?.data.message,
+      });
     },
   });
 
@@ -58,7 +47,7 @@ function AuthenticationPage() {
   });
 
   const onSubmit: SubmitHandler<{ verificationCode: number }> = data => {
-    mutateVerifyCodeAndLogin({
+    mutateVerifyCode({
       email: user.email,
       verificationCode: data.verificationCode,
     });
@@ -88,7 +77,7 @@ function AuthenticationPage() {
                 }
                 className={css({ cursor: 'pointer', margin: '3px' })}
               >
-                {t('send')}
+                {t('submit')}
               </Button>
             </TextField.Root>
             {error && (

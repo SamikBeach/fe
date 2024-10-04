@@ -91,6 +91,16 @@ export function verifyCode({ email, verificationCode }: VerifyCodeRequest) {
   });
 }
 
+export function verifyCodeAndLogin({
+  email,
+  verificationCode,
+}: VerifyCodeRequest) {
+  return api.post<VerifyCodeResponse>('/auth/verify-code-and-login', {
+    email,
+    verification_code: verificationCode,
+  });
+}
+
 interface RegisterUserInfoRequest {
   email: string;
   nickname: string;
@@ -111,4 +121,34 @@ export function registerUserInfo({
       },
     }
   );
+}
+
+interface UpdateUserInfoRequest {
+  email: string;
+  password?: string;
+  nickname?: string;
+  name?: string;
+}
+
+export function updateUserInfo({
+  email,
+  name,
+  nickname,
+  password,
+}: UpdateUserInfoRequest) {
+  return api.put(
+    '/auth/update-user-info',
+    { email, name, nickname, password },
+    {
+      ...(password && {
+        headers: {
+          Authorization: `Basic ${base64.encode(`${email}:${password}`)}`,
+        },
+      }),
+    }
+  );
+}
+
+export function sendPasswordResetEmail({ email }: { email: string }) {
+  return api.post('/auth/send-password-reset-email', { email });
 }

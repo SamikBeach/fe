@@ -195,7 +195,7 @@ export default function LoginForm() {
             </VStack>
 
             <VStack>
-              <Link href="/login">
+              <Link href="/login/forgot-password">
                 <Text size="2" color="gray">
                   {t('forgot_password')}
                 </Text>

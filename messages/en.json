@@ -43,7 +43,13 @@
     "nickname_required": "Please enter your nickname.",
     "nickname_length_error": "Nickname must be {length} characters or less.",
     "verification_code_not_match": "The authentication number does not match.",
-    "new_password_label": "Please enter a new password."
+    "new_password_label": "Please enter a new password.",
+    "settings": "Privacy settings",
+    "change_password": "Reset password",
+    "current_password_label": "Please enter your current password.",
+    "change": "Change",
+    "current_password_placeholder": "Current password",
+    "new_password_placeholder": "New password"
   },
   "Home": {
     "trending_now": "Trending Now",

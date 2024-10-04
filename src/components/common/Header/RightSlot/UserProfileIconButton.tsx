@@ -45,6 +45,14 @@ export default function UserProfileIconButton() {
         </DropdownMenu.Item>
         <DropdownMenu.Item
           onSelect={() => {
+            router.push(`/user/${currentUser?.id}/settings`);
+          }}
+          className={css({ cursor: 'pointer' })}
+        >
+          {t('settings')}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onSelect={() => {
             mutate();
           }}
           className={css({ cursor: 'pointer' })}

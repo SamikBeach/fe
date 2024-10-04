@@ -47,7 +47,13 @@
     "nickname_length_error": "닉네임은 {length}자 이하여야 해요.",
     "password_confirm_error": "비밀번호가 일치하지 않아요.",
     "verification_code_not_match": "인증번호가 일치하지 않아요.",
-    "new_password_label": "새 비밀번호를 입력해 주세요."
+    "new_password_label": "새 비밀번호를 입력해 주세요.",
+    "settings": "개인정보 설정",
+    "change_password": "비밀번호 재설정",
+    "current_password_label": "현재 비밀번호를 입력해 주세요.",
+    "change": "변경하기",
+    "current_password_placeholder": "현재 비밀번호",
+    "new_password_placeholder": "새 비밀번호"
   },
   "Home": {
     "trending_now": "실시간 인기",

@@ -158,3 +158,18 @@ export function updateUserInfo({
 export function sendPasswordResetEmail({ email }: { email: string }) {
   return api.post('/auth/send-password-reset-email', { email });
 }
+
+interface ChangePasswordRequest {
+  password: string;
+  newPassword: string;
+}
+
+export function changePassword({
+  password,
+  newPassword,
+}: ChangePasswordRequest) {
+  return api.post('/auth/change-password', {
+    password: base64.encode(password),
+    new_password: base64.encode(newPassword),
+  });
+}

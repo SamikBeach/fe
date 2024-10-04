@@ -95,6 +95,7 @@ export default function AuthorInfo() {
 
       return getMyAuthorLikeExist({ authorId: id, userId: currentUser.id });
     },
+    enabled: currentUser != null,
     select: response => response.data,
   });
 

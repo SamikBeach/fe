@@ -110,6 +110,7 @@ export default function EditionBasicInfo() {
         userId: currentUser.id,
       });
     },
+    enabled: currentUser != null,
     select: response => response.data,
   });
 

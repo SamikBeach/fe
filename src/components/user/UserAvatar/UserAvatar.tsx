@@ -1,4 +1,3 @@
-import { UserHoverCard } from '@components/user/UserHoverCard';
 import { UserServerModel } from '@models/user';
 import { Avatar, AvatarProps, Text, TextProps } from '@radix-ui/themes';
 import classNames from 'classnames';
@@ -47,27 +46,22 @@ function UserAvatar({
   );
 
   return (
-    <UserHoverCard.Root>
-      <UserHoverCard.Trigger>
-        <HStack display="inline" onClick={e => e.stopPropagation()}>
-          {!onlyName && (
-            <>
-              <Link href={`/user/${user.id}`}>
-                <Avatar
-                  size="2"
-                  radius="full"
-                  //   src={user.image_url ?? undefined}
-                  fallback={user.nickname?.[0] ?? ''}
-                  {...props}
-                />
-              </Link>{' '}
-            </>
-          )}
-          {withName && nickname}
-        </HStack>
-      </UserHoverCard.Trigger>
-      <UserHoverCard.Content user={user} side="top" />
-    </UserHoverCard.Root>
+    <HStack display="inline" onClick={e => e.stopPropagation()}>
+      {!onlyName && (
+        <>
+          <Link href={`/user/${user.id}`}>
+            <Avatar
+              size="2"
+              radius="full"
+              //   src={user.image_url ?? undefined}
+              fallback={user.nickname?.[0] ?? ''}
+              {...props}
+            />
+          </Link>{' '}
+        </>
+      )}
+      {withName && nickname}
+    </HStack>
   );
 }
 

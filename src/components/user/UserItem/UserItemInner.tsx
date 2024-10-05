@@ -53,70 +53,7 @@ export default function UserItemInner({ user }: Props) {
               {nickname}
             </Text>
           </Link>
-          {/* <HStack>
-            <Text size="2" color="gray" mt="2px">
-              {getBornAndDiedDateText({
-                bornDate: born_date,
-                diedDate: died_date,
-                bornDateIsBc: born_date_is_bc === 1,
-                diedDateIsBc: died_date_is_bc === 1,
-                locale,
-              })}
-            </Text>
-          </HStack> */}
         </VStack>
-        {/* <HStack gap="10px" width="100%" alignItems="start">
-          <HStack gap="3px">
-            <GiSecretBook
-              className={css({
-                display: 'inline',
-                cursor: 'pointer',
-                color: 'gray.500',
-              })}
-              size="18px"
-            />{' '}
-            <Text size="2" color="gray">
-              {original_work_count}
-            </Text>
-          </HStack>
-          <HStack gap="3px">
-            <GiBlackBook
-              className={css({
-                display: 'inline',
-                cursor: 'pointer',
-                color: 'gray.500',
-              })}
-              size="18px"
-            />
-            <Text size="2" color="gray">
-              {edition_count}
-            </Text>
-          </HStack>
-          <HStack gap="3px">
-            <HeartFilledIcon
-              width="16px"
-              height="16px"
-              className={css({
-                color: 'gray.500',
-              })}
-            />
-            <Text size="2" color="gray">
-              {like_count}
-            </Text>
-          </HStack>
-          <HStack gap="3px">
-            <ChatBubbleIcon
-              width="16px"
-              height="16px"
-              className={css({
-                color: 'gray.500',
-              })}
-            />
-            <Text size="2" color="gray">
-              {comment_count}
-            </Text>
-          </HStack>
-        </HStack> */}
       </VStack>
     </HStack>
   );

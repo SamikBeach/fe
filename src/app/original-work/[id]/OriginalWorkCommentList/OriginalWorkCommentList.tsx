@@ -25,6 +25,7 @@ import OriginalWorkCommentSortDropdown from './OriginalWorkCommentSortDropdown';
 import { AxiosResponse } from 'axios';
 import { originalWorkCommentSortAtom } from '@atoms/sort';
 import { useTranslations } from 'next-intl';
+import CommentListEmpty from '@components/common/Comment/CommentListEmpty';
 
 export default function OriginalWorkCommentList() {
   const t = useTranslations('Common');
@@ -72,6 +73,8 @@ export default function OriginalWorkCommentList() {
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
+
+  const hasComments = comments.length > 0;
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
@@ -138,7 +141,7 @@ export default function OriginalWorkCommentList() {
             <OriginalWorkCommentItemSkeleton height="62px" />
             <OriginalWorkCommentItemSkeleton height="62px" />
           </>
-        ) : (
+        ) : hasComments ? (
           comments.map(comment => (
             <OriginalWorkCommentItem
               key={comment.id}
@@ -147,6 +150,8 @@ export default function OriginalWorkCommentList() {
               onUpdate={refetchSearchOriginalWorkComments}
             />
           ))
+        ) : (
+          <CommentListEmpty />
         )}
       </CommentListBox>
       <div

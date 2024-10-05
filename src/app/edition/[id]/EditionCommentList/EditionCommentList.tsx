@@ -25,6 +25,7 @@ import EditionCommentSortDropdown from './EditionCommentSortDropdown';
 import { AxiosResponse } from 'axios';
 import { editionCommentSortAtom } from '@atoms/sort';
 import { useTranslations } from 'next-intl';
+import CommentListEmpty from '@components/common/Comment/CommentListEmpty';
 
 export default function EditionCommentList() {
   const t = useTranslations('Common');
@@ -72,6 +73,8 @@ export default function EditionCommentList() {
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
+
+  const hasComments = comments.length > 0;
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
@@ -138,7 +141,7 @@ export default function EditionCommentList() {
             <EditionCommentItemSkeleton height="62px" />
             <EditionCommentItemSkeleton height="62px" />
           </>
-        ) : (
+        ) : hasComments ? (
           comments.map(comment => (
             <EditionCommentItem
               key={comment.id}
@@ -147,6 +150,8 @@ export default function EditionCommentList() {
               onUpdate={refetchSearchEditionComments}
             />
           ))
+        ) : (
+          <CommentListEmpty />
         )}
       </CommentListBox>
       <div

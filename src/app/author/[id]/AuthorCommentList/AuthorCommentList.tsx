@@ -25,6 +25,7 @@ import AuthorCommentSortDropdown from './AuthorCommentSortDropdown';
 import { AxiosResponse } from 'axios';
 import { authorCommentSortAtom } from '@atoms/sort';
 import { useTranslations } from 'next-intl';
+import CommentListEmpty from '@components/common/Comment/CommentListEmpty';
 
 export default function AuthorCommentList() {
   const t = useTranslations('Common');
@@ -72,6 +73,8 @@ export default function AuthorCommentList() {
     () => data?.pages?.flatMap(page => page.data.data) ?? [],
     [data]
   );
+
+  const hasComments = comments.length > 0;
 
   const { mutate: addComment } = useMutation({
     mutationFn: ({ comment }: { comment: string }) => {
@@ -139,7 +142,7 @@ export default function AuthorCommentList() {
             <AuthorCommentItemSkeleton height="62px" />
             <AuthorCommentItemSkeleton height="62px" />
           </>
-        ) : (
+        ) : hasComments ? (
           comments.map(comment => (
             <AuthorCommentItem
               key={comment.id}
@@ -148,6 +151,8 @@ export default function AuthorCommentList() {
               onUpdate={refetchSearchAuthorComments}
             />
           ))
+        ) : (
+          <CommentListEmpty />
         )}
       </CommentListBox>
       <div

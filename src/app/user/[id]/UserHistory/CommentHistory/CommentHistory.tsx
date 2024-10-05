@@ -1,9 +1,9 @@
 'use client';
 
 import { VStack } from 'styled-system/jsx';
-import AuthorLikeHistory from './AuthorLikeHistory';
-import OriginalWorkLikeHistory from './OriginalWorkLikeHistory';
-import EditionLikeHistory from './EditionLikeHistory';
+import AuthorLikeHistory from './AuthorCommentHistory';
+import OriginalWorkLikeHistory from './OriginalWorkCommentHistory';
+import EditionLikeHistory from './EditionCommentHistory';
 
 export default function CommentHistory() {
   return (

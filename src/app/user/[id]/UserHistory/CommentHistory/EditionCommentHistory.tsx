@@ -9,8 +9,9 @@ import {
   EditionItem,
   EditionItemSkeleton,
 } from '@components/edition/EditionItem';
+import CommentHistoryEmpty from './CommentHistoryEmpty';
 
-export default function EditionLikeHistory() {
+export default function EditionCommentHistory() {
   const t = useTranslations('Common');
 
   const params = useParams();
@@ -24,6 +25,7 @@ export default function EditionLikeHistory() {
   });
 
   const editions = data?.editions ?? [];
+  const hasEditions = editions.length > 0;
 
   return (
     <CategoryWrapper>
@@ -31,13 +33,17 @@ export default function EditionLikeHistory() {
         {t('editions')}
       </Text>
       <HStack gap="6px" flexWrap="wrap">
-        {isLoading
-          ? Array(10)
-              .fill(0)
-              .map((_, index) => <EditionItemSkeleton key={index} />)
-          : editions.map(edition => (
-              <EditionItem key={edition.id} edition={edition} />
-            ))}
+        {isLoading ? (
+          Array(10)
+            .fill(0)
+            .map((_, index) => <EditionItemSkeleton key={index} />)
+        ) : hasEditions ? (
+          editions.map(edition => (
+            <EditionItem key={edition.id} edition={edition} />
+          ))
+        ) : (
+          <CommentHistoryEmpty type="edition" />
+        )}
       </HStack>
     </CategoryWrapper>
   );

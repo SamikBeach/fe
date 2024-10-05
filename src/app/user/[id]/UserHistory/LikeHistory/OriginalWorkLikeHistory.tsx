@@ -10,6 +10,7 @@ import {
   OriginalWorkItemSkeleton,
 } from '@components/original-work/OriginalWorkItem';
 import { useTranslations } from 'next-intl';
+import LikeHistoryEmpty from './LikeHistoryEmpty';
 
 export default function OriginalWorkLikeHistory() {
   const t = useTranslations('Common');
@@ -25,6 +26,7 @@ export default function OriginalWorkLikeHistory() {
   });
 
   const originalWorks = data?.original_works ?? [];
+  const hasOriginalWorks = originalWorks.length > 0;
 
   return (
     <CategoryWrapper>
@@ -32,16 +34,20 @@ export default function OriginalWorkLikeHistory() {
         {t('original_works')}
       </Text>
       <HStack gap="6px" flexWrap="wrap">
-        {isLoading
-          ? Array(10)
-              .fill(0)
-              .map((_, index) => <OriginalWorkItemSkeleton key={index} />)
-          : originalWorks.map(originalWork => (
-              <OriginalWorkItem
-                key={originalWork.id}
-                originalWork={originalWork}
-              />
-            ))}
+        {isLoading ? (
+          Array(10)
+            .fill(0)
+            .map((_, index) => <OriginalWorkItemSkeleton key={index} />)
+        ) : hasOriginalWorks ? (
+          originalWorks.map(originalWork => (
+            <OriginalWorkItem
+              key={originalWork.id}
+              originalWork={originalWork}
+            />
+          ))
+        ) : (
+          <LikeHistoryEmpty type="original_work" />
+        )}
       </HStack>
     </CategoryWrapper>
   );

@@ -3,6 +3,9 @@
     "authors": "저자",
     "original_works": "원전",
     "editions": "에디션",
+    "author": "저자",
+    "original_work": "원전",
+    "edition": "에디션",
     "sign_up": "회원가입",
     "login": "로그인",
     "search_bar_placeholder": "저자, 원전, 에디션 검색...",
@@ -61,7 +64,8 @@
     "login_alert": "로그인이 필요한 기능이에요.",
     "login_alert_description": "로그인 페이지로 이동할까요?",
     "go_to_login": "로그인 페이지로 이동",
-    "login_to_comment": "로그인이 필요해요."
+    "login_to_comment": "로그인이 필요해요.",
+    "like_empty_history": "좋아한 {type}이 없어요."
   },
   "Home": {
     "trending_now": "실시간 인기",

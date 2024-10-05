@@ -5,13 +5,7 @@ import {
   VstackProps,
   styled,
 } from 'styled-system/jsx';
-import {
-  Avatar,
-  Button,
-  DropdownMenu,
-  IconButton,
-  Text,
-} from '@radix-ui/themes';
+import { Button, DropdownMenu, IconButton, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 
 import { formatDistanceToNow } from 'date-fns';
@@ -26,6 +20,7 @@ import { motion } from 'framer-motion';
 import { ko, enUS } from 'date-fns/locale';
 import { useLocale, useTranslations } from 'next-intl';
 import { LoginAlertDialog } from '../LoginAlertDialog';
+import { UserAvatar } from '@components/user';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -100,17 +95,12 @@ export default function CommentItem({
         }}
       >
         <HStack alignItems="start" width="100%" justify="end" {...props}>
-          <Avatar
-            fallback={user.nickname?.[0] ?? ''}
-            radius="full"
-            size="2"
-            mt="4px"
-          />
+          <UserAvatar user={user} mt="4px" />
           <VStack gap="4px" alignItems="start" width={width}>
             <CommentBox>
               <HStack justify="space-between">
                 <Text weight="medium" className={css({ display: 'block' })}>
-                  {user.nickname}{' '}
+                  <UserAvatar withName onlyName user={user} />{' '}
                   <span
                     className={css({
                       fontSize: '12px',

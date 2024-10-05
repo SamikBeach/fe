@@ -14,6 +14,7 @@ import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
 import { ko, enUS } from 'date-fns/locale';
 import { EditionHoverCard } from '@components/edition/EditionHoverCard';
+import { UserAvatar } from '@components/user';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -59,12 +60,11 @@ export default function LogItem({ log }: Props) {
   });
 
   const authorLikeText = t.rich('log_item_author_like', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     Author: () =>
       isAuthor && (
         <AuthorAvatar
           author={target_author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
@@ -76,12 +76,11 @@ export default function LogItem({ log }: Props) {
   });
 
   const authorCommentText = t.rich('log_item_author_comment', {
-    User: () => <BoldText>{user.name ?? user.nickname}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     Author: () =>
       isAuthor && (
         <AuthorAvatar
           author={target_author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
@@ -89,7 +88,7 @@ export default function LogItem({ log }: Props) {
   });
 
   const originalWorkLikeText = t.rich('log_item_original_work_like', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     OriginalWork: () =>
       isOriginalWork && (
         <>
@@ -127,7 +126,6 @@ export default function LogItem({ log }: Props) {
       isOriginalWork && (
         <AuthorAvatar
           author={target_original_work.author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
@@ -139,7 +137,7 @@ export default function LogItem({ log }: Props) {
   });
 
   const originalWorkCommentText = t.rich('log_item_original_work_comment', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     OriginalWork: () =>
       isOriginalWork && (
         <>
@@ -177,7 +175,6 @@ export default function LogItem({ log }: Props) {
       isOriginalWork && (
         <AuthorAvatar
           author={target_original_work.author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
@@ -185,7 +182,7 @@ export default function LogItem({ log }: Props) {
   });
 
   const editionLikeText = t.rich('log_item_edition_like', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     Edition: () =>
       isEdition && (
         <>
@@ -215,7 +212,6 @@ export default function LogItem({ log }: Props) {
       isEdition && (
         <AuthorAvatar
           author={target_edition.author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />
@@ -227,7 +223,7 @@ export default function LogItem({ log }: Props) {
   });
 
   const editionCommentText = t.rich('log_item_edition_comment', {
-    User: () => <BoldText>{user.name}</BoldText>,
+    User: () => <UserAvatar withName user={user} />,
     Edition: () =>
       isEdition && (
         <>
@@ -257,7 +253,6 @@ export default function LogItem({ log }: Props) {
       isEdition && (
         <AuthorAvatar
           author={target_edition.author}
-          mb="4px"
           className={css({ cursor: 'pointer' })}
           withName
         />

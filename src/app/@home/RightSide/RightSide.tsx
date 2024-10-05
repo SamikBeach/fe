@@ -42,7 +42,7 @@ export default function RightSide() {
     });
 
   return (
-    <VStack width="320px" position="sticky" top="0" pt="84px">
+    <VStack minWidth="320px" position="sticky" top="0" pt="84px">
       <ScrollArea
         scrollbars="vertical"
         className={css({

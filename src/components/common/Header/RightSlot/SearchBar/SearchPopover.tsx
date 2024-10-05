@@ -283,31 +283,30 @@ function SearchPopover({
                       />
                     </span>
                   </Tooltip>
-                  <Tooltip content={originalWork.title_in_eng}>
-                    <span
-                      className={css({
-                        color: 'gray.500',
-                        fontSize: '11px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        maxWidth: '380px',
+
+                  <span
+                    className={css({
+                      color: 'gray.500',
+                      fontSize: '11px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      maxWidth: '380px',
+                    })}
+                  >
+                    <Highlighter
+                      searchWords={[searchValue]}
+                      textToHighlight={
+                        locale === 'ko'
+                          ? originalWork.author.name_in_kor ?? ''
+                          : originalWork.author.name ?? ''
+                      }
+                      highlightClassName={css({
+                        fontWeight: 'bold',
+                        backgroundColor: 'transparent',
                       })}
-                    >
-                      <Highlighter
-                        searchWords={[searchValue]}
-                        textToHighlight={
-                          locale === 'ko'
-                            ? originalWork.author.name_in_kor ?? ''
-                            : originalWork.author.name ?? ''
-                        }
-                        highlightClassName={css({
-                          fontWeight: 'bold',
-                          backgroundColor: 'transparent',
-                        })}
-                      />
-                    </span>
-                  </Tooltip>
+                    />
+                  </span>
                 </VStack>
               </HStack>
             ))}

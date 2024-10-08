@@ -60,7 +60,7 @@ export default function RightSide() {
             trendingAuthors.length > 0 && (
               <Section>
                 <Text>{t('Common.authors')}</Text>
-                {trendingAuthors.slice(0, 5).map(author => (
+                {trendingAuthors.slice(0, 4).map(author => (
                   <AuthorAvatar
                     key={author.id}
                     author={author}
@@ -77,7 +77,7 @@ export default function RightSide() {
             trendingOriginalWorks.length > 0 && (
               <Section className={css({ gap: '2px' })}>
                 <Text>{t('Common.original_works')}</Text>
-                {trendingOriginalWorks.slice(0, 5).map(originalWork => (
+                {trendingOriginalWorks.slice(0, 4).map(originalWork => (
                   <OriginalWorkShort
                     key={originalWork.id}
                     originalWork={originalWork}
@@ -92,7 +92,7 @@ export default function RightSide() {
             trendingEditions.length > 0 && (
               <Section className={css({ gap: '2px' })}>
                 <Text>{t('Common.editions')}</Text>
-                {trendingEditions.slice(0, 5).map(edition => (
+                {trendingEditions.slice(0, 4).map(edition => (
                   <EditionShort key={edition.id} edition={edition} />
                 ))}
               </Section>

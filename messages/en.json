@@ -66,7 +66,9 @@
     "login_to_comment": "You need to log in.",
     "like_empty_history": "There is no {type} I liked.",
     "comment_empty_history": "There are no comments left on {type}.",
-    "comment_list_empty": "There are no comments yet."
+    "comment_list_empty": "There are no comments yet.",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy policy"
   },
   "Home": {
     "trending_now": "Trending Now",

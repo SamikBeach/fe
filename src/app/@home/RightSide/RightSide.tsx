@@ -1,7 +1,7 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 
 import { css } from 'styled-system/css';
-import { VStack, styled } from 'styled-system/jsx';
+import { HStack, VStack, styled } from 'styled-system/jsx';
 import { ScrollArea, Text } from '@radix-ui/themes';
 import { OriginalWorkShort } from '@components/original-work/OriginalWorkShort';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import RightSideSkeleton from './RightSideSkeleton';
 import { useTranslations } from 'next-intl';
 import { getTrendingEditions } from '@apis/edition';
 import { EditionShort } from '@components/edition/EditionShort';
+import Link from 'next/link';
 
 export default function RightSide() {
   const t = useTranslations();
@@ -99,6 +100,41 @@ export default function RightSide() {
             )
           )}
         </VStack>
+        <HStack mt="4px">
+          <Link href="/terms-of-service">
+            <Text
+              color="gray"
+              size="1"
+              className={css({
+                cursor: 'pointer',
+
+                _hover: {
+                  textDecoration: 'underline',
+                },
+              })}
+            >
+              {t('Common.terms_of_service')}
+            </Text>
+          </Link>
+          <Text color="gray" size="1">
+            {' · '}
+          </Text>
+          <Link href="privacy-policy">
+            <Text
+              color="gray"
+              size="1"
+              className={css({
+                cursor: 'pointer',
+
+                _hover: {
+                  textDecoration: 'underline',
+                },
+              })}
+            >
+              {t('Common.privacy_policy')}
+            </Text>
+          </Link>
+        </HStack>
       </ScrollArea>
     </VStack>
   );

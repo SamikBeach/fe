@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { LoginAlertDialog } from '../LoginAlertDialog';
+import { Editor } from '../Editor';
 
 interface Props {
   onSubmit: ({
@@ -50,7 +51,8 @@ export default function CommentEditor({
           mt="4px"
         />
         <div className={css({ width: width, position: 'relative' })}>
-          <TextArea
+          <Editor />
+          {/* <TextArea
             ref={textAreaRef}
             autoFocus
             placeholder={currentUser === null ? t('login_to_comment') : ''}
@@ -83,7 +85,7 @@ export default function CommentEditor({
                 setOpenAlertDialog(true);
               }
             }}
-          />
+          /> */}
           <Button
             onClick={() => {
               if (currentUser === null) {

@@ -3,12 +3,18 @@ import { CommentServerModel } from '@models/comment';
 import { AlertDialog, Avatar, Button, TextArea } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { LoginAlertDialog } from '../LoginAlertDialog';
 import { Editor } from '../Editor';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { searchAuthors } from '@apis/author';
+import useDebounce from '@hooks/useDebounce';
+import { BeautifulMentionsItem } from 'lexical-beautiful-mentions';
+import { searchOriginalWorks } from '@apis/original-work';
+import { searchEditions } from '@apis/edition';
 
 interface Props {
   onSubmit: ({
@@ -31,6 +37,8 @@ export default function CommentEditor({
 }: Props) {
   const t = useTranslations('Common');
 
+  const locale = useLocale();
+
   const currentUser = useAtomValue(currentUserAtom);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -40,6 +48,55 @@ export default function CommentEditor({
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
   const isEditMode = onClose !== undefined;
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const { data: authors = [] } = useQuery({
+    queryKey: ['author', value],
+    queryFn: () => searchAuthors({ keyword: value ?? '', limit: 2, locale }),
+    select: response => response.data.data,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: originalWorks = [] } = useQuery({
+    queryKey: ['originalWork', value],
+    queryFn: () =>
+      searchOriginalWorks({ keyword: value ?? '', limit: 2, locale }),
+    select: response => response.data.data,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: editions = [] } = useQuery({
+    queryKey: ['edition', value],
+    queryFn: () => searchEditions({ keyword: value ?? '', limit: 2 }),
+    select: response => response.data.data,
+    placeholderData: keepPreviousData,
+  });
+
+  const mentionItems: Record<string, BeautifulMentionsItem[]> = {
+    '@': ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'],
+    '#': [
+      ...authors.map(author => ({
+        value: author.name,
+        name: author.name,
+        nameInKor: author.name_in_kor,
+        imageUrl: author.image_url ?? null,
+        type: 'author',
+      })),
+      ...originalWorks.map(originalWork => ({
+        value: originalWork.title,
+        titleInEng: originalWork.title_in_eng ?? null,
+        titleInKor: originalWork.title_in_kor ?? null,
+        type: 'original-work',
+      })),
+      ...editions.map(edition => ({
+        value: edition.title,
+        title: edition.title ?? null,
+        imageUrl: edition.image_url ?? null,
+        type: 'edition',
+      })),
+    ],
+  };
 
   return (
     <>
@@ -51,7 +108,11 @@ export default function CommentEditor({
           mt="4px"
         />
         <div className={css({ width: width, position: 'relative' })}>
-          <Editor />
+          <Editor
+            mentionItems={mentionItems}
+            value={value}
+            setValue={setValue}
+          />
           {/* <TextArea
             ref={textAreaRef}
             autoFocus

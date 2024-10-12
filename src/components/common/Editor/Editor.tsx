@@ -1,17 +1,28 @@
-import { BeautifulMentionNode } from 'lexical-beautiful-mentions';
+import {
+  BeautifulMentionsPlugin,
+  createBeautifulMentionNode,
+} from 'lexical-beautiful-mentions';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { css } from 'styled-system/css';
-import NewMentionsPlugin from './plugins/MentionsPlugin';
+import CustomMenu from './CustomMenu';
+import CustomMenuItem from './CustomMenuItem';
+import CustomMentionComponent from './CustomMentionsComponent';
+
+const mentionItems = {
+  '@': ['Anton', 'Boris', 'Catherine', 'Dmitri', 'Elena', 'Felix', 'Gina'],
+  '#': ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'],
+  'due:': ['Today', 'Tomorrow', '01-01-2023'],
+};
 
 const editorConfig = {
   namespace: 'beautiful-mentions',
   onError: (error: Error) => {
     console.error(error);
   },
-  nodes: [BeautifulMentionNode], // 👈 register the mention node
+  nodes: [...createBeautifulMentionNode(CustomMentionComponent)],
 };
 
 export default function Editor() {
@@ -22,15 +33,6 @@ export default function Editor() {
         border: '1px solid',
         borderColor: 'gray.400',
         borderRadius: '4px',
-
-        _focus: {
-          borderColor: 'gray.600',
-          outline: 'none',
-        },
-        _active: {
-          borderColor: 'gray.600',
-          outline: 'none',
-        },
       })}
     >
       <LexicalComposer initialConfig={editorConfig}>
@@ -38,7 +40,11 @@ export default function Editor() {
           contentEditable={<ContentEditable />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <NewMentionsPlugin />
+        <BeautifulMentionsPlugin // 👈 add the mentions plugin
+          items={mentionItems}
+          menuComponent={props => <CustomMenu {...props} />}
+          menuItemComponent={props => <CustomMenuItem {...props} />}
+        />
       </LexicalComposer>
     </div>
   );

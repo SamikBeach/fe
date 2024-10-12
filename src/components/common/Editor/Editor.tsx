@@ -24,8 +24,6 @@ import {
   HTMLProps,
   RefAttributes,
   useCallback,
-  useRef,
-  useState,
 } from 'react';
 import { $getRoot, EditorState } from 'lexical';
 import classNames from 'classnames';
@@ -54,8 +52,6 @@ export default function Editor({
     },
     [setValue]
   );
-
-  console.log({ mentionItems });
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
@@ -86,9 +82,13 @@ export default function Editor({
                 borderColor: 'gray.300',
                 borderRadius: '4px',
                 padding: '4px',
+                paddingRight: '90px',
                 fontSize: '14px',
-
                 minHeight: '60px',
+
+                _focus: {
+                  outlineColor: 'gray.400',
+                },
               }),
               className
             )}

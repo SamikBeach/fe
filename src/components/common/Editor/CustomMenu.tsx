@@ -10,15 +10,14 @@ const CustomMenu = forwardRef<HTMLUListElement, BeautifulMentionsMenuProps>(
           position: 'absolute',
           bottom: '40px',
           top: 'auto',
-          maxHeight: '200px',
+          maxHeight: '240px',
           overflowY: 'auto',
-          width: '400px',
+          width: '600px',
           bgColor: 'white',
           cursor: 'pointer',
           borderRadius: '8px',
           boxShadow:
             '0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.1)',
-
           padding: '6px',
         })}
         {...props}

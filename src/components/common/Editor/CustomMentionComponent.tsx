@@ -1,6 +1,8 @@
+import { Avatar } from '@radix-ui/themes';
 import { BeautifulMentionComponentProps } from 'lexical-beautiful-mentions';
 import { useLocale } from 'next-intl';
 import { forwardRef, useMemo } from 'react';
+import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 
 interface Props extends Omit<BeautifulMentionComponentProps, 'data'> {
@@ -40,6 +42,56 @@ const CustomMentionComponent = forwardRef<HTMLSpanElement, Props>(
       }
     }, [data]);
 
+    const avatar = useMemo(() => {
+      if (data?.type === 'author') {
+        return (
+          <Avatar
+            size="1"
+            radius="full"
+            src={data?.imageUrl ?? undefined}
+            fallback={data?.nameInKor?.[0] ?? ''}
+            className={css({
+              borderRadius: '50%',
+              width: '14px',
+              height: '14px',
+              mb: '3px',
+              mx: '2px',
+            })}
+          />
+        );
+      }
+
+      if (data?.type === 'original-work') {
+        return (
+          <GiSecretBook
+            className={css({
+              display: 'inline',
+              marginBottom: '2px',
+              width: '14px',
+              color: 'gray.500',
+              mx: '1px',
+            })}
+            size="24px"
+          />
+        );
+      }
+
+      if (data?.type === 'edition') {
+        return (
+          <img
+            src={data?.imageUrl ?? undefined}
+            width="10px"
+            className={css({
+              borderRadius: '2px',
+              display: 'inline',
+              mb: '3px',
+              mx: '2px',
+            })}
+          />
+        );
+      }
+    }, [data?.imageUrl, data?.nameInKor, data?.type]);
+
     return (
       <span
         {...other}
@@ -53,7 +105,7 @@ const CustomMentionComponent = forwardRef<HTMLSpanElement, Props>(
           borderRadius: '4px',
         })}
       >
-        {trigger}
+        {avatar}
         {locale === 'ko' ? valueInKor : valueInEng}
       </span>
     );

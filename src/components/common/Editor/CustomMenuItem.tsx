@@ -1,4 +1,4 @@
-import { Avatar } from '@radix-ui/themes';
+import { Avatar, Tooltip } from '@radix-ui/themes';
 import { BeautifulMentionsMenuItemProps } from 'lexical-beautiful-mentions';
 import { forwardRef, useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -14,6 +14,7 @@ interface Props extends BeautifulMentionsMenuItemProps {
   titleInKor?: string;
   titleInEng?: string;
   imageUrl?: string;
+  authorNameInKor?: string;
   searchValue: string;
 }
 
@@ -31,6 +32,7 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       titleInKor,
       titleInEng,
       imageUrl,
+      authorNameInKor,
       searchValue,
       ...restProps
     },
@@ -78,7 +80,7 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       }
     }, [imageUrl, type, nameInKor]);
 
-    const valueInKor = useMemo(() => {
+    const value = useMemo(() => {
       if (type === 'author') {
         return nameInKor;
       }
@@ -92,7 +94,7 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       }
     }, [nameInKor, title, titleInKor, type]);
 
-    const valueInEng = useMemo(() => {
+    const subValue = useMemo(() => {
       if (type === 'author') {
         return name;
       }
@@ -106,11 +108,25 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       }
     }, [name, titleInEng, type]);
 
+    const authorName = useMemo(() => {
+      if (type === 'author') {
+        return name;
+      }
+
+      if (type === 'original-work') {
+        return authorNameInKor;
+      }
+
+      if (type === 'edition') {
+        return authorNameInKor;
+      }
+    }, [name, authorNameInKor, type]);
+
     return (
       <li
         className={css({
           borderRadius: '4px',
-          height: '38px',
+          height: '44px',
           fontSize: '14px',
           px: '4px',
 
@@ -121,35 +137,66 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
         ref={ref}
         {...restProps}
       >
-        <HStack gap="10px" alignItems="center">
+        <HStack height="100%" width="100%" gap="10px" alignItems="center">
           {avatar}
           <VStack alignItems="start" gap="0px">
+            <Tooltip
+              content={`${value} ${subValue == null ? '' : `- ${subValue}`}`}
+            >
+              <span
+                className={css({
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: '540px',
+                  color: 'gray.500',
+                })}
+              >
+                <Highlighter
+                  searchWords={[searchValue]}
+                  textToHighlight={value ?? ''}
+                  highlightClassName={css({
+                    fontWeight: 'bold',
+                    backgroundColor: 'transparent',
+                  })}
+                  className={css({
+                    color: 'black',
+                    lineHeight: '16px',
+                  })}
+                />
+                {type === 'original-work' && (
+                  <>
+                    {' '}
+                    <Highlighter
+                      className={css({
+                        color: 'gray.500',
+                        fontSize: '11px',
+                        lineHeight: '16px',
+                      })}
+                      searchWords={[searchValue]}
+                      textToHighlight={subValue ?? ''}
+                      highlightClassName={css({
+                        fontWeight: 'bold',
+                        backgroundColor: 'transparent',
+                      })}
+                    />
+                  </>
+                )}
+              </span>
+            </Tooltip>
             <Highlighter
+              className={css({
+                color: 'gray.500',
+                fontSize: '11px',
+                lineHeight: '16px',
+              })}
               searchWords={[searchValue]}
-              textToHighlight={valueInKor ?? ''}
+              textToHighlight={authorName ?? ''}
               highlightClassName={css({
                 fontWeight: 'bold',
                 backgroundColor: 'transparent',
               })}
-              className={css({
-                lineHeight: '16px',
-              })}
             />
-            {type !== 'edition' && (
-              <Highlighter
-                className={css({
-                  color: 'gray.500',
-                  fontSize: '13px',
-                  lineHeight: '16px',
-                })}
-                searchWords={[searchValue]}
-                textToHighlight={valueInEng ?? ''}
-                highlightClassName={css({
-                  fontWeight: 'bold',
-                  backgroundColor: 'transparent',
-                })}
-              />
-            )}
           </VStack>
         </HStack>
       </li>

@@ -4,17 +4,42 @@ import classNames from 'classnames';
 import { ComponentProps } from 'react';
 import { css } from 'styled-system/css';
 import AuthorItemInner from '../AuthorItem/AuthorItemInner';
+import { useQuery } from '@tanstack/react-query';
+import { getAuthorById } from '@apis/author';
 
 interface AuthorHoverCardContentProps
   extends ComponentProps<typeof HoverCard.Content> {
-  author: AuthorServerModel;
+  author?: AuthorServerModel;
+  authorId?: number;
+  open?: boolean;
 }
 
 function AuthorHoverCardContent({
-  author,
+  author: authorFromProps,
+  authorId,
   className,
+  open,
   ...props
 }: AuthorHoverCardContentProps) {
+  const { data: authorFromQuery } = useQuery({
+    queryKey: ['author', authorId],
+    queryFn: () => {
+      if (authorId == null) {
+        throw new Error('authorId is required');
+      }
+
+      return getAuthorById({ id: authorId });
+    },
+    enabled: open && authorId != null && authorFromProps == null,
+    select: response => response.data,
+  });
+
+  const author = authorFromProps ?? authorFromQuery;
+
+  if (author == null) {
+    return;
+  }
+
   return (
     <HoverCard.Content
       className={classNames(

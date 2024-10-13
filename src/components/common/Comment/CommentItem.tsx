@@ -21,6 +21,7 @@ import { ko, enUS } from 'date-fns/locale';
 import { useLocale, useTranslations } from 'next-intl';
 import { LoginAlertDialog } from '../LoginAlertDialog';
 import { UserAvatar } from '@components/user';
+import { Item } from './Item';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -73,8 +74,6 @@ export default function CommentItem({
     addSuffix: true,
     includeSeconds: true,
   });
-
-  console.log('comment:', comment.comment);
 
   return (
     <>
@@ -149,9 +148,12 @@ export default function CommentItem({
                 )}
               </HStack>
               <Text>
-                {isSeeMoreButtonShown
-                  ? `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
-                  : comment.comment}
+                {isSeeMoreButtonShown ? (
+                  <Item comment={comment.comment} />
+                ) : (
+                  // `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
+                  <Item comment={comment.comment} />
+                )}
               </Text>
               {
                 <Button

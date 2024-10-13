@@ -1,7 +1,7 @@
 import { InitialConfigType } from '@lexical/react/LexicalComposer';
 import { createBeautifulMentionNode } from 'lexical-beautiful-mentions';
-import CustomMentionComponent from './CustomMentionComponent';
 import { $getRoot, LexicalEditor } from 'lexical';
+import CustomMentionComponent from '../common/CustomMentionComponent';
 
 interface Params {
   comment?: string;
@@ -9,7 +9,7 @@ interface Params {
 
 export function getEditorConfig({ comment }: Params): InitialConfigType {
   return {
-    namespace: 'beautiful-mentions',
+    namespace: 'editor',
     onError: (error: Error) => {
       console.error(error);
     },

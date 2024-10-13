@@ -65,7 +65,7 @@
     "login_alert_description": "로그인 페이지로 이동할까요?",
     "go_to_login": "로그인 페이지로 이동",
     "login_to_comment": "로그인이 필요해요.",
-    "like_empty_history": "좋아한 {type}이 없어요.",
+    "like_empty_history": "좋아한 {type}<Josa></Josa> 없어요.",
     "comment_empty_history": "{type}에 남긴 글이 없어요.",
     "comment_list_empty": "아직 댓글이 없어요.",
     "terms_of_service": "이용약관",

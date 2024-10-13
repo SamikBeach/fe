@@ -8,14 +8,14 @@ import { useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { LoginAlertDialog } from '../LoginAlertDialog';
-import { Editor } from '../Editor';
+import { Editor } from './Editor';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
 import { BeautifulMentionsItem } from 'lexical-beautiful-mentions';
 import { searchOriginalWorks } from '@apis/original-work';
 import { searchEditions } from '@apis/edition';
 import { searchUsers } from '@apis/user';
-import { getEditorConfig, getIsEditorStateEmpty } from '../Editor/utils';
+import { getEditorConfig, getIsEditorStateEmpty } from './Editor/utils';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
@@ -172,6 +172,10 @@ function CommentEditor({
             }}
             onKeyDown={e => {
               if (e.metaKey && e.key === 'Enter') {
+                if (getIsEditorStateEmpty(editor)) {
+                  return;
+                }
+
                 onSubmit({ comment });
                 handleResetComment();
 

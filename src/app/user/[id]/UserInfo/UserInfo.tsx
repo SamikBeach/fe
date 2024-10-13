@@ -37,6 +37,8 @@ export default function UserInfo() {
 
   const currentUser = useAtomValue(currentUserAtom);
 
+  const isMyPage = currentUser != null && currentUser.id === userId;
+
   const [isNickNameEditMode, setIsNickNameEditMode] = useState(false);
 
   const {
@@ -110,7 +112,7 @@ export default function UserInfo() {
       />
       {isLoading ? (
         <Skeleton height="24px" width="140px" />
-      ) : isNickNameEditMode && currentUser !== null ? (
+      ) : isNickNameEditMode && isMyPage ? (
         <FormProvider {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -160,7 +162,7 @@ export default function UserInfo() {
           <Text weight="bold" size="6">
             {user?.nickname ?? user?.name}
           </Text>
-          {currentUser !== null && (
+          {isMyPage && (
             <IconButton
               size="3"
               variant="ghost"

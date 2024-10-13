@@ -309,7 +309,7 @@ export default function LogItem({ log }: Props) {
                 },
               })}
             >
-              {isSeeMoreButtonShown ? t('see_more') : t('see_less')}
+              {isSeeMoreButtonShown ? t('see_more') : undefined}
             </Button>
           }
         </p>

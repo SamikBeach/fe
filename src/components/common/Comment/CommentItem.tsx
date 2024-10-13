@@ -22,6 +22,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { LoginAlertDialog } from '../LoginAlertDialog';
 import { UserAvatar } from '@components/user';
 import { Item } from './Item';
+import { getEditorConfig } from './Item/utils';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $getRoot } from 'lexical';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -39,7 +43,7 @@ interface Props extends HstackProps {
   width: VstackProps['width'];
 }
 
-export default function CommentItem({
+function CommentItem({
   onClickLike,
   onClickToggleShowSubComments,
   onDelete,
@@ -59,12 +63,23 @@ export default function CommentItem({
 
   const currentUser = useAtomValue(currentUserAtom);
 
+  const [editor] = useLexicalComposerContext();
+
+  const textContent = editor.getEditorState().read(() => {
+    const root = $getRoot();
+
+    return root.getTextContent();
+  });
+
+  const commentLength = textContent.length;
+
   const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] =
     useState(false);
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
+  console.log({ commentLength });
   const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
-    comment.comment.length > MAX_COMMENT_LENGTH
+    commentLength > MAX_COMMENT_LENGTH
   );
 
   const isMyComment = currentUser?.id === user.id;
@@ -149,33 +164,33 @@ export default function CommentItem({
               </HStack>
               <Text>
                 {isSeeMoreButtonShown ? (
-                  <Item comment={comment.comment} />
+                  <>
+                    <Item />
+                    <Button
+                      variant="ghost"
+                      size="1"
+                      onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
+                      className={css({
+                        color: 'gray',
+                        fontWeight: 'medium',
+                        pt: '6px',
+                        pl: '16px',
+                        display: 'inline',
+
+                        _hover: {
+                          bgColor: 'transparent',
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                        },
+                      })}
+                    >
+                      {t('see_more')}
+                    </Button>
+                  </>
                 ) : (
-                  // `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
-                  <Item comment={comment.comment} />
+                  <Item />
                 )}
               </Text>
-              {
-                <Button
-                  variant="ghost"
-                  size="1"
-                  onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
-                  className={css({
-                    color: 'gray',
-                    fontWeight: 'medium',
-                    pt: '6px',
-                    pl: '16px',
-
-                    _hover: {
-                      bgColor: 'transparent',
-                      textDecoration: 'underline',
-                      cursor: 'pointer',
-                    },
-                  })}
-                >
-                  {isSeeMoreButtonShown ? t('see_more') : t('see_less')}
-                </Button>
-              }
             </CommentBox>
             <HStack justify="space-between" width="100%">
               <HStack ml="8px">
@@ -261,3 +276,13 @@ const CommentBox = styled('div', {
     whiteSpace: 'pre-wrap',
   },
 });
+
+export default function CommentItemWithLexicalComposer(props: Props) {
+  return (
+    <LexicalComposer
+      initialConfig={getEditorConfig({ comment: props.comment.comment })}
+    >
+      <CommentItem {...props} />
+    </LexicalComposer>
+  );
+}

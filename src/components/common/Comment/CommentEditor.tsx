@@ -20,9 +20,6 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
 
-const EMPTY_STATE_JSON =
-  '{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
-
 interface Props {
   onSubmit: ({
     comment,

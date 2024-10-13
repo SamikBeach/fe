@@ -1,35 +1,19 @@
 import {
   BeautifulMentionsItem,
   BeautifulMentionsPlugin,
-  createBeautifulMentionNode,
 } from 'lexical-beautiful-mentions';
-import {
-  InitialConfigType,
-  LexicalComposer,
-} from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { css } from 'styled-system/css';
 import CustomMenu from './CustomMenu';
 import CustomMenuItem from './CustomMenuItem';
-import CustomMentionComponent from './CustomMentionComponent';
-import { HTMLProps, useCallback, useEffect, useRef } from 'react';
-import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  $getSelection,
-  EditorState,
-  createEditor,
-} from 'lexical';
+import { HTMLProps, useCallback } from 'react';
+import { EditorState } from 'lexical';
 import classNames from 'classnames';
-import { getEditorConfig } from './getEditorConfig';
-import { ComponentProps } from 'styled-system/types';
 
 interface Props extends HTMLProps<HTMLDivElement> {
   comment?: string;

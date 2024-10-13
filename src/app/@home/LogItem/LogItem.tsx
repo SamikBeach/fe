@@ -15,6 +15,9 @@ import { VStack, styled } from 'styled-system/jsx';
 import { ko, enUS } from 'date-fns/locale';
 import { EditionHoverCard } from '@components/edition/EditionHoverCard';
 import { UserAvatar } from '@components/user';
+import { Item } from '@components/common/Comment/Item';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { getEditorConfig } from '@components/common/Comment/Item/utils';
 
 const MAX_COMMENT_LENGTH = 120;
 
@@ -260,61 +263,67 @@ export default function LogItem({ log }: Props) {
   });
 
   return (
-    <VStack
-      bgColor="white"
-      alignItems="start"
-      width="100%"
-      padding="16px"
-      borderRadius="8px"
-      border="1px solid"
-      borderColor="gray.200"
-      fontSize="14px"
-      display="inline"
+    <LexicalComposer
+      initialConfig={getEditorConfig({ comment: comment?.comment })}
     >
-      {isAuthor && (isComment ? authorCommentText : authorLikeText)}
-      {isOriginalWork &&
-        (isComment ? originalWorkCommentText : originalWorkLikeText)}{' '}
-      {isEdition && (isComment ? editionCommentText : editionLikeText)}{' '}
-      <span className={css({ fontSize: '13px', color: 'gray.500' })}>
-        {createdAt}
-      </span>
-      {isComment && comment !== undefined && (
-        <p
-          className={css({
-            backgroundColor: ' gray.100',
-            padding: '14px',
-            mt: '10px',
-            borderRadius: '8px',
-            whiteSpace: 'pre-wrap',
-          })}
-        >
-          {isSeeMoreButtonShown
-            ? `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
-            : comment.comment}
-          {
-            <Button
-              variant="ghost"
-              size="1"
-              onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
-              className={css({
-                color: 'gray',
-                fontWeight: 'medium',
-                pt: '6px',
-                pl: '16px',
+      <VStack
+        bgColor="white"
+        alignItems="start"
+        width="100%"
+        padding="16px"
+        borderRadius="8px"
+        border="1px solid"
+        borderColor="gray.200"
+        fontSize="14px"
+        display="inline"
+      >
+        {isAuthor && (isComment ? authorCommentText : authorLikeText)}
+        {isOriginalWork &&
+          (isComment ? originalWorkCommentText : originalWorkLikeText)}{' '}
+        {isEdition && (isComment ? editionCommentText : editionLikeText)}{' '}
+        <span className={css({ fontSize: '13px', color: 'gray.500' })}>
+          {createdAt}
+        </span>
+        {isComment && comment !== undefined && (
+          <p
+            className={css({
+              backgroundColor: ' gray.100',
+              padding: '14px',
+              mt: '10px',
+              borderRadius: '8px',
+              whiteSpace: 'pre-wrap',
+            })}
+          >
+            {isSeeMoreButtonShown ? (
+              <>
+                <Item />
+                <Button
+                  variant="ghost"
+                  size="1"
+                  onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
+                  className={css({
+                    color: 'gray',
+                    fontWeight: 'medium',
+                    pt: '6px',
+                    pl: '16px',
 
-                _hover: {
-                  bgColor: 'transparent',
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
-                },
-              })}
-            >
-              {isSeeMoreButtonShown ? t('see_more') : undefined}
-            </Button>
-          }
-        </p>
-      )}
-    </VStack>
+                    _hover: {
+                      bgColor: 'transparent',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                    },
+                  })}
+                >
+                  {t('see_more')}
+                </Button>
+              </>
+            ) : (
+              <Item />
+            )}
+          </p>
+        )}
+      </VStack>
+    </LexicalComposer>
   );
 }
 

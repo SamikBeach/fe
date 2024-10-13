@@ -139,53 +139,57 @@ const CustomMentionComponent = forwardRef<HTMLSpanElement, Props>(
 
 CustomMentionComponent.displayName = 'CustomMentionComponent';
 
-export default function CustomMentionComponentWithHoverCard(props: Props) {
-  const [open, setOpen] = useState(false);
+const CustomMentionComponentWithHoverCard = forwardRef<HTMLSpanElement, Props>(
+  (props, ref) => {
+    const [open, setOpen] = useState(false);
 
-  if (props.data?.type === 'author') {
-    return (
-      <AuthorHoverCard.Root open={open} onOpenChange={setOpen}>
-        <AuthorHoverCard.Trigger>
-          <CustomMentionComponent {...props} />
-        </AuthorHoverCard.Trigger>
-        <AuthorHoverCard.Content
-          authorId={Number(props.data.id)}
-          open={open}
-          side="top"
-        />
-      </AuthorHoverCard.Root>
-    );
+    if (props.data?.type === 'author') {
+      return (
+        <AuthorHoverCard.Root open={open} onOpenChange={setOpen}>
+          <AuthorHoverCard.Trigger>
+            <CustomMentionComponent ref={ref} {...props} />
+          </AuthorHoverCard.Trigger>
+          <AuthorHoverCard.Content
+            authorId={Number(props.data.id)}
+            open={open}
+            side="top"
+          />
+        </AuthorHoverCard.Root>
+      );
+    }
+
+    if (props.data?.type === 'original-work') {
+      return (
+        <OriginalWorkHoverCard.Root open={open} onOpenChange={setOpen}>
+          <OriginalWorkHoverCard.Trigger>
+            <CustomMentionComponent ref={ref} {...props} />
+          </OriginalWorkHoverCard.Trigger>
+          <OriginalWorkHoverCard.Content
+            originalWorkId={Number(props.data.id)}
+            open={open}
+            side="top"
+          />
+        </OriginalWorkHoverCard.Root>
+      );
+    }
+
+    if (props.data?.type === 'edition') {
+      return (
+        <EditionHoverCard.Root open={open} onOpenChange={setOpen}>
+          <EditionHoverCard.Trigger>
+            <CustomMentionComponent ref={ref} {...props} />
+          </EditionHoverCard.Trigger>
+          <EditionHoverCard.Content
+            editionId={Number(props.data.id)}
+            open={open}
+            side="top"
+          />
+        </EditionHoverCard.Root>
+      );
+    }
+
+    return <CustomMentionComponent ref={ref} {...props} />;
   }
+);
 
-  if (props.data?.type === 'original-work') {
-    return (
-      <OriginalWorkHoverCard.Root open={open} onOpenChange={setOpen}>
-        <OriginalWorkHoverCard.Trigger>
-          <CustomMentionComponent {...props} />
-        </OriginalWorkHoverCard.Trigger>
-        <OriginalWorkHoverCard.Content
-          originalWorkId={Number(props.data.id)}
-          open={open}
-          side="top"
-        />
-      </OriginalWorkHoverCard.Root>
-    );
-  }
-
-  if (props.data?.type === 'edition') {
-    return (
-      <EditionHoverCard.Root open={open} onOpenChange={setOpen}>
-        <EditionHoverCard.Trigger>
-          <CustomMentionComponent {...props} />
-        </EditionHoverCard.Trigger>
-        <EditionHoverCard.Content
-          editionId={Number(props.data.id)}
-          open={open}
-          side="top"
-        />
-      </EditionHoverCard.Root>
-    );
-  }
-
-  return <CustomMentionComponent {...props} />;
-}
+export default CustomMentionComponentWithHoverCard;

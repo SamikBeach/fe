@@ -77,7 +77,6 @@ function CommentItem({
     useState(false);
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
-  console.log({ commentLength });
   const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
     commentLength > MAX_COMMENT_LENGTH
   );

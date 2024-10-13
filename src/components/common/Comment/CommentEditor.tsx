@@ -4,7 +4,7 @@ import { AlertDialog, Avatar, Button } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { LoginAlertDialog } from '../LoginAlertDialog';
@@ -34,240 +34,241 @@ interface Props {
   width?: string;
 }
 
-function CommentEditor({
-  onSubmit,
-  onClose,
-  comment: commentProps,
-  width = '100%',
-}: Props) {
-  const t = useTranslations('Common');
+const CommentEditor = forwardRef<HTMLDivElement, Props>(
+  ({ onSubmit, onClose, comment: commentProps, width = '100%' }, ref) => {
+    const t = useTranslations('Common');
 
-  const locale = useLocale();
+    const locale = useLocale();
 
-  const currentUser = useAtomValue(currentUserAtom);
+    const currentUser = useAtomValue(currentUserAtom);
 
-  const textAreaRef = useRef<HTMLDivElement>(null);
+    const textAreaRef = useRef<HTMLDivElement>(null);
 
-  const [editor] = useLexicalComposerContext();
+    const [editor] = useLexicalComposerContext();
 
-  const [comment, setComment] = useState(commentProps?.comment);
-  const [openAlertDialog, setOpenAlertDialog] = useState(false);
-  const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
+    const [comment, setComment] = useState(commentProps?.comment);
+    const [openAlertDialog, setOpenAlertDialog] = useState(false);
+    const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
-  const isEditMode = onClose !== undefined;
+    const isEditMode = onClose !== undefined;
 
-  const searchValue = useAtomValue(searchValueAtom);
-  const searchUserValue = useAtomValue(searchUserValueAtom);
+    const searchValue = useAtomValue(searchValueAtom);
+    const searchUserValue = useAtomValue(searchUserValueAtom);
 
-  const { data: authors = [] } = useQuery({
-    queryKey: ['author', searchValue],
-    queryFn: () =>
-      searchAuthors({ keyword: searchValue ?? '', limit: 2, locale }),
-    select: response => response.data.data,
-    enabled: searchValue != null,
-    placeholderData: keepPreviousData,
-  });
-
-  const { data: originalWorks = [] } = useQuery({
-    queryKey: ['original-work', searchValue],
-    queryFn: () =>
-      searchOriginalWorks({ keyword: searchValue ?? '', limit: 2, locale }),
-    select: response => response.data.data,
-    enabled: searchValue != null,
-    placeholderData: keepPreviousData,
-  });
-
-  const { data: editions = [] } = useQuery({
-    queryKey: ['edition', searchValue],
-    queryFn: () => searchEditions({ keyword: searchValue ?? '', limit: 2 }),
-    select: response => response.data.data,
-    enabled: searchValue != null,
-    placeholderData: keepPreviousData,
-  });
-
-  const { data: users = [] } = useQuery({
-    queryKey: ['user', searchUserValue],
-    queryFn: () => searchUsers({ keyword: searchUserValue ?? '', limit: 5 }),
-    select: response => response.data.data,
-    enabled: searchUserValue != null,
-    placeholderData: keepPreviousData,
-  });
-
-  const mentionItems: Record<string, BeautifulMentionsItem[]> = {
-    '@': users.map(user => ({
-      id: user.id,
-      value: user.nickname ?? '',
-      type: 'user',
-    })),
-    '#': [
-      ...authors.map(author => ({
-        id: author.id,
-        value: author.name,
-        name: author.name,
-        nameInKor: author.name_in_kor,
-        imageUrl: author.image_url ?? null,
-        type: 'author',
-      })),
-      ...originalWorks.map(originalWork => ({
-        id: originalWork.id,
-        value: originalWork.title,
-        titleInEng: originalWork.title_in_eng ?? null,
-        titleInKor: originalWork.title_in_kor ?? null,
-        authorNameInKor: originalWork.author.name_in_kor,
-        type: 'original-work',
-      })),
-      ...editions.map(edition => ({
-        id: edition.id,
-        value: edition.title,
-        title: edition.title ?? null,
-        imageUrl: edition.image_url ?? null,
-        authorNameInKor: edition.author.name_in_kor,
-        type: 'edition',
-      })),
-    ],
-  };
-
-  const handleResetComment = () => {
-    setComment(undefined);
-
-    editor.update(() => {
-      // 현재 root를 가져와서 clear한 뒤, 빈 단락 노드를 추가
-      const root = $getRoot();
-      root.clear(); // 기존 내용을 제거
-
-      const paragraphNode = $createParagraphNode(); // 빈 단락 생성
-      const textNode = $createTextNode(''); // 빈 텍스트 노드 추가
-      paragraphNode.append(textNode);
-      root.append(paragraphNode); // 루트에 빈 단락 추가
+    const { data: authors = [] } = useQuery({
+      queryKey: ['author', searchValue],
+      queryFn: () =>
+        searchAuthors({ keyword: searchValue ?? '', limit: 2, locale }),
+      select: response => response.data.data,
+      enabled: searchValue != null,
+      placeholderData: keepPreviousData,
     });
-  };
 
-  return (
-    <>
-      <HStack alignItems="start" width="100%" justify="end">
-        <Avatar
-          fallback={currentUser?.nickname?.[0] ?? ''}
-          radius="full"
-          size="2"
-          mt="4px"
-        />
-        <div className={css({ width: width, position: 'relative' })}>
-          <Editor
-            ref={textAreaRef}
-            comment={comment}
-            setComment={setComment}
-            mentionItems={mentionItems}
-            placeholder={currentUser === null ? t('login_to_comment') : ''}
-            onBlur={e => {
-              if (isEditMode) {
-                if (e.relatedTarget?.className.includes('submit-button')) {
-                  return;
+    const { data: originalWorks = [] } = useQuery({
+      queryKey: ['original-work', searchValue],
+      queryFn: () =>
+        searchOriginalWorks({ keyword: searchValue ?? '', limit: 2, locale }),
+      select: response => response.data.data,
+      enabled: searchValue != null,
+      placeholderData: keepPreviousData,
+    });
+
+    const { data: editions = [] } = useQuery({
+      queryKey: ['edition', searchValue],
+      queryFn: () => searchEditions({ keyword: searchValue ?? '', limit: 2 }),
+      select: response => response.data.data,
+      enabled: searchValue != null,
+      placeholderData: keepPreviousData,
+    });
+
+    const { data: users = [] } = useQuery({
+      queryKey: ['user', searchUserValue],
+      queryFn: () => searchUsers({ keyword: searchUserValue ?? '', limit: 5 }),
+      select: response => response.data.data,
+      enabled: searchUserValue != null,
+      placeholderData: keepPreviousData,
+    });
+
+    const mentionItems: Record<string, BeautifulMentionsItem[]> = {
+      '@': users.map(user => ({
+        id: user.id,
+        value: user.nickname ?? '',
+        type: 'user',
+      })),
+      '#': [
+        ...authors.map(author => ({
+          id: author.id,
+          value: author.name,
+          name: author.name,
+          nameInKor: author.name_in_kor,
+          imageUrl: author.image_url ?? null,
+          type: 'author',
+        })),
+        ...originalWorks.map(originalWork => ({
+          id: originalWork.id,
+          value: originalWork.title,
+          titleInEng: originalWork.title_in_eng ?? null,
+          titleInKor: originalWork.title_in_kor ?? null,
+          authorNameInKor: originalWork.author.name_in_kor,
+          type: 'original-work',
+        })),
+        ...editions.map(edition => ({
+          id: edition.id,
+          value: edition.title,
+          title: edition.title ?? null,
+          imageUrl: edition.image_url ?? null,
+          authorNameInKor: edition.author.name_in_kor,
+          type: 'edition',
+        })),
+      ],
+    };
+
+    const handleResetComment = () => {
+      setComment(undefined);
+
+      editor.update(() => {
+        // 현재 root를 가져와서 clear한 뒤, 빈 단락 노드를 추가
+        const root = $getRoot();
+        root.clear(); // 기존 내용을 제거
+
+        const paragraphNode = $createParagraphNode(); // 빈 단락 생성
+        const textNode = $createTextNode(''); // 빈 텍스트 노드 추가
+        paragraphNode.append(textNode);
+        root.append(paragraphNode); // 루트에 빈 단락 추가
+      });
+    };
+
+    return (
+      <>
+        <HStack ref={ref} alignItems="start" width="100%" justify="end">
+          <Avatar
+            fallback={currentUser?.nickname?.[0] ?? ''}
+            radius="full"
+            size="2"
+            mt="4px"
+          />
+          <div className={css({ width: width, position: 'relative' })}>
+            <Editor
+              ref={textAreaRef}
+              comment={comment}
+              setComment={setComment}
+              mentionItems={mentionItems}
+              placeholder={currentUser === null ? t('login_to_comment') : ''}
+              onBlur={e => {
+                if (isEditMode) {
+                  if (e.relatedTarget?.className.includes('submit-button')) {
+                    return;
+                  }
+
+                  setOpenAlertDialog(true);
+                }
+              }}
+              onKeyDown={e => {
+                if (e.metaKey && e.key === 'Enter') {
+                  if (getIsEditorStateEmpty(editor)) {
+                    return;
+                  }
+
+                  onSubmit({ comment });
+                  handleResetComment();
+
+                  textAreaRef.current?.focus();
                 }
 
-                setOpenAlertDialog(true);
-              }
-            }}
-            onKeyDown={e => {
-              if (e.metaKey && e.key === 'Enter') {
-                if (getIsEditorStateEmpty(editor)) {
+                if (isEditMode && e.key === 'Escape') {
+                  setOpenAlertDialog(true);
+                }
+              }}
+            />
+            <Button
+              onClick={() => {
+                if (currentUser === null) {
+                  setOpenLoginAlertDialog(true);
+
                   return;
                 }
 
                 onSubmit({ comment });
+
                 handleResetComment();
 
                 textAreaRef.current?.focus();
-              }
+              }}
+              size="2"
+              variant="outline"
+              className={classNames(
+                css({
+                  cursor: 'pointer',
+                  position: 'absolute',
+                  right: '10px',
+                  bottom: '10px',
+                }),
+                'submit-button'
+              )}
+              disabled={comment == null || getIsEditorStateEmpty(editor)}
+            >
+              {t('submit')}
+            </Button>
+          </div>
+        </HStack>
+        <AlertDialog.Root
+          open={openAlertDialog}
+          onOpenChange={setOpenAlertDialog}
+        >
+          <AlertDialog.Content maxWidth="400px">
+            <AlertDialog.Title>{t('discard_changes')}</AlertDialog.Title>
+            <AlertDialog.Description>
+              {t('discard_changes_description')}
+            </AlertDialog.Description>
+            <HStack mt="30px" justify="end">
+              <AlertDialog.Action>
+                <Button
+                  onClick={() => {
+                    setOpenAlertDialog(false);
+                    onClose?.();
+                  }}
+                  className={css({ cursor: 'pointer' })}
+                >
+                  {t('discard')}
+                </Button>
+              </AlertDialog.Action>
+              <AlertDialog.Cancel>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setOpenAlertDialog(false);
 
-              if (isEditMode && e.key === 'Escape') {
-                setOpenAlertDialog(true);
-              }
-            }}
-          />
-          <Button
-            onClick={() => {
-              if (currentUser === null) {
-                setOpenLoginAlertDialog(true);
+                    setTimeout(() => {
+                      textAreaRef.current?.focus();
+                    }, 100);
+                  }}
+                  className={css({ cursor: 'pointer' })}
+                >
+                  {t('cancel_and_continue_editing')}
+                </Button>
+              </AlertDialog.Cancel>
+            </HStack>
+          </AlertDialog.Content>
+        </AlertDialog.Root>
+        <LoginAlertDialog
+          open={openLoginAlertDialog}
+          onOpenChange={setOpenLoginAlertDialog}
+        />
+      </>
+    );
+  }
+);
 
-                return;
-              }
-
-              onSubmit({ comment });
-
-              handleResetComment();
-
-              textAreaRef.current?.focus();
-            }}
-            size="2"
-            variant="outline"
-            className={classNames(
-              css({
-                cursor: 'pointer',
-                position: 'absolute',
-                right: '10px',
-                bottom: '10px',
-              }),
-              'submit-button'
-            )}
-            disabled={comment == null || getIsEditorStateEmpty(editor)}
-          >
-            {t('submit')}
-          </Button>
-        </div>
-      </HStack>
-      <AlertDialog.Root
-        open={openAlertDialog}
-        onOpenChange={setOpenAlertDialog}
+const CommentEditorWithLexicalComposer = forwardRef<HTMLDivElement, Props>(
+  (props, ref) => {
+    return (
+      <LexicalComposer
+        initialConfig={getEditorConfig({ comment: props.comment?.comment })}
       >
-        <AlertDialog.Content maxWidth="400px">
-          <AlertDialog.Title>{t('discard_changes')}</AlertDialog.Title>
-          <AlertDialog.Description>
-            {t('discard_changes_description')}
-          </AlertDialog.Description>
-          <HStack mt="30px" justify="end">
-            <AlertDialog.Action>
-              <Button
-                onClick={() => {
-                  setOpenAlertDialog(false);
-                  onClose?.();
-                }}
-                className={css({ cursor: 'pointer' })}
-              >
-                {t('discard')}
-              </Button>
-            </AlertDialog.Action>
-            <AlertDialog.Cancel>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setOpenAlertDialog(false);
+        <CommentEditor ref={ref} {...props} />
+      </LexicalComposer>
+    );
+  }
+);
 
-                  setTimeout(() => {
-                    textAreaRef.current?.focus();
-                  }, 100);
-                }}
-                className={css({ cursor: 'pointer' })}
-              >
-                {t('cancel_and_continue_editing')}
-              </Button>
-            </AlertDialog.Cancel>
-          </HStack>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
-      <LoginAlertDialog
-        open={openLoginAlertDialog}
-        onOpenChange={setOpenLoginAlertDialog}
-      />
-    </>
-  );
-}
-
-export default function CommentEditorWithLexicalComposer(props: Props) {
-  return (
-    <LexicalComposer
-      initialConfig={getEditorConfig({ comment: props.comment?.comment })}
-    >
-      <CommentEditor {...props} />
-    </LexicalComposer>
-  );
-}
+export default CommentEditorWithLexicalComposer;

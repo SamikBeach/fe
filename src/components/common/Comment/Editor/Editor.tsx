@@ -11,7 +11,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { css } from 'styled-system/css';
 import CustomMenu from './CustomMenu';
 import CustomMenuItem from './CustomMenuItem';
-import { HTMLProps, useCallback } from 'react';
+import { HTMLProps, forwardRef, useCallback } from 'react';
 import { EditorState } from 'lexical';
 import classNames from 'classnames';
 import { useSetAtom } from 'jotai';
@@ -23,84 +23,100 @@ interface Props extends HTMLProps<HTMLDivElement> {
   mentionItems: Record<string, BeautifulMentionsItem[]>;
 }
 
-export default function Editor({
-  comment,
-  setComment,
-  className,
-  placeholder,
-  mentionItems,
-  ...props
-}: Props) {
-  const setSearchValue = useSetAtom(searchValueAtom);
-  const setSearchUserValue = useSetAtom(searchUserValueAtom);
+const Editor = forwardRef<HTMLDivElement, Props>(
+  (
+    { comment, setComment, className, placeholder, mentionItems, ...props },
+    _
+  ) => {
+    const setSearchValue = useSetAtom(searchValueAtom);
+    const setSearchUserValue = useSetAtom(searchUserValueAtom);
 
-  const handleChange = useCallback(
-    (editorState: EditorState) => {
-      setComment(JSON.stringify(editorState.toJSON()));
-    },
-    [setComment]
-  );
+    const handleChange = useCallback(
+      (editorState: EditorState) => {
+        setComment(JSON.stringify(editorState.toJSON()));
+      },
+      [setComment]
+    );
 
-  return (
-    <>
-      <RichTextPlugin
-        contentEditable={
-          <ContentEditable
-            autoFocus
-            aria-placeholder={placeholder}
-            placeholder={
-              (
-                <div
-                  className={css({
-                    color: 'gray.500',
-                    position: 'absolute',
-                    top: '0',
-                    left: '6px',
-                    padding: '4px',
-                    pointerEvents: 'none',
-                    fontSize: '14px',
-                  })}
-                >
-                  {placeholder}
-                </div>
-              ) as any
+    return (
+      <>
+        <RichTextPlugin
+          contentEditable={
+            <ContentEditable
+              autoFocus
+              aria-placeholder={placeholder}
+              placeholder={
+                (
+                  <div
+                    className={css({
+                      color: 'gray.500',
+                      position: 'absolute',
+                      top: '0',
+                      left: '6px',
+                      padding: '4px',
+                      pointerEvents: 'none',
+                      fontSize: '14px',
+                    })}
+                  >
+                    {placeholder}
+                  </div>
+                ) as any
+              }
+              className={classNames(
+                css({
+                  position: 'relative',
+                  border: '1px solid',
+                  borderColor: 'gray.300',
+                  borderRadius: '4px',
+                  py: '4px',
+                  px: '8px',
+                  paddingRight: '90px',
+                  fontSize: '14px',
+                  minHeight: '54px',
+
+                  _focus: {
+                    outlineColor: 'gray.400',
+                  },
+                }),
+                className
+              )}
+              {...props}
+            />
+          }
+          ErrorBoundary={LexicalErrorBoundary}
+        />
+        <HistoryPlugin />
+        <AutoFocusPlugin />
+        <OnChangePlugin onChange={handleChange} />
+        <BeautifulMentionsPlugin
+          triggers={['@', '#']}
+          menuComponent={CustomMenu}
+          menuItemComponent={CustomMenuItem}
+          onSearch={(
+            trigger: string,
+            queryString?: string | undefined | null
+          ) => {
+            if (trigger === '@') {
+              setSearchUserValue(queryString ?? null);
+
+              return new Promise(resolve => {
+                resolve(
+                  mentionItems[trigger].filter(item => {
+                    if (typeof item === 'string') {
+                      throw new Error('Invalid mention item');
+                    }
+
+                    if (item.type === 'user') {
+                      return item.value;
+                    }
+                  })
+                );
+              });
             }
-            className={classNames(
-              css({
-                position: 'relative',
-                border: '1px solid',
-                borderColor: 'gray.300',
-                borderRadius: '4px',
-                py: '4px',
-                px: '8px',
-                paddingRight: '90px',
-                fontSize: '14px',
-                minHeight: '54px',
 
-                _focus: {
-                  outlineColor: 'gray.400',
-                },
-              }),
-              className
-            )}
-            {...props}
-          />
-        }
-        ErrorBoundary={LexicalErrorBoundary}
-      />
-      <HistoryPlugin />
-      <AutoFocusPlugin />
-      <OnChangePlugin onChange={handleChange} />
-      <BeautifulMentionsPlugin
-        triggers={['@', '#']}
-        menuComponent={CustomMenu}
-        menuItemComponent={CustomMenuItem}
-        onSearch={(
-          trigger: string,
-          queryString?: string | undefined | null
-        ) => {
-          if (trigger === '@') {
-            setSearchUserValue(queryString ?? null);
+            setSearchValue(queryString ?? null);
+
+            const isKorean = (queryString ?? '').charCodeAt(0) > 255;
 
             return new Promise(resolve => {
               resolve(
@@ -109,41 +125,25 @@ export default function Editor({
                     throw new Error('Invalid mention item');
                   }
 
-                  if (item.type === 'user') {
-                    return item.value;
+                  if (item.type === 'author') {
+                    return isKorean ? item.nameInKor : item.name;
+                  }
+
+                  if (item.type === 'original-work') {
+                    return isKorean ? item.titleInKor : item.titleInEng;
+                  }
+
+                  if (item.type === 'edition') {
+                    return item.title;
                   }
                 })
               );
             });
-          }
+          }}
+        />
+      </>
+    );
+  }
+);
 
-          setSearchValue(queryString ?? null);
-
-          const isKorean = (queryString ?? '').charCodeAt(0) > 255;
-
-          return new Promise(resolve => {
-            resolve(
-              mentionItems[trigger].filter(item => {
-                if (typeof item === 'string') {
-                  throw new Error('Invalid mention item');
-                }
-
-                if (item.type === 'author') {
-                  return isKorean ? item.nameInKor : item.name;
-                }
-
-                if (item.type === 'original-work') {
-                  return isKorean ? item.titleInKor : item.titleInEng;
-                }
-
-                if (item.type === 'edition') {
-                  return item.title;
-                }
-              })
-            );
-          });
-        }}
-      />
-    </>
-  );
-}
+export default Editor;

@@ -19,6 +19,7 @@ import { getEditorConfig, getIsEditorStateEmpty } from './Editor/utils';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
+import { searchUserValueAtom, searchValueAtom } from './atoms';
 
 interface Props {
   onSubmit: ({
@@ -55,8 +56,8 @@ function CommentEditor({
 
   const isEditMode = onClose !== undefined;
 
-  const [searchValue, setSearchValue] = useState<string | null>(null);
-  const [searchUserValue, setSearchUserValue] = useState<string | null>(null);
+  const searchValue = useAtomValue(searchValueAtom);
+  const searchUserValue = useAtomValue(searchUserValueAtom);
 
   const { data: authors = [] } = useQuery({
     queryKey: ['author', searchValue],
@@ -156,10 +157,6 @@ function CommentEditor({
             comment={comment}
             setComment={setComment}
             mentionItems={mentionItems}
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-            searchUserValue={searchUserValue}
-            setSearchUserValue={setSearchUserValue}
             placeholder={currentUser === null ? t('login_to_comment') : ''}
             onBlur={e => {
               if (isEditMode) {

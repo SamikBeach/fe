@@ -14,29 +14,26 @@ import CustomMenuItem from './CustomMenuItem';
 import { HTMLProps, useCallback } from 'react';
 import { EditorState } from 'lexical';
 import classNames from 'classnames';
+import { useSetAtom } from 'jotai';
+import { searchUserValueAtom, searchValueAtom } from '../atoms';
 
 interface Props extends HTMLProps<HTMLDivElement> {
   comment?: string;
   setComment: (comment?: string) => void;
   mentionItems: Record<string, BeautifulMentionsItem[]>;
-  searchValue: string | null;
-  setSearchValue: (value: string | null) => void;
-  searchUserValue: string | null;
-  setSearchUserValue: (value: string | null) => void;
 }
 
 export default function Editor({
   comment,
   setComment,
-  searchValue,
-  setSearchValue,
-  searchUserValue,
-  setSearchUserValue,
   className,
   placeholder,
   mentionItems,
   ...props
 }: Props) {
+  const setSearchValue = useSetAtom(searchValueAtom);
+  const setSearchUserValue = useSetAtom(searchUserValueAtom);
+
   const handleChange = useCallback(
     (editorState: EditorState) => {
       setComment(JSON.stringify(editorState.toJSON()));
@@ -97,13 +94,7 @@ export default function Editor({
       <BeautifulMentionsPlugin
         triggers={['@', '#']}
         menuComponent={CustomMenu}
-        menuItemComponent={prop => (
-          <CustomMenuItem
-            searchValue={searchValue}
-            searchUserValue={searchUserValue}
-            {...prop}
-          />
-        )}
+        menuItemComponent={CustomMenuItem}
         onSearch={(
           trigger: string,
           queryString?: string | undefined | null

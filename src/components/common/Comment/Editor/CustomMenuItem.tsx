@@ -1,10 +1,12 @@
 import { Avatar, Tooltip } from '@radix-ui/themes';
+import { useAtomValue } from 'jotai';
 import { BeautifulMentionsMenuItemProps } from 'lexical-beautiful-mentions';
 import { forwardRef, useMemo } from 'react';
 import Highlighter from 'react-highlight-words';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
+import { searchUserValueAtom, searchValueAtom } from '../atoms';
 
 interface Props extends BeautifulMentionsMenuItemProps {
   type: 'author' | 'original-work' | 'edition';
@@ -15,8 +17,6 @@ interface Props extends BeautifulMentionsMenuItemProps {
   titleInEng?: string;
   imageUrl?: string;
   authorNameInKor?: string;
-  searchValue: string;
-  searchUserValue: string;
 }
 
 const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
@@ -34,12 +34,13 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       titleInEng,
       imageUrl,
       authorNameInKor,
-      searchValue,
-      searchUserValue,
       ...restProps
     },
     ref
   ) => {
+    const searchValue = useAtomValue(searchValueAtom) ?? '';
+    const searchUserValue = useAtomValue(searchUserValueAtom) ?? '';
+
     const avatar = useMemo(() => {
       if (type === 'author') {
         return (

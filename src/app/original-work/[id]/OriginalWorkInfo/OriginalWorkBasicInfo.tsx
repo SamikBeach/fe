@@ -104,7 +104,6 @@ export default function OriginalWorkInfo() {
     select: response => response.data,
   });
 
-  console.log({ originalWorkLike });
   const {
     data: originalWorkAllLikes,
     isLoading: isLoadingOriginalWorkAllLikes,
@@ -119,13 +118,6 @@ export default function OriginalWorkInfo() {
     isLoadingOriginalWork ||
     isLoadingOriginalWorkLike ||
     isLoadingOriginalWorkAllLikes;
-
-  console.log({
-    isLoading,
-    isLoadingOriginalWork,
-    isLoadingOriginalWorkLike,
-    isLoadingOriginalWorkAllLikes,
-  });
 
   if (isLoading) {
     return <OriginalWorkBasicInfoSkeleton />;

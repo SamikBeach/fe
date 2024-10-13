@@ -141,8 +141,6 @@ function CommentEditor({
     });
   };
 
-  console.log({ comment });
-
   return (
     <>
       <HStack alignItems="start" width="100%" justify="end">

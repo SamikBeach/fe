@@ -78,7 +78,7 @@ export default function Editor({
                 px: '8px',
                 paddingRight: '90px',
                 fontSize: '14px',
-                minHeight: '60px',
+                minHeight: '54px',
 
                 _focus: {
                   outlineColor: 'gray.400',

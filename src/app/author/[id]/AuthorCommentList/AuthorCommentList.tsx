@@ -77,8 +77,7 @@ export default function AuthorCommentList() {
   const hasComments = comments.length > 0;
 
   const { mutate: addComment } = useMutation({
-    mutationFn: ({ comment }: { comment: string }) => {
-      console.log({ currentUser });
+    mutationFn: ({ comment }: { comment?: string }) => {
       if (currentUser === null) {
         throw new Error('User is not logged in');
       }
@@ -86,7 +85,7 @@ export default function AuthorCommentList() {
       return addAuthorComment({
         authorId,
         userId: currentUser.id,
-        comment,
+        comment: comment ?? '',
       });
     },
     onSuccess: () => {

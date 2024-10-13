@@ -98,14 +98,14 @@ export default function SubCommentItem({
   });
 
   const { mutate: updateComment } = useMutation({
-    mutationFn: (param: { comment: string }) => {
+    mutationFn: (param: { comment?: string }) => {
       if (currentUser === null) {
         throw new Error('User is not logged in');
       }
 
       return updateAuthorComment({
         commentId: id,
-        comment: param.comment,
+        comment: param.comment ?? '',
       });
     },
     onSuccess: () => {

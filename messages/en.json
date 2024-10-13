@@ -68,7 +68,8 @@
     "comment_empty_history": "There are no comments left on {type}.",
     "comment_list_empty": "There are no comments yet.",
     "terms_of_service": "Terms of Service",
-    "privacy_policy": "Privacy policy"
+    "privacy_policy": "Privacy policy",
+    "see_less": "Hide"
   },
   "Home": {
     "trending_now": "Trending Now",
@@ -78,7 +79,8 @@
     "log_item_original_work_comment": "<User></User> left a comment on <Author></Author>'s <OriginalWork></OriginalWork>.",
     "log_item_edition_like": "<User></User> likes <Author></Author>'s <Edition></Edition>.",
     "log_item_edition_comment": "<User></User> left a comment on <Author></Author>'s <Edition></Edition>.",
-    "see_more": "See more"
+    "see_more": "See more",
+    "see_less": "Hide"
   },
   "Author": {
     "era": "Era",

@@ -74,6 +74,8 @@ export default function CommentItem({
     includeSeconds: true,
   });
 
+  console.log('comment:', comment.comment);
+
   return (
     <>
       <motion.div
@@ -151,13 +153,13 @@ export default function CommentItem({
                   ? `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
                   : comment.comment}
               </Text>
-              {isSeeMoreButtonShown && (
+              {
                 <Button
                   variant="ghost"
                   size="1"
-                  onClick={() => setIsSeeMoreButtonShown(false)}
+                  onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
                   className={css({
-                    color: 'black',
+                    color: 'gray',
                     fontWeight: 'medium',
                     pt: '6px',
                     pl: '16px',
@@ -169,9 +171,9 @@ export default function CommentItem({
                     },
                   })}
                 >
-                  {t('see_more')}
+                  {isSeeMoreButtonShown ? t('see_more') : t('see_less')}
                 </Button>
-              )}
+              }
             </CommentBox>
             <HStack justify="space-between" width="100%">
               <HStack ml="8px">

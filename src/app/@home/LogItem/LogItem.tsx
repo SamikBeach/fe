@@ -288,32 +288,30 @@ export default function LogItem({ log }: Props) {
             whiteSpace: 'pre-wrap',
           })}
         >
-          {isSeeMoreButtonShown ? (
-            <>
-              {`${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`}
-              <Button
-                variant="ghost"
-                size="1"
-                onClick={() => setIsSeeMoreButtonShown(false)}
-                className={css({
-                  color: 'black',
-                  fontWeight: 'medium',
-                  pt: '6px',
-                  pl: '16px',
+          {isSeeMoreButtonShown
+            ? `${comment.comment.slice(0, MAX_COMMENT_LENGTH)}...`
+            : comment.comment}
+          {
+            <Button
+              variant="ghost"
+              size="1"
+              onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
+              className={css({
+                color: 'gray',
+                fontWeight: 'medium',
+                pt: '6px',
+                pl: '16px',
 
-                  _hover: {
-                    bgColor: 'transparent',
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                  },
-                })}
-              >
-                {t('see_more')}
-              </Button>
-            </>
-          ) : (
-            comment.comment
-          )}
+                _hover: {
+                  bgColor: 'transparent',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                },
+              })}
+            >
+              {isSeeMoreButtonShown ? t('see_more') : t('see_less')}
+            </Button>
+          }
         </p>
       )}
     </VStack>

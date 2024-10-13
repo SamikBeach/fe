@@ -69,7 +69,8 @@
     "comment_empty_history": "{type}에 남긴 글이 없어요.",
     "comment_list_empty": "아직 댓글이 없어요.",
     "terms_of_service": "이용약관",
-    "privacy_policy": "개인정보 처리방침"
+    "privacy_policy": "개인정보 처리방침",
+    "see_less": "숨기기"
   },
   "Home": {
     "trending_now": "실시간 인기",
@@ -79,7 +80,8 @@
     "log_item_original_work_comment": "<User></User>님이 <Author></Author>의 <OriginalWork></OriginalWork>에 글을 남겼습니다.",
     "log_item_edition_like": "<User></User>님이 <Author></Author>의 <Edition></Edition><Josa></Josa> 좋아합니다.",
     "log_item_edition_comment": "<User></User>님이 <Author></Author>의 <Edition></Edition>에 글을 남겼습니다.",
-    "see_more": "더 보기"
+    "see_more": "더 보기",
+    "see_less": "숨기기"
   },
   "Author": {
     "era": "시대",

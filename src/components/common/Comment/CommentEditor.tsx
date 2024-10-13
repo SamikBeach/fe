@@ -1,6 +1,6 @@
 import { currentUserAtom } from '@atoms/user';
 import { CommentServerModel } from '@models/comment';
-import { AlertDialog, Avatar, Button, TextArea } from '@radix-ui/themes';
+import { AlertDialog, Avatar, Button } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
@@ -11,18 +11,24 @@ import { LoginAlertDialog } from '../LoginAlertDialog';
 import { Editor } from '../Editor';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { searchAuthors } from '@apis/author';
-import useDebounce from '@hooks/useDebounce';
 import { BeautifulMentionsItem } from 'lexical-beautiful-mentions';
 import { searchOriginalWorks } from '@apis/original-work';
 import { searchEditions } from '@apis/edition';
 import { searchUsers } from '@apis/user';
+import { getEditorConfig, getIsEditorStateEmpty } from '../Editor/utils';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
+
+const EMPTY_STATE_JSON =
+  '{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
 interface Props {
   onSubmit: ({
     comment,
     commentId,
   }: {
-    comment: string;
+    comment?: string;
     commentId?: number;
   }) => void;
   onClose?: () => void;
@@ -30,7 +36,7 @@ interface Props {
   width?: string;
 }
 
-export default function CommentEditor({
+function CommentEditor({
   onSubmit,
   onClose,
   comment: commentProps,
@@ -44,7 +50,9 @@ export default function CommentEditor({
 
   const textAreaRef = useRef<HTMLDivElement>(null);
 
-  const [comment, setComment] = useState(commentProps?.comment ?? '');
+  const [editor] = useLexicalComposerContext();
+
+  const [comment, setComment] = useState(commentProps?.comment);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
@@ -89,11 +97,13 @@ export default function CommentEditor({
 
   const mentionItems: Record<string, BeautifulMentionsItem[]> = {
     '@': users.map(user => ({
+      id: user.id,
       value: user.nickname ?? '',
       type: 'user',
     })),
     '#': [
       ...authors.map(author => ({
+        id: author.id,
         value: author.name,
         name: author.name,
         nameInKor: author.name_in_kor,
@@ -101,6 +111,7 @@ export default function CommentEditor({
         type: 'author',
       })),
       ...originalWorks.map(originalWork => ({
+        id: originalWork.id,
         value: originalWork.title,
         titleInEng: originalWork.title_in_eng ?? null,
         titleInKor: originalWork.title_in_kor ?? null,
@@ -108,6 +119,7 @@ export default function CommentEditor({
         type: 'original-work',
       })),
       ...editions.map(edition => ({
+        id: edition.id,
         value: edition.title,
         title: edition.title ?? null,
         imageUrl: edition.image_url ?? null,
@@ -116,6 +128,23 @@ export default function CommentEditor({
       })),
     ],
   };
+
+  const handleResetComment = () => {
+    setComment(undefined);
+
+    editor.update(() => {
+      // 현재 root를 가져와서 clear한 뒤, 빈 단락 노드를 추가
+      const root = $getRoot();
+      root.clear(); // 기존 내용을 제거
+
+      const paragraphNode = $createParagraphNode(); // 빈 단락 생성
+      const textNode = $createTextNode(''); // 빈 텍스트 노드 추가
+      paragraphNode.append(textNode);
+      root.append(paragraphNode); // 루트에 빈 단락 추가
+    });
+  };
+
+  console.log({ comment });
 
   return (
     <>
@@ -129,6 +158,8 @@ export default function CommentEditor({
         <div className={css({ width: width, position: 'relative' })}>
           <Editor
             ref={textAreaRef}
+            comment={comment}
+            setComment={setComment}
             mentionItems={mentionItems}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
@@ -136,7 +167,6 @@ export default function CommentEditor({
             setSearchUserValue={setSearchUserValue}
             placeholder={currentUser === null ? t('login_to_comment') : ''}
             onBlur={e => {
-              console.log({ isEditMode });
               if (isEditMode) {
                 if (e.relatedTarget?.className.includes('submit-button')) {
                   return;
@@ -145,12 +175,11 @@ export default function CommentEditor({
                 setOpenAlertDialog(true);
               }
             }}
-            value={comment}
-            onChange={e => setComment(e.target.value)}
             onKeyDown={e => {
               if (e.metaKey && e.key === 'Enter') {
                 onSubmit({ comment });
-                setComment('');
+                handleResetComment();
+
                 textAreaRef.current?.focus();
               }
 
@@ -159,40 +188,6 @@ export default function CommentEditor({
               }
             }}
           />
-          {/* <TextArea
-            ref={textAreaRef}
-            autoFocus
-            placeholder={currentUser === null ? t('login_to_comment') : ''}
-            onFocus={e =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
-            onBlur={e => {
-              if (isEditMode) {
-                if (e.relatedTarget?.className.includes('submit-button')) {
-                  return;
-                }
-
-                setOpenAlertDialog(true);
-              }
-            }}
-            value={comment}
-            onChange={e => setComment(e.target.value)}
-            className={css({ width: '100%', height: '60px', pr: '80px' })}
-            onKeyDown={e => {
-              if (e.metaKey && e.key === 'Enter') {
-                onSubmit({ comment });
-                setComment('');
-                textAreaRef.current?.focus();
-              }
-
-              if (isEditMode && e.key === 'Escape') {
-                setOpenAlertDialog(true);
-              }
-            }}
-          /> */}
           <Button
             onClick={() => {
               if (currentUser === null) {
@@ -203,7 +198,8 @@ export default function CommentEditor({
 
               onSubmit({ comment });
 
-              setComment('');
+              handleResetComment();
+
               textAreaRef.current?.focus();
             }}
             size="2"
@@ -217,7 +213,7 @@ export default function CommentEditor({
               }),
               'submit-button'
             )}
-            disabled={comment === ''}
+            disabled={comment == null || getIsEditorStateEmpty(editor)}
           >
             {t('submit')}
           </Button>
@@ -267,5 +263,15 @@ export default function CommentEditor({
         onOpenChange={setOpenLoginAlertDialog}
       />
     </>
+  );
+}
+
+export default function CommentEditorWithLexicalComposer(props: Props) {
+  return (
+    <LexicalComposer
+      initialConfig={getEditorConfig({ comment: props.comment?.comment })}
+    >
+      <CommentEditor {...props} />
+    </LexicalComposer>
   );
 }

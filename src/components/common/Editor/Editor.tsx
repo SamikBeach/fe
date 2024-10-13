@@ -13,17 +13,27 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { css } from 'styled-system/css';
 import CustomMenu from './CustomMenu';
 import CustomMenuItem from './CustomMenuItem';
 import CustomMentionComponent from './CustomMentionComponent';
-import { HTMLProps, useCallback, useEffect } from 'react';
-import { $getRoot, EditorState } from 'lexical';
+import { HTMLProps, useCallback, useEffect, useRef } from 'react';
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  $getSelection,
+  EditorState,
+  createEditor,
+} from 'lexical';
 import classNames from 'classnames';
-import { editorConfig } from './editorConfig';
+import { getEditorConfig } from './getEditorConfig';
 import { ComponentProps } from 'styled-system/types';
 
 interface Props extends HTMLProps<HTMLDivElement> {
+  comment?: string;
+  setComment: (comment?: string) => void;
   mentionItems: Record<string, BeautifulMentionsItem[]>;
   searchValue: string | null;
   setSearchValue: (value: string | null) => void;
@@ -32,6 +42,8 @@ interface Props extends HTMLProps<HTMLDivElement> {
 }
 
 export default function Editor({
+  comment,
+  setComment,
   searchValue,
   setSearchValue,
   searchUserValue,
@@ -43,17 +55,13 @@ export default function Editor({
 }: Props) {
   const handleChange = useCallback(
     (editorState: EditorState) => {
-      editorState.read(() => {
-        const textContent = $getRoot().__cachedText;
-
-        // setSearchValue(textContent);
-      });
+      setComment(JSON.stringify(editorState.toJSON()));
     },
-    [setSearchValue]
+    [setComment]
   );
 
   return (
-    <LexicalComposer initialConfig={editorConfig}>
+    <>
       <RichTextPlugin
         contentEditable={
           <ContentEditable
@@ -161,6 +169,6 @@ export default function Editor({
           });
         }}
       />
-    </LexicalComposer>
+    </>
   );
 }

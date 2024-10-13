@@ -4,6 +4,8 @@ import { css } from 'styled-system/css';
 
 const CustomMenu = forwardRef<HTMLUListElement, BeautifulMentionsMenuProps>(
   ({ loading, ...props }, ref) => {
+    console.log({ props });
+
     return (
       <ul
         className={css({
@@ -12,7 +14,6 @@ const CustomMenu = forwardRef<HTMLUListElement, BeautifulMentionsMenuProps>(
           top: 'auto',
           maxHeight: '240px',
           overflowY: 'auto',
-          width: '600px',
           bgColor: 'white',
           cursor: 'pointer',
           borderRadius: '8px',

@@ -15,6 +15,7 @@ import useDebounce from '@hooks/useDebounce';
 import { BeautifulMentionsItem } from 'lexical-beautiful-mentions';
 import { searchOriginalWorks } from '@apis/original-work';
 import { searchEditions } from '@apis/edition';
+import { searchUsers } from '@apis/user';
 
 interface Props {
   onSubmit: ({
@@ -41,7 +42,7 @@ export default function CommentEditor({
 
   const currentUser = useAtomValue(currentUserAtom);
 
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const textAreaRef = useRef<HTMLDivElement>(null);
 
   const [comment, setComment] = useState(commentProps?.comment ?? '');
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
@@ -49,32 +50,48 @@ export default function CommentEditor({
 
   const isEditMode = onClose !== undefined;
 
-  const [value, setValue] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [searchUserValue, setSearchUserValue] = useState<string | null>(null);
 
   const { data: authors = [] } = useQuery({
-    queryKey: ['author', value],
-    queryFn: () => searchAuthors({ keyword: value ?? '', limit: 2, locale }),
+    queryKey: ['author', searchValue],
+    queryFn: () =>
+      searchAuthors({ keyword: searchValue ?? '', limit: 2, locale }),
     select: response => response.data.data,
+    enabled: searchValue != null,
     placeholderData: keepPreviousData,
   });
 
   const { data: originalWorks = [] } = useQuery({
-    queryKey: ['originalWork', value],
+    queryKey: ['original-work', searchValue],
     queryFn: () =>
-      searchOriginalWorks({ keyword: value ?? '', limit: 2, locale }),
+      searchOriginalWorks({ keyword: searchValue ?? '', limit: 2, locale }),
     select: response => response.data.data,
+    enabled: searchValue != null,
     placeholderData: keepPreviousData,
   });
 
   const { data: editions = [] } = useQuery({
-    queryKey: ['edition', value],
-    queryFn: () => searchEditions({ keyword: value ?? '', limit: 2 }),
+    queryKey: ['edition', searchValue],
+    queryFn: () => searchEditions({ keyword: searchValue ?? '', limit: 2 }),
     select: response => response.data.data,
+    enabled: searchValue != null,
+    placeholderData: keepPreviousData,
+  });
+
+  const { data: users = [] } = useQuery({
+    queryKey: ['user', searchUserValue],
+    queryFn: () => searchUsers({ keyword: searchUserValue ?? '', limit: 5 }),
+    select: response => response.data.data,
+    enabled: searchUserValue != null,
     placeholderData: keepPreviousData,
   });
 
   const mentionItems: Record<string, BeautifulMentionsItem[]> = {
-    '@': ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape'],
+    '@': users.map(user => ({
+      value: user.nickname ?? '',
+      type: 'user',
+    })),
     '#': [
       ...authors.map(author => ({
         value: author.name,
@@ -111,9 +128,36 @@ export default function CommentEditor({
         />
         <div className={css({ width: width, position: 'relative' })}>
           <Editor
+            ref={textAreaRef}
             mentionItems={mentionItems}
-            value={value}
-            setValue={setValue}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            searchUserValue={searchUserValue}
+            setSearchUserValue={setSearchUserValue}
+            placeholder={currentUser === null ? t('login_to_comment') : ''}
+            onBlur={e => {
+              console.log({ isEditMode });
+              if (isEditMode) {
+                if (e.relatedTarget?.className.includes('submit-button')) {
+                  return;
+                }
+
+                setOpenAlertDialog(true);
+              }
+            }}
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+            onKeyDown={e => {
+              if (e.metaKey && e.key === 'Enter') {
+                onSubmit({ comment });
+                setComment('');
+                textAreaRef.current?.focus();
+              }
+
+              if (isEditMode && e.key === 'Escape') {
+                setOpenAlertDialog(true);
+              }
+            }}
           />
           {/* <TextArea
             ref={textAreaRef}

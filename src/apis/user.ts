@@ -3,6 +3,7 @@ import { AuthorServerModel } from '@models/author';
 import { EditionServerModel } from '@models/edition';
 import { OriginalWorkServerModel } from '@models/original-work';
 import { UserServerModel } from '@models/user';
+import { SearchResponse } from './common';
 
 type GetAllUsersResponse = UserServerModel[];
 
@@ -52,4 +53,22 @@ interface GetUserCommentsResponse {
 
 export function getUserComments({ userId }: GetUserCommentsRequest) {
   return api.get<GetUserCommentsResponse>(`/user/${userId}/comment`);
+}
+
+interface SearchUsersRequest {
+  page?: number;
+  keyword?: string;
+  limit?: number;
+}
+
+export interface SearchUsersResponse extends SearchResponse<UserServerModel> {}
+
+export function searchUsers({ page, keyword, limit }: SearchUsersRequest) {
+  return api.get<SearchUsersResponse>('/user/search', {
+    params: {
+      search: keyword === '' ? undefined : keyword,
+      page,
+      limit,
+    },
+  });
 }

@@ -16,6 +16,7 @@ interface Props extends BeautifulMentionsMenuItemProps {
   imageUrl?: string;
   authorNameInKor?: string;
   searchValue: string;
+  searchUserValue: string;
 }
 
 const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
@@ -34,6 +35,7 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       imageUrl,
       authorNameInKor,
       searchValue,
+      searchUserValue,
       ...restProps
     },
     ref
@@ -126,10 +128,10 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
       <li
         className={css({
           borderRadius: '4px',
-          height: '44px',
+          height: item.trigger === '@' ? '28px' : '44px',
           fontSize: '14px',
           px: '4px',
-
+          width: item.trigger === '@' ? '200px' : '600px',
           _selected: {
             bgColor: 'gray.100',
           },
@@ -137,68 +139,90 @@ const CustomMenuItem = forwardRef<HTMLLIElement, Props>(
         ref={ref}
         {...restProps}
       >
-        <HStack height="100%" width="100%" gap="10px" alignItems="center">
-          {avatar}
-          <VStack alignItems="start" gap="0px">
-            <Tooltip
-              content={`${value} ${subValue == null ? '' : `- ${subValue}`}`}
-            >
-              <span
-                className={css({
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  maxWidth: '540px',
-                  color: 'gray.500',
-                })}
-              >
-                <Highlighter
-                  searchWords={[searchValue]}
-                  textToHighlight={value ?? ''}
-                  highlightClassName={css({
-                    fontWeight: 'bold',
-                    backgroundColor: 'transparent',
-                  })}
-                  className={css({
-                    color: 'black',
-                    lineHeight: '16px',
-                  })}
-                />
-                {type === 'original-work' && (
-                  <>
-                    {' '}
-                    <Highlighter
-                      className={css({
-                        color: 'gray.500',
-                        fontSize: '11px',
-                        lineHeight: '16px',
-                      })}
-                      searchWords={[searchValue]}
-                      textToHighlight={subValue ?? ''}
-                      highlightClassName={css({
-                        fontWeight: 'bold',
-                        backgroundColor: 'transparent',
-                      })}
-                    />
-                  </>
-                )}
-              </span>
-            </Tooltip>
+        {item.trigger === '@' ? (
+          <VStack
+            width="100%"
+            height="100%"
+            alignItems="start"
+            justify="center"
+          >
             <Highlighter
-              className={css({
-                color: 'gray.500',
-                fontSize: '11px',
-                lineHeight: '16px',
-              })}
-              searchWords={[searchValue]}
-              textToHighlight={authorName ?? ''}
+              searchWords={[searchUserValue]}
+              textToHighlight={item.value ?? ''}
               highlightClassName={css({
                 fontWeight: 'bold',
                 backgroundColor: 'transparent',
               })}
+              className={css({
+                color: 'black',
+                lineHeight: '16px',
+              })}
             />
           </VStack>
-        </HStack>
+        ) : (
+          <HStack height="100%" width="100%" gap="10px" alignItems="center">
+            {avatar}
+            <VStack alignItems="start" gap="0px">
+              <Tooltip
+                content={`${value} ${subValue == null ? '' : `- ${subValue}`}`}
+              >
+                <span
+                  className={css({
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    maxWidth: '540px',
+                    color: 'gray.500',
+                  })}
+                >
+                  <Highlighter
+                    searchWords={[searchValue]}
+                    textToHighlight={value ?? ''}
+                    highlightClassName={css({
+                      fontWeight: 'bold',
+                      backgroundColor: 'transparent',
+                    })}
+                    className={css({
+                      color: 'black',
+                      lineHeight: '16px',
+                    })}
+                  />
+                  {type === 'original-work' && (
+                    <>
+                      {' '}
+                      <Highlighter
+                        className={css({
+                          color: 'gray.500',
+                          fontSize: '11px',
+                          lineHeight: '16px',
+                        })}
+                        searchWords={[searchValue]}
+                        textToHighlight={subValue ?? ''}
+                        highlightClassName={css({
+                          fontWeight: 'bold',
+                          backgroundColor: 'transparent',
+                        })}
+                      />
+                    </>
+                  )}
+                </span>
+              </Tooltip>
+              <Highlighter
+                className={css({
+                  color: 'gray.500',
+                  fontSize: '11px',
+                  lineHeight: '16px',
+                })}
+                searchWords={[searchValue]}
+                textToHighlight={authorName ?? ''}
+                highlightClassName={css({
+                  fontWeight: 'bold',
+                  backgroundColor: 'transparent',
+                })}
+              />
+            </VStack>
+          </HStack>
+        )}
       </li>
     );
   }

@@ -17,28 +17,27 @@ import { css } from 'styled-system/css';
 import CustomMenu from './CustomMenu';
 import CustomMenuItem from './CustomMenuItem';
 import CustomMentionComponent from './CustomMentionComponent';
-import {
-  ComponentProps,
-  ComponentPropsWithRef,
-  ForwardRefExoticComponent,
-  HTMLProps,
-  RefAttributes,
-  useCallback,
-} from 'react';
+import { HTMLProps, useCallback, useEffect } from 'react';
 import { $getRoot, EditorState } from 'lexical';
 import classNames from 'classnames';
 import { editorConfig } from './editorConfig';
+import { ComponentProps } from 'styled-system/types';
 
-interface Props extends Omit<HTMLProps<HTMLDivElement>, 'value'> {
+interface Props extends HTMLProps<HTMLDivElement> {
   mentionItems: Record<string, BeautifulMentionsItem[]>;
-  value: string | null;
-  setValue: (value: string | null) => void;
+  searchValue: string | null;
+  setSearchValue: (value: string | null) => void;
+  searchUserValue: string | null;
+  setSearchUserValue: (value: string | null) => void;
 }
 
 export default function Editor({
-  value,
-  setValue,
+  searchValue,
+  setSearchValue,
+  searchUserValue,
+  setSearchUserValue,
   className,
+  placeholder,
   mentionItems,
   ...props
 }: Props) {
@@ -47,10 +46,10 @@ export default function Editor({
       editorState.read(() => {
         const textContent = $getRoot().__cachedText;
 
-        setValue(textContent);
+        // setSearchValue(textContent);
       });
     },
-    [setValue]
+    [setSearchValue]
   );
 
   return (
@@ -58,7 +57,8 @@ export default function Editor({
       <RichTextPlugin
         contentEditable={
           <ContentEditable
-            aria-placeholder="Write something..."
+            autoFocus
+            aria-placeholder={placeholder}
             placeholder={
               (
                 <div
@@ -66,12 +66,13 @@ export default function Editor({
                     color: 'gray.500',
                     position: 'absolute',
                     top: '0',
-                    left: '0',
+                    left: '6px',
                     padding: '4px',
                     pointerEvents: 'none',
+                    fontSize: '14px',
                   })}
                 >
-                  Write something...
+                  {placeholder}
                 </div>
               ) as any
             }
@@ -81,7 +82,8 @@ export default function Editor({
                 border: '1px solid',
                 borderColor: 'gray.300',
                 borderRadius: '4px',
-                padding: '4px',
+                py: '4px',
+                px: '8px',
                 paddingRight: '90px',
                 fontSize: '14px',
                 minHeight: '60px',
@@ -104,13 +106,35 @@ export default function Editor({
         triggers={['@', '#']}
         menuComponent={CustomMenu}
         menuItemComponent={prop => (
-          <CustomMenuItem searchValue={value} {...prop} />
+          <CustomMenuItem
+            searchValue={searchValue}
+            searchUserValue={searchUserValue}
+            {...prop}
+          />
         )}
         onSearch={(
           trigger: string,
           queryString?: string | undefined | null
         ) => {
-          setValue(queryString ?? null);
+          if (trigger === '@') {
+            setSearchUserValue(queryString ?? null);
+
+            return new Promise(resolve => {
+              resolve(
+                mentionItems[trigger].filter(item => {
+                  if (typeof item === 'string') {
+                    throw new Error('Invalid mention item');
+                  }
+
+                  if (item.type === 'user') {
+                    return item.value;
+                  }
+                })
+              );
+            });
+          }
+
+          setSearchValue(queryString ?? null);
 
           const isKorean = (queryString ?? '').charCodeAt(0) > 255;
 

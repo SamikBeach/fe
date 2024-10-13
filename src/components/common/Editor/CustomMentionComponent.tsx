@@ -26,7 +26,11 @@ const CustomMentionComponent = forwardRef<HTMLSpanElement, Props>(
       if (data?.type === 'edition') {
         return data.title;
       }
-    }, [data]);
+
+      if (data?.type === 'user') {
+        return `${trigger}${value}`;
+      }
+    }, [data, value, trigger]);
 
     const valueInEng = useMemo(() => {
       if (data?.type === 'author') {

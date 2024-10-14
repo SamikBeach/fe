@@ -1,17 +1,20 @@
 'use client';
 
-import { HStack, HstackProps, VStack } from 'styled-system/jsx';
-import AuthorBasicInfo from './OriginalWorkBasicInfo';
-import { ScrollArea, SegmentedControl } from '@radix-ui/themes';
+import { HstackProps, VStack } from 'styled-system/jsx';
+import { ScrollArea } from '@radix-ui/themes';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
-import SortDropdown from './SortDropdown';
-import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import AvatarSection from './sections/AvatarSection';
+import FilterSection from './sections/FilterSection';
+import OriginalWorkBasicInfoSection from './sections/OriginalWorkBasicInfoSection';
+
+const SCROLL_THRESHOLD = 218;
 
 interface Props extends HstackProps {}
 
-export default function AuthorInfo({ ...props }: Props) {
-  const t = useTranslations('OriginalWork');
+export default function OriginalWorkInfo({ ...props }: Props) {
+  const [isOverThreshold, setIsOverThreshold] = useState(false);
 
   return (
     <ScrollArea
@@ -20,31 +23,42 @@ export default function AuthorInfo({ ...props }: Props) {
         height: 'calc(100vh - 64px)',
         flex: 2,
       })}
+      onScroll={e => {
+        if (
+          (e.target as HTMLElement).scrollTop > SCROLL_THRESHOLD &&
+          !isOverThreshold
+        ) {
+          setIsOverThreshold(true);
+        }
+
+        if (
+          (e.target as HTMLElement).scrollTop <= SCROLL_THRESHOLD &&
+          isOverThreshold
+        ) {
+          setIsOverThreshold(false);
+        }
+      }}
     >
-      <VStack
-        gap="20px"
-        width="420px"
-        alignItems="start"
-        px="10px"
-        pt="40px"
-        ml="auto"
-        {...props}
-      >
-        <AuthorBasicInfo />
+      <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
+        <AvatarSection />
 
-        <HStack width="100%" justify="space-between" pr="16px">
-          <SegmentedControl.Root defaultValue="editions" size="1">
-            <SegmentedControl.Item
-              value="editions"
-              className={css({ cursor: 'pointer' })}
-            >
-              {t('editions')}
-            </SegmentedControl.Item>
-          </SegmentedControl.Root>
-          <SortDropdown />
-        </HStack>
+        <VStack
+          width="400px"
+          gap="20px"
+          position={isOverThreshold ? 'fixed' : 'static'}
+          top="64px"
+          bgColor="white"
+          zIndex={2}
+          pt="20px"
+          pb="10px"
+          borderBottom={isOverThreshold ? '1px solid' : 'none'}
+          borderColor={isOverThreshold ? 'gray.200' : 'none'}
+        >
+          <OriginalWorkBasicInfoSection isOverThreshold={isOverThreshold} />
+          <FilterSection />
+        </VStack>
 
-        <EditionList />
+        <EditionList mt={isOverThreshold ? '240px' : '0px'} />
       </VStack>
     </ScrollArea>
   );

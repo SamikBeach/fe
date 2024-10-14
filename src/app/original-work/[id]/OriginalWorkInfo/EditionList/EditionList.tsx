@@ -1,4 +1,4 @@
-import { VStack } from 'styled-system/jsx';
+import { VStack, VstackProps } from 'styled-system/jsx';
 import { useAtomValue } from 'jotai';
 import { originalWorkEditionSortAtom } from '@atoms/sort';
 import { useParams } from 'next/navigation';
@@ -9,7 +9,9 @@ import {
   EditionItemSkeleton,
 } from '@components/edition/EditionItem';
 
-export default function EditonList() {
+interface Props extends VstackProps {}
+
+export default function EditonList(props: Props) {
   const originalWorkEditionSort = useAtomValue(originalWorkEditionSortAtom);
 
   const params = useParams();
@@ -27,7 +29,7 @@ export default function EditonList() {
   });
 
   return (
-    <VStack pb="40px">
+    <VStack pb="40px" {...props}>
       {isLoading
         ? Array(24)
             .fill(0)

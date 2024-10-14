@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl';
 import { Dispatch, SetStateAction } from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
-import OriginalWorkSortDropdown from './OriginalWorkSortDropdown';
-import EditionSortDropdown from './EditionSortDropdown';
+import OriginalWorkSortDropdown from '../OriginalWorkSortDropdown';
+import EditionSortDropdown from '../EditionSortDropdown';
 
 interface Props {
   setSelected: Dispatch<SetStateAction<'original-works' | 'editions'>>;

@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { OriginalWorkList } from './OriginalWorkList';
 import { EditionList } from './EditionList';
 import { css } from 'styled-system/css';
-import AvatarSection from './AvatarSection';
-import AuthorBasicInfoSection from './AuthorBasicInfoSection';
-import FilterSection from './FilterSection';
+import AvatarSection from './sections/AvatarSection';
+import AuthorBasicInfoSection from './sections/AuthorBasicInfoSection';
+import FilterSection from './sections/FilterSection';
 
 const SCROLL_THRESHOLD = 319;
 
@@ -46,6 +46,7 @@ export default function AuthorInfo({ ...props }: Props) {
     >
       <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
         <AvatarSection />
+
         <VStack
           width="400px"
           gap="20px"

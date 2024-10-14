@@ -1,4 +1,4 @@
-import { VStack } from 'styled-system/jsx';
+import { VStack, VstackProps } from 'styled-system/jsx';
 import { searchOriginalWorks } from '@apis/original-work';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -10,7 +10,9 @@ import { useAtomValue } from 'jotai';
 import { authorOriginalWorkSortAtom } from '@atoms/sort';
 import { useLocale } from 'next-intl';
 
-export default function OriginalWorkList() {
+interface Props extends VstackProps {}
+
+export default function OriginalWorkList(props: Props) {
   const locale = useLocale();
 
   const authorOriginalWorkSort = useAtomValue(authorOriginalWorkSortAtom);
@@ -31,7 +33,7 @@ export default function OriginalWorkList() {
   });
 
   return (
-    <VStack pb="40px">
+    <VStack pb="40px" {...props}>
       {isLoading
         ? Array(24)
             .fill(0)

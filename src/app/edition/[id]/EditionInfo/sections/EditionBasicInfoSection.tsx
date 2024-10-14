@@ -1,19 +1,10 @@
 import { HStack, VStack } from 'styled-system/jsx';
 import { Text, Tooltip } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  addEditionLike,
-  getEditionById,
-  getEditionLikeCount,
-  getMyEditionLikeExist,
-  removeEditionLike,
-} from '@apis/edition';
-import { useAtomValue } from 'jotai';
-import { currentUserAtom } from '@atoms/user';
+import { useQuery } from '@tanstack/react-query';
+import { getEditionById } from '@apis/edition';
 import { useParams } from 'next/navigation';
-import EditionBasicInfoSkeleton from './EditionBasicInfoSkeleton';
+import EditionBasicInfoSkeleton from './EditionBasicInfoSectionSkeleton';
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
@@ -25,7 +16,11 @@ import { AiOutlineAlert } from 'react-icons/ai';
 import { ReportDialog } from '@components/common/ReportDialog';
 import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
-export default function EditionBasicInfo() {
+export default function EditionBasicInfoSection({
+  isOverThreshold,
+}: {
+  isOverThreshold: boolean;
+}) {
   const locale = useLocale();
 
   const t = useTranslations('Common');
@@ -43,15 +38,12 @@ export default function EditionBasicInfo() {
   });
 
   const {
-    id,
     title,
     publication_date,
     publisher,
-    image_url,
     author,
+    image_url,
     original_works = [],
-    isbn,
-    isbn13,
   } = edition ?? {
     id: 0,
     title: '',
@@ -60,143 +52,37 @@ export default function EditionBasicInfo() {
     publisher: '',
   };
 
-  const currentUser = useAtomValue(currentUserAtom);
-
-  const { mutate: addLike } = useMutation({
-    mutationFn: () => {
-      if (currentUser === null) {
-        throw new Error('User is not logged in');
-      }
-
-      return addEditionLike({
-        editionId: id,
-        userId: currentUser.id,
-      });
-    },
-    onSuccess: () => {
-      refetchEditionLike();
-      refetchEditionAllLikes();
-    },
-  });
-
-  const { mutate: removeLike } = useMutation({
-    mutationFn: () => {
-      if (currentUser === null) {
-        throw new Error('User is not logged in');
-      }
-
-      return removeEditionLike({
-        editionId: id,
-        userId: currentUser.id,
-      });
-    },
-    onSuccess: () => {
-      refetchEditionLike();
-      refetchEditionAllLikes();
-    },
-  });
-
-  const {
-    data: editionLike,
-    isLoading: isLoadingEditionLike,
-    refetch: refetchEditionLike,
-  } = useQuery({
-    queryKey: ['edition-like', id],
-    queryFn: () => {
-      if (currentUser === null) {
-        throw new Error('User is not logged in');
-      }
-
-      return getMyEditionLikeExist({
-        editionId: id,
-        userId: currentUser.id,
-      });
-    },
-    enabled: currentUser != null,
-    select: response => response.data,
-  });
-
-  const {
-    data: editionAllLikes,
-    isLoading: isLoadingEditionAllLikes,
-    refetch: refetchEditionAllLikes,
-  } = useQuery({
-    queryKey: ['edition-like/count', id],
-    queryFn: () => getEditionLikeCount({ editionId: id }),
-    select: response => response.data.count,
-  });
-
-  const isLoading =
-    isLoadingEdition || isLoadingEditionLike || isLoadingEditionAllLikes;
-
-  if (isLoading) {
+  if (isLoadingEdition) {
     return <EditionBasicInfoSkeleton />;
   }
 
   return (
     <>
       <VStack alignItems="start" gap="20px" width="100%">
-        <VStack position="relative" width="100%">
-          <Link
-            target="_blank"
-            href={`https://www.aladin.co.kr/shop/wproduct.aspx?isbn=${isbn13 ?? isbn}`}
-          >
-            <img
-              src={image_url ?? undefined}
-              className={css({
-                width: '140px',
-                margin: '0 auto',
-                cursor: 'pointer',
-                _hover: {
-                  scale: 1.05,
-                },
-                transition: 'scale 0.2s ease-in-out',
-              })}
-            />
-          </Link>
-          <HStack
-            className={css({
-              zIndex: 2,
-              position: 'absolute',
-              right: '20px',
-              bottom: '0px',
-            })}
-            gap="2px"
-          >
-            <Text size="5" color="gray" className={css({ userSelect: 'none' })}>
-              {editionAllLikes}
-            </Text>
-            {editionLike?.isExist ? (
-              <HeartFilledIcon
-                color="gray"
-                width="22px"
-                height="22px"
-                cursor="pointer"
-                onClick={() => removeLike()}
-              />
-            ) : (
-              <HeartIcon
-                color="gray"
-                width="22px"
-                height="22px"
-                cursor="pointer"
-                onClick={() => {
-                  if (currentUser === null) {
-                    setOpenLoginAlertDialog(true);
-                  }
-
-                  addLike();
-                }}
-              />
-            )}
-          </HStack>
-        </VStack>
         <VStack alignItems="start" gap="4px">
           <VStack alignItems="start" gap="0px">
             <HStack>
-              <Text size="6" weight="bold">
-                {title}
-              </Text>
+              <HStack gap={isOverThreshold ? '8px' : '0px'}>
+                <img
+                  src={image_url ?? undefined}
+                  className={css({
+                    margin: '0 auto',
+                    cursor: 'pointer',
+
+                    height: isOverThreshold ? '30px' : '0px',
+
+                    _hover: {
+                      scale: 1.05,
+                    },
+
+                    transition:
+                      'height 0.2s ease-in-out, scale 0.2s ease-in-out',
+                  })}
+                />
+                <Text size="6" weight="bold">
+                  {title}
+                </Text>
+              </HStack>
               <Tooltip content={t('report_incorrect_information')}>
                 <span>
                   <AiOutlineAlert

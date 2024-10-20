@@ -167,8 +167,6 @@ export default function EditionCommentList() {
         <CommentEditor
           onSubmit={({ comment }) => {
             addComment({ comment });
-
-            commentListBoxRef.current?.scroll({ top: 99999 });
           }}
         />
       </div>

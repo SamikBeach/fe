@@ -170,8 +170,6 @@ export default function AuthorCommentList() {
         <CommentEditor
           onSubmit={({ comment }) => {
             addComment({ comment });
-
-            commentListBoxRef.current?.scroll({ top: 99999 });
           }}
         />
       </div>

@@ -24,8 +24,6 @@ const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
         gap="20px"
         width="800px"
         padding="40px"
-        // NOTE: scroll margin
-        pb="120px"
       >
         {children}
       </VStack>

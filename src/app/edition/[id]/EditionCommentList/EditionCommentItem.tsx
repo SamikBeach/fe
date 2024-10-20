@@ -150,6 +150,7 @@ export default function EditionCommentItem({
         />
       ) : (
         <CommentItem
+          key={commentProps.comment}
           onClickLike={() => (myLikeExist ? removeLike() : addLike())}
           onClickToggleShowSubComments={() => {
             setShowSubComments(prev => !prev);

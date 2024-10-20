@@ -5,7 +5,7 @@ import {
   VstackProps,
   styled,
 } from 'styled-system/jsx';
-import { Button, DropdownMenu, IconButton, Text } from '@radix-ui/themes';
+import { DropdownMenu, IconButton, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 
 import { formatDistanceToNow } from 'date-fns';
@@ -24,10 +24,6 @@ import { UserAvatar } from '@components/user';
 import { Item } from './Item';
 import { getEditorConfig } from './Item/utils';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getRoot } from 'lexical';
-
-const MAX_COMMENT_LENGTH = 120;
 
 interface Props extends HstackProps {
   onClickLike: () => void;
@@ -63,23 +59,11 @@ function CommentItem({
 
   const currentUser = useAtomValue(currentUserAtom);
 
-  const [editor] = useLexicalComposerContext();
-
-  const textContent = editor.getEditorState().read(() => {
-    const root = $getRoot();
-
-    return root.getTextContent();
-  });
-
-  const commentLength = textContent.length;
+  // const [editor] = useLexicalComposerContext();
 
   const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] =
     useState(false);
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
-
-  const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
-    commentLength > MAX_COMMENT_LENGTH
-  );
 
   const isMyComment = currentUser?.id === user.id;
 
@@ -162,10 +146,9 @@ function CommentItem({
                 )}
               </HStack>
               <Text>
-                {isSeeMoreButtonShown ? (
-                  <>
-                    <Item />
-                    <Button
+                <>
+                  <Item />
+                  {/* <Button
                       variant="ghost"
                       size="1"
                       onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
@@ -184,11 +167,8 @@ function CommentItem({
                       })}
                     >
                       {t('see_more')}
-                    </Button>
-                  </>
-                ) : (
-                  <Item />
-                )}
+                    </Button> */}
+                </>
               </Text>
             </CommentBox>
             <HStack justify="space-between" width="100%">

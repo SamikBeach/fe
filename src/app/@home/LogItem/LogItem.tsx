@@ -2,13 +2,11 @@
 import { AuthorAvatar } from '@components/author/AuthorAvatar';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 import { LogServerModel } from '@models/log';
-import { Button } from '@radix-ui/themes';
 import { formatDistanceToNow } from 'date-fns';
 import { getJosaPicker } from 'josa';
 import { isNil } from 'lodash';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useState } from 'react';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
 import { VStack, styled } from 'styled-system/jsx';
@@ -18,8 +16,6 @@ import { UserAvatar } from '@components/user';
 import { Item } from '@components/common/Comment/Item';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { getEditorConfig } from '@components/common/Comment/Item/utils';
-
-const MAX_COMMENT_LENGTH = 120;
 
 interface Props {
   log: LogServerModel;
@@ -47,10 +43,6 @@ export default function LogItem({ log }: Props) {
     isAuthorComment || isOriginalWorkComment || isEditionComment;
 
   const comment = author_comment || original_work_comment || edition_comment;
-
-  const [isSeeMoreButtonShown, setIsSeeMoreButtonShown] = useState(
-    !isNil(comment) && comment.comment.length > MAX_COMMENT_LENGTH
-  );
 
   const isAuthor = !isNil(target_author);
   const isOriginalWork = !isNil(target_original_work);
@@ -294,10 +286,9 @@ export default function LogItem({ log }: Props) {
               whiteSpace: 'pre-wrap',
             })}
           >
-            {isSeeMoreButtonShown ? (
-              <>
-                <Item />
-                <Button
+            <>
+              <Item />
+              {/* <Button
                   variant="ghost"
                   size="1"
                   onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
@@ -315,11 +306,8 @@ export default function LogItem({ log }: Props) {
                   })}
                 >
                   {t('see_more')}
-                </Button>
-              </>
-            ) : (
-              <Item />
-            )}
+                </Button> */}
+            </>
           </p>
         )}
       </VStack>

@@ -174,6 +174,12 @@ const CommentEditor = forwardRef<Handle, Props>(
       });
     };
 
+    useEffect(() => {
+      if (getIsEditorStateEmpty(editor)) {
+        setCommentFromProps?.(null);
+      }
+    }, [editor, comment, setCommentFromProps]);
+
     return (
       <>
         <HStack alignItems="start" width="100%" justify="end">

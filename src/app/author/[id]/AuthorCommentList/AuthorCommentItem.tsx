@@ -149,8 +149,6 @@ export default function AuthorCommentItem({
   }: {
     user: UserServerModel;
   }) => {
-    commentEditorRef.current?.focus();
-
     const comment = `{"root":{"children":[{"children":[{"trigger":"@","value":"${userParam.nickname}","data":{"id":${userParam.id},"type":"user"},"type":"custom-beautifulMention","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}`;
 
     setSubComment(comment);
@@ -158,6 +156,10 @@ export default function AuthorCommentItem({
     commentEditorWrapperRef.current?.scrollIntoView({
       block: 'center',
     });
+
+    setTimeout(() => {
+      commentEditorRef.current?.focus();
+    }, 0);
   };
 
   return (

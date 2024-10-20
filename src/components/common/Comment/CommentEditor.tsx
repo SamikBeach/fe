@@ -18,7 +18,7 @@ import { searchUsers } from '@apis/user';
 import { getEditorConfig, getIsEditorStateEmpty } from './Editor/utils';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
+import { $getRoot } from 'lexical';
 import { searchUserValueAtom, searchValueAtom } from './atoms';
 
 interface Props {
@@ -26,7 +26,7 @@ interface Props {
     comment,
     commentId,
   }: {
-    comment?: string;
+    comment: string;
     commentId?: number;
   }) => void;
   onClose?: () => void;
@@ -130,11 +130,6 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
         // 현재 root를 가져와서 clear한 뒤, 빈 단락 노드를 추가
         const root = $getRoot();
         root.clear(); // 기존 내용을 제거
-
-        const paragraphNode = $createParagraphNode(); // 빈 단락 생성
-        const textNode = $createTextNode(''); // 빈 텍스트 노드 추가
-        paragraphNode.append(textNode);
-        root.append(paragraphNode); // 루트에 빈 단락 추가
       });
     };
 
@@ -163,8 +158,15 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
                   setOpenAlertDialog(true);
                 }
               }}
-              onKeyDown={e => {
+              onKeyDownCapture={e => {
+                if (comment == null) {
+                  return;
+                }
+
                 if (e.metaKey && e.key === 'Enter') {
+                  e.stopPropagation();
+                  e.preventDefault();
+
                   if (getIsEditorStateEmpty(editor)) {
                     return;
                   }
@@ -182,6 +184,10 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
             />
             <Button
               onClick={() => {
+                if (comment == null) {
+                  return;
+                }
+
                 if (currentUser === null) {
                   setOpenLoginAlertDialog(true);
 

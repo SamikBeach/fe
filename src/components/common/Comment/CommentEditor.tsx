@@ -66,7 +66,6 @@ const CommentEditor = forwardRef<Handle, Props>(
     const [editor] = useLexicalComposerContext();
 
     useEffect(() => {
-      console.log({ commentProps });
       editor.update(() => {
         if (commentProps != null) {
           const newEditorState = editor.parseEditorState(
@@ -80,9 +79,7 @@ const CommentEditor = forwardRef<Handle, Props>(
 
     useImperativeHandle(ref, () => ({
       focus: () => {
-        console.log(textAreaRef.current);
         textAreaRef.current?.focus();
-        console.log('focus');
       },
     }));
 

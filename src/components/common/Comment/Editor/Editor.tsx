@@ -74,6 +74,25 @@ const Editor = forwardRef<HTMLDivElement, Props>(
                   paddingRight: '90px',
                   fontSize: '14px',
                   minHeight: '54px',
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+
+                  _scrollbar: {
+                    width: '5px',
+                    borderRadius: '3px',
+                  },
+
+                  _scrollbarTrack: {
+                    width: '5px',
+                    backgroundColor: 'gray.100',
+                    mr: '80px',
+                  },
+
+                  _scrollbarThumb: {
+                    width: '5px',
+                    backgroundColor: 'gray.300',
+                    borderRadius: '6px',
+                  },
 
                   _focus: {
                     outlineColor: 'gray.400',

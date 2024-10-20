@@ -28,6 +28,7 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 interface Props extends HstackProps {
   onClickLike: () => void;
   onClickToggleShowSubComments?: () => void;
+  onClickReply?: () => void;
   onDelete?: () => void;
   onEdit?: () => void;
   likeCount: number;
@@ -42,6 +43,7 @@ interface Props extends HstackProps {
 function CommentItem({
   onClickLike,
   onClickToggleShowSubComments,
+  onClickReply,
   onDelete,
   onEdit,
   likeCount,
@@ -209,6 +211,7 @@ function CommentItem({
                     }
 
                     onClickToggleShowSubComments?.();
+                    onClickReply?.();
                   }}
                 >
                   {t('reply')}

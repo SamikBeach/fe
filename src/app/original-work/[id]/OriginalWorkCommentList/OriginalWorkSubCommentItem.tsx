@@ -13,17 +13,20 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useState } from 'react';
+import { UserServerModel } from '@models/user';
 
 interface Props {
   comment: CommentServerModel;
   onDelete: () => void;
   onEdit: () => void;
+  onClickReply: ({ user }: { user: UserServerModel }) => void;
 }
 
 export default function SubCommentItem({
   comment: commentProps,
   onDelete,
   onEdit,
+  onClickReply,
 }: Props) {
   const { id, user } = commentProps;
 
@@ -124,7 +127,7 @@ export default function SubCommentItem({
     <CommentEditor
       onSubmit={updateComment}
       onClose={() => setIsEditing(false)}
-      comment={commentProps}
+      comment={commentProps.comment}
       width="630px"
     />
   ) : (
@@ -139,6 +142,7 @@ export default function SubCommentItem({
       user={user}
       comment={commentProps}
       width="630px"
+      onClickReply={() => onClickReply({ user })}
     />
   );
 }

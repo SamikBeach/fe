@@ -16,6 +16,7 @@ import AuthorSubCommentItem from './AuthorSubCommentItem';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { css } from 'styled-system/css';
+import { UserServerModel } from '@models/user';
 
 interface Props {
   authorId: number;
@@ -29,6 +30,7 @@ export default function AuthorCommentItem({
   onUpdate,
 }: Props) {
   const commentEditorWrapperRef = useRef<HTMLDivElement>(null);
+  const commentEditorRef = useRef<HTMLDivElement>(null);
 
   const {
     id,
@@ -140,13 +142,31 @@ export default function AuthorCommentItem({
     },
   });
 
+  const [subComment, setSubComment] = useState<string | null>(null);
+
+  const handleClickReplySubComment = ({
+    user: userParam,
+  }: {
+    user: UserServerModel;
+  }) => {
+    commentEditorRef.current?.focus();
+
+    const comment = `{"root":{"children":[{"children":[{"trigger":"@","value":"${userParam.nickname}","data":{"id":${userParam.id},"type":"user"},"type":"custom-beautifulMention","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}`;
+
+    setSubComment(comment);
+
+    commentEditorWrapperRef.current?.scrollIntoView({
+      block: 'center',
+    });
+  };
+
   return (
     <VStack width="100%">
       {isEditing ? (
         <CommentEditor
           onSubmit={updateComment}
           onClose={() => setIsEditing(false)}
-          comment={commentProps}
+          comment={commentProps.comment}
         />
       ) : (
         <CommentItem
@@ -167,12 +187,13 @@ export default function AuthorCommentItem({
         />
       )}
       {showSubComments &&
-        subComments.map(subComment => (
+        subComments.map(_subComment => (
           <AuthorSubCommentItem
-            key={subComment.id}
-            comment={subComment}
+            key={_subComment.id}
+            comment={_subComment}
             onDelete={refetchGetAllAuthorSubCommentsByCommentId}
             onEdit={refetchGetAllAuthorSubCommentsByCommentId}
+            onClickReply={handleClickReplySubComment}
           />
         ))}
       {showSubComments && (
@@ -181,12 +202,15 @@ export default function AuthorCommentItem({
           className={css({ width: '100%', pl: '48px' })}
         >
           <CommentEditor
+            ref={commentEditorRef}
             onSubmit={({ comment }) => {
               addComment({ comment });
               commentEditorWrapperRef.current?.scrollIntoView({
                 block: 'center',
               });
             }}
+            comment={subComment ?? undefined}
+            setComment={setSubComment}
           />
         </div>
       )}

@@ -26,7 +26,7 @@ interface Props extends HTMLProps<HTMLDivElement> {
 const Editor = forwardRef<HTMLDivElement, Props>(
   (
     { comment, setComment, className, placeholder, mentionItems, ...props },
-    _
+    ref
   ) => {
     const setSearchValue = useSetAtom(searchValueAtom);
     const setSearchUserValue = useSetAtom(searchUserValueAtom);
@@ -43,6 +43,7 @@ const Editor = forwardRef<HTMLDivElement, Props>(
         <RichTextPlugin
           contentEditable={
             <ContentEditable
+              ref={ref}
               autoFocus
               aria-placeholder={placeholder}
               placeholder={

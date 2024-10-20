@@ -1,10 +1,15 @@
 import { currentUserAtom } from '@atoms/user';
-import { CommentServerModel } from '@models/comment';
 import { AlertDialog, Avatar, Button } from '@radix-ui/themes';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
-import { forwardRef, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 import { LoginAlertDialog } from '../LoginAlertDialog';
@@ -30,12 +35,26 @@ interface Props {
     commentId?: number;
   }) => void;
   onClose?: () => void;
-  comment?: CommentServerModel;
+  comment?: string;
+  setComment?: (comment: string | null) => void;
   width?: string;
 }
 
-const CommentEditor = forwardRef<HTMLDivElement, Props>(
-  ({ onSubmit, onClose, comment: commentProps, width = '100%' }, ref) => {
+interface Handle {
+  focus: () => void;
+}
+
+const CommentEditor = forwardRef<Handle, Props>(
+  (
+    {
+      onSubmit,
+      setComment: setCommentFromProps,
+      onClose,
+      comment: commentProps,
+      width = '100%',
+    },
+    ref
+  ) => {
     const t = useTranslations('Common');
 
     const locale = useLocale();
@@ -46,7 +65,28 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
 
     const [editor] = useLexicalComposerContext();
 
-    const [comment, setComment] = useState(commentProps?.comment);
+    useEffect(() => {
+      console.log({ commentProps });
+      editor.update(() => {
+        if (commentProps != null) {
+          const newEditorState = editor.parseEditorState(
+            JSON.parse(commentProps)
+          );
+
+          editor.setEditorState(newEditorState);
+        }
+      });
+    }, [commentProps, editor]);
+
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        console.log(textAreaRef.current);
+        textAreaRef.current?.focus();
+        console.log('focus');
+      },
+    }));
+
+    const [comment, setComment] = useState(commentProps);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
@@ -125,6 +165,7 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
 
     const handleResetComment = () => {
       setComment(undefined);
+      setCommentFromProps?.(null);
 
       editor.update(() => {
         // 현재 root를 가져와서 clear한 뒤, 빈 단락 노드를 추가
@@ -135,7 +176,7 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
 
     return (
       <>
-        <HStack ref={ref} alignItems="start" width="100%" justify="end">
+        <HStack alignItems="start" width="100%" justify="end">
           <Avatar
             fallback={currentUser?.nickname?.[0] ?? ''}
             radius="full"
@@ -173,8 +214,6 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
 
                   onSubmit({ comment });
                   handleResetComment();
-
-                  textAreaRef.current?.focus();
                 }
 
                 if (isEditMode && e.key === 'Escape') {
@@ -197,8 +236,6 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
                 onSubmit({ comment });
 
                 handleResetComment();
-
-                textAreaRef.current?.focus();
               }}
               size="2"
               variant="outline"
@@ -244,9 +281,7 @@ const CommentEditor = forwardRef<HTMLDivElement, Props>(
                   onClick={() => {
                     setOpenAlertDialog(false);
 
-                    setTimeout(() => {
-                      textAreaRef.current?.focus();
-                    }, 100);
+                    textAreaRef.current?.focus();
                   }}
                   className={css({ cursor: 'pointer' })}
                 >
@@ -269,7 +304,7 @@ const CommentEditorWithLexicalComposer = forwardRef<HTMLDivElement, Props>(
   (props, ref) => {
     return (
       <LexicalComposer
-        initialConfig={getEditorConfig({ comment: props.comment?.comment })}
+        initialConfig={getEditorConfig({ comment: props.comment })}
       >
         <CommentEditor ref={ref} {...props} />
       </LexicalComposer>

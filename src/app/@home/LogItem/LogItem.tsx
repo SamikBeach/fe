@@ -277,7 +277,7 @@ export default function LogItem({ log }: Props) {
           {createdAt}
         </span>
         {isComment && comment !== undefined && (
-          <p
+          <div
             className={css({
               backgroundColor: ' gray.100',
               padding: '14px',
@@ -308,7 +308,7 @@ export default function LogItem({ log }: Props) {
                   {t('see_more')}
                 </Button> */}
             </>
-          </p>
+          </div>
         )}
       </VStack>
     </LexicalComposer>

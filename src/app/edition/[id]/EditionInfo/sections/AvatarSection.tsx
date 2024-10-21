@@ -1,5 +1,5 @@
 import { HStack, VStack } from 'styled-system/jsx';
-import { Text } from '@radix-ui/themes';
+import { Skeleton, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -23,7 +23,7 @@ export default function AvatarSection() {
 
   const [openLoginAlertDialog, setOpenLoginAlertDialog] = useState(false);
 
-  const { data: edition } = useQuery({
+  const { data: edition, isLoading: isLoadingEdition } = useQuery({
     queryKey: ['edition', params.id],
     queryFn: () => getEditionById({ id: editionId }),
     select: response => response.data,
@@ -98,23 +98,29 @@ export default function AvatarSection() {
   return (
     <>
       <VStack position="relative" width="100%">
-        <Link
-          target="_blank"
-          href={`https://www.aladin.co.kr/shop/wproduct.aspx?isbn=${isbn13 ?? isbn}`}
-        >
-          <img
-            src={image_url ?? undefined}
-            className={css({
-              width: '140px',
-              margin: '0 auto',
-              cursor: 'pointer',
-              _hover: {
-                scale: 1.05,
-              },
-              transition: 'scale 0.2s ease-in-out',
-            })}
-          />
-        </Link>
+        <VStack justify="center">
+          {isLoadingEdition ? (
+            <Skeleton width="140px" height="208px" />
+          ) : (
+            <Link
+              target="_blank"
+              href={`https://www.aladin.co.kr/shop/wproduct.aspx?isbn=${isbn13 ?? isbn}`}
+            >
+              <img
+                src={image_url ?? undefined}
+                className={css({
+                  width: '140px',
+                  margin: '0 auto',
+                  cursor: 'pointer',
+                  _hover: {
+                    scale: 1.05,
+                  },
+                  transition: 'scale 0.2s ease-in-out',
+                })}
+              />
+            </Link>
+          )}
+        </VStack>
         <HStack
           className={css({
             zIndex: 2,

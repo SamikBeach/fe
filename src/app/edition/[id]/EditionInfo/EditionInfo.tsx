@@ -53,6 +53,7 @@ export default function EditionInfo({ ...props }: Props) {
           pb="10px"
           borderBottom={isOverThreshold ? '1px solid' : 'none'}
           borderColor={isOverThreshold ? 'gray.200' : 'none'}
+          alignItems="start"
         >
           <EditionBasicInfoSection isOverThreshold={isOverThreshold} />
           <FilterSection />

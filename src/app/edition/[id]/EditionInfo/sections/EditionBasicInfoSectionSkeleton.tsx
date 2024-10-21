@@ -3,7 +3,7 @@ import { VStack } from 'styled-system/jsx';
 
 export default function EditionBasicInfoSectionSkeleton() {
   return (
-    <VStack alignItems="start" gap="6px">
+    <VStack alignItems="start" gap="6px" mb="20px">
       <Skeleton height="28px" width="200px" />
       <Skeleton height="22px" width="140px" />
       <Skeleton height="22px" width="100px" />

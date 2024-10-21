@@ -51,10 +51,12 @@ export default function AuthorCommentItem({
   );
 
   const [isMyLikeExist, setIsMyLikeExist] = useState(() => myLikeExist);
+  const [likeCount, setLikeCount] = useState(like_count);
 
   useEffect(() => {
     setIsMyLikeExist(myLikeExist);
-  }, [myLikeExist]);
+    setLikeCount(like_count);
+  }, [myLikeExist, like_count]);
 
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
@@ -69,6 +71,7 @@ export default function AuthorCommentItem({
     },
     onSuccess: () => {
       setIsMyLikeExist(true);
+      setLikeCount(prev => prev + 1);
     },
   });
 
@@ -85,6 +88,7 @@ export default function AuthorCommentItem({
     },
     onSuccess: () => {
       setIsMyLikeExist(false);
+      setLikeCount(prev => prev - 1);
     },
   });
 
@@ -185,7 +189,7 @@ export default function AuthorCommentItem({
           }}
           onEdit={() => setIsEditing(true)}
           onDelete={deleteComment}
-          likeCount={like_count}
+          likeCount={likeCount}
           subCommentCount={comment_count}
           myLikeExist={isMyLikeExist}
           isShowSubComments={showSubComments}

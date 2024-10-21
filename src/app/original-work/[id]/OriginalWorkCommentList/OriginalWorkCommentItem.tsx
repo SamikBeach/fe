@@ -191,8 +191,7 @@ export default function OriginalWorkCommentItem({
           <OriginalWorkSubCommentItem
             key={_subComment.id}
             comment={_subComment}
-            onDelete={refetchGetAllOriginalWorkSubCommentsByCommentId}
-            onEdit={refetchGetAllOriginalWorkSubCommentsByCommentId}
+            onUpdate={refetchGetAllOriginalWorkSubCommentsByCommentId}
             onClickReply={handleClickReplySubComment}
           />
         ))}

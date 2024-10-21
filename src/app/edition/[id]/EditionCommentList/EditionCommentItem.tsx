@@ -191,8 +191,7 @@ export default function EditionCommentItem({
           <EditionSubCommentItem
             key={_subComment.id}
             comment={_subComment}
-            onDelete={refetchGetAllEditionSubCommentsByCommentId}
-            onEdit={refetchGetAllEditionSubCommentsByCommentId}
+            onUpdate={refetchGetAllEditionSubCommentsByCommentId}
             onClickReply={handleClickReplySubComment}
           />
         ))}

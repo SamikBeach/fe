@@ -193,8 +193,7 @@ export default function AuthorCommentItem({
           <AuthorSubCommentItem
             key={_subComment.id}
             comment={_subComment}
-            onDelete={refetchGetAllAuthorSubCommentsByCommentId}
-            onEdit={refetchGetAllAuthorSubCommentsByCommentId}
+            onUpdate={refetchGetAllAuthorSubCommentsByCommentId}
             onClickReply={handleClickReplySubComment}
           />
         ))}

@@ -4,12 +4,10 @@ import { currentUserAtom } from '@atoms/user';
 import {
   addAuthorCommentLike,
   deleteAuthorComment,
-  getAuthorCommentLikeCount,
-  getMyAuthorCommentLikeExist,
   removeAuthorCommentLike,
   updateAuthorComment,
 } from '@apis/author';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
 import { useState } from 'react';
@@ -17,22 +15,24 @@ import { UserServerModel } from '@models/user';
 
 interface Props {
   comment: CommentServerModel;
-  onDelete: () => void;
-  onEdit: () => void;
+  onUpdate: () => void;
   onClickReply: ({ user }: { user: UserServerModel }) => void;
 }
 
 export default function SubCommentItem({
   comment: commentProps,
-  onDelete,
-  onEdit,
+  onUpdate,
   onClickReply,
 }: Props) {
-  const { id, user } = commentProps;
+  const { id, user, like_count, liked_users = [] } = commentProps;
 
   const [isEditing, setIsEditing] = useState(false);
 
   const currentUser = useAtomValue(currentUserAtom);
+
+  const myLikeExist = liked_users.some(
+    likedUser => likedUser.id === currentUser?.id
+  );
 
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
@@ -46,8 +46,7 @@ export default function SubCommentItem({
       });
     },
     onSuccess: () => {
-      refetchAuthorCommentLike();
-      refetchAuthorCommentAllLikes();
+      onUpdate();
     },
   });
 
@@ -63,26 +62,8 @@ export default function SubCommentItem({
       });
     },
     onSuccess: () => {
-      refetchAuthorCommentLike();
-      refetchAuthorCommentAllLikes();
+      onUpdate();
     },
-  });
-
-  const { data: authorCommentLike, refetch: refetchAuthorCommentLike } =
-    useQuery({
-      queryKey: ['author-comment-like', id],
-      queryFn: () =>
-        getMyAuthorCommentLikeExist({ authorCommentId: id, userId: 1 }),
-      select: response => response.data,
-    });
-
-  const {
-    data: authorCommentAllLikes = 0,
-    refetch: refetchAuthorCommentAllLikes,
-  } = useQuery({
-    queryKey: ['author-comment-like/count', id],
-    queryFn: () => getAuthorCommentLikeCount({ authorCommentId: id }),
-    select: response => response.data.count,
   });
 
   const { mutate: deleteComment } = useMutation({
@@ -96,7 +77,7 @@ export default function SubCommentItem({
       });
     },
     onSuccess: () => {
-      onDelete();
+      onUpdate();
     },
   });
 
@@ -113,7 +94,7 @@ export default function SubCommentItem({
     },
     onSuccess: () => {
       setIsEditing(false);
-      onEdit();
+      onUpdate();
     },
   });
 
@@ -126,13 +107,11 @@ export default function SubCommentItem({
     />
   ) : (
     <CommentItem
-      onClickLike={() =>
-        authorCommentLike?.isExist ? removeLike() : addLike()
-      }
+      onClickLike={() => (myLikeExist ? removeLike() : addLike())}
       onEdit={() => setIsEditing(true)}
       onDelete={deleteComment}
-      likeCount={authorCommentAllLikes}
-      myLikeExist={authorCommentLike?.isExist ?? false}
+      likeCount={like_count}
+      myLikeExist={myLikeExist}
       user={user}
       comment={commentProps}
       width="630px"

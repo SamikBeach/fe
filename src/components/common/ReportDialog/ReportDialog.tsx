@@ -196,7 +196,6 @@ export default function ReportDialog({
                     position: 'bottom-right',
                     autoClose: 3000,
                     hideProgressBar: true,
-                    className: css({ zIndex: 10000 }),
                   });
 
                   onReport?.();

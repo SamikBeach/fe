@@ -1,6 +1,7 @@
 import { AlertDialog, Button } from '@radix-ui/themes';
 import { useTranslations } from 'next-intl';
 import { ComponentProps } from 'react';
+import { toast } from 'react-toastify';
 import { css } from 'styled-system/css';
 import { HStack } from 'styled-system/jsx';
 
@@ -23,6 +24,13 @@ export default function DeleteConfirmDialog({ onDelete, ...props }: Props) {
             <Button
               onClick={() => {
                 props.onOpenChange?.(false);
+
+                toast.success(t('delete_comment_success_toast'), {
+                  position: 'bottom-right',
+                  autoClose: 3000,
+                  hideProgressBar: true,
+                });
+
                 onDelete?.();
               }}
               className={css({ cursor: 'pointer' })}

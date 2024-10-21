@@ -70,7 +70,8 @@
     "terms_of_service": "Terms of Service",
     "privacy_policy": "Privacy policy",
     "see_less": "Hide",
-    "report_success_toast": "The error report has been completed."
+    "report_success_toast": "The error report has been completed.",
+    "delete_comment_success_toast": "I deleted the comment."
   },
   "Home": {
     "trending_now": "Trending Now",

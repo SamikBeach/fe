@@ -71,7 +71,8 @@
     "terms_of_service": "이용약관",
     "privacy_policy": "개인정보 처리방침",
     "see_less": "숨기기",
-    "report_success_toast": "오류 제보를 완료했어요."
+    "report_success_toast": "오류 제보를 완료했어요.",
+    "delete_comment_success_toast": "댓글을 삭제했어요."
   },
   "Home": {
     "trending_now": "실시간 인기",

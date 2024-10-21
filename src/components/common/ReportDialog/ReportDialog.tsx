@@ -16,6 +16,7 @@ import { getJosaPicker } from 'josa';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { ComponentProps, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { css } from 'styled-system/css';
 import { HStack, VStack } from 'styled-system/jsx';
 
@@ -123,93 +124,104 @@ export default function ReportDialog({
   });
 
   return (
-    <AlertDialog.Root {...props}>
-      <AlertDialog.Content maxWidth="600px">
-        <AlertDialog.Title>
-          {t.rich('report_dialog_title', {
-            targetInKr,
-            target,
-            Josa: () => targetInKr != null && getJosaPicker('와')(targetInKr),
-          })}
-        </AlertDialog.Title>
-        <AlertDialog.Description />
-        <VStack alignItems="start" width="100%" py="10px" gap="20px">
-          <RadioCards.Root
-            defaultValue={selectedReportType}
-            onValueChange={value =>
-              setSelectedReportType(
-                value as 'author' | 'original-work' | 'edition'
-              )
-            }
-          >
-            <VStack alignItems="start" gap="4px" width="100%">
-              {isAuthorReportDialog &&
-                AUTHOR_REPORT_RADIO_CARD_ITEMS.map(item => (
-                  <RadioCards.Item
-                    key={item.value}
-                    value={item.value}
-                    className={css({ cursor: 'pointer', padding: '10px' })}
-                  >
-                    {t(item.tKey)}
-                  </RadioCards.Item>
-                ))}
-              {isOriginalWorkReportDialog &&
-                ORIGINAL_WORK_REPORT_RADIO_CARD_ITEMS.map(item => (
-                  <RadioCards.Item
-                    key={item.value}
-                    value={item.value}
-                    className={css({ cursor: 'pointer', padding: '10px' })}
-                  >
-                    {t(item.tKey)}
-                  </RadioCards.Item>
-                ))}
-              {isEditionReportDialog &&
-                EDITION_REPORT_RADIO_CARD_ITEMS.map(item => (
-                  <RadioCards.Item
-                    key={item.value}
-                    value={item.value}
-                    className={css({ cursor: 'pointer', padding: '10px' })}
-                  >
-                    {t(item.tKey)}
-                  </RadioCards.Item>
-                ))}
+    <>
+      <AlertDialog.Root {...props}>
+        <AlertDialog.Content maxWidth="600px">
+          <AlertDialog.Title>
+            {t.rich('report_dialog_title', {
+              targetInKr,
+              target,
+              Josa: () => targetInKr != null && getJosaPicker('와')(targetInKr),
+            })}
+          </AlertDialog.Title>
+          <AlertDialog.Description />
+          <VStack alignItems="start" width="100%" py="10px" gap="20px">
+            <RadioCards.Root
+              defaultValue={selectedReportType}
+              onValueChange={value =>
+                setSelectedReportType(
+                  value as 'author' | 'original-work' | 'edition'
+                )
+              }
+            >
+              <VStack alignItems="start" gap="4px" width="100%">
+                {isAuthorReportDialog &&
+                  AUTHOR_REPORT_RADIO_CARD_ITEMS.map(item => (
+                    <RadioCards.Item
+                      key={item.value}
+                      value={item.value}
+                      className={css({ cursor: 'pointer', padding: '10px' })}
+                    >
+                      {t(item.tKey)}
+                    </RadioCards.Item>
+                  ))}
+                {isOriginalWorkReportDialog &&
+                  ORIGINAL_WORK_REPORT_RADIO_CARD_ITEMS.map(item => (
+                    <RadioCards.Item
+                      key={item.value}
+                      value={item.value}
+                      className={css({ cursor: 'pointer', padding: '10px' })}
+                    >
+                      {t(item.tKey)}
+                    </RadioCards.Item>
+                  ))}
+                {isEditionReportDialog &&
+                  EDITION_REPORT_RADIO_CARD_ITEMS.map(item => (
+                    <RadioCards.Item
+                      key={item.value}
+                      value={item.value}
+                      className={css({ cursor: 'pointer', padding: '10px' })}
+                    >
+                      {t(item.tKey)}
+                    </RadioCards.Item>
+                  ))}
+              </VStack>
+            </RadioCards.Root>
+            <VStack gap="4px" alignItems="start" width="100%">
+              <Text size="2">{t('report_dialog_text_area_description')}</Text>
+              <TextArea
+                value={reportText}
+                onChange={e => setReportText(e.currentTarget.value)}
+                className={css({ width: '100%' })}
+              />
             </VStack>
-          </RadioCards.Root>
-          <VStack gap="4px" alignItems="start" width="100%">
-            <Text size="2">{t('report_dialog_text_area_description')}</Text>
-            <TextArea
-              value={reportText}
-              onChange={e => setReportText(e.currentTarget.value)}
-              className={css({ width: '100%' })}
-            />
           </VStack>
-        </VStack>
-        <HStack mt="30px" justify="end">
-          <AlertDialog.Action onClick={e => e.preventDefault()}>
-            <Button
-              onClick={() => {
-                mutatePostReport();
-                onReport?.();
-              }}
-              className={css({ cursor: 'pointer' })}
-            >
-              {t('report')}
-            </Button>
-          </AlertDialog.Action>
-          <AlertDialog.Cancel>
-            <Button
-              variant="outline"
-              onClick={() => {
-                props.onOpenChange?.(false);
-                setReportText('');
-              }}
-              className={css({ cursor: 'pointer' })}
-            >
-              {t('cancel')}
-            </Button>
-          </AlertDialog.Cancel>
-        </HStack>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
+          <HStack mt="30px" justify="end">
+            <AlertDialog.Action onClick={e => e.preventDefault()}>
+              <Button
+                onClick={() => {
+                  mutatePostReport();
+
+                  toast.success(t('report_success_toast'), {
+                    position: 'bottom-right',
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    className: css({ zIndex: 10000 }),
+                  });
+
+                  onReport?.();
+                }}
+                className={css({ cursor: 'pointer' })}
+              >
+                {t('report')}
+              </Button>
+            </AlertDialog.Action>
+            <AlertDialog.Cancel>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  props.onOpenChange?.(false);
+                  setReportText('');
+                }}
+                className={css({ cursor: 'pointer' })}
+              >
+                {t('cancel')}
+              </Button>
+            </AlertDialog.Cancel>
+          </HStack>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+      <ToastContainer className={css({ zIndex: 9999 })} />
+    </>
   );
 }

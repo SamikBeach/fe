@@ -162,7 +162,6 @@ export default function AuthorCommentList() {
           padding: '20px',
           borderTop: '1px solid',
           borderColor: 'gray.200',
-          zIndex: 2,
           position: 'absolute',
           bottom: 0,
         })}

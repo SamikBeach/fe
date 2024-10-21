@@ -7,6 +7,8 @@ import NextTopLoader from 'nextjs-toploader';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import '@styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import SilentRefresh from './SilentRefresh';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';

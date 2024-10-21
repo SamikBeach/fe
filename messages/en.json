@@ -69,7 +69,8 @@
     "comment_list_empty": "There are no comments yet.",
     "terms_of_service": "Terms of Service",
     "privacy_policy": "Privacy policy",
-    "see_less": "Hide"
+    "see_less": "Hide",
+    "report_success_toast": "The error report has been completed."
   },
   "Home": {
     "trending_now": "Trending Now",

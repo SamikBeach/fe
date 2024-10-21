@@ -70,7 +70,8 @@
     "comment_list_empty": "아직 댓글이 없어요.",
     "terms_of_service": "이용약관",
     "privacy_policy": "개인정보 처리방침",
-    "see_less": "숨기기"
+    "see_less": "숨기기",
+    "report_success_toast": "오류 제보를 완료했어요."
   },
   "Home": {
     "trending_now": "실시간 인기",

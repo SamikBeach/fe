@@ -11,7 +11,7 @@ import {
 } from '@apis/author';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AuthorSubCommentItem from './AuthorSubCommentItem';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
@@ -50,6 +50,12 @@ export default function AuthorCommentItem({
     likedUser => likedUser.id === currentUser?.id
   );
 
+  const [isMyLikeExist, setIsMyLikeExist] = useState(() => myLikeExist);
+
+  useEffect(() => {
+    setIsMyLikeExist(myLikeExist);
+  }, [myLikeExist]);
+
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
       if (currentUser === null) {
@@ -62,7 +68,7 @@ export default function AuthorCommentItem({
       });
     },
     onSuccess: () => {
-      onUpdate();
+      setIsMyLikeExist(true);
     },
   });
 
@@ -78,7 +84,7 @@ export default function AuthorCommentItem({
       });
     },
     onSuccess: () => {
-      onUpdate();
+      setIsMyLikeExist(false);
     },
   });
 
@@ -173,7 +179,7 @@ export default function AuthorCommentItem({
       ) : (
         <CommentItem
           key={commentProps.comment}
-          onClickLike={() => (myLikeExist ? removeLike() : addLike())}
+          onClickLike={() => (isMyLikeExist ? removeLike() : addLike())}
           onClickToggleShowSubComments={() => {
             setShowSubComments(prev => !prev);
           }}
@@ -181,7 +187,7 @@ export default function AuthorCommentItem({
           onDelete={deleteComment}
           likeCount={like_count}
           subCommentCount={comment_count}
-          myLikeExist={myLikeExist}
+          myLikeExist={isMyLikeExist}
           isShowSubComments={showSubComments}
           user={user}
           comment={commentProps}

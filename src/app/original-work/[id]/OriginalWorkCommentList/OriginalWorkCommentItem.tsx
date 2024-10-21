@@ -11,7 +11,7 @@ import {
 } from '@apis/original-work';
 import { currentUserAtom } from '@atoms/user';
 import { useAtomValue } from 'jotai';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import OriginalWorkSubCommentItem from './OriginalWorkSubCommentItem';
 import CommentItem from '@components/common/Comment/CommentItem';
 import CommentEditor from '@components/common/Comment/CommentEditor';
@@ -50,6 +50,12 @@ export default function OriginalWorkCommentItem({
     likedUser => likedUser.id === currentUser?.id
   );
 
+  const [isMyLikeExist, setIsMyLikeExist] = useState(() => myLikeExist);
+
+  useEffect(() => {
+    setIsMyLikeExist(myLikeExist);
+  }, [myLikeExist]);
+
   const { mutate: addLike } = useMutation({
     mutationFn: () => {
       if (currentUser === null) {
@@ -62,7 +68,7 @@ export default function OriginalWorkCommentItem({
       });
     },
     onSuccess: () => {
-      onUpdate();
+      setIsMyLikeExist(true);
     },
   });
 
@@ -78,7 +84,7 @@ export default function OriginalWorkCommentItem({
       });
     },
     onSuccess: () => {
-      onUpdate();
+      setIsMyLikeExist(false);
     },
   });
 
@@ -171,7 +177,7 @@ export default function OriginalWorkCommentItem({
       ) : (
         <CommentItem
           key={commentProps.comment}
-          onClickLike={() => (myLikeExist ? removeLike() : addLike())}
+          onClickLike={() => (isMyLikeExist ? removeLike() : addLike())}
           onClickToggleShowSubComments={() => {
             setShowSubComments(prev => !prev);
           }}
@@ -179,7 +185,7 @@ export default function OriginalWorkCommentItem({
           onDelete={deleteComment}
           likeCount={like_count}
           subCommentCount={comment_count}
-          myLikeExist={myLikeExist}
+          myLikeExist={isMyLikeExist}
           isShowSubComments={showSubComments}
           user={user}
           comment={commentProps}

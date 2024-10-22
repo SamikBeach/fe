@@ -58,10 +58,9 @@ export default async function RootLayout({
                   <SilentRefresh
                     refreshToken={cookies().get('refreshToken')?.value}
                   />
-                  {/* <MediaContextProvider> */}
+
                   <Header />
                   {children}
-                  {/* </MediaContextProvider> */}
                 </main>
               </NextIntlClientProvider>
             </ReactQueryProvider>

@@ -1,6 +1,6 @@
 import { AuthorServerModel } from '@models/author';
 import { css } from 'styled-system/css';
-import { HStack, HstackProps, HstackProps } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import AuthorItemInner from './AuthorItemInner';
 import { useRouter } from 'next/navigation';
 

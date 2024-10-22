@@ -1,8 +1,10 @@
 import { Avatar, Skeleton } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
-export default function AuthorItemSkeleton() {
+interface Props extends HstackProps {}
+
+export default function AuthorItemSkeleton(props: Props) {
   return (
     <HStack
       gap="20px"
@@ -15,6 +17,7 @@ export default function AuthorItemSkeleton() {
       className={css({ cursor: 'pointer' })}
       _hover={{ scale: 1.02, bgColor: 'gray.50' }}
       transition="scale 0.1s ease-in-out"
+      {...props}
     >
       <Avatar fallback="" radius="full" size="7" />
       <VStack alignItems="start" justify="space-between">

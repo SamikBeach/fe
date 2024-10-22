@@ -71,7 +71,21 @@ export default function AuthorList(props: Props) {
         {isLoading
           ? Array(24)
               .fill(0)
-              .map((_, index) => <AuthorItemSkeleton key={index} />)
+              .map((_, index) => (
+                <Fragment key={index}>
+                  <Media greaterThanOrEqual="lg">
+                    <AuthorItemSkeleton key={index} />
+                  </Media>
+                  <Media lessThan="lg" className={css({ width: '100%' })}>
+                    <AuthorItemSkeleton
+                      key={index}
+                      width="100%"
+                      padding="10px"
+                      gap="10px"
+                    />
+                  </Media>
+                </Fragment>
+              ))
           : authors.map(author => (
               <Fragment key={author.id}>
                 <Media greaterThanOrEqual="lg">

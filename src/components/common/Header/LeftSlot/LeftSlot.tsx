@@ -5,6 +5,12 @@ import { HStack } from 'styled-system/jsx';
 import Link from 'next/link';
 import MenuButton from './MenuButton';
 import { useTranslations } from 'next-intl';
+import { BREAKPOINTS } from '@constants/index';
+import dynamic from 'next/dynamic';
+
+const MediaQuery = dynamic(() => import('react-responsive'), {
+  ssr: false,
+});
 
 const MENU_ITEMS = [
   { href: '/authors', tKey: 'authors' },
@@ -18,25 +24,35 @@ export default function LeftSlot() {
   const pathname = usePathname();
 
   return (
-    <HStack gap="40px">
-      <Link href="/">
-        <Logo className={css({ cursor: 'pointer' })} />
-      </Link>
+    <>
+      <MediaQuery minWidth={BREAKPOINTS.md}>
+        <HStack gap="40px">
+          <Link href="/">
+            <Logo className={css({ cursor: 'pointer' })} />
+          </Link>
 
-      <HStack gap="30px">
-        {MENU_ITEMS.map(({ href, tKey }) => (
-          <MenuButton
-            key={href}
-            className={css({
-              backgroundColor: pathname.startsWith(href)
-                ? 'gray.100'
-                : undefined,
-            })}
-          >
-            <Link href={href}>{t(tKey)}</Link>
-          </MenuButton>
-        ))}
-      </HStack>
-    </HStack>
+          <HStack gap="30px">
+            {MENU_ITEMS.map(({ href, tKey }) => (
+              <MenuButton
+                key={href}
+                className={css({
+                  backgroundColor: pathname.startsWith(href)
+                    ? 'gray.100'
+                    : undefined,
+                })}
+              >
+                <Link href={href}>{t(tKey)}</Link>
+              </MenuButton>
+            ))}
+          </HStack>
+        </HStack>
+      </MediaQuery>
+      <MediaQuery maxWidth={BREAKPOINTS.md}>
+        {/* 햄버거 버튼 */}
+        <MenuButton>
+          <Logo className={css({ cursor: 'pointer' })} />
+        </MenuButton>
+      </MediaQuery>
+    </>
   );
 }

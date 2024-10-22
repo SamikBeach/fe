@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import SearchPopover from './SearchPopover';
 import { useTranslations } from 'next-intl';
+import { useMediaQuery } from 'react-responsive';
+import { BREAKPOINTS } from '@constants/index';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
@@ -24,6 +26,9 @@ function SearchBar() {
     });
   }, []);
 
+  const isMobile = useMediaQuery({ maxWidth: BREAKPOINTS.md });
+  console.log({ isMobile });
+
   return (
     <SearchPopover
       open={isOpenSearchPopover}
@@ -34,7 +39,7 @@ function SearchBar() {
         ref={textFieldRef}
         placeholder={t('search_bar_placeholder')}
         className={css({
-          width: '400px',
+          width: isMobile ? '60vw' : '400px',
         })}
         value={searchValue}
         onClick={() => {

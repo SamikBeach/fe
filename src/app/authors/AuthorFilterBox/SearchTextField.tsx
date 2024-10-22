@@ -4,10 +4,12 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
-export default function SearchTextField() {
+interface Props extends ComponentProps<typeof TextField.Root> {}
+
+export default function SearchTextField(props: Props) {
   const t = useTranslations('Author');
 
   const [searchKeyword, setSearchKeyword] = useAtom(authorSearchKeywordAtom);
@@ -31,6 +33,7 @@ export default function SearchTextField() {
       })}
       value={searchValue}
       onChange={e => handleValueChange(e.target.value)}
+      {...props}
     >
       <TextField.Slot>
         <MagnifyingGlassIcon height="16" width="16" />

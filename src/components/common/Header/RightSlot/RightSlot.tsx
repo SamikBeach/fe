@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { isLoggedInAtom } from '@atoms/user';
+import { Media } from '@app/media';
 
 const BUTTONS = [
   { href: '/login', tKey: 'login' },
@@ -21,8 +22,13 @@ export default function RightSlot() {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
 
   return (
-    <HStack gap="20px">
-      <SearchBar />
+    <HStack gap="20px" width="100%" justify="end">
+      <Media greaterThanOrEqual="lg">
+        <SearchBar />
+      </Media>
+      <Media lessThan="lg" className={css({ width: '100%' })}>
+        <SearchBar className={css({ width: '100%' })} />
+      </Media>
       {isLoggedIn ? (
         <UserProfileIconButton />
       ) : (

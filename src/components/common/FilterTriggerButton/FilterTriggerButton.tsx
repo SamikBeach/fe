@@ -23,6 +23,7 @@ const FilterTriggerButton = forwardRef<HTMLButtonElement, Props>(function (
         cursor: 'pointer',
         color: isNil(value) ? 'gray' : 'black',
         gap: '4px',
+        minWidth: '76px',
       })}
     >
       {isNil(value) ? label : value}

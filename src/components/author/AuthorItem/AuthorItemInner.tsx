@@ -8,13 +8,13 @@ import { useRouter } from 'next/navigation';
 import { GiBlackBook, GiSecretBook } from 'react-icons/gi';
 
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
-interface Props {
+interface Props extends HstackProps {
   author: AuthorServerModel;
 }
 
-export default function AuthorItemInner({ author }: Props) {
+export default function AuthorItemInner({ author, ...props }: Props) {
   const locale = useLocale();
 
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function AuthorItemInner({ author }: Props) {
   } = author;
 
   return (
-    <HStack gap="20px">
+    <HStack gap="20px" {...props}>
       <Link href={`/author/${author.id}`}>
         <Avatar
           src={image_url ?? undefined}

@@ -12,6 +12,7 @@ import { useTranslations } from 'next-intl';
 import { getTrendingEditions } from '@apis/edition';
 import { EditionShort } from '@components/edition/EditionShort';
 import Link from 'next/link';
+import { Media } from '@app/media';
 
 export default function RightSide() {
   const t = useTranslations();
@@ -43,100 +44,102 @@ export default function RightSide() {
     });
 
   return (
-    <VStack minWidth="320px" position="sticky" top="0" pt="84px">
-      <ScrollArea
-        scrollbars="vertical"
-        className={css({
-          height: 'calc(100vh - 84px)',
-          pr: '20px',
-        })}
-      >
-        <VStack gap="8px" width="100%" alignItems="start">
-          <Text className={css({ fontWeight: 'medium' })}>
-            {t('Home.trending_now')}
-          </Text>
-          {isLoadingTrendingAuthors ? (
-            <RightSideSkeleton />
-          ) : (
-            trendingAuthors.length > 0 && (
-              <Section>
-                <Text>{t('Common.authors')}</Text>
-                {trendingAuthors.slice(0, 4).map(author => (
-                  <AuthorAvatar
-                    key={author.id}
-                    author={author}
-                    withName
-                    withSubName
-                  />
-                ))}
-              </Section>
-            )
-          )}
-          {isLoadingTrendingOriginalWorks ? (
-            <RightSideSkeleton />
-          ) : (
-            trendingOriginalWorks.length > 0 && (
-              <Section className={css({ gap: '2px' })}>
-                <Text>{t('Common.original_works')}</Text>
-                {trendingOriginalWorks.slice(0, 4).map(originalWork => (
-                  <OriginalWorkShort
-                    key={originalWork.id}
-                    originalWork={originalWork}
-                  />
-                ))}
-              </Section>
-            )
-          )}
-          {isLoadingTrendingEditions ? (
-            <RightSideSkeleton />
-          ) : (
-            trendingEditions.length > 0 && (
-              <Section className={css({ gap: '2px' })}>
-                <Text>{t('Common.editions')}</Text>
-                {trendingEditions.slice(0, 4).map(edition => (
-                  <EditionShort key={edition.id} edition={edition} />
-                ))}
-              </Section>
-            )
-          )}
-        </VStack>
-        <HStack mt="4px">
-          <Link href="/terms-of-service">
-            <Text
-              color="gray"
-              size="1"
-              className={css({
-                cursor: 'pointer',
-
-                _hover: {
-                  textDecoration: 'underline',
-                },
-              })}
-            >
-              {t('Common.terms_of_service')}
+    <Media greaterThanOrEqual="lg">
+      <VStack minWidth="320px" position="sticky" top="0" pt="84px">
+        <ScrollArea
+          scrollbars="vertical"
+          className={css({
+            height: 'calc(100vh - 84px)',
+            pr: '20px',
+          })}
+        >
+          <VStack gap="8px" width="100%" alignItems="start">
+            <Text className={css({ fontWeight: 'medium' })}>
+              {t('Home.trending_now')}
             </Text>
-          </Link>
-          <Text color="gray" size="1">
-            {' · '}
-          </Text>
-          <Link href="privacy-policy">
-            <Text
-              color="gray"
-              size="1"
-              className={css({
-                cursor: 'pointer',
+            {isLoadingTrendingAuthors ? (
+              <RightSideSkeleton />
+            ) : (
+              trendingAuthors.length > 0 && (
+                <Section>
+                  <Text>{t('Common.authors')}</Text>
+                  {trendingAuthors.slice(0, 4).map(author => (
+                    <AuthorAvatar
+                      key={author.id}
+                      author={author}
+                      withName
+                      withSubName
+                    />
+                  ))}
+                </Section>
+              )
+            )}
+            {isLoadingTrendingOriginalWorks ? (
+              <RightSideSkeleton />
+            ) : (
+              trendingOriginalWorks.length > 0 && (
+                <Section className={css({ gap: '2px' })}>
+                  <Text>{t('Common.original_works')}</Text>
+                  {trendingOriginalWorks.slice(0, 4).map(originalWork => (
+                    <OriginalWorkShort
+                      key={originalWork.id}
+                      originalWork={originalWork}
+                    />
+                  ))}
+                </Section>
+              )
+            )}
+            {isLoadingTrendingEditions ? (
+              <RightSideSkeleton />
+            ) : (
+              trendingEditions.length > 0 && (
+                <Section className={css({ gap: '2px' })}>
+                  <Text>{t('Common.editions')}</Text>
+                  {trendingEditions.slice(0, 4).map(edition => (
+                    <EditionShort key={edition.id} edition={edition} />
+                  ))}
+                </Section>
+              )
+            )}
+          </VStack>
+          <HStack mt="4px">
+            <Link href="/terms-of-service">
+              <Text
+                color="gray"
+                size="1"
+                className={css({
+                  cursor: 'pointer',
 
-                _hover: {
-                  textDecoration: 'underline',
-                },
-              })}
-            >
-              {t('Common.privacy_policy')}
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {t('Common.terms_of_service')}
+              </Text>
+            </Link>
+            <Text color="gray" size="1">
+              {' · '}
             </Text>
-          </Link>
-        </HStack>
-      </ScrollArea>
-    </VStack>
+            <Link href="privacy-policy">
+              <Text
+                color="gray"
+                size="1"
+                className={css({
+                  cursor: 'pointer',
+
+                  _hover: {
+                    textDecoration: 'underline',
+                  },
+                })}
+              >
+                {t('Common.privacy_policy')}
+              </Text>
+            </Link>
+          </HStack>
+        </ScrollArea>
+      </VStack>
+    </Media>
   );
 }
 

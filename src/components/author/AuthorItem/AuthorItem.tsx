@@ -1,14 +1,19 @@
 import { AuthorServerModel } from '@models/author';
 import { css } from 'styled-system/css';
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps, HstackProps } from 'styled-system/jsx';
 import AuthorItemInner from './AuthorItemInner';
 import { useRouter } from 'next/navigation';
 
-interface Props {
+interface Props extends HstackProps {
   author: AuthorServerModel;
+  authorItemInnerProps?: HstackProps;
 }
 
-export default function AuthorItem({ author }: Props) {
+export default function AuthorItem({
+  author,
+  authorItemInnerProps,
+  ...props
+}: Props) {
   const router = useRouter();
 
   return (
@@ -23,8 +28,9 @@ export default function AuthorItem({ author }: Props) {
       _hover={{ scale: 1.02, bgColor: 'gray.50' }}
       transition="scale 0.1s ease-in-out"
       onClick={() => router.push(`/author/${author.id}`)}
+      {...props}
     >
-      <AuthorItemInner author={author} />
+      <AuthorItemInner author={author} {...authorItemInnerProps} />
     </HStack>
   );
 }

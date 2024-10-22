@@ -1,10 +1,10 @@
 'use client';
 
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import { AxiosResponse } from 'axios';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { SearchAuthorsResponse, searchAuthors } from '@apis/author';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { authorFilterAtom } from '@atoms/filter';
 import { useAtomValue } from 'jotai';
@@ -15,8 +15,12 @@ import {
   AuthorItem,
 } from '../../../components/author/AuthorItem';
 import { useLocale } from 'next-intl';
+import { Media } from '@app/media';
+import { css } from 'styled-system/css';
 
-export default function AuthorList() {
+interface Props extends HstackProps {}
+
+export default function AuthorList(props: Props) {
   const locale = useLocale();
 
   const authorFilter = useAtomValue(authorFilterAtom);
@@ -63,13 +67,25 @@ export default function AuthorList() {
       hasMore={true}
       loader={<></>}
     >
-      <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px">
+      <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px" {...props}>
         {isLoading
           ? Array(24)
               .fill(0)
               .map((_, index) => <AuthorItemSkeleton key={index} />)
           : authors.map(author => (
-              <AuthorItem key={author.id} author={author} />
+              <Fragment key={author.id}>
+                <Media greaterThanOrEqual="lg">
+                  <AuthorItem author={author} />
+                </Media>
+                <Media lessThan="lg" className={css({ width: '100%' })}>
+                  <AuthorItem
+                    author={author}
+                    width="100%"
+                    padding="10px"
+                    authorItemInnerProps={{ gap: '10px' }}
+                  />
+                </Media>
+              </Fragment>
             ))}
       </HStack>
     </InfiniteScroll>

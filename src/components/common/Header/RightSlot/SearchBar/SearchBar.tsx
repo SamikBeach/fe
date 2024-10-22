@@ -1,12 +1,14 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { TextField } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
-import { useEffect, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import useDebounce from '@hooks/useDebounce';
 import SearchPopover from './SearchPopover';
 import { useTranslations } from 'next-intl';
 
-function SearchBar() {
+interface Props extends ComponentProps<typeof TextField.Root> {}
+
+function SearchBar(props: Props) {
   const [searchValue, setSearchValue] = useState('');
   const [isOpenSearchPopover, setIsOpenSearchPopover] = useState(false);
   const debouncedSearchValue = useDebounce(searchValue, 200);
@@ -56,6 +58,7 @@ function SearchBar() {
             e.preventDefault();
           }
         }}
+        {...props}
       >
         <SearchPopover.Trigger>
           <TextField.Slot>

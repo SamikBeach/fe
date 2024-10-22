@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { LogItem } from './LogItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LogItemSkeleton from './LogItem/LogItemSkeleton';
+import { Media } from '@app/media';
 
 function LogList() {
   const { data, fetchNextPage, isLoading } = useInfiniteQuery<
@@ -56,11 +57,20 @@ function LogList() {
       hasMore={true}
       loader={<></>}
     >
-      <VStack gap="10px" pt="84px" py="30px" width="700px">
-        {logs.map(log => (
-          <LogItem key={log.id} log={log} />
-        ))}
-      </VStack>
+      <Media greaterThanOrEqual="lg">
+        <VStack gap="10px" pt="84px" py="30px" width="700px">
+          {logs.map(log => (
+            <LogItem key={log.id} log={log} />
+          ))}
+        </VStack>
+      </Media>
+      <Media lessThan="lg">
+        <VStack gap="10px" pt="84px" py="30px" width="100%" px="10px">
+          {logs.map(log => (
+            <LogItem key={log.id} log={log} />
+          ))}
+        </VStack>
+      </Media>
     </InfiniteScroll>
   );
 }

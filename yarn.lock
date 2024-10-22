@@ -4140,6 +4140,7 @@ __metadata:
     react-hook-form: "npm:^7.53.0"
     react-icons: "npm:^5.2.1"
     react-infinite-scroll-component: "npm:^6.1.0"
+    react-modern-drawer: "npm:^1.4.0"
     react-responsive: "npm:^10.0.0"
     react-toastify: "npm:^10.0.6"
     tslib: "npm:^2.6.3"
@@ -6488,6 +6489,15 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
+  languageName: node
+  linkType: hard
+
+"react-modern-drawer@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "react-modern-drawer@npm:1.4.0"
+  peerDependencies:
+    react: ">16.0.0"
+  checksum: 10c0/5d06838dbc7854f96bafe59c3b6c2d72a58901b00f101161fbca8f17c5b6fc443bd4305d2ff561f8669a45f92eb0ab70de79f905ebc1459779426929516669cd
   languageName: node
   linkType: hard
 

@@ -7,6 +7,10 @@ import MenuButton from './MenuButton';
 import { useTranslations } from 'next-intl';
 import { BREAKPOINTS } from '@constants/index';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import Drawer from 'react-modern-drawer';
+import { ChevronDownIcon, IconButton } from '@radix-ui/themes';
+import 'react-modern-drawer/dist/index.css';
 
 const MediaQuery = dynamic(() => import('react-responsive'), {
   ssr: false,
@@ -22,6 +26,8 @@ export default function LeftSlot() {
   const t = useTranslations('Common');
 
   const pathname = usePathname();
+
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   return (
     <>
@@ -48,10 +54,21 @@ export default function LeftSlot() {
         </HStack>
       </MediaQuery>
       <MediaQuery maxWidth={BREAKPOINTS.md}>
-        {/* 햄버거 버튼 */}
-        <MenuButton>
-          <Logo className={css({ cursor: 'pointer' })} />
-        </MenuButton>
+        <IconButton
+          onClick={() => {
+            console.log('clicked');
+            setIsOpenSidebar(true);
+          }}
+        >
+          <ChevronDownIcon onClick={() => setIsOpenSidebar(true)} />
+        </IconButton>
+        <Drawer
+          open={isOpenSidebar}
+          onClose={() => setIsOpenSidebar(prev => !prev)}
+          direction="left"
+        >
+          <div>Hello World</div>
+        </Drawer>
       </MediaQuery>
     </>
   );

@@ -13,6 +13,7 @@ import SilentRefresh from './SilentRefresh';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { cookies } from 'next/headers';
+import RootHead from './RootHead';
 
 export const metadata = {
   title: 'samik beach',
@@ -28,6 +29,7 @@ export default async function RootLayout({
 
   return (
     <html>
+      <RootHead />
       <body>
         <NextTopLoader
           color="black"
@@ -56,8 +58,10 @@ export default async function RootLayout({
                   <SilentRefresh
                     refreshToken={cookies().get('refreshToken')?.value}
                   />
+                  {/* <MediaContextProvider> */}
                   <Header />
                   {children}
+                  {/* </MediaContextProvider> */}
                 </main>
               </NextIntlClientProvider>
             </ReactQueryProvider>

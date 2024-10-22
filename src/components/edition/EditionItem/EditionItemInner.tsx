@@ -8,14 +8,19 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 import { OriginalWorkHoverCard } from '@components/original-work/OriginalWorkHoverCard';
 
-interface Props {
+interface Props extends HstackProps {
   edition: EditionServerModel;
+  isMobile?: boolean;
 }
 
-export default function EditionItemInner({ edition }: Props) {
+export default function EditionItemInner({
+  edition,
+  isMobile = false,
+  ...props
+}: Props) {
   const locale = useLocale();
 
   const {
@@ -39,7 +44,7 @@ export default function EditionItemInner({ edition }: Props) {
   const originalWorks = original_works ?? originalWorksFromQuery ?? [];
 
   return (
-    <HStack gap="20px" width="100%" height="100%">
+    <HStack gap="20px" width="100%" height="100%" {...props}>
       <div className={css({ maxWidth: '80px', minWidth: '80px' })}>
         <Link href={`/edition/${edition.id}`}>
           <img
@@ -62,7 +67,7 @@ export default function EditionItemInner({ edition }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
 
-                maxWidth: '260px',
+                maxWidth: isMobile ? '60vw' : '260px',
                 lineHeight: '19px',
                 color: 'gray.500',
 

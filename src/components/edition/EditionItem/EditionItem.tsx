@@ -1,14 +1,23 @@
 import { EditionServerModel } from '@models/edition';
 import { css } from 'styled-system/css';
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import EditionItemInner from './EditionItemInner';
 import { useRouter } from 'next/navigation';
+import { ComponentProps } from 'react';
 
-interface Props {
+interface Props extends HstackProps {
   edition: EditionServerModel;
+  editionItemInnerProps?: Omit<
+    ComponentProps<typeof EditionItemInner>,
+    'edition'
+  >;
 }
 
-export default function EditionItem({ edition }: Props) {
+export default function EditionItem({
+  edition,
+  editionItemInnerProps,
+  ...props
+}: Props) {
   const router = useRouter();
 
   return (
@@ -23,8 +32,9 @@ export default function EditionItem({ edition }: Props) {
       _hover={{ scale: 1.02, bgColor: 'gray.50' }}
       transition="scale 0.1s ease-in-out"
       onClick={() => router.push(`/edition/${edition.id}`)}
+      {...props}
     >
-      <EditionItemInner edition={edition} />
+      <EditionItemInner edition={edition} {...editionItemInnerProps} />
     </HStack>
   );
 }

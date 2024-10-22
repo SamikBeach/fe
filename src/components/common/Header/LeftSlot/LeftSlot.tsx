@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { usePathname } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { Logo } from '../../Logo';
-import { HStack } from 'styled-system/jsx';
+import { HStack, VStack } from 'styled-system/jsx';
 import Link from 'next/link';
 import MenuButton from './MenuButton';
 import { useTranslations } from 'next-intl';
@@ -9,10 +10,17 @@ import { BREAKPOINTS } from '@constants/index';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import Drawer from 'react-modern-drawer';
-import { ChevronDownIcon, IconButton } from '@radix-ui/themes';
+import { Text, IconButton } from '@radix-ui/themes';
+import { RxHamburgerMenu } from 'react-icons/rx';
+
 import 'react-modern-drawer/dist/index.css';
 
 const MediaQuery = dynamic(() => import('react-responsive'), {
+  ssr: false,
+  loading: () => <Logo />,
+});
+
+const MediaQueryMobile = dynamic(() => import('react-responsive'), {
   ssr: false,
 });
 
@@ -53,23 +61,54 @@ export default function LeftSlot() {
           </HStack>
         </HStack>
       </MediaQuery>
-      <MediaQuery maxWidth={BREAKPOINTS.md}>
+
+      <MediaQueryMobile maxWidth={BREAKPOINTS.md}>
         <IconButton
           onClick={() => {
-            console.log('clicked');
             setIsOpenSidebar(true);
           }}
+          variant="outline"
+          className={css({ cursor: 'pointer' })}
         >
-          <ChevronDownIcon onClick={() => setIsOpenSidebar(true)} />
+          <RxHamburgerMenu />
         </IconButton>
         <Drawer
           open={isOpenSidebar}
-          onClose={() => setIsOpenSidebar(prev => !prev)}
+          onClose={() => setIsOpenSidebar(false)}
           direction="left"
+          style={{
+            width: '70vw',
+            padding: '20px',
+          }}
+          duration={200}
         >
-          <div>Hello World</div>
+          <VStack alignItems="start" gap="20px">
+            <Logo />
+            <VStack alignItems="start" gap="0" width="100%">
+              {MENU_ITEMS.map(({ href, tKey }) => (
+                <Link key={href} href={href} className={css({ width: '100%' })}>
+                  <div
+                    className={css({
+                      width: '100%',
+                      borderRadius: '6px',
+                      padding: '10px',
+
+                      _hover: {
+                        backgroundColor: 'gray.100',
+                      },
+                    })}
+                    onClick={() => setIsOpenSidebar(false)}
+                  >
+                    <Text weight="medium" size="4">
+                      {t(tKey)}
+                    </Text>
+                  </div>
+                </Link>
+              ))}
+            </VStack>
+          </VStack>
         </Drawer>
-      </MediaQuery>
+      </MediaQueryMobile>
     </>
   );
 }

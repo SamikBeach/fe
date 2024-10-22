@@ -4,6 +4,8 @@ import { HStack } from 'styled-system/jsx';
 import { AuthorFilter, FieldFilter } from './filters';
 import { SortDropdown } from './sort';
 import SearchTextField from './SearchTextField';
+import { Media } from '@app/media';
+import { css } from 'styled-system/css';
 
 export default function OriginalWorkFilterBox() {
   return (
@@ -17,19 +19,32 @@ export default function OriginalWorkFilterBox() {
     >
       <HStack
         justify="space-between"
-        width="1180px"
+        width="1200px"
+        px="10px"
         height="64px"
         borderBottom="1px solid"
         borderColor="gray.100"
       >
         <HStack>
-          <FieldFilter />
-          <AuthorFilter />
+          <Media greaterThanOrEqual="sm">
+            <HStack>
+              <FieldFilter />
+              <AuthorFilter />
+            </HStack>
+          </Media>
         </HStack>
-        <HStack>
-          <SearchTextField />
-          <SortDropdown />
-        </HStack>
+        <Media greaterThanOrEqual="sm">
+          <HStack>
+            <SearchTextField />
+            <SortDropdown />
+          </HStack>
+        </Media>
+        <Media lessThan="sm" className={css({ width: '100%' })}>
+          <HStack width="100%" justify="end">
+            <SearchTextField className={css({ width: '100%' })} />
+            <SortDropdown />
+          </HStack>
+        </Media>
       </HStack>
     </HStack>
   );

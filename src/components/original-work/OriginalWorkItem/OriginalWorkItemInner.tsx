@@ -7,13 +7,18 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { GiBlackBook, GiSecretBook } from 'react-icons/gi';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, HstackProps, VStack } from 'styled-system/jsx';
 
-interface Props {
+interface Props extends HstackProps {
   originalWork: OriginalWorkServerModel;
+  isMobile?: boolean;
 }
 
-export default function OringinalWorkItemInner({ originalWork }: Props) {
+export default function OringinalWorkItemInner({
+  originalWork,
+  isMobile = false,
+  ...props
+}: Props) {
   const locale = useLocale();
 
   const {
@@ -27,7 +32,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
   } = originalWork;
 
   return (
-    <HStack gap="20px">
+    <HStack gap="20px" {...props}>
       <Link href={`/original-work/${originalWork.id}`}>
         <Avatar
           radius="full"
@@ -55,7 +60,7 @@ export default function OringinalWorkItemInner({ originalWork }: Props) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
 
-                maxWidth: '270px',
+                maxWidth: isMobile ? '70vw' : '270px',
                 lineHeight: '19px',
                 color: 'gray.500',
 

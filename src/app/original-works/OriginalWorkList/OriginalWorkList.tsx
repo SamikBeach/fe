@@ -1,6 +1,6 @@
 'use client';
 
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   SearchOriginalWorksResponse,
@@ -12,14 +12,18 @@ import { originalWorkSortAtom } from '@atoms/sort';
 import { originalWorkSearchKeywordAtom } from '@atoms/searchKeyword';
 import { AxiosResponse } from 'axios';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import {
   OriginalWorkItem,
   OriginalWorkItemSkeleton,
 } from '@components/original-work/OriginalWorkItem';
 import { useLocale } from 'next-intl';
+import { Media } from '@app/media';
+import { css } from 'styled-system/css';
 
-export default function OriginalWorkList() {
+interface Props extends HstackProps {}
+
+export default function OriginalWorkList(props: Props) {
   const locale = useLocale();
 
   const originalWorkFilter = useAtomValue(originalWorkFilterAtom);
@@ -71,16 +75,42 @@ export default function OriginalWorkList() {
       hasMore={true}
       loader={<></>}
     >
-      <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px">
+      <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px" {...props}>
         {isLoading
           ? Array(24)
               .fill(0)
-              .map((_, index) => <OriginalWorkItemSkeleton key={index} />)
+              .map((_, index) => (
+                <Fragment key={index}>
+                  <Media greaterThanOrEqual="lg">
+                    <OriginalWorkItemSkeleton key={index} />
+                  </Media>
+                  <Media lessThan="lg" className={css({ width: '100%' })}>
+                    <OriginalWorkItemSkeleton
+                      key={index}
+                      width="100%"
+                      padding="10px"
+                      gap="10px"
+                    />
+                  </Media>
+                </Fragment>
+              ))
           : originalWorks.map(originalWork => (
-              <OriginalWorkItem
-                key={originalWork.id}
-                originalWork={originalWork}
-              />
+              <Fragment key={originalWork.id}>
+                <Media greaterThanOrEqual="lg">
+                  <OriginalWorkItem originalWork={originalWork} />
+                </Media>
+                <Media lessThan="lg" className={css({ width: '100%' })}>
+                  <OriginalWorkItem
+                    originalWork={originalWork}
+                    width="100%"
+                    padding="10px"
+                    originalWorkItemInnerProps={{
+                      gap: '10px',
+                      isMobile: true,
+                    }}
+                  />
+                </Media>
+              </Fragment>
             ))}
       </HStack>
     </InfiniteScroll>

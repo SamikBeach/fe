@@ -1,14 +1,23 @@
 import { OriginalWorkServerModel } from '@models/original-work';
 import { css } from 'styled-system/css';
-import { HStack } from 'styled-system/jsx';
+import { HStack, HstackProps } from 'styled-system/jsx';
 import OringinalWorkItemInner from './OriginalWorkItemInner';
 import { useRouter } from 'next/navigation';
+import { ComponentProps } from 'react';
 
-interface Props {
+interface Props extends HstackProps {
   originalWork: OriginalWorkServerModel;
+  originalWorkItemInnerProps?: Omit<
+    ComponentProps<typeof OringinalWorkItemInner>,
+    'originalWork'
+  >;
 }
 
-export default function OriginalWorkItem({ originalWork }: Props) {
+export default function OriginalWorkItem({
+  originalWork,
+  originalWorkItemInnerProps,
+  ...props
+}: Props) {
   const router = useRouter();
 
   return (
@@ -23,8 +32,12 @@ export default function OriginalWorkItem({ originalWork }: Props) {
       _hover={{ scale: 1.02, bgColor: 'gray.50' }}
       transition="scale 0.1s ease-in-out"
       onClick={() => router.push(`/original-work/${originalWork.id}`)}
+      {...props}
     >
-      <OringinalWorkItemInner originalWork={originalWork} />
+      <OringinalWorkItemInner
+        originalWork={originalWork}
+        {...originalWorkItemInnerProps}
+      />
     </HStack>
   );
 }

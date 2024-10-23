@@ -10,6 +10,9 @@ import {
   EditionItemSkeleton,
 } from '@components/edition/EditionItem';
 import LikeHistoryEmpty from './LikeHistoryEmpty';
+import { Fragment } from 'react';
+import { Media } from '@app/media';
+import { css } from 'styled-system/css';
 
 export default function EditionLikeHistory() {
   const t = useTranslations('Common');
@@ -36,10 +39,36 @@ export default function EditionLikeHistory() {
         {isLoading ? (
           Array(10)
             .fill(0)
-            .map((_, index) => <EditionItemSkeleton key={index} />)
+            .map((_, index) => (
+              <Fragment key={index}>
+                <Media greaterThanOrEqual="lg">
+                  <EditionItemSkeleton key={index} />
+                </Media>
+                <Media lessThan="lg" className={css({ width: '100%' })}>
+                  <EditionItemSkeleton
+                    key={index}
+                    width="100%"
+                    padding="10px"
+                    gap="10px"
+                  />
+                </Media>
+              </Fragment>
+            ))
         ) : hasEditions ? (
           editions.map(edition => (
-            <EditionItem key={edition.id} edition={edition} />
+            <Fragment key={edition.id}>
+              <Media greaterThanOrEqual="lg">
+                <EditionItem edition={edition} />
+              </Media>
+              <Media lessThan="lg" className={css({ width: '100%' })}>
+                <EditionItem
+                  edition={edition}
+                  width="100%"
+                  padding="10px"
+                  editionItemInnerProps={{ gap: '10px', isMobile: true }}
+                />
+              </Media>
+            </Fragment>
           ))
         ) : (
           <LikeHistoryEmpty type="edition" />

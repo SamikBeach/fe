@@ -30,7 +30,7 @@ export default function AuthorLikeHistory() {
       <Text size="2" weight="medium">
         {t('authors')}
       </Text>
-      <HStack gap="6px" width="100%">
+      <HStack gap="6px" width="100%" flexWrap="wrap">
         {isLoading ? (
           Array(3)
             .fill(0)

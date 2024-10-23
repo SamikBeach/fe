@@ -12,11 +12,12 @@ function UserHistory() {
   const [selected, setSelected] = useState<'likes' | 'comments'>('likes');
 
   return (
-    <VStack alignItems="start" padding="20px">
+    <VStack alignItems="start" py="20px">
       <SegmentedControl.Root
         defaultValue="likes"
         onValueChange={value => setSelected(value as 'likes' | 'comments')}
         size="2"
+        className={css({ mx: '10px' })}
       >
         <SegmentedControl.Item
           value="likes"

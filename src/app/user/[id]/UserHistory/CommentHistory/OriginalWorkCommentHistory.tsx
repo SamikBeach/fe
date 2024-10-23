@@ -11,6 +11,9 @@ import {
 } from '@components/original-work/OriginalWorkItem';
 import { useTranslations } from 'next-intl';
 import CommentHistoryEmpty from './CommentHistoryEmpty';
+import { Media } from '@app/media';
+import { Fragment } from 'react';
+import { css } from 'styled-system/css';
 
 export default function OriginalWorkCommentHistory() {
   const t = useTranslations('Common');
@@ -37,13 +40,39 @@ export default function OriginalWorkCommentHistory() {
         {isLoading ? (
           Array(10)
             .fill(0)
-            .map((_, index) => <OriginalWorkItemSkeleton key={index} />)
+            .map((_, index) => (
+              <Fragment key={index}>
+                <Media greaterThanOrEqual="lg">
+                  <OriginalWorkItemSkeleton key={index} />
+                </Media>
+                <Media lessThan="lg" className={css({ width: '100%' })}>
+                  <OriginalWorkItemSkeleton
+                    key={index}
+                    width="100%"
+                    padding="10px"
+                    gap="10px"
+                  />
+                </Media>
+              </Fragment>
+            ))
         ) : hasOriginalWorks ? (
           originalWorks.map(originalWork => (
-            <OriginalWorkItem
-              key={originalWork.id}
-              originalWork={originalWork}
-            />
+            <Fragment key={originalWork.id}>
+              <Media greaterThanOrEqual="lg">
+                <OriginalWorkItem originalWork={originalWork} />
+              </Media>
+              <Media lessThan="lg" className={css({ width: '100%' })}>
+                <OriginalWorkItem
+                  originalWork={originalWork}
+                  width="100%"
+                  padding="10px"
+                  originalWorkItemInnerProps={{
+                    gap: '10px',
+                    isMobile: true,
+                  }}
+                />
+              </Media>
+            </Fragment>
           ))
         ) : (
           <CommentHistoryEmpty type="original_work" />

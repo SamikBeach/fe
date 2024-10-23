@@ -30,7 +30,7 @@ export default function AuthorCommentHistory() {
       <Text size="2" weight="medium">
         {t('authors')}
       </Text>
-      <HStack gap="6px">
+      <HStack gap="6px" flexWrap="wrap">
         {isLoading ? (
           Array(3)
             .fill(0)

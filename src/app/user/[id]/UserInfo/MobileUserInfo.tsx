@@ -23,13 +23,13 @@ import {
   useForm,
 } from 'react-hook-form';
 import { css } from 'styled-system/css';
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack } from 'styled-system/jsx';
 
 interface FormValues {
   nickname: string;
 }
 
-export default function UserInfo() {
+export default function MobileUserInfo() {
   const t = useTranslations('Common');
 
   const params = useParams();
@@ -99,17 +99,8 @@ export default function UserInfo() {
   }, [user, onNicknameChange]);
 
   return (
-    <VStack gap="20px" width="260px" alignItems="start" pt="30px">
-      <Avatar
-        radius="full"
-        fallback={nickname[0]}
-        size="9"
-        className={css({
-          width: '260px',
-          height: '260px',
-          margin: '0 auto',
-        })}
-      />
+    <HStack gap="8px" alignItems="start" px="10px">
+      <Avatar radius="full" fallback={nickname[0]} size="2" />
       {isLoading ? (
         <Skeleton height="24px" width="140px" />
       ) : isNickNameEditMode && isMyPage ? (
@@ -174,6 +165,6 @@ export default function UserInfo() {
           )}
         </HStack>
       )}
-    </VStack>
+    </HStack>
   );
 }

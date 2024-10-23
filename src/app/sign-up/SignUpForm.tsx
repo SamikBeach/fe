@@ -4,7 +4,7 @@ import { checkEmailDuplication, signUpWithGoogle } from '@apis/auth';
 import { userAtom } from '@atoms/auth';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
-import { Card, Link, TextField, Text } from '@radix-ui/themes';
+import { Card, Link, TextField, Text, CardProps } from '@radix-ui/themes';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -26,7 +26,9 @@ import api from '@apis/config';
 import { useState } from 'react';
 import { currentUserAtom, isLoggedInAtom } from '@atoms/user';
 
-export default function SignUpForm() {
+interface Props extends CardProps {}
+
+export default function SignUpForm(props: Props) {
   const router = useRouter();
   const t = useTranslations('SignUp');
 
@@ -106,7 +108,7 @@ export default function SignUpForm() {
 
   return (
     <FormProvider {...methods}>
-      <Card className={css({ width: '400px', padding: '40px' })}>
+      <Card className={css({ width: '400px', padding: '40px' })} {...props}>
         <VStack
           className={css({ pt: '20px' })}
           rounded="xl"

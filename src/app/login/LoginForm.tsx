@@ -6,7 +6,7 @@ import { currentUserAtom, isLoggedInAtom } from '@atoms/user';
 import { Logo } from '@components/common/Logo';
 import { Button } from '@elements/Button';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@radix-ui/react-icons';
-import { Card, Link, TextField, Text } from '@radix-ui/themes';
+import { Card, Link, TextField, Text, CardProps } from '@radix-ui/themes';
 import { useGoogleLogin } from '@react-oauth/google';
 import Google from '@svg/google';
 import { useMutation } from '@tanstack/react-query';
@@ -28,7 +28,9 @@ interface FormValues {
   password: string;
 }
 
-export default function LoginForm() {
+interface Props extends CardProps {}
+
+export default function LoginForm(props: Props) {
   const t = useTranslations('Login');
 
   const isLoggedIn = useAtomValue(isLoggedInAtom);
@@ -102,7 +104,7 @@ export default function LoginForm() {
 
   return (
     <FormProvider {...methods}>
-      <Card className={css({ width: '400px', padding: '40px' })}>
+      <Card className={css({ width: '400px', padding: '40px' })} {...props}>
         <VStack className={css({ pt: '20px' })} rounded="xl" gap="40px">
           <Logo
             width="80px"

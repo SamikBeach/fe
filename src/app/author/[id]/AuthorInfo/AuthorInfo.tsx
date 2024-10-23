@@ -12,14 +12,60 @@ import FilterSection from './sections/FilterSection';
 
 const SCROLL_THRESHOLD = 319;
 
-interface Props extends HstackProps {}
+interface Props extends HstackProps {
+  isMobile?: boolean;
+}
 
-export default function AuthorInfo({ ...props }: Props) {
+export default function AuthorInfo({ isMobile, ...props }: Props) {
   const [selected, setSelected] = useState<'original-works' | 'editions'>(
     'original-works'
   );
 
   const [isOverThreshold, setIsOverThreshold] = useState(false);
+
+  const renderContent = () => {
+    return (
+      <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
+        {!isMobile && <AvatarSection />}
+
+        <VStack
+          width={isMobile ? '100%' : '400px'}
+          gap={isMobile ? '2px' : '20px'}
+          position={isMobile || isOverThreshold ? 'fixed' : 'static'}
+          top="64px"
+          bgColor="white"
+          zIndex={2}
+          pt="20px"
+          pb="10px"
+          borderBottom={isMobile || isOverThreshold ? '1px solid' : 'none'}
+          borderColor={isMobile || isOverThreshold ? 'gray.200' : 'none'}
+        >
+          <AuthorBasicInfoSection
+            isOverThreshold={isMobile ? true : isOverThreshold}
+          />
+          <FilterSection
+            setSelected={setSelected}
+            selected={selected}
+            width="100%"
+          />
+        </VStack>
+
+        {selected === 'original-works' ? (
+          <OriginalWorkList
+            mt={isMobile ? '110px' : isOverThreshold ? '176px' : '0px'}
+          />
+        ) : (
+          <EditionList
+            mt={isMobile ? '110px' : isOverThreshold ? '176px' : '0px'}
+          />
+        )}
+      </VStack>
+    );
+  };
+
+  if (isMobile) {
+    return renderContent();
+  }
 
   return (
     <ScrollArea
@@ -44,31 +90,7 @@ export default function AuthorInfo({ ...props }: Props) {
         }
       }}
     >
-      <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
-        <AvatarSection />
-
-        <VStack
-          width="400px"
-          gap="20px"
-          position={isOverThreshold ? 'fixed' : 'static'}
-          top="64px"
-          bgColor="white"
-          zIndex={2}
-          pt="20px"
-          pb="10px"
-          borderBottom={isOverThreshold ? '1px solid' : 'none'}
-          borderColor={isOverThreshold ? 'gray.200' : 'none'}
-        >
-          <AuthorBasicInfoSection isOverThreshold={isOverThreshold} />
-          <FilterSection setSelected={setSelected} selected={selected} />
-        </VStack>
-
-        {selected === 'original-works' ? (
-          <OriginalWorkList mt={isOverThreshold ? '176px' : '0px'} />
-        ) : (
-          <EditionList mt={isOverThreshold ? '176px' : '0px'} />
-        )}
-      </VStack>
+      {renderContent()}
     </ScrollArea>
   );
 }

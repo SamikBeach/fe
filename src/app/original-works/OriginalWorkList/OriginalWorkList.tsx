@@ -77,7 +77,7 @@ export default function OriginalWorkList(props: Props) {
     >
       <HStack flexWrap="wrap" width="1200px" px="10px" mt="128px" {...props}>
         {isLoading
-          ? Array(24)
+          ? Array(10)
               .fill(0)
               .map((_, index) => (
                 <Fragment key={index}>

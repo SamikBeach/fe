@@ -6,6 +6,9 @@ import { useParams } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { authorEditionSortAtom } from '@atoms/sort';
 import { EditionItemSkeleton } from '@components/edition/EditionItem';
+import { Fragment } from 'react';
+import { Media } from '@app/media';
+import { css } from 'styled-system/css';
 
 interface Props extends VstackProps {}
 
@@ -27,13 +30,39 @@ export default function EditonList(props: Props) {
   });
 
   return (
-    <VStack pb="40px" {...props}>
+    <VStack pb="40px" width="100%" {...props}>
       {isLoading
         ? Array(24)
             .fill(0)
-            .map((_, index) => <EditionItemSkeleton key={index} />)
+            .map((_, index) => (
+              <Fragment key={index}>
+                <Media greaterThanOrEqual="lg">
+                  <EditionItemSkeleton key={index} />
+                </Media>
+                <Media lessThan="lg" className={css({ width: '100%' })}>
+                  <EditionItemSkeleton
+                    key={index}
+                    width="100%"
+                    padding="10px"
+                    gap="10px"
+                  />
+                </Media>
+              </Fragment>
+            ))
         : editions.map(edition => (
-            <EditionItem key={edition.id} edition={edition} />
+            <Fragment key={edition.id}>
+              <Media greaterThanOrEqual="lg">
+                <EditionItem edition={edition} />
+              </Media>
+              <Media lessThan="lg" className={css({ width: '100%' })}>
+                <EditionItem
+                  edition={edition}
+                  width="100%"
+                  padding="10px"
+                  editionItemInnerProps={{ gap: '10px', isMobile: true }}
+                />
+              </Media>
+            </Fragment>
           ))}
     </VStack>
   );

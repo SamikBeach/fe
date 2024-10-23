@@ -1,4 +1,4 @@
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, VStack, VstackProps } from 'styled-system/jsx';
 import { Avatar, Text, Tooltip } from '@radix-ui/themes';
 import { getBornAndDiedDateText } from '@utils/author';
 import { css } from 'styled-system/css';
@@ -12,11 +12,14 @@ import { ReportDialog } from '@components/common/ReportDialog';
 import { useState } from 'react';
 import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
+interface Props extends VstackProps {
+  isOverThreshold: boolean;
+}
+
 export default function AuthorBasicInfoSection({
   isOverThreshold,
-}: {
-  isOverThreshold: boolean;
-}) {
+  ...props
+}: Props) {
   const locale = useLocale();
 
   const t = useTranslations('Common');
@@ -52,12 +55,12 @@ export default function AuthorBasicInfoSection({
   };
 
   if (isLoadingAuthor) {
-    return <AuthorBasicInfoSectionSkeleton />;
+    return <AuthorBasicInfoSectionSkeleton py="1px" />;
   }
 
   return (
     <>
-      <VStack alignItems="start" gap="2px" width="100%" px="10px">
+      <VStack alignItems="start" gap="2px" width="100%" px="10px" {...props}>
         <HStack>
           <HStack gap={isOverThreshold ? '8px' : '0px'}>
             <Avatar

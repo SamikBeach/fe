@@ -121,6 +121,7 @@ export default function AuthorCommentList({ isMobile = false }: Props) {
           ? css({
               mt: '110px',
               mb: '100px',
+              width: '100%',
             })
           : css({
               flex: 3,

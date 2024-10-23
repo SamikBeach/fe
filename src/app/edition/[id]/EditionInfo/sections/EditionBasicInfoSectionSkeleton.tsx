@@ -1,14 +1,16 @@
 import { Skeleton } from '@radix-ui/themes';
-import { VStack } from 'styled-system/jsx';
+import { VStack, VstackProps } from 'styled-system/jsx';
 
-export default function EditionBasicInfoSectionSkeleton() {
+interface Props extends VstackProps {}
+
+export default function EditionBasicInfoSectionSkeleton(props: Props) {
   return (
-    <VStack alignItems="start" gap="6px" mb="20px">
+    <VStack alignItems="start" gap="6px" px="10px" {...props}>
       <Skeleton height="28px" width="200px" />
       <Skeleton height="22px" width="140px" />
       <Skeleton height="22px" width="100px" />
       <Skeleton height="28px" width="100px" />
-      <Skeleton height="24px" width="140px" />
+      <Skeleton height="20px" width="140px" />
     </VStack>
   );
 }

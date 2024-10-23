@@ -4,7 +4,7 @@ import SortDropdown from '../SortDropdown';
 import { useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
 import { Dispatch, SetStateAction } from 'react';
-import AuthorCommentSortDropdown from '@app/author/[id]/AuthorCommentList/AuthorCommentSortDropdown';
+import OriginalWorkCommentSortDropdown from '../../OriginalWorkCommentList/OriginalWorkCommentSortDropdown';
 
 interface Props extends HstackProps {
   setSelected: Dispatch<SetStateAction<'editions' | 'comments'>>;
@@ -43,7 +43,7 @@ export default function FilterSection({
         )}
       </SegmentedControl.Root>
       {selected === 'editions' && <SortDropdown />}
-      {selected === 'comments' && <AuthorCommentSortDropdown size="1" />}
+      {selected === 'comments' && <OriginalWorkCommentSortDropdown size="1" />}
     </HStack>
   );
 }

@@ -8,13 +8,61 @@ import AvatarSection from './sections/AvatarSection';
 import EditionBasicInfoSection from './sections/EditionBasicInfoSection';
 import { useState } from 'react';
 import FilterSection from './sections/FilterSection';
+import { EditionCommentList } from '../EditionCommentList';
 
 const SCROLL_THRESHOLD = 266;
 
-interface Props extends HstackProps {}
+interface Props extends HstackProps {
+  isMobile?: boolean;
+}
 
-export default function EditionInfo({ ...props }: Props) {
+export default function EditionInfo({ isMobile, ...props }: Props) {
+  const [selected, setSelected] = useState<'editions' | 'comments'>('editions');
+
   const [isOverThreshold, setIsOverThreshold] = useState(false);
+
+  const renderContent = () => {
+    return (
+      <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
+        {!isMobile && <AvatarSection />}
+
+        <VStack
+          width={isMobile ? '100%' : '400px'}
+          gap={isMobile ? '2px' : '20px'}
+          position={isMobile || isOverThreshold ? 'fixed' : 'static'}
+          top="64px"
+          bgColor="white"
+          zIndex={2}
+          pt="20px"
+          pb="10px"
+          borderBottom={isMobile || isOverThreshold ? '1px solid' : 'none'}
+          borderColor={isMobile || isOverThreshold ? 'gray.200' : 'none'}
+          alignItems="start"
+        >
+          <EditionBasicInfoSection
+            isOverThreshold={isMobile ? true : isOverThreshold}
+          />
+          <FilterSection
+            setSelected={setSelected}
+            selected={selected}
+            width="100%"
+            isMobile={isMobile}
+          />
+        </VStack>
+
+        {selected === 'editions' && (
+          <EditionList
+            mt={isMobile ? '170px' : isOverThreshold ? '236px' : '0px'}
+          />
+        )}
+        {selected === 'comments' && <EditionCommentList isMobile={isMobile} />}
+      </VStack>
+    );
+  };
+
+  if (isMobile) {
+    return renderContent();
+  }
 
   return (
     <ScrollArea
@@ -39,28 +87,7 @@ export default function EditionInfo({ ...props }: Props) {
         }
       }}
     >
-      <VStack gap="20px" width="420px" px="10px" pt="40px" ml="auto" {...props}>
-        <AvatarSection />
-
-        <VStack
-          width="400px"
-          gap="20px"
-          position={isOverThreshold ? 'fixed' : 'static'}
-          top="64px"
-          bgColor="white"
-          zIndex={2}
-          pt="20px"
-          pb="10px"
-          borderBottom={isOverThreshold ? '1px solid' : 'none'}
-          borderColor={isOverThreshold ? 'gray.200' : 'none'}
-          alignItems="start"
-        >
-          <EditionBasicInfoSection isOverThreshold={isOverThreshold} />
-          <FilterSection />
-        </VStack>
-
-        <EditionList mt={isOverThreshold ? '236px' : '0px'} />
-      </VStack>
+      {renderContent()}
     </ScrollArea>
   );
 }

@@ -1,4 +1,4 @@
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, VStack, VstackProps } from 'styled-system/jsx';
 import { Text, Tooltip } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { useQuery } from '@tanstack/react-query';
@@ -16,11 +16,14 @@ import { AiOutlineAlert } from 'react-icons/ai';
 import { ReportDialog } from '@components/common/ReportDialog';
 import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 
+interface Props extends VstackProps {
+  isOverThreshold: boolean;
+}
+
 export default function EditionBasicInfoSection({
   isOverThreshold,
-}: {
-  isOverThreshold: boolean;
-}) {
+  ...props
+}: Props) {
   const locale = useLocale();
 
   const t = useTranslations('Common');
@@ -58,7 +61,7 @@ export default function EditionBasicInfoSection({
 
   return (
     <>
-      <VStack alignItems="start" gap="20px" width="100%">
+      <VStack alignItems="start" gap="20px" width="100%" px="10px" {...props}>
         <VStack alignItems="start" gap="4px">
           <VStack alignItems="start" gap="0px">
             <HStack>

@@ -131,7 +131,8 @@
     "alphabetical": "Alphabetical",
     "sort_by": "Sort by",
     "search_editions_placeholder": "Search editions and authors...",
-    "other_editions": "Other editions"
+    "other_editions": "Other editions",
+    "comments": "comments"
   },
   "SignUp": {
     "sign_up": "Sign up",

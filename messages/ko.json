@@ -132,7 +132,8 @@
     "newest_first": "최신순",
     "sort_by": "정렬",
     "search_editions_placeholder": "에디션, 저자 검색...",
-    "other_editions": "다른 에디션"
+    "other_editions": "다른 에디션",
+    "comments": "댓글"
   },
   "SignUp": {
     "sign_up": "회원가입",

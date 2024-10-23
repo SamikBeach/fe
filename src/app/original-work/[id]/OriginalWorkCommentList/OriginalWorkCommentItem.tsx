@@ -193,7 +193,7 @@ export default function OriginalWorkCommentItem({
           isShowSubComments={showSubComments}
           user={user}
           comment={commentProps}
-          width="678px"
+          width="100%"
         />
       )}
       {showSubComments &&
@@ -208,7 +208,7 @@ export default function OriginalWorkCommentItem({
       {showSubComments && (
         <div
           ref={commentEditorWrapperRef}
-          className={css({ width: '100%', pl: '48px' })}
+          className={css({ width: '100%', pl: '24px' })}
         >
           <CommentEditor
             ref={commentEditorRef}
@@ -220,6 +220,7 @@ export default function OriginalWorkCommentItem({
             }}
             comment={subComment ?? undefined}
             setComment={setSubComment}
+            width="88%"
           />
         </div>
       )}

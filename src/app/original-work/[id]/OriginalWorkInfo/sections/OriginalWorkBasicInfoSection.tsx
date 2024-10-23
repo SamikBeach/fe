@@ -1,4 +1,4 @@
-import { HStack, VStack } from 'styled-system/jsx';
+import { HStack, VStack, VstackProps } from 'styled-system/jsx';
 import { Avatar, Text, Tooltip } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 import { useQuery } from '@tanstack/react-query';
@@ -14,11 +14,14 @@ import { ReportDialog } from '@components/common/ReportDialog';
 import { LoginAlertDialog } from '@components/common/LoginAlertDialog';
 import { GiSecretBook } from 'react-icons/gi';
 
+interface Props extends VstackProps {
+  isOverThreshold: boolean;
+}
+
 export default function OriginalWorkBasicInfoSection({
   isOverThreshold,
-}: {
-  isOverThreshold: boolean;
-}) {
+  ...props
+}: Props) {
   const locale = useLocale();
 
   const t = useTranslations('Common');
@@ -43,12 +46,12 @@ export default function OriginalWorkBasicInfoSection({
   };
 
   if (isLoadingOriginalWork) {
-    return <OriginalWorkBasicInfoSectionSkeleton />;
+    return <OriginalWorkBasicInfoSectionSkeleton py="1px" />;
   }
 
   return (
     <>
-      <VStack alignItems="start" gap="2px" width="100%" px="10px">
+      <VStack alignItems="start" gap="2px" width="100%" px="10px" {...props}>
         <HStack>
           <HStack gap={isOverThreshold ? '8px' : '0px'}>
             <Avatar

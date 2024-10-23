@@ -32,7 +32,7 @@ export default function EditonList(props: Props) {
   return (
     <VStack pb="40px" width="100%" {...props}>
       {isLoading
-        ? Array(24)
+        ? Array(10)
             .fill(0)
             .map((_, index) => (
               <Fragment key={index}>

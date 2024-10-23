@@ -27,7 +27,11 @@ import { originalWorkCommentSortAtom } from '@atoms/sort';
 import { useTranslations } from 'next-intl';
 import CommentListEmpty from '@components/common/Comment/CommentListEmpty';
 
-export default function OriginalWorkCommentList() {
+interface Props {
+  isMobile?: boolean;
+}
+
+export default function OriginalWorkCommentList({ isMobile = false }: Props) {
   const t = useTranslations('Common');
 
   const commentListBoxRef = useRef<HTMLDivElement>(null);
@@ -112,26 +116,37 @@ export default function OriginalWorkCommentList() {
 
   return (
     <div
-      className={css({
-        flex: 3,
-        position: 'relative',
-        height: 'calc(100vh - 64px)',
-      })}
+      className={
+        isMobile
+          ? css({
+              mt: '176px',
+              mb: '100px',
+              width: '100%',
+            })
+          : css({
+              flex: 3,
+              position: 'relative',
+              height: 'calc(100vh - 64px)',
+            })
+      }
     >
       <CommentListBox
         ref={commentListBoxRef}
         onScroll={e => fetchMoreOnBottomReached(e.target as HTMLDivElement)}
+        isMobile={isMobile}
       >
-        <HStack justify="space-between" width="100%">
-          {isLoading ? (
-            <Skeleton height="24px" width="100px" />
-          ) : (
-            <Text size="3" weight="medium">
-              {t('comment', { count: comments.length })}
-            </Text>
-          )}
-          <OriginalWorkCommentSortDropdown />
-        </HStack>
+        {!isMobile && (
+          <HStack justify="space-between" width="100%">
+            {isLoading ? (
+              <Skeleton height="24px" width="100px" />
+            ) : (
+              <Text size="3" weight="medium">
+                {t('comment', { count: comments.length })}
+              </Text>
+            )}
+            <OriginalWorkCommentSortDropdown />
+          </HStack>
+        )}
         {isLoading ? (
           <>
             <OriginalWorkCommentItemSkeleton height="140px" />
@@ -156,13 +171,14 @@ export default function OriginalWorkCommentList() {
       </CommentListBox>
       <div
         className={css({
-          width: '800px',
+          width: isMobile ? '100%' : '800px',
           bgColor: 'white',
-          padding: '20px',
+          padding: '10px',
           borderTop: '1px solid',
           borderColor: 'gray.200',
-          position: 'absolute',
+          position: isMobile ? 'fixed' : 'absolute',
           bottom: 0,
+          left: 0,
         })}
       >
         <CommentEditor

@@ -195,7 +195,7 @@ export default function AuthorCommentItem({
           isShowSubComments={showSubComments}
           user={user}
           comment={commentProps}
-          width="678px"
+          width="100%"
         />
       )}
       {showSubComments &&
@@ -208,10 +208,7 @@ export default function AuthorCommentItem({
           />
         ))}
       {showSubComments && (
-        <div
-          ref={commentEditorWrapperRef}
-          className={css({ width: '100%', pl: '48px' })}
-        >
+        <div ref={commentEditorWrapperRef} className={css({ width: '100%' })}>
           <CommentEditor
             ref={commentEditorRef}
             onSubmit={({ comment }) => {
@@ -222,6 +219,7 @@ export default function AuthorCommentItem({
             }}
             comment={subComment ?? undefined}
             setComment={setSubComment}
+            width="88%"
           />
         </div>
       )}

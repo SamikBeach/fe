@@ -99,7 +99,8 @@
     "newest_first": "Newest first",
     "alphabetical": "Alphabetical",
     "original_works": "Original works",
-    "editions": "Editions"
+    "editions": "Editions",
+    "comments": "comment"
   },
   "OriginalWork": {
     "field": "Field",

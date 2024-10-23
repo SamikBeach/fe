@@ -1,6 +1,11 @@
 import { authorCommentSortAtom } from '@atoms/sort';
 import { CommentSort } from '@models/comment';
-import { Button, ChevronDownIcon, DropdownMenu } from '@radix-ui/themes';
+import {
+  Button,
+  ButtonProps,
+  ChevronDownIcon,
+  DropdownMenu,
+} from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { css } from 'styled-system/css';
@@ -11,7 +16,9 @@ const SORT_OPTIONS: { tKey: string; value: CommentSort }[] = [
   { tKey: 'newest_first', value: 'newest_first' },
 ];
 
-export default function AuthorCommentSortDropdown() {
+interface Props extends ButtonProps {}
+
+export default function AuthorCommentSortDropdown(props: Props) {
   const t = useTranslations('Author');
 
   const [authorCommentSort, setAuthorCommentSort] = useAtom(
@@ -27,6 +34,7 @@ export default function AuthorCommentSortDropdown() {
             cursor: 'pointer',
             color: 'black',
           })}
+          {...props}
         >
           {t(
             SORT_OPTIONS.find(option => option.value === authorCommentSort)

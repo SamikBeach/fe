@@ -5,15 +5,20 @@ import { css } from 'styled-system/css';
 import { HStack, HstackProps } from 'styled-system/jsx';
 import OriginalWorkSortDropdown from '../OriginalWorkSortDropdown';
 import EditionSortDropdown from '../EditionSortDropdown';
+import AuthorCommentSortDropdown from '../../AuthorCommentList/AuthorCommentSortDropdown';
 
 interface Props extends HstackProps {
-  setSelected: Dispatch<SetStateAction<'original-works' | 'editions'>>;
-  selected: 'original-works' | 'editions';
+  setSelected: Dispatch<
+    SetStateAction<'original-works' | 'editions' | 'comments'>
+  >;
+  selected: 'original-works' | 'editions' | 'comments';
+  isMobile?: boolean;
 }
 
 export default function FilterSection({
   setSelected,
   selected,
+  isMobile,
   ...props
 }: Props) {
   const t = useTranslations('Author');
@@ -23,7 +28,7 @@ export default function FilterSection({
       <SegmentedControl.Root
         defaultValue="original-works"
         onValueChange={value =>
-          setSelected(value as 'original-works' | 'editions')
+          setSelected(value as 'original-works' | 'editions' | 'comments')
         }
         size="1"
       >
@@ -39,12 +44,18 @@ export default function FilterSection({
         >
           {t('editions')}
         </SegmentedControl.Item>
+        {isMobile && (
+          <SegmentedControl.Item
+            value="comments"
+            className={css({ cursor: 'pointer' })}
+          >
+            {t('comments')}
+          </SegmentedControl.Item>
+        )}
       </SegmentedControl.Root>
-      {selected === 'original-works' ? (
-        <OriginalWorkSortDropdown />
-      ) : (
-        <EditionSortDropdown />
-      )}
+      {selected === 'original-works' && <OriginalWorkSortDropdown />}
+      {selected === 'editions' && <EditionSortDropdown />}
+      {selected === 'comments' && <AuthorCommentSortDropdown size="1" />}
     </HStack>
   );
 }

@@ -5,12 +5,27 @@ import { ReactNode, forwardRef } from 'react';
 
 interface Props extends ScrollAreaProps {
   children: ReactNode;
+  isMobile?: boolean;
 }
 
 const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
-  { children, ...props },
+  { children, isMobile, ...props },
   ref
 ) {
+  if (isMobile) {
+    return (
+      <VStack
+        alignItems="start"
+        fontSize="14px"
+        gap="20px"
+        width="100%"
+        padding={isMobile ? '10px' : '40px'}
+      >
+        {children}
+      </VStack>
+    );
+  }
+
   return (
     <ScrollArea
       ref={ref}

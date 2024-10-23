@@ -100,7 +100,8 @@
     "alphabetical": "가나다순",
     "newest_first": "최신순",
     "original_works": "원전",
-    "editions": "에디션"
+    "editions": "에디션",
+    "comments": "댓글"
   },
   "OriginalWork": {
     "field": "분야",

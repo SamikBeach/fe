@@ -103,7 +103,7 @@ export default function SubCommentItem({
       onSubmit={updateComment}
       onClose={() => setIsEditing(false)}
       comment={commentProps.comment}
-      width="630px"
+      width="88%"
     />
   ) : (
     <CommentItem
@@ -114,7 +114,7 @@ export default function SubCommentItem({
       myLikeExist={myLikeExist}
       user={user}
       comment={commentProps}
-      width="630px"
+      width="88%"
       onClickReply={() => onClickReply({ user })}
     />
   );

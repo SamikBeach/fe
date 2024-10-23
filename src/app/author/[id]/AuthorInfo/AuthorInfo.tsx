@@ -9,6 +9,7 @@ import { css } from 'styled-system/css';
 import AvatarSection from './sections/AvatarSection';
 import AuthorBasicInfoSection from './sections/AuthorBasicInfoSection';
 import FilterSection from './sections/FilterSection';
+import { AuthorCommentList } from '../AuthorCommentList';
 
 const SCROLL_THRESHOLD = 319;
 
@@ -17,9 +18,9 @@ interface Props extends HstackProps {
 }
 
 export default function AuthorInfo({ isMobile, ...props }: Props) {
-  const [selected, setSelected] = useState<'original-works' | 'editions'>(
-    'original-works'
-  );
+  const [selected, setSelected] = useState<
+    'original-works' | 'editions' | 'comments'
+  >('original-works');
 
   const [isOverThreshold, setIsOverThreshold] = useState(false);
 
@@ -47,18 +48,21 @@ export default function AuthorInfo({ isMobile, ...props }: Props) {
             setSelected={setSelected}
             selected={selected}
             width="100%"
+            isMobile={isMobile}
           />
         </VStack>
 
-        {selected === 'original-works' ? (
+        {selected === 'original-works' && (
           <OriginalWorkList
             mt={isMobile ? '110px' : isOverThreshold ? '176px' : '0px'}
           />
-        ) : (
+        )}
+        {selected === 'editions' && (
           <EditionList
             mt={isMobile ? '110px' : isOverThreshold ? '176px' : '0px'}
           />
         )}
+        {selected === 'comments' && <AuthorCommentList isMobile={isMobile} />}
       </VStack>
     );
   };

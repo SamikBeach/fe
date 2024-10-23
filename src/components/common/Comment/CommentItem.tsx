@@ -1,10 +1,4 @@
-import {
-  HStack,
-  HstackProps,
-  VStack,
-  VstackProps,
-  styled,
-} from 'styled-system/jsx';
+import { HStack, HstackProps, VStack, styled } from 'styled-system/jsx';
 import { DropdownMenu, IconButton, Text } from '@radix-ui/themes';
 import { css } from 'styled-system/css';
 
@@ -16,7 +10,6 @@ import { useAtomValue } from 'jotai';
 import { currentUserAtom } from '@atoms/user';
 import { useState } from 'react';
 import { DeleteConfirmDialog } from '../DeleteConfirmDialog';
-import { motion } from 'framer-motion';
 import { ko, enUS } from 'date-fns/locale';
 import { useLocale, useTranslations } from 'next-intl';
 import { LoginAlertDialog } from '../LoginAlertDialog';
@@ -37,7 +30,6 @@ interface Props extends HstackProps {
   user: UserServerModel;
   comment: CommentServerModel;
   isShowSubComments?: boolean;
-  width: VstackProps['width'];
 }
 
 function CommentItem({
@@ -77,7 +69,7 @@ function CommentItem({
 
   return (
     <>
-      <motion.div
+      {/* <motion.div
         initial={{
           // 처음 마운트 될 때 상태,
           // 마운트시 애니메이션을 원하지 않다면 initial = {false}
@@ -94,63 +86,63 @@ function CommentItem({
           ease: 'easeIn',
           duration: 0.2,
         }}
-      >
-        <HStack alignItems="start" width="100%" justify="end" {...props}>
-          <UserAvatar user={user} mt="4px" />
-          <VStack gap="4px" alignItems="start" width={width}>
-            <CommentBox>
-              <HStack justify="space-between">
-                <Text weight="medium" className={css({ display: 'block' })}>
-                  <UserAvatar withName onlyName user={user} />{' '}
-                  <span
-                    className={css({
-                      fontSize: '12px',
-                      fontWeight: 'normal',
-                      color: 'gray',
-                    })}
-                  >
-                    {createdAt}
-                  </span>
-                </Text>
-                {isMyComment && (
-                  <>
-                    <DropdownMenu.Root>
-                      <DropdownMenu.Trigger>
-                        <IconButton
-                          size="1"
-                          variant="ghost"
-                          className={css({ cursor: 'pointer' })}
-                        >
-                          <DotsHorizontalIcon color="gray" />
-                        </IconButton>
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content>
-                        <DropdownMenu.Item
-                          className={css({ cursor: 'pointer' })}
-                          onSelect={onEdit}
-                        >
-                          {t('edit')}
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item
-                          className={css({ cursor: 'pointer' })}
-                          onSelect={() => setIsOpenDeleteConfirmDialog(true)}
-                        >
-                          {t('delete')}
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu.Root>
-                    <DeleteConfirmDialog
-                      onDelete={onDelete}
-                      open={isOpenDeleteConfirmDialog}
-                      onOpenChange={setIsOpenDeleteConfirmDialog}
-                    />
-                  </>
-                )}
-              </HStack>
-              <Text>
+      > */}
+      <HStack alignItems="start" width="100%" justify="end" {...props}>
+        <UserAvatar user={user} mt="4px" />
+        <VStack gap="4px" alignItems="start" width={width}>
+          <CommentBox>
+            <HStack justify="space-between">
+              <Text weight="medium" className={css({ display: 'block' })}>
+                <UserAvatar withName onlyName user={user} />{' '}
+                <span
+                  className={css({
+                    fontSize: '12px',
+                    fontWeight: 'normal',
+                    color: 'gray',
+                  })}
+                >
+                  {createdAt}
+                </span>
+              </Text>
+              {isMyComment && (
                 <>
-                  <Item />
-                  {/* <Button
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      <IconButton
+                        size="1"
+                        variant="ghost"
+                        className={css({ cursor: 'pointer' })}
+                      >
+                        <DotsHorizontalIcon color="gray" />
+                      </IconButton>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                      <DropdownMenu.Item
+                        className={css({ cursor: 'pointer' })}
+                        onSelect={onEdit}
+                      >
+                        {t('edit')}
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item
+                        className={css({ cursor: 'pointer' })}
+                        onSelect={() => setIsOpenDeleteConfirmDialog(true)}
+                      >
+                        {t('delete')}
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                  <DeleteConfirmDialog
+                    onDelete={onDelete}
+                    open={isOpenDeleteConfirmDialog}
+                    onOpenChange={setIsOpenDeleteConfirmDialog}
+                  />
+                </>
+              )}
+            </HStack>
+            <Text>
+              <>
+                <Item />
+                {/* <Button
                       variant="ghost"
                       size="1"
                       onClick={() => setIsSeeMoreButtonShown(prev => !prev)}
@@ -170,77 +162,77 @@ function CommentItem({
                     >
                       {t('see_more')}
                     </Button> */}
-                </>
+              </>
+            </Text>
+          </CommentBox>
+          <HStack justify="space-between" width="100%">
+            <HStack ml="8px">
+              <Text
+                size="1"
+                className={css({
+                  cursor: 'pointer',
+                  fontWeight: myLikeExist ? 'bold' : 'medium',
+                  color: myLikeExist ? 'black' : 'gray',
+                  userSelect: 'none',
+                })}
+                onClick={() => {
+                  if (currentUser === null) {
+                    setOpenLoginAlertDialog(true);
+
+                    return;
+                  }
+
+                  onClickLike();
+                }}
+              >
+                {t('like')}
               </Text>
-            </CommentBox>
-            <HStack justify="space-between" width="100%">
-              <HStack ml="8px">
-                <Text
-                  size="1"
-                  className={css({
-                    cursor: 'pointer',
-                    fontWeight: myLikeExist ? 'bold' : 'medium',
-                    color: myLikeExist ? 'black' : 'gray',
-                    userSelect: 'none',
-                  })}
-                  onClick={() => {
-                    if (currentUser === null) {
-                      setOpenLoginAlertDialog(true);
+              <Text
+                weight="medium"
+                color="gray"
+                size="1"
+                className={css({
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                })}
+                onClick={() => {
+                  if (currentUser === null) {
+                    setOpenLoginAlertDialog(true);
 
-                      return;
-                    }
+                    return;
+                  }
 
-                    onClickLike();
-                  }}
-                >
-                  {t('like')}
-                </Text>
+                  onClickToggleShowSubComments?.();
+                  onClickReply?.();
+                }}
+              >
+                {t('reply')}
+              </Text>
+            </HStack>
+            <HStack mr="8px">
+              <Text weight="medium" color="gray" size="1">
+                {likeCount} {t('likes')}
+              </Text>
+              {subCommentCount !== undefined && subCommentCount > 0 && (
                 <Text
                   weight="medium"
                   color="gray"
                   size="1"
-                  className={css({
-                    cursor: 'pointer',
-                    userSelect: 'none',
-                  })}
-                  onClick={() => {
-                    if (currentUser === null) {
-                      setOpenLoginAlertDialog(true);
-
-                      return;
-                    }
-
-                    onClickToggleShowSubComments?.();
-                    onClickReply?.();
-                  }}
+                  className={css({ cursor: 'pointer', userSelect: 'none' })}
+                  onClick={onClickToggleShowSubComments}
                 >
-                  {t('reply')}
+                  {isShowSubComments
+                    ? t('hide_replies')
+                    : t('view_replies', {
+                        count: subCommentCount,
+                      })}
                 </Text>
-              </HStack>
-              <HStack mr="8px">
-                <Text weight="medium" color="gray" size="1">
-                  {likeCount} {t('likes')}
-                </Text>
-                {subCommentCount !== undefined && subCommentCount > 0 && (
-                  <Text
-                    weight="medium"
-                    color="gray"
-                    size="1"
-                    className={css({ cursor: 'pointer', userSelect: 'none' })}
-                    onClick={onClickToggleShowSubComments}
-                  >
-                    {isShowSubComments
-                      ? t('hide_replies')
-                      : t('view_replies', {
-                          count: subCommentCount,
-                        })}
-                  </Text>
-                )}
-              </HStack>
+              )}
             </HStack>
-          </VStack>
-        </HStack>
-      </motion.div>
+          </HStack>
+        </VStack>
+      </HStack>
+      {/* </motion.div> */}
       <LoginAlertDialog
         open={openLoginAlertDialog}
         onOpenChange={setOpenLoginAlertDialog}

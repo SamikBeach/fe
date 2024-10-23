@@ -173,11 +173,12 @@ export default function AuthorCommentList({ isMobile = false }: Props) {
           width: isMobile ? '100%' : '800px',
 
           bgColor: 'white',
-          padding: '20px',
+          padding: '10px',
           borderTop: '1px solid',
           borderColor: 'gray.200',
           position: isMobile ? 'fixed' : 'absolute',
           bottom: 0,
+          left: 0,
         })}
       >
         <CommentEditor

@@ -115,6 +115,7 @@ export default function SubCommentItem({
       user={user}
       comment={commentProps}
       width="88%"
+      pl="24px"
       onClickReply={() => onClickReply({ user })}
     />
   );

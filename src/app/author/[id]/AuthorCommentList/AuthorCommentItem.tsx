@@ -208,7 +208,10 @@ export default function AuthorCommentItem({
           />
         ))}
       {showSubComments && (
-        <div ref={commentEditorWrapperRef} className={css({ width: '100%' })}>
+        <div
+          ref={commentEditorWrapperRef}
+          className={css({ width: '100%', pl: '24px' })}
+        >
           <CommentEditor
             ref={commentEditorRef}
             onSubmit={({ comment }) => {

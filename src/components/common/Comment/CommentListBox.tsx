@@ -19,7 +19,7 @@ const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
         fontSize="14px"
         gap="20px"
         width="100%"
-        padding={isMobile ? '10px' : '40px'}
+        padding={isMobile ? '0px' : '40px'}
       >
         {children}
       </VStack>
@@ -30,7 +30,7 @@ const CommentListBox = forwardRef<HTMLDivElement, Props>(function (
     <ScrollArea
       ref={ref}
       scrollbars="vertical"
-      className={css({ height: 'calc(100vh - 170px)' })}
+      className={css({ height: 'calc(100vh - 140px)' })}
       {...props}
     >
       <VStack

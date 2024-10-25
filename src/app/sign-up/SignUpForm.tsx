@@ -30,7 +30,7 @@ interface Props extends CardProps {}
 
 export default function SignUpForm(props: Props) {
   const router = useRouter();
-  const t = useTranslations('SignUp');
+  const t = useTranslations();
 
   const isLoggedIn = useAtomValue(isLoggedInAtom);
   const setCurrentUser = useSetAtom(currentUserAtom);
@@ -67,7 +67,7 @@ export default function SignUpForm(props: Props) {
       // error 코드에 맞게 에러 메시지를 설정
       if (error.response?.status === 401) {
         methods.setError('email', {
-          message: t('email_already_exists'),
+          message: t('SignUp.email_already_exists'),
         });
       }
     },
@@ -133,7 +133,7 @@ export default function SignUpForm(props: Props) {
                       value={email}
                       onChange={e => onEmailChange(e.target.value)}
                       type="text"
-                      placeholder={t('enter_email')}
+                      placeholder={t('SignUp.enter_email')}
                       size="3"
                       className={css({
                         width: '100%',
@@ -161,7 +161,7 @@ export default function SignUpForm(props: Props) {
                     size="3"
                     disabled={!getIsValidEmail(email)}
                   >
-                    <Text size="2">{t('sign_up')}</Text>
+                    <Text size="2">{t('SignUp.sign_up')}</Text>
                   </Button>
                 </VStack>
               </form>
@@ -174,7 +174,7 @@ export default function SignUpForm(props: Props) {
                   size="2"
                 >
                   <Google width={16} height={16} />
-                  {t('continue_with_google')}
+                  {t('SignUp.continue_with_google')}
                 </Button>
                 {oauthSignUpErrorMessage && (
                   <Text size="1" className={css({ color: 'red' })} role="alert">
@@ -184,20 +184,57 @@ export default function SignUpForm(props: Props) {
               </VStack>
             </VStack>
 
-            <HStack gap="4px">
-              <Text size="2" color="gray">
-                {t('already_have_account')}
-              </Text>
-              <Link href="/login">
-                <Text
-                  size="2"
-                  weight="medium"
-                  className={css({ color: 'black' })}
-                >
-                  {t('login')}
+            <VStack gap="0px">
+              <HStack gap="4px">
+                <Text size="2" color="gray">
+                  {t('SignUp.already_have_account')}
                 </Text>
-              </Link>
-            </HStack>
+                <Link href="/login">
+                  <Text
+                    size="2"
+                    weight="medium"
+                    className={css({ color: 'black' })}
+                  >
+                    {t('SignUp.login')}
+                  </Text>
+                </Link>
+              </HStack>
+              <HStack>
+                <Link href="/terms-of-service">
+                  <Text
+                    color="gray"
+                    size="1"
+                    className={css({
+                      cursor: 'pointer',
+
+                      _hover: {
+                        textDecoration: 'underline',
+                      },
+                    })}
+                  >
+                    {t('Common.terms_of_service')}
+                  </Text>
+                </Link>
+                <Text color="gray" size="1">
+                  {' · '}
+                </Text>
+                <Link href="privacy-policy">
+                  <Text
+                    color="gray"
+                    size="1"
+                    className={css({
+                      cursor: 'pointer',
+
+                      _hover: {
+                        textDecoration: 'underline',
+                      },
+                    })}
+                  >
+                    {t('Common.privacy_policy')}
+                  </Text>
+                </Link>
+              </HStack>
+            </VStack>
           </VStack>
         </VStack>
       </Card>

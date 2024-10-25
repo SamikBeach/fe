@@ -1,6 +1,7 @@
 import { searchAuthors } from '@apis/author';
 import { searchEditions } from '@apis/edition';
 import { searchOriginalWorks } from '@apis/original-work';
+import { Media } from '@app/media';
 import { Avatar, Popover, Spinner, Text, Tooltip } from '@radix-ui/themes';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
@@ -13,6 +14,7 @@ import { HStack, VStack } from 'styled-system/jsx';
 
 interface Props extends ComponentProps<typeof Popover.Root> {
   searchValue: string;
+  isMobile?: boolean;
 }
 
 function SearchPopover({
@@ -20,6 +22,7 @@ function SearchPopover({
   open,
   onOpenChange,
   searchValue,
+  isMobile = false,
   ...props
 }: Props) {
   const router = useRouter();
@@ -111,7 +114,11 @@ function SearchPopover({
   const renderPopoverContentInner = () => {
     if (isLoading || searchValue === '') {
       return (
-        <VStack width="430px" height="388px" justify="center">
+        <VStack
+          width={isMobile ? '100%' : '430px'}
+          height="388px"
+          justify="center"
+        >
           <Spinner />
         </VStack>
       );
@@ -119,7 +126,11 @@ function SearchPopover({
 
     if (!hasResults) {
       return (
-        <VStack width="430px" height="388px" justify="center">
+        <VStack
+          width={isMobile ? '100%' : '430px'}
+          height="388px"
+          justify="center"
+        >
           <Text>{t('no_result')}</Text>
         </VStack>
       );
@@ -141,7 +152,7 @@ function SearchPopover({
                 key={index}
                 gap="10px"
                 className={css({
-                  width: '430px',
+                  width: isMobile ? '100%' : '430px',
                   py: '4px',
                   px: '8px',
                   background:
@@ -206,7 +217,7 @@ function SearchPopover({
                 key={index}
                 gap="10px"
                 className={css({
-                  width: '430px',
+                  width: isMobile ? '100%' : '430px',
                   py: '4px',
                   px: '8px',
                   background:
@@ -249,7 +260,7 @@ function SearchPopover({
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
-                        maxWidth: '380px',
+                        maxWidth: isMobile ? '77vw' : '380px',
                       })}
                     >
                       <Highlighter
@@ -291,7 +302,7 @@ function SearchPopover({
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
-                      maxWidth: '380px',
+                      maxWidth: isMobile ? '77vw' : '380px',
                     })}
                   >
                     <Highlighter
@@ -327,7 +338,7 @@ function SearchPopover({
                 key={index}
                 gap="10px"
                 className={css({
-                  width: '430px',
+                  width: isMobile ? '100%' : '430px',
                   py: '4px',
                   px: '8px',
                   background:
@@ -379,7 +390,7 @@ function SearchPopover({
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
-                        maxWidth: '380px',
+                        maxWidth: isMobile ? '77vw' : '380px',
                       })}
                     >
                       <Highlighter
@@ -438,7 +449,7 @@ function SearchPopover({
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
-                      maxWidth: '380px',
+                      maxWidth: isMobile ? '70vw' : '380px',
                     })}
                     highlightClassName={css({
                       fontWeight: 'bold',
@@ -472,6 +483,8 @@ function SearchPopover({
         onOpenAutoFocus={e => e.preventDefault()}
         className={css({
           padding: '10px',
+          maxHeight: isMobile ? '88vh' : undefined,
+          width: isMobile ? '94vw' : '430px',
         })}
       >
         {renderPopoverContentInner()}
@@ -480,6 +493,19 @@ function SearchPopover({
   );
 }
 
-export default Object.assign(SearchPopover, {
+function SearchPopoverWithMedia(props: Props) {
+  return (
+    <>
+      <Media greaterThanOrEqual="lg">
+        <SearchPopover {...props} />
+      </Media>
+      <Media lessThan="lg">
+        <SearchPopover isMobile={true} {...props} />
+      </Media>
+    </>
+  );
+}
+
+export default Object.assign(SearchPopoverWithMedia, {
   Trigger: Popover.Trigger,
 });

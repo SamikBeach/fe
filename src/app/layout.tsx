@@ -33,6 +33,15 @@ export default async function RootLayout({
     <html>
       <RootHead />
       <body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P88QJD8Q"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
+
         <NextTopLoader
           color="black"
           initialPosition={0.08}

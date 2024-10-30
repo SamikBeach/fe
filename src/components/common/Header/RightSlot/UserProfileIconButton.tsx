@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { logout } from '@apis/auth';
 import { currentUserAtom } from '@atoms/user';
 import { useTranslations } from 'next-intl';
+import api from '@apis/config';
 
 export default function UserProfileIconButton() {
   const t = useTranslations('Common');
@@ -19,6 +20,8 @@ export default function UserProfileIconButton() {
     mutationFn: logout,
     onSuccess: () => {
       setCurrentUser(null);
+
+      api.defaults.headers.common['Authorization'] = undefined;
 
       googleLogout();
     },

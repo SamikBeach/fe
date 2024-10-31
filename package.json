@@ -59,7 +59,6 @@
     "next-intl": "^3.20.0",
     "nextjs-toploader": "^1.6.12",
     "nprogress": "^0.2.0",
-    "pm2": "^5.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-highlight-words": "^0.20.0",

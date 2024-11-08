@@ -1,16 +1,18 @@
 {
+  "branches": [
+    "main"
+  ],
+  "tagFormat": "${version}",
+  "repository": "https://github.com/SamikBeach/fe",
   "plugins": [
     [
+      "@semantic-release/github",
       "@semantic-release/commit-analyzer",
       {
         "releaseRules": [
           {
             "scope": "no-release",
             "release": false
-          },
-          {
-            "scope": "breaking",
-            "release": "major"
           },
           {
             "type": "docs",
@@ -68,9 +70,7 @@
         ]
       }
     ],
-    [
-      "@semantic-release/release-notes-generator"
-    ],
+    "@semantic-release/release-notes-generator",
     [
       "@semantic-release/changelog",
       {

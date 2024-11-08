@@ -11,12 +11,9 @@
     "lint": "next lint"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
     "@pandacss/dev": "^0.40.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.1",
     "@types/base-64": "^1",
     "@types/josa": "^3",
     "@types/js-cookie": "^3",

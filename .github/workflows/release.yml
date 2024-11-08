@@ -7,22 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    strategy:
-      matrix:
-        node-version: [23.x]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: yarn run build
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Release
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '23.x'
+
+      - name: Build
+        run: yarn run build
+
+      - name: Semantic Release
+        run: yarn run semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release@18
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}

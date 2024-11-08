@@ -23,4 +23,4 @@ jobs:
       - name: Semantic Release
         run: yarn run semantic-release
         env:
-          FE_TOKEN: ${{ secrets.FE_TOKEN }}
+          FE_TOKEN: ${{ secrets.GH_TOKEN }}

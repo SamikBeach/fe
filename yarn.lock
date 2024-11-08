@@ -3024,7 +3024,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/release-notes-generator@npm:^14.0.0-beta.1":
+"@semantic-release/release-notes-generator@npm:^14.0.0-beta.1, @semantic-release/release-notes-generator@npm:^14.0.1":
   version: 14.0.1
   resolution: "@semantic-release/release-notes-generator@npm:14.0.1"
   dependencies:
@@ -5643,6 +5643,7 @@ __metadata:
     "@react-oauth/google": "npm:^0.12.1"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/git": "npm:^10.0.1"
+    "@semantic-release/release-notes-generator": "npm:^14.0.1"
     "@sentry/nextjs": "npm:^7"
     "@sentry/utils": "npm:^8.35.0"
     "@tanstack/react-query": "npm:^5.44.0"

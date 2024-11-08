@@ -1,5 +1,15 @@
 # 🚦 CHANGELOG
 
+## [1.0.1](https://github.com/SamikBeach/fe/compare/v1.0.0...1.0.1) (2024-11-08)
+
+
+### Bug Fixes
+
+* fix yml ([b0f76ba](https://github.com/SamikBeach/fe/commit/b0f76bab2ce141a02eb3055fbb3ccf7b7d2b7207))
+* fix yml ([fd7e5c0](https://github.com/SamikBeach/fe/commit/fd7e5c09763975bcedf6a696ab6b0dab8e664fd2))
+* fix yml ([ed6495a](https://github.com/SamikBeach/fe/commit/ed6495a422407b06840cd2104e63664b31472fe2))
+* fix yml ([2273055](https://github.com/SamikBeach/fe/commit/2273055eb0a5ee332e99e68e7d6bae12d320841b))
+
 # 1.0.0 (2024-11-08)
 
 

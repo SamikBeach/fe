@@ -95,6 +95,11 @@
               "hidden": false
             },
             {
+              "type": "chore",
+              "section": "🧹 Chore",
+              "hidden": false
+            },
+            {
               "type": "docs",
               "section": "📝 Docs",
               "hidden": false

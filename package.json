@@ -1,5 +1,7 @@
 {
   "name": "fe",
+  "private": true,
+  "version": "0.0.1",
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "prepare": "panda codegen",

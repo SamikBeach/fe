@@ -5,8 +5,8 @@
   "tagFormat": "${version}",
   "repository": "https://github.com/SamikBeach/fe",
   "plugins": [
+    "@semantic-release/github",
     [
-      "@semantic-release/github",
       "@semantic-release/commit-analyzer",
       {
         "releaseRules": [

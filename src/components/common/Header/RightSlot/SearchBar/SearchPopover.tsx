@@ -484,7 +484,7 @@ function SearchPopover({
         className={css({
           padding: '10px',
           maxHeight: isMobile ? '88vh' : undefined,
-          width: isMobile ? '94vw' : '430px',
+          width: isMobile ? '94vw' : '450px',
         })}
       >
         {renderPopoverContentInner()}

@@ -1,5 +1,12 @@
 # 🚦 CHANGELOG
 
+## [1.0.2](https://github.com/SamikBeach/fe/compare/1.0.1...1.0.2) (2024-11-08)
+
+
+### Bug Fixes
+
+* fix for release ([fc3dfa3](https://github.com/SamikBeach/fe/commit/fc3dfa3ca576fc164a880eddfff0a5a9d566822f))
+
 ## [1.0.1](https://github.com/SamikBeach/fe/compare/v1.0.0...1.0.1) (2024-11-08)
 
 

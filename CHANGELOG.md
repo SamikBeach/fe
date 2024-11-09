@@ -1,5 +1,13 @@
 # 🚦 CHANGELOG
 
+## [1.1.4](https://github.com/SamikBeach/fe/compare/1.1.3...1.1.4) (2024-11-09)
+
+
+### Bug Fixes
+
+* 모바일 LogList 스타일 수정 ([c9f2c03](https://github.com/SamikBeach/fe/commit/c9f2c036f63d0cfe833c3cfd4994329c9e57f96f))
+* 모바일 로고에 누락된 링크 추가 ([8d97b6e](https://github.com/SamikBeach/fe/commit/8d97b6ed1a5c5408ba9c8d66b3ce9ef9455dfbf0))
+
 ## [1.1.3](https://github.com/SamikBeach/fe/compare/1.1.2...1.1.3) (2024-11-09)
 
 

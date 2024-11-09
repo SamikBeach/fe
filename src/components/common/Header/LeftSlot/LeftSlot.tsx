@@ -73,7 +73,9 @@ export default function LeftSlot() {
           duration={200}
         >
           <VStack alignItems="start" gap="20px">
-            <Logo />
+            <Link href="/">
+              <Logo onClick={() => setIsOpenSidebar(false)} />
+            </Link>
             <VStack alignItems="start" gap="0" width="100%">
               {MENU_ITEMS.map(({ href, tKey }) => (
                 <Link key={href} href={href} className={css({ width: '100%' })}>

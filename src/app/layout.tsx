@@ -13,6 +13,7 @@ import SilentRefresh from './SilentRefresh';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { cookies } from 'next/headers';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import RootHead from './RootHead';
 import { Metadata } from 'next';
 
@@ -32,16 +33,9 @@ export default async function RootLayout({
   return (
     <html>
       <RootHead />
+      <GoogleTagManager gtmId={process.env.GTM_ID ?? ''} />
+      <GoogleAnalytics gaId={process.env.GA_ID ?? ''} />
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-P88QJD8Q"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          ></iframe>
-        </noscript>
-
         <NextTopLoader
           color="black"
           initialPosition={0.08}

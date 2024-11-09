@@ -34,6 +34,7 @@ export default async function RootLayout({
     <html>
       <RootHead />
       <GoogleTagManager gtmId={process.env.GTM_ID ?? ''} />
+      <GoogleAnalytics gaId={process.env.GA_ID ?? ''} />
       <body>
         <NextTopLoader
           color="black"
@@ -72,7 +73,6 @@ export default async function RootLayout({
           {/* <ThemePanel /> */}
         </Theme>
       </body>
-      <GoogleAnalytics gaId={process.env.GA_ID ?? ''} />
     </html>
   );
 }

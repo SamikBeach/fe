@@ -1,5 +1,13 @@
 # 🚦 CHANGELOG
 
+## [1.1.3](https://github.com/SamikBeach/fe/compare/1.1.2...1.1.3) (2024-11-09)
+
+
+### Bug Fixes
+
+* fix .releaserc ([1a511ab](https://github.com/SamikBeach/fe/commit/1a511ab67c63dde148405b05cb67b2593111f07b))
+* fix .releaserc ([8405a15](https://github.com/SamikBeach/fe/commit/8405a1594b6dc242d57ab63664ca613019c0e17e))
+
 ## [1.1.2](https://github.com/SamikBeach/fe/compare/1.1.1...1.1.2) (2024-11-09)
 
 ## [1.1.1](https://github.com/SamikBeach/fe/compare/1.1.0...1.1.1) (2024-11-09)

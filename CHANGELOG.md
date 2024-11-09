@@ -1,5 +1,12 @@
 # 🚦 CHANGELOG
 
+# [1.1.0](https://github.com/SamikBeach/fe/compare/1.0.2...1.1.0) (2024-11-09)
+
+
+### Features
+
+* GoogleAnalytics, GoogleTagManager 적용 ([244e42e](https://github.com/SamikBeach/fe/commit/244e42e2575a08c41a5c7d8fcd297228f08de649))
+
 ## [1.0.2](https://github.com/SamikBeach/fe/compare/1.0.1...1.0.2) (2024-11-08)
 
 

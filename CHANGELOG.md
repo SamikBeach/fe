@@ -1,5 +1,7 @@
 # 🚦 CHANGELOG
 
+## [1.2.3](https://github.com/SamikBeach/fe/compare/1.2.2...1.2.3) (2024-11-11)
+
 ## [1.2.2](https://github.com/SamikBeach/fe/compare/1.2.1...1.2.2) (2024-11-11)
 
 

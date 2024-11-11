@@ -1,5 +1,12 @@
 # 🚦 CHANGELOG
 
+# [1.2.0](https://github.com/SamikBeach/fe/compare/1.1.4...1.2.0) (2024-11-11)
+
+
+### Features
+
+* create deploy.yml ([d7b831e](https://github.com/SamikBeach/fe/commit/d7b831e734147607d8fca252365c702e4672f31b))
+
 ## [1.1.4](https://github.com/SamikBeach/fe/compare/1.1.3...1.1.4) (2024-11-09)
 
 

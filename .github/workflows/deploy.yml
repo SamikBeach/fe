@@ -1,25 +1,46 @@
-# name: master branch auto ci process script
+name: main
 
-# on:
-#   push:
-#     branches: ['main']
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   deploy:
-#     name: deploy
-#     runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout # Git Checkout
+        uses: actions/checkout@v3
 
-#     steps:
-#       - name: excuting remote ssh commands
-#         uses: appleboy/ssh-action@v1.1.0 # ssh 접속하는 오픈소스
-#         with:
-#           host: ${{ secrets.REMOTE_IP }} # 인스턴스 IP
-#           username: ${{ secrets.REMOTE_USER }} # 우분투 아이디
-#           key: ${{ secrets.REMOTE_PRIVATE_KEY }} # ec2 instance pem key
-#           port: ${{ secrets.REMOTE_SSH_PORT }} # 접속포트
-#           script: | # 실행할 스크립트
-#             cd fe
-#             git pull
-#             pm2 kill
-#             yarn
-#             yarn start
+      - name: Check Node v # 노드 버전 확인.
+        run: node -v
+
+      - name: Install Dependencies # 의존성 설치
+        run: yarn install --frozen-lockfile
+
+      - name: Build # 빌드
+        run: yarn build
+
+      - name: zip create # S3에 업로드할 zip 파일 생성
+        run: zip -qq -r ./build.zip .
+        shell: bash
+        # -qq: quit 모드로 실행 (에러나 경고메세지만 출력하도록 함)
+        # -r: 지정된 디렉토리를 재귀적으로 압축 (하위 디렉토리와 파일들 모두 압축)
+
+      - name: Configure AWS credentials # AWS 인증 확인
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3 # zip 파일을 S3에 업로드
+        run: |
+          aws s3 cp --region ap-northeast-2 ./build.zip s3://samik-beach/build.zip
+
+      - name: Code Deploy # S3에 올라간 zip 파일을 CodeDeploy로 가져옴
+        run: aws deploy create-deployment
+          --application-name samik-beach
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name samik-beach
+          --s3-location bucket=samik-beach/build.zip,bundleType=zip # Code Deploy가 S3에서 프로젝트를 찾을 수 있도록 경로 지정. (bucket=버킷 이름/test-build.zip)

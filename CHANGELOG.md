@@ -1,5 +1,12 @@
 # 🚦 CHANGELOG
 
+# [1.3.0](https://github.com/SamikBeach/fe/compare/1.2.3...1.3.0) (2024-11-11)
+
+
+### Features
+
+* add deploy.yml, appspect.yml, deploy.sh ([8ec3be6](https://github.com/SamikBeach/fe/commit/8ec3be608689b1600e2aefae03ca279dfad3ef00))
+
 ## [1.2.3](https://github.com/SamikBeach/fe/compare/1.2.2...1.2.3) (2024-11-11)
 
 ## [1.2.2](https://github.com/SamikBeach/fe/compare/1.2.1...1.2.2) (2024-11-11)

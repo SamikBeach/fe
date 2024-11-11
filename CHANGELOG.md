@@ -1,5 +1,12 @@
 # 🚦 CHANGELOG
 
+## [1.3.2](https://github.com/SamikBeach/fe/compare/1.3.1...1.3.2) (2024-11-11)
+
+
+### Bug Fixes
+
+* update deploy.yml ([6fafe9e](https://github.com/SamikBeach/fe/commit/6fafe9e5afe200d36505f568a993102b4ca2d0d4))
+
 ## [1.3.1](https://github.com/SamikBeach/fe/compare/1.3.0...1.3.1) (2024-11-11)
 
 

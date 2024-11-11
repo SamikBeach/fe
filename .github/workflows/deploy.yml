@@ -43,4 +43,4 @@ jobs:
           --application-name samik-beach
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name samik-beach
-          --s3-location bucket=samik-beach/build.zip,bundleType=zip # Code Deploy가 S3에서 프로젝트를 찾을 수 있도록 경로 지정. (bucket=버킷 이름/test-build.zip)
+          --s3-location bucket=samik-beach,key=build.zip,bundleType=zip # Code Deploy가 S3에서 프로젝트를 찾을 수 있도록 경로 지정. (bucket=버킷 이름/test-build.zip)

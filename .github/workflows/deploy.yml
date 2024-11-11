@@ -19,7 +19,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build # 빌드
-        run: yarn build
+        run: yarn prepare && yarn build
 
       - name: zip create # S3에 업로드할 zip 파일 생성
         run: zip -qq -r ./build.zip .

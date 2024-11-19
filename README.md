@@ -1,9 +1,78 @@
 # 🚦 CHANGELOG
 
+## [1.3.2](https://github.com/SamikBeach/fe/compare/1.3.1...1.3.2) (2024-11-11)
+
+### Bug Fixes
+
+- update deploy.yml ([6fafe9e](https://github.com/SamikBeach/fe/commit/6fafe9e5afe200d36505f568a993102b4ca2d0d4))
+
+## [1.3.1](https://github.com/SamikBeach/fe/compare/1.3.0...1.3.1) (2024-11-11)
+
+### Bug Fixes
+
+- update deploy.yml ([211864d](https://github.com/SamikBeach/fe/commit/211864d5d5d3f1b641eb401fe425967fb81f6cf2))
+
+# [1.3.0](https://github.com/SamikBeach/fe/compare/1.2.3...1.3.0) (2024-11-11)
+
+### Features
+
+- add deploy.yml, appspect.yml, deploy.sh ([8ec3be6](https://github.com/SamikBeach/fe/commit/8ec3be608689b1600e2aefae03ca279dfad3ef00))
+
+## [1.2.3](https://github.com/SamikBeach/fe/compare/1.2.2...1.2.3) (2024-11-11)
+
+## [1.2.2](https://github.com/SamikBeach/fe/compare/1.2.1...1.2.2) (2024-11-11)
+
+### Bug Fixes
+
+- update deploy.yml ([dd6ee13](https://github.com/SamikBeach/fe/commit/dd6ee13a76c346e7955a526e4ff84d1076ce77d7))
+
+## [1.2.1](https://github.com/SamikBeach/fe/compare/1.2.0...1.2.1) (2024-11-11)
+
+### Bug Fixes
+
+- update deploy.yml ([db25bb7](https://github.com/SamikBeach/fe/commit/db25bb7d496b26fd64bde251588f1a002105d085))
+
+# [1.2.0](https://github.com/SamikBeach/fe/compare/1.1.4...1.2.0) (2024-11-11)
+
+### Features
+
+- create deploy.yml ([d7b831e](https://github.com/SamikBeach/fe/commit/d7b831e734147607d8fca252365c702e4672f31b))
+
+## [1.1.4](https://github.com/SamikBeach/fe/compare/1.1.3...1.1.4) (2024-11-09)
+
+### Bug Fixes
+
+- 모바일 LogList 스타일 수정 ([c9f2c03](https://github.com/SamikBeach/fe/commit/c9f2c036f63d0cfe833c3cfd4994329c9e57f96f))
+- 모바일 로고에 누락된 링크 추가 ([8d97b6e](https://github.com/SamikBeach/fe/commit/8d97b6ed1a5c5408ba9c8d66b3ce9ef9455dfbf0))
+
+## [1.1.3](https://github.com/SamikBeach/fe/compare/1.1.2...1.1.3) (2024-11-09)
+
+### Bug Fixes
+
+- fix .releaserc ([1a511ab](https://github.com/SamikBeach/fe/commit/1a511ab67c63dde148405b05cb67b2593111f07b))
+- fix .releaserc ([8405a15](https://github.com/SamikBeach/fe/commit/8405a1594b6dc242d57ab63664ca613019c0e17e))
+
+## [1.1.2](https://github.com/SamikBeach/fe/compare/1.1.1...1.1.2) (2024-11-09)
+
+## [1.1.1](https://github.com/SamikBeach/fe/compare/1.1.0...1.1.1) (2024-11-09)
+
+# [1.1.0](https://github.com/SamikBeach/fe/compare/1.0.2...1.1.0) (2024-11-09)
+
+### Features
+
+- GoogleAnalytics, GoogleTagManager 적용 ([244e42e](https://github.com/SamikBeach/fe/commit/244e42e2575a08c41a5c7d8fcd297228f08de649))
+
+## [1.0.2](https://github.com/SamikBeach/fe/compare/1.0.1...1.0.2) (2024-11-08)
+
+### Bug Fixes
+
+- fix for release ([fc3dfa3](https://github.com/SamikBeach/fe/commit/fc3dfa3ca576fc164a880eddfff0a5a9d566822f))
+
 ## [1.0.1](https://github.com/SamikBeach/fe/compare/v1.0.0...1.0.1) (2024-11-08)
 
 ### Bug Fixes
 
+- fix .releaserc ([262f038](https://github.com/SamikBeach/fe/commit/262f03823bea9be6befec25d223338d789c33230))
 - fix yml ([b0f76ba](https://github.com/SamikBeach/fe/commit/b0f76bab2ce141a02eb3055fbb3ccf7b7d2b7207))
 - fix yml ([fd7e5c0](https://github.com/SamikBeach/fe/commit/fd7e5c09763975bcedf6a696ab6b0dab8e664fd2))
 - fix yml ([ed6495a](https://github.com/SamikBeach/fe/commit/ed6495a422407b06840cd2104e63664b31472fe2))
